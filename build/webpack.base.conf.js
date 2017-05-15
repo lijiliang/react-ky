@@ -28,8 +28,9 @@ module.exports = {
             /**
              * 自定义路径别名
              */
-            jquery: 'jquery',
-            '~': path.join(commonPath.src)
+            kyBase: path.join(commonPath.src, '/base/'),
+            kyBus: path.join(commonPath.src, '/business/'),
+            busModels: path.join(commonPath.src, '/business/modelIndex.js')
         }
     },
     // 模块 - 各种加载器
