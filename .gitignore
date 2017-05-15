@@ -1,0 +1,13 @@
+.DS_Store
+.sass-cache
+.idea/
+.project
+*.sublime*
+*.log
+coverage
+node_modules/**
+node_modules
+dist
+debug
+npm-debug.log
+.vscode
