@@ -1,5 +1,5 @@
 /**
- * 生产环境构建
+ * @fileOverview 生产环境构建
  */
 const fs = require('fs');
 const path = require('path');

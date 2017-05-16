@@ -1,5 +1,5 @@
 /**
- * 生产环境 构建配置
+ * @fileOverview 生产环境 构建配置
  */
 const path = require('path');
 const webpack = require('webpack');

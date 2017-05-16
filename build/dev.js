@@ -1,5 +1,5 @@
 /**
- * dev环境构建
+ * @fileOverview dev环境构建
  */
 const express = require('express');
 const webpack = require('webpack');

@@ -1,5 +1,5 @@
 /**
- * dev环境 构建配置
+ * @fileOverview dev环境 构建配置
  */
 const webpack = require('webpack');
 const config = require('./webpack.base.conf');  // 引入公用配置

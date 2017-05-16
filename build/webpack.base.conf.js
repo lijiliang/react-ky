@@ -1,5 +1,5 @@
 /**
- * webpack构建流程，公用配置
+ * @fileOverview webpack构建流程，公用配置
  */
 const path = require('path');
 const webpack = require('webpack');

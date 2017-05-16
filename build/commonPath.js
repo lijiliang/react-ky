@@ -1,5 +1,5 @@
 /**
- * commonPath 路径配置
+ * @fileOverview commonPath 路径配置
  */
 const path = require('path');
 const rootPath = path.resolve(__dirname, '..');  //项目根目录
