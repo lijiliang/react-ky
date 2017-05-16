@@ -3,4 +3,4 @@
  */
 
 // 首页 reducers
- export {default as HomeModel} from "kyBus/home/model/HomeModel";
+ export {default as HomeModel} from './home/model/HomeModel';

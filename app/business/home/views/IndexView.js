@@ -18,15 +18,29 @@ class IndexView extends React.Component{
         };
     }
     componentDidMount(){
-
+        console.log('homeInfo: ', this.props.homeInfo);
     }
     render(){
-        console.log(this.state.isMore);
         return(
-            <div>home</div>
+            <div>home </div>
         );
     }
 
 }
 
-export default IndexView;
+/*  React 与  Redux 绑定 */
+function mapStateToProps(state){
+    return {
+        homeInfo: state.HomeModel
+    };
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(IndexView);

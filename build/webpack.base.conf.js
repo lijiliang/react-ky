@@ -114,9 +114,7 @@ module.exports = {
             // 配置开发全局常量
             // ================================
             __DEV__: commonPath.env === 'development',
-            __PROD__: commonPath.env === 'production',
-            __COMPONENT_DEVTOOLS__: false, // 是否使用组件形式的 Redux DevTools
-            __WHY_DID_YOU_UPDATE__: false  // 是否检测不必要的组件重渲染
+            __PROD__: commonPath.env === 'production'
         })
     ]
 };

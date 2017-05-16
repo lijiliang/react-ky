@@ -5,8 +5,8 @@ React开发SPA脚手架。 Webapck / ES6 + Babel / Redux / React Router
 ### 更新
 * 2017/4/24 &nbsp; 引入 `cross-env` 解决跨平台问题
 * 2017/4/26 &nbsp; 增加对`favicon`文件的支持
-* 2017/4/27 &nbsp; 增加四个环境变量：`__DEV__`、`__PROD__`、`__COMPONENT_DEVTOOLS__`、`__WHY_DID_YOU_UPDATE__`
-* 2017/5/10 &nbsp; 引入`react-addons-pure-render-mixin`提高react性能 *
+* 2017/4/27 &nbsp; 增加四个环境变量：`__DEV__`、`__PROD__`
+* 2017/5/10 &nbsp; 引入`react-addons-pure-render-mixin`提高react性能
 
 ## 快速开始
 在开始前，希望您已通读如下资料
@@ -26,7 +26,7 @@ $ npm install
 ```shell
 npm start
 ```
-无意外，默认浏览器就会自动打开 `localhost:9092`，您立即可以看到效果
+无意外，默认浏览器就会自动打开 `localhost:9002`，您立即可以看到效果
 
 若浏览器没有自动弹出，则请自行手动访问  
 
@@ -39,26 +39,39 @@ npm run build
 ```
 .
 ├─ build/            # Webpack 配置目录
+│   ├─ commonPath.js    # 路径配置
+│   ├─ dev.js           # dev环境构建
+│   ├─ prod.js          # 生产环境构建
+│   ├─ webpack.base.conf.js  # 公共webpack配置文件
+│   ├─ webpack.dev.conf.js   # dev环境webpack配置文件
+│   ├─ webpack.prod.conf.js  # 生产环境webpack配置文件
 ├─ dist/             # build 生成的生产环境下的项目
-├─ src/              # 源码目录（开发都在这里进行）
-│   ├── static/         # 放置需要经由 Webpack 处理的静态文件
-│   ├── components/     # 木偶组件（COMPONENT）
-│   ├── containers/     # 智能组件（COMPONENT）
-│   ├── constants/      # 放置actions的类型
-│   ├── actions/          # （ACTION）
-│   ├── reducers/         # （REDUCER）
-│   ├── store/            # （STORE）
-│   ├── routes/        # 路由（ROUTE）
-│   ├── fetch/      # 服务（FETCH，用于统一管理 XHR 请求）
-│   ├── utils/         # 工具库（UTIL）
+├── app/
+│   ├─ base/            # 基础支持
+│   │   ├── common/         # 一些公用的方法及函数
+│   │   ├── components/     # 组件
+│   │   ├──├── business        # 木偶组件
+│   │   ├──├── ux              # 智能组件
+│   │   ├── resources/      # 静态资源
+│   │   ├── reducers/       # reducers,组合整个state
+│   │   ├── store/          # 生成store
+│   │   ├── router/         # 程序所有可跳转页面的路由配置文件
+│   ├─ business/       # 源码目录（按业务进行分片）
+│   │   ├── home/           # 一个单独的业务模块
+│   │   ├── ├── action/           # action
+│   │   ├── ├── model/            # model,其实就是单个的reducers
+│   │   ├── ├── resources/        # 业务模块的静态资源
+│   │   ├── ├── views/            # 业务界面
+│   │   ├── ├── routers.js/       # 业务模块路由
+│   │   ├── 更多模块...
+│   │   ├── modelIndex.js/  # 各业务模块模型提取文件索引
 │   ├── app.js         # 启动文件
 │   ├── vendor.js      # 公共核心文件
 │   ├── index.html     # 静态基页
-├── .babelrc         # Babel 转码配置
-├── .eslintignore    # （配置）ESLint 检查中需忽略的文件（夹）
-├── .eslintrc        # ESLint 配置
+├── .eslintrc.yml       # ESLint 配置
 ├── .gitignore       # （配置）需被 Git 忽略的文件（夹）
 ├── package.json     #  npm包配置文件
+├── README.md        #  README说明文件
 ```
 
 ## 特色
@@ -71,7 +84,6 @@ npm run build
 * 引入 [路径别名] 简化import路径,实现优雅的加载模式
 * [Redux Logger][redux-logger] 打印动作及前后状态变化
 * 利用[postcss-loader]为各个浏览器自动加前缀
-* 利用React-router V4.4作为前端路由
 * less
 * webpack2
 * ES6/7
@@ -84,10 +96,9 @@ npm run build
 * React 15.5.4
 * Redux
 * React Router
-* Ajax 请求库（Superagent / jQuery-Ajax / ...）
+* Ajax 请求库（axios）
 * Webpack
 * ES6 + Babel
-* jQuery + BootStrap (UI)
 
 ***
 ## 开发
@@ -96,12 +107,12 @@ npm run build
 > 但有了路径别名后，只需要 `import userService from 'SERVICE/userService'`  
 
 * 开发环境**全局变量**，由 `webpack.DefinePlugin` 提供（详见 `build/webpack.base.conf.js`）
-> 默认有 `__DEV__` / `__PROD__` / `__COMPONENT_DEVTOOLS__` / `__WHY_DID_YOU_UPDATE__` 四个全局变量  
+> 默认有 `__DEV__` / `__PROD__` 二个全局变量  
 ***
 
 ***
 ## 部署
-在 `react-frame` 的命令窗口下，敲下 `npm run build`，将会在项目根目录下生成 `dist/`  
+在 `react-ky` 的命令窗口下，敲下 `npm run build`，将会在项目根目录下生成 `dist/`  
 > 您可以使用命令行静态资源服务器 [serve](https://github.com/tj/serve) ( `npm i serve -g` )，敲下 `serve dist/ -p [端口]` 来快速查看 build 后的项目  
 > 还可以自己配置一个`nginx`服务器进行快速便捷地实现静态资源服务器
 >
