@@ -18,7 +18,7 @@ React开发SPA脚手架。 Webapck / ES6 + Babel / Redux / React Router
 ## 安装
 ```shell
 $ git clone https://github.com/lijiliang/react-ky.git
-$ cd react-frame
+$ cd react-ky
 $ npm install
 ```
 
