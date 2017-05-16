@@ -6,6 +6,7 @@ const config = require('./webpack.base.conf');  // 引入公用配置
 const commonPath = require('./commonPath');   // 路径配置
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const SOURCE_MAP = true;
 
@@ -48,12 +49,15 @@ config.plugins.push(
     new HtmlWebpackPlugin({
         template: commonPath.indexHTML,
         filename: 'index.html',
-        // chunksSortMode: 'none'
     }),
     new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',   //指定公共bundle名字
         minChunks: Infinity, // 随着 入口chunk 越来越多，这个配置保证没其它的模块会打包进 公共chunk
     }),
+    new OpenBrowserPlugin({
+        url: 'http://localhost:9002'
+    })
+    /*  如果react项目没有开启 module.hot 热加载的话，可以打开这里直接用浏览器代理直接刷新页面实现热加载
     new BrowserSyncPlugin({
         host: '127.0.0.1',
         port: 9092,
@@ -64,5 +68,6 @@ config.plugins.push(
         // 防止sync自动加载页面，直接让webpack dev server 来处理
         reload: false
     })
+    */
 );
 module.exports = config;

@@ -3,34 +3,35 @@
  */
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { createLogger } from 'redux-logger';
+import logger from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from '../reducers';   // rootReducer 为顶级的 Reducer
 
-// 叠加中间件
-let creatStoreWithMiddleware;
-if(__DEV__){
-    console.log('asdf')
-    /*
-       触发Redux DevTools
-       1. Chrome 插件 Redux DevTools（默认）
-       P.S: 独立窗口可调用 window.devToolsExtension.open()
-    */
-    window.devToolsExtension ? window.devToolsExtension() : undefined;
 
-    creatStoreWithMiddleware = compose(
-        applyMiddleware(thunk),
-        applyMiddleware(createLogger())
-    )(createStore);
-}else{
-    creatStoreWithMiddleware = compose(
-        applyMiddleware(thunk)
-    )(createStore);
-}
+// 叠加中间件
+let store;
 
 // 加载reducers
 export default function ConfigureStore(initialState){
-    const store = creatStoreWithMiddleware(rootReducer, initialState);
+    if(__DEV__){
+        /**
+         * 触发Redux DevTools 及 打印 logger
+         * 1. Chrome 插件 Redux DevTools（内置）
+         * P.S: 独立窗口可调用 window.devToolsExtension.open()
+         * window.devToolsExtension ? window.devToolsExtension() : undefined;
+         */
+        store = createStore(rootReducer, initialState, composeWithDevTools(
+            applyMiddleware(
+                thunk,
+                logger
+            )
+        ));
+    }else{
+        store = createStore(rootReducer, initialState, applyMiddleware(
+                thunk
+            )
+        );
+    }
     if (module.hot) {
         module.hot.accept('../reducers', () => {
             const nextReducer = require('../reducers');
