@@ -3,12 +3,14 @@
  */
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import createLogger from 'redux-logger';
+import { createLogger } from 'redux-logger';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from '../reducers';   // rootReducer 为顶级的 Reducer
 
 // 叠加中间件
 let creatStoreWithMiddleware;
 if(__DEV__){
+    console.log('asdf')
     /*
        触发Redux DevTools
        1. Chrome 插件 Redux DevTools（默认）

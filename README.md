@@ -121,6 +121,8 @@ npm run build
 * [davezuko/react-redux-starter-kit](https://github.com/davezuko/react-redux-starter-kit)
 * [探讨 React 项目目录结构](http://marmelab.com/blog/2015/12/17/react-directory-structure.html)
 
+react闲谈——10分钟学会react-redux异步： https://segmentfault.com/a/1190000008063435
+
 [react-doc]: http://reactjs.cn/react/docs/getting-started-zh-CN.html
 [redux-doc]: http://camsong.github.io/redux-in-chinese/index.html
 [react-router-doc]: http://react-guide.github.io/react-router-cn/

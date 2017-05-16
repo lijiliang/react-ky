@@ -3,9 +3,11 @@
  */
 import React from 'react';
 import { render } from 'react-dom';
-import { hashHistory } from 'react-router';
+
+// 引入路由配置
+import RouterConfig from 'kyBase/router/RouterConfig';
 
 render(
-    <div>asdfasd</div>,
+    <RouterConfig />,
     document.getElementById('root')
 );
