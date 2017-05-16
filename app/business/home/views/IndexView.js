@@ -7,7 +7,9 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import '../resources/style.less';
+import { get, past } from 'kyBase/common/fetchData';
+
+import 'resetLess';
 
 class IndexView extends React.Component{
     constructor(props, context){
@@ -19,6 +21,29 @@ class IndexView extends React.Component{
     }
     componentDidMount(){
         console.log('homeInfo: ', this.props.homeInfo);
+        /*
+        async function axiosGet(){
+            try{
+                const response = await get(`/api/2`);
+                await response;
+                console.log(response.data);
+            }catch(err){
+                console.log(err);
+            }
+        }
+        axiosGet();
+        */
+
+        const response = get('/api/2', {
+            a:1,
+            b:2
+        });
+        console.log(response)
+        response.then((res) => {
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+        });
     }
     render(){
         return(

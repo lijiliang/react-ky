@@ -30,7 +30,9 @@ module.exports = {
              */
             kyBase: path.join(commonPath.src, '/base/'),
             kyBus: path.join(commonPath.src, '/business/'),
-            busModels: path.join(commonPath.src, '/business/modelIndex.js')
+            fetchData: path.join(commonPath.src, '/base/common/fetchData.js'),
+            busModels: path.join(commonPath.src, '/business/modelIndex.js'),
+            resetLess: path.join(commonPath.src, '/base/resources/less/reset.less')
         }
     },
     // 模块 - 各种加载器
