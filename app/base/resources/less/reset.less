@@ -8,9 +8,6 @@
 /* 引入公共方法 */
 @import './variables.less';
 
-html {
-   overflow-y:scroll
-}
 html * {
    outline:0;
    -webkit-text-size-adjust:none;
@@ -18,9 +15,7 @@ html * {
 }
 html {
    color: @font-color-common;
-   overflow-y: scroll;
    -webkit-text-size-adjust: 100%;
-   -ms-text-size-adjust: 100%;
    text-size-adjust: 100%;
    -webkit-user-select: none;
    -ms-user-select: none;
@@ -36,7 +31,9 @@ html,body {
 }
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
    margin:0;
-   padding:0
+   padding:0;
+   border: 0;
+   vertical-align: middle;
 }
 input, select, textarea {
    font-size:100%
