@@ -9,5 +9,5 @@ import RouterConfig from 'kyBase/router/RouterConfig';
 
 render(
     <RouterConfig />,
-    document.getElementById('root')
+    document.getElementById('root-container')
 );

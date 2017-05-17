@@ -32,7 +32,7 @@ module.exports = {
             kyBus: path.join(commonPath.src, '/business/'),
             fetchData: path.join(commonPath.src, '/base/common/fetchData.js'),
             busModels: path.join(commonPath.src, '/business/modelIndex.js'),
-            resetLess: path.join(commonPath.src, '/base/resources/less/reset.less')
+            varLess: path.join(commonPath.src, '/base/resources/less/variables.less')   // less的一些变量
         }
     },
     // 模块 - 各种加载器
@@ -102,7 +102,8 @@ module.exports = {
                 postcss : function(){
                     return [
                         require('autoprefixer')({
-                            broswers : ['last 5 versions']
+                            // broswers : ['last 5 versions']
+                            browsers: ['iOS >= 8','Android >= 4.1']
                         })
                     ];
                 }
