@@ -1,0 +1,39 @@
+/**
+ * @fileOverview: 幻灯片公共组件
+ * @version: 1.0.0(2017-5-18)
+ * @author: Benson
+ * @updatatime:
+ */
+ // 引入变量
+ @import '~varLess';
+
+.ky-slide-swipe{
+    position: relative;
+    .slide-item{
+        img{
+            display: block;
+            width: 100%;
+        }
+    }
+    .slide-dot{
+        position: absolute;
+        bottom: 20/@rem;
+        width: 100%;
+        ul{
+            width: 100%;
+            height: auto;
+            text-align: center;
+        }
+        li{
+            display: inline-block;
+            width: 15/@rem;
+            height: 15/@rem;
+            margin: 0 10/@rem;
+            border-radius: 50%;
+            background: #cccccc;
+            &.selected{
+                background: #1b305b;
+            }
+        }
+    }
+}

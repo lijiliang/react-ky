@@ -7,12 +7,35 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { get, past } from 'kyBase/common/fetchData';
 import KYHeaderBar from 'kyBus/common/views/KYHeaderBar';
 import KYFooterBar from 'kyBus/common/views/KYFooterBar';
-
+// 幻灯片组件
+import SlideSwipe from 'kyBase/components/ux/SlideSwipe';
 import '../resources/IndexView.less';
 
+import { get, past } from 'kyBase/common/fetchData';
+// 幻灯片模拟数据
+import Banner1 from 'kyBus/home/resources/img/banner1.png';
+import Banner2 from 'kyBus/home/resources/img/banner2.png';
+const slideList = [
+    {
+        src: Banner1,
+        href: '',
+        title: 'Banner1'
+    },{
+        src: Banner2,
+        href: '',
+        title: 'Banner2'
+    },{
+        src: Banner1,
+        href: '',
+        title: 'Banner2'
+    },{
+        src: Banner2,
+        href: '',
+        title: 'Banner2'
+    }
+];
 class IndexView extends React.Component{
     constructor(props, context){
         super(props, context);
@@ -53,6 +76,7 @@ class IndexView extends React.Component{
                 <KYHeaderBar  />
                 <div className="ky-view-body">
                     <div className="ky-scrollable">
+                        <SlideSwipe list={slideList}/>
                         123456<br/>22222222<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
                         body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
                         body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
