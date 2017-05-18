@@ -84,6 +84,7 @@
     "react-swipe": "^5.0.8",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "zscroller": "^0.2.5"
   }
 }

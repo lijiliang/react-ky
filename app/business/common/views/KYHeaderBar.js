@@ -7,6 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import KYSideBar from './KYSideBar';
 import '../resources/KYHeaderBar.less';
 
 class KYHeaderBar extends React.Component{
@@ -36,7 +37,6 @@ class KYHeaderBar extends React.Component{
     }
     render(){
         return(
-            <div>
             <header className="ky-view-header">
                 <div className="ky-navbar">
                     <div className="ky-navbar-left">
@@ -52,16 +52,8 @@ class KYHeaderBar extends React.Component{
                         </div>
                     </div>
                 </div>
+                <KYSideBar />
             </header>
-            <div className="m-sideBar">
-                {/* <div className="ky-popup-mask"></div> */}
-                <div className="ky-sideBar-wrap">
-                    <div className="sideBar-content">
-                        content
-                    </div>
-                </div>
-            </div>
-            </div>
         );
     }
 
