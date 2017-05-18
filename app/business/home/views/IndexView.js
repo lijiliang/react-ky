@@ -76,7 +76,7 @@ class IndexView extends React.Component{
                 <KYHeaderBar  />
                 <div className="ky-view-body">
                     <div className="ky-scrollable">
-                        <SlideSwipe list={slideList}/>
+                        <SlideSwipe List={slideList}/>
                         123456<br/>22222222<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
                         body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
                         body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>

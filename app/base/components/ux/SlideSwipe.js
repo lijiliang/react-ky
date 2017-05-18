@@ -1,5 +1,13 @@
 /**
  * @fileOverview 幻灯片公共组件
+ * 需要传入的参数是：List
+ * [
+ *  {
+         src: '',
+         href: '',
+         title: ''
+     }
+ * ]
  */
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
@@ -21,7 +29,7 @@ class Slideshow extends React.Component{
                 this.setState({ index: index });
             }.bind(this)
         };
-        const list = this.props.list;
+        const list = this.props.List;
         return(
             <div className="ky-slide-swipe">
                 <ReactSwipe className="carousel" swipeOptions={opt}>
