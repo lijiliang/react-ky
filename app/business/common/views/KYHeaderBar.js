@@ -16,8 +16,23 @@ class KYHeaderBar extends React.Component{
     }
     componentDidMount(){
     }
+    // 处理menu
     menuClickHandle(){
-        console.log('a')
+        const bodyHeight = $(window).height();
+        const kyFooter = $('#kyFooter');
+        const sideBarWrap = $('.ky-sideBar-wrap');
+        if(kyFooter){
+            const footerHeight = kyFooter.height();
+            sideBarWrap.css({
+                transform: 'translate3d(0, 0, 0)',
+                height: bodyHeight-footerHeight
+            });
+        }else{
+            sideBarWrap.css({
+                transform: 'translate3d(0, 0, 0)',
+                height: '100%'
+            });
+        }
     }
     render(){
         return(
@@ -38,10 +53,10 @@ class KYHeaderBar extends React.Component{
                     </div>
                 </div>
             </header>
-            <div className="m-menu">
+            <div className="m-sideBar">
                 {/* <div className="ky-popup-mask"></div> */}
-                <div className="ky-popup-wrap">
-                    <div className="popup-content">
+                <div className="ky-sideBar-wrap">
+                    <div className="sideBar-content">
                         content
                     </div>
                 </div>

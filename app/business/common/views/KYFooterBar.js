@@ -18,7 +18,7 @@ class KYFooterBar extends React.Component{
     }
     render(){
         return(
-            <footer className="ky-view-footer flex-column">
+            <footer className="ky-view-footer flex-column" id="kyFooter">
                 <div className="footer-bar flex-row">
                     <div className="footer-bar-list ky-center-v">
                         <div className="bar-item">

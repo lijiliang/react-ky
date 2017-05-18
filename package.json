@@ -74,6 +74,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "es6-promise": "^4.1.0",
+    "fastclick": "^1.0.6",
     "lodash": "^4.17.4",
     "react": "^15.5.4",
     "react-addons-pure-render-mixin": "^15.5.2",
@@ -83,7 +84,6 @@
     "react-swipe": "^5.0.8",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
-    "redux-thunk": "^2.2.0",
-    "whatwg-fetch": "^2.0.3"
+    "redux-thunk": "^2.2.0"
   }
 }

@@ -7,3 +7,4 @@ import 'react-router';
 import 'redux';
 import 'react-redux';
 import 'axios';
+import 'kyBase/common/zepto';
