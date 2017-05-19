@@ -106,6 +106,7 @@ module.exports = {
                             // broswers : ['last 5 versions']
                             browsers: ['iOS >= 8','Android >= 4.1']
                         }),
+                        // 将px转为rem
                         pxtorem({
                             rootValue: 100,
                             propWhiteList: [],
