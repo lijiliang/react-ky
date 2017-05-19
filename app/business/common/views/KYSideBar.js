@@ -35,16 +35,34 @@ class KYSideBar extends React.Component{
                             <i className="icon icon icon-zaixiankefu" onClick={this.closeSideHandle.bind(this)}></i>
                         </div>
                         <div className="side-main" ref="sideMain">
-                            111<br/>111<br/>111<br/>111<br/>111<br/>111<br/>
-                            111<br/>111<br/>111<br/>111<br/>111<br/>111<br/>
-                            111<br/>111<br/>111<br/>111<br/>111<br/>111<br/>
-                            111<br/>111<br/>111<br/>111<br/>111<br/>111<br/>
-                            111<br/>111<br/>111<br/>111<br/>111<br/>111<br/>
-                            111<br/>111<br/>111<br/>111<br/>111<br/>111<br/>
-                            111<br/>111<br/>111<br/>111<br/>111<br/>111<br/>
-                            111<br/>111<br/>111<br/>111<br/>111<br/>111<br/>
-                            111<br/>111<br/>111<br/>111<br/>111<br/>111<br/>
-                            111<br/>111<br/>111<br/>111<br/>111<br/>12345678<br/>
+                            <div className="ky-menu">
+                                <ul className="m-menu-main">
+                                    <li className="m-menu-submenu">
+                                        <div className="menu-submenu-title">
+                                            <span>消费者告知书</span>
+                                        </div>
+                                    </li>
+                                    <li className="m-menu-submenu">
+                                        <div className="menu-submenu-title">
+                                            <span>登入/注册</span>
+                                        </div>
+                                        <ul className="m-menu-sub">
+                                            <li className="m-menu-item">登入我的帐号</li>
+                                            <li className="m-menu-item">消费者帐户</li>
+                                            <li className="m-menu-item">注册会员帐户</li>
+                                            <li className="m-menu-submenu">
+                                                <div className="menu-submenu-title">
+                                                    <span>研发理念</span>
+                                                </div>
+                                                <ul className="m-menu-sub">
+                                                    <li className="m-menu-item">健康三角组合</li>
+                                                    <li className="m-menu-item">优质保证</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
