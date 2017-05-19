@@ -30,10 +30,15 @@ config.entry.app = [
 config.module.rules.push(
     {
         test: /\.less$/,
+        exclude: /node_modules/,
         use: [
             'style-loader',
-          { loader: 'css-loader', options: { importLoaders: 1 } },
-            'less-loader'
+            {
+                loader: 'css-loader',
+                options: { importLoaders: 1 }
+            },
+            'postcss-loader',
+            'less-loader',
         ]
     }
 );

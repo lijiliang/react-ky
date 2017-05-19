@@ -5,6 +5,7 @@ const path = require('path');
 const webpack = require('webpack');
 const commonPath = require('./commonPath');   // 路径配置
 const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
+const pxtorem = require('postcss-pxtorem');
 
 module.exports = {
     entry: {
@@ -104,6 +105,10 @@ module.exports = {
                         require('autoprefixer')({
                             // broswers : ['last 5 versions']
                             browsers: ['iOS >= 8','Android >= 4.1']
+                        }),
+                        pxtorem({
+                            rootValue: 100,
+                            propWhiteList: [],
                         })
                     ];
                 }
