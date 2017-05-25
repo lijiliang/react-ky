@@ -8,6 +8,7 @@ import ConfigureStore from '../store/ConfigureStore';
 
 import Launch from './Launch';
 import HomeView from 'kyBus/home/views/IndexView';
+import LoginView from 'kyBus/login/views/LoginView';
 
 /*
  * 路由
@@ -21,6 +22,7 @@ class RouterMap extends React.Component {
             <Router history={this.props.history} onUpdate={this.updateHandle.bind(this)}>
                 <Route path='/' component={Launch}>
                     <IndexRoute component={HomeView}/>
+                    <Route path='login' component={LoginView}/>
                     {/* <Route path='*' component={NotFound}/> */}
                 </Route>
             </Router>

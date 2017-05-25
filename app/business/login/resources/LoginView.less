@@ -1,0 +1,92 @@
+/**
+ * @fileOverview: 登录页
+ * @version: 1.0.0(2017-5-24)
+ * @author: Benson
+ * @updatatime:
+ */
+
+// 引入变量
+@import '~varLess';
+
+.ky-login{
+    min-height: 100%;
+    background: #236194;
+    h2{
+        padding: 80px 0 60px 0;
+        color: #fff;
+        text-align: center;
+        font-size: @font-size-heading;
+    }
+}
+
+.ky-list-body{
+    padding: 0 10%;
+    .ky-input-item{
+        width: 100%;
+        display: flex;
+        position: relative;
+        height: 80px;
+        background: #fff;
+        margin-bottom: @v-spacing-lg;
+        vertical-align: middle;
+        align-items: center;
+        border-radius: 5px;
+        border: 1px solid #567591;
+        box-shadow: 0 0 6px @color-shadow;
+        .ky-input-label{
+            width: 60px;
+            font-size: 34px;
+            margin-left: 0;
+            margin-right: 5px;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            .icon{
+                font-size: @icon-size-xs;
+                color: @brand-primary;
+            }
+        }
+        .ky-input-control{
+            flex: 1;
+            input{
+                font-size: 28px;
+                appearance: none;
+                width: 100%;
+                padding: 0;
+                border: 0;
+                background-color: transparent;
+                line-height: 1.8;
+                box-sizing: border-box;
+                color: #333;
+            }
+        }
+    }
+    .login-other-info{
+        margin-bottom: @v-spacing-lg;
+        text-align: right;
+        .forget-password{
+            color: #5fbcb4;
+        }
+        .login-checkbox{
+            color: #fff;
+            input{
+                font-size: 50px;
+            }
+        }
+    }
+    // 没有帐号
+    .account-other{
+        padding-bottom: 40px;
+        .no-account-tit{
+            width: 100%;
+            display: inline-block;
+            padding: 88px 0 58px 0;
+            text-align: center;
+            color: #fff;
+        }
+    }
+}
+
+.ky-btn{
+    margin-bottom: @v-spacing-lg;
+}
