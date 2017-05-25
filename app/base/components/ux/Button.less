@@ -24,15 +24,18 @@
 
     // default
     color: @button-primary-color;
-    background-color: transparent;
+    background-color: @primary-button-fill;
     border: @border-width-sm solid @button-primary-color;
     // &:active
     &&-active {
-        background-color: @fill-tap;
+        background-color: @button-fill-tap;
     }
     &-primary{
         background: @button-primary-color;
         color: #fff;
+        &.@{buttonPrefixCls}-active {
+          background-color: @primary-button-fill-tap;
+        }
     }
     // 小尺寸
     &-small {

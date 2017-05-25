@@ -105,7 +105,7 @@ class LoginView extends React.Component{
                                         <i className="icon icon-zaixiankefu"></i>
                                     </div>
                                     <div className="ky-input-control">
-                                        <input type="text" placeholder="密码"/>
+                                        <input type="password" placeholder="密码"/>
                                     </div>
                                 </div>
                                 <div className="login-other-info">
@@ -120,29 +120,12 @@ class LoginView extends React.Component{
                                     </label>
                                 </div>
                                 <div className="login-btn">
-                                    <a role="button" className="ky-button ky-button-primary">
-                                        <span>登录</span>
-                                    </a>
+                                    <Button className="ky-btn" title="登录" type="primary"/>
                                 </div>
-
-                                <Button className="ky-btn" title="登录" type="primary"/>
-                                <Button className="ky-btn" title="可点击" onClick={e => console.log(e)}/>
-                                <Button title="会员注册" />
-                                <Button title="自定义样式" style={{ fontSize: '0.26rem' }}/>
-                                <Button title="disabled" disabled onClick={e => console.log(e)}/>
-                                <Button title="inline" inline onClick={e => console.log(e)}/>
-                                <Button title="通栏(没圆角和边框)" disabled across/>
-                                <Button title="大尺寸" size="large"/>
-                                <Button title="小尺寸" size="small"/>
-
                                 <div className="account-other">
                                     <span className="no-account-tit">没有帐号？</span>
-                                    <a role="button" className="ky-btn ky-button">
-                                        <span>会员注册</span>
-                                    </a>
-                                    <a role="button" className="ky-button">
-                                        <span>消费者注册</span>
-                                    </a>
+                                    <Button className="ky-btn" title="会员注册"/>
+                                    <Button className="ky-btn" title="消费者注册" onClick={e => console.log(e)}/>
                                 </div>
                             </div>
                         </div>
