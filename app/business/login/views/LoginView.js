@@ -111,11 +111,13 @@ class LoginView extends React.Component{
                                 <div className="login-other-info">
                                     <a href="" className="forget-password">忘记密码？</a>
                                     <label className="login-checkbox">
-                                    <input
-                                        name="isAccount"
-                                        type="checkbox"
-                                        checked={this.state.isAccount}
-                                        onChange={this.handleAccountChange.bind(this)} />
+                                        <input
+                                            className="input-checkbox"
+                                            name="isAccount"
+                                            type="checkbox"
+                                            checked={this.state.isAccount}
+                                            onChange={this.handleAccountChange.bind(this)} />
+                                            <span className="checkbox-inner"></span>
                                         记住帐户
                                     </label>
                                 </div>
