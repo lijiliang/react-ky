@@ -7,6 +7,11 @@ const commonPath = require('./commonPath');   // 路径配置
 const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
 const pxtorem = require('postcss-pxtorem');
 
+const SvgStorePlugin = require('external-svg-sprite-loader/lib/SvgStorePlugin');
+const svgDirs = [
+    path.join(commonPath.src, '/base/resources/svg')    // 需要处理的svg存放目录
+];
+
 module.exports = {
     entry: {
         app: path.join(commonPath.src, 'app.js'),
@@ -73,6 +78,19 @@ module.exports = {
                 }]
             },
             {
+                test: /\.svg$/,
+                loader: 'external-svg-sprite-loader',
+                include: svgDirs,
+            },
+            // {
+            //     test: /\.svg$/,
+            //     loader: 'svg-sprite-loader',
+            //     include: svgDirs,   // 把 svgDirs 路径下的所有 svg 文件交给 svg-sprite-loader 插件处理
+            //     options: {
+            //         runtimeCompat: true
+            //     }
+            // },
+            {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 // 排除favicon.png, 因为它已经由上面的loader处理了. 如果不排除掉, 它会被这个loader再处理一遍
@@ -124,6 +142,7 @@ module.exports = {
             // ================================
             __DEV__: commonPath.env === 'development',
             __PROD__: commonPath.env === 'production'
-        })
+        }),
+        new SvgStorePlugin()
     ]
 };
