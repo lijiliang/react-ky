@@ -67,10 +67,6 @@
         .forget-password{
             color: #5fbcb4;
         }
-        .login-checkbox{
-            color: #fff;
-            position: relative;
-        }
     }
     // 没有帐号
     .account-other{
@@ -89,47 +85,58 @@
     margin-bottom: @v-spacing-lg;
 }
 
-.input-checkbox{
-    opacity: 0;
-    position: absolute;
-    z-index: 1;
-    width: 38px;
-    height: 38px;
-}
-.checkbox-inner {
-    width: .42rem;
-    height: .42rem;
-    border: .03rem solid #fff;
-    // border-radius: 50%;
-    transform: rotate(0deg);
-    box-sizing: border-box;
-    vertical-align: middle;
 
+// 模拟多选框
+.login-checkbox{
+    color: #fff;
+    position: relative;
+    padding-left: 15px;
+    .input-checkbox{
+        opacity: 0;
+        position: absolute;
+        top: 6px;
+        z-index: 1;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+    .checkbox-inner {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #adadad;
+        // border-radius: 50%;
+        transform: rotate(0deg);
+        box-sizing: border-box;
+        vertical-align: middle;
+        padding-right: 10px;
+        background: #fff;
+    }
 }
 .login-checkbox input[type=checkbox]+.checkbox-inner {
     display: inline-block;
-    width: .38rem;
-    height: .38rem;
-    border: .03rem solid #fff;
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    border: 1px solid #adadad;
     // border-radius: 50%;
     transform: rotate(0deg);
     box-sizing: border-box;
 }
-
-/* active style goes here */
+/* active */
 .login-checkbox input[type=checkbox]:checked+.checkbox-inner {
-    // background-color: red;
+    // border:3px solid #54acae;
 }
 .login-checkbox input[type=checkbox]:checked+.checkbox-inner:after {
     display: block;
     position: absolute;
-    top: .03rem;
-    right: .12rem;
+    top: 0px;
+    right: 8px;
     z-index: 999;
-    width: .1rem;
-    height: .22rem;
+    width: 8px;
+    height: 20px;
     border-style: solid;
-    border-width: 0 .03rem .03rem 0;
+    border-width: 0 3px 3px 0;
+    border-color: #54acae;
     content: " ";
     transform: rotate(45deg);
 }

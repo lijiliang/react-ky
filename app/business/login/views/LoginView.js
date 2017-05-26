@@ -31,7 +31,7 @@ class LoginView extends React.Component{
     }
     componentDidMount(){
         console.log('homeInfo: ', this.props.homeInfo);
-
+        console.log(this.state.isAccount)
         const kyaniSecurity = Base64.Base64.encode('kyani-shop:security');
         $.ajax({
             type: 'POST',
@@ -75,15 +75,16 @@ class LoginView extends React.Component{
         })
     }
     // 记住帐号
-    handleAccountChange(){
+    handleAccountChange(event){
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
         this.setState({
-          [name]: value
+            isAccount: value
         });
     }
     render(){
+        console.log(this.state.isAccount)
         return(
             <div className="ky-view-main">
                 <KYHeaderBar  />
