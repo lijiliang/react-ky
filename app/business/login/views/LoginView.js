@@ -11,6 +11,7 @@ import KYHeaderBar from 'kyBus/common/views/KYHeaderBar';
 import KYFooterBar from 'kyBus/common/views/KYFooterBar';
 
 import Button from 'kyBase/components/ux/Button';
+import Toast from 'kyBase/components/ux/Toast';
 
 import Base64 from 'js-base64';
 
@@ -82,9 +83,9 @@ class LoginView extends React.Component{
         this.setState({
             isAccount: value
         });
+        Toast.loading('这是一个 toast 提示!!!', 100);
     }
     render(){
-        console.log(this.state.isAccount)
         return(
             <div className="ky-view-main">
                 <KYHeaderBar  />

@@ -14,7 +14,7 @@
 
 /*  字体颜色  */
 @color-text-base: #333;         //默认颜色
-@color-text-base-inverse: #000; //深色背景下的文字
+@color-text-base-inverse: #fff; //深色背景下的文字
 @color-text-placeholder: #ccc;  //input输入框
 @color-text-disabled: #c8c8c8;     //失效,禁用文字
 @color-link: #002e5f;           //链接的颜色
@@ -69,6 +69,11 @@
 @icon-size-md: 48px;
 @icon-size-lg: 72px;
 
+// 高度
+@option-height: 84px;           // 组件的选项高度
+@line-height-base: 1;           // 单行行高
+@line-height-paragraph: 1.5;    // 多行行高
+
 /*   圆角   */
 @radius-xs: 4px;
 @radius-sm: 6px;
@@ -85,6 +90,15 @@
 @button-fill-tap: #23659c;   // 默认按下背影
 @primary-button-fill: #236194;     //主按钮背景色
 @primary-button-fill-tap: #4aaaac;  //主按钮-按下背景色
+
+// z-index
+@progress-zindex: 2000;
+@popover-zindex: 1999;
+@toast-zindex: 1999;
+@action-sheet-zindex: 1000; // 会放到 popup / modal 中
+@picker-zindex: 1000;
+@popup-zindex: 999;
+@modal-zindex: 999; // modal.alert 应该最大，其他应该较小
 
 /* 定义rem */
 @font-size-num:100;
