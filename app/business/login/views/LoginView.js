@@ -13,9 +13,8 @@ import KYFooterBar from 'kyBus/common/views/KYFooterBar';
 import Button from 'kyBase/components/ux/Button';
 import Toast from 'kyBase/components/ux/Toast';
 import Icon from 'kyBase/components/ux/Icon';
-import loading from 'kyBase/resources/svg/loading.svg';
-import chat from 'kyBase/resources/svg/error.svg';
-import logo from 'kyBase/resources/svg/logo.svg';
+// import loading from 'kyBase/resources/svg/loading.svg';
+// import logo from 'kyBase/resources/svg/logo.svg';
 
 import Base64 from 'js-base64';
 
@@ -87,19 +86,11 @@ class LoginView extends React.Component{
         this.setState({
             isAccount: value
         });
-        // Toast.info('这是一个 toast 提示!!!', 1);
-        // Toast.info('无 mask 的 toast !!!', 2, null, false);
-        // Toast.success('加载成功!!!', 3);
-        // Toast.fail('加载失败!!!', 4);
-        // Toast.offline('网络连接失败!!!', 5);
-        Toast.loading('加载中...', 6, () => {
-            console.log('加载完成!!!');
-        });
+        Toast.info('请输入用户帐户！', 1);
     }
     render(){
-        console.log(loading)
-        console.log(chat)
-        console.log(logo)
+        // console.log(loading)
+        // console.log(logo)
         return(
             <div className="ky-view-main">
                 <KYHeaderBar  />
@@ -140,11 +131,7 @@ class LoginView extends React.Component{
                                 <div className="login-btn">
                                     <Button className="ky-btn" title="登录" type="primary"/>
                                 </div>
-                                <Icon type="loading" size='lg' />
-
-                                <svg viewBox={loading.viewBox}>
-                <use xlinkHref={loading.symbol} />
-            </svg>
+                                {/* <Icon type="loading" size='lg' /> */}
 
                                 <div className="account-other">
                                     <span className="no-account-tit">没有帐号？</span>

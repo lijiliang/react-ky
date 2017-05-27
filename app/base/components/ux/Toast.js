@@ -1,6 +1,15 @@
 /**
  * @fileOverview Toast 轻提示
  * 种轻量级反馈/提示，可以用来显示不会打断用户操作的内容，适合用于页面转场、数据交互的等场景中。
+ * 使用
+    Toast.info('这是一个 toast 提示!!!', 1);
+    Toast.info('无 mask 的 toast !!!', 2, null, false);
+    Toast.success('加载成功!!!', 3);
+    Toast.fail('加载失败!!!', 4);
+    Toast.offline('网络连接失败!!!', 5);
+    Toast.loading('加载中...', 6, () => {
+        console.log('加载完成!!!');
+    });
  */
 import React from 'react';
 import Notification from 'rc-notification';

@@ -12,8 +12,8 @@ const commonPath = require('./commonPath');
 const app = express();
 
 // 设置代理
-const apiProxy = proxy('/api', {target: 'http://127.0.0.1:3008', changeOrigin: true});
-app.use('/api/*', apiProxy); //api子目录下的都是用代理
+//const apiProxy = proxy('/api', {target: 'http://127.0.0.1:3008', changeOrigin: true});
+//app.use('/api/*', apiProxy); //api子目录下的都是用代理
 
 const compiler = webpack(config);
 

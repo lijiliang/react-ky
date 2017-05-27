@@ -58,7 +58,8 @@ config.plugins.push(
     new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',   //指定公共bundle名字
         minChunks: Infinity, // 随着 入口chunk 越来越多，这个配置保证没其它的模块会打包进 公共chunk
-    }),
+    })
+    ,
     new OpenBrowserPlugin({
         url: 'http://localhost:9002'
     })
