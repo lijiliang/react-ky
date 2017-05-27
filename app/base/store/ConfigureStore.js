@@ -5,8 +5,11 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { logger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import Immutable from 'immutable';
+
 import rootReducer from '../reducers';   // rootReducer 为顶级的 Reducer
 
+// const initialState = Immutable.fromJS({});
 
 // 叠加中间件
 let store;

@@ -6,7 +6,8 @@ import { Link } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import * as loginAction from '../action/actionTypes';
+import {login} from '../action/DataAction';
 import KYHeaderBar from 'kyBus/common/views/KYHeaderBar';
 import KYFooterBar from 'kyBus/common/views/KYFooterBar';
 
@@ -34,49 +35,52 @@ class LoginView extends React.Component{
         };
     }
     componentDidMount(){
-        console.log('homeInfo: ', this.props.homeInfo);
-        console.log(this.state.isAccount)
-        const kyaniSecurity = Base64.Base64.encode('kyani-shop:security');
-        $.ajax({
-            type: 'POST',
-            url: 'http://10.206.41.67:8012/oauth/token',
-            data: {
-                grant_type : 'password',
-                username :'2771081C',
-                password : 'Ky5513687',
-                scope : 'read write'
-            },
-            headers: {
-                Authorization: 'Basic ' + kyaniSecurity,
-                Accept: 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }, function(res){
-            console.log(res)
-        })
+        console.log('1LoginModel: ', this.props.LoginModel);
 
-        const aa = get('http://api.didadi.fm/index.php?act=index&op=cartype&brand_id=34&tuan_id=492&client=h5&_=1495676461468');
+        this.props.LoginModel.set('account', 'asdfsdaf');
+        console.log(this.props.LoginModel.toObject())
+        const kyaniSecurity = Base64.Base64.encode('kyani-shop:security');
+        // $.ajax({
+        //     type: 'POST',
+        //     url: 'http://10.206.41.67:8012/oauth/token',
+        //     data: {
+        //         grant_type : 'password',
+        //         username :'2771081C',
+        //         password : 'Ky5513687',
+        //         scope : 'read write'
+        //     },
+        //     headers: {
+        //         Authorization: 'Basic ' + kyaniSecurity,
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/x-www-form-urlencoded'
+        //     }
+        // }, function(res){
+        //     console.log(res)
+        // })
+
+        console.log(this.props)
     }
     loginHandle(){
-        const kyaniSecurity = Base64.Base64.encode('kyani-shop' + ':' + 'security');
-        axios.defaults.headers.common['Authorization'] = 'Basic ' + kyaniSecurity;
-        // axios.defaults.headers.post['Accept'] = 'application/json';
-        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-        const response = post('http://10.206.41.67:8012/oauth/token', qs.stringify({
-            grant_type : 'password',
-            username :'2771081C',
-            password : 'Ky5513687',
-            scope : 'read write'
-        }));
-        response.then(function(res){
-            axios.get('http://10.206.41.67:8012/test/test',{
-                headers: {
-                    Authorization: "Bearer "+ res.data.access_token
-                }
-            }).then(function(obj){
-
-            })
-        })
+        this.props.dispatch(login("2771081C","Ky5513687"))
+        // const kyaniSecurity = Base64.Base64.encode('kyani-shop' + ':' + 'security');
+        // axios.defaults.headers.common['Authorization'] = 'Basic ' + kyaniSecurity;
+        // // axios.defaults.headers.post['Accept'] = 'application/json';
+        // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        // const response = post('http://10.206.41.67:8012/oauth/token', qs.stringify({
+        //     grant_type : 'password',
+        //     username :'2771081C',
+        //     password : 'Ky5513687',
+        //     scope : 'read write'
+        // }));
+        // response.then(function(res){
+        //     axios.get('http://10.206.41.67:8012/test/test',{
+        //         headers: {
+        //             Authorization: "Bearer "+ res.data.access_token
+        //         }
+        //     }).then(function(obj){
+        //
+        //     })
+        // })
     }
     // 记住帐号
     handleAccountChange(event){
@@ -151,16 +155,12 @@ class LoginView extends React.Component{
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
-        homeInfo: state.HomeModel
+        LoginModel: state.LoginModel,
+        HomeModel: state.HomeModel
     };
 }
 
-function mapDispatchToProps(dispatch){
-    return {
-    };
-}
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(LoginView);

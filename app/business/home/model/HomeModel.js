@@ -1,5 +1,5 @@
 import * as actionTypes from '../action/actionTypes';
-const initialState = {};
+const initialState = {ishome: false};
 
 export default function userinfo (state = initialState, action) {
     switch (action.type) {
