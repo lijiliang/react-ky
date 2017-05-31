@@ -30,7 +30,6 @@ class LoginView extends React.Component{
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-            isMore: false,
             isAccount: true,
         };
     }
@@ -90,11 +89,11 @@ class LoginView extends React.Component{
         this.setState({
             isAccount: value
         });
-        Toast.info('请输入用户帐户！', 1);
+        Toast.info('请输入用户帐户！', 100);
+        // Toast.offline('网络连接失败!', 100);
+        // Toast.loading('加载中...', 100);
     }
     render(){
-        // console.log(loading)
-        // console.log(logo)
         return(
             <div className="ky-view-main">
                 <KYHeaderBar  />

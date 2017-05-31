@@ -1,7 +1,7 @@
 import * as types from './actionTypes';
 import Base64 from 'js-base64';
 export function login(username,password){
-    return (dispatch,getState)=>{
+    return (dispatch,getState) => {
         const kyaniSecurity = Base64.Base64.encode('kyani-shop:security');
         $.ajax({
             type: 'POST',
@@ -18,7 +18,6 @@ export function login(username,password){
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             success: function(res){
-                console.log(res)
                 dispatch({
                     type : types.LOGIN,
                     user:{
@@ -26,11 +25,8 @@ export function login(username,password){
                         password:password,
                         token:res.access_token
                     }
-                })
+                });
             }
         });
-
-
-    }
-
+    };
 }

@@ -1,6 +1,18 @@
 /**
  * @fileOverview Toast 轻提示
  * 种轻量级反馈/提示，可以用来显示不会打断用户操作的内容，适合用于页面转场、数据交互的等场景中。
+ *
+ *
+    @param  {[React.Element or String]} content [提示内容]
+    @return {[number]}    duration   [自动关闭的延时，单位秒，默认值 3 秒]
+    @return {[Function]}  onClose    [关闭后回调]
+    @return {[Boolean]}   mask       [是否显示透明蒙层，防止触摸穿透，默认值 true]
+    Toast.success(content, duration, onClose, mask)
+    Toast.fail(content, duration, onClose, mask)
+    Toast.info(content, duration, onClose, mask)
+    Toast.loading(content, duration, onClose, mask)
+    Toast.offline(content, duration, onClose, mask)
+    Toast.hide()  // 全局配置和全局销毁方法
  * 使用
     Toast.info('这是一个 toast 提示!!!', 1);
     Toast.info('无 mask 的 toast !!!', 2, null, false);
@@ -14,9 +26,19 @@
 import React from 'react';
 import Notification from 'rc-notification';
 import './Toast.less';
+
+import Success from 'kyBase/resources/svg/success.svg';
+import Fail from 'kyBase/resources/svg/fail.svg';
+import Offline from 'kyBase/resources/svg/offline.svg';
+import Loading from 'kyBase/resources/svg/loading.svg';
 let messageInstance;
 const prefixCls = 'ky-toast';
 
+/**
+ * [getMessageInstance description]
+ * @param  {[type]} mask [description]
+ * @return {[type]}      [description]
+ */
 function getMessageInstance(mask) {
     if (messageInstance) {
         messageInstance.destroy();
@@ -32,12 +54,12 @@ function getMessageInstance(mask) {
 }
 
 function notice(content, type, duration = 3, onClose, mask = true) {
-    let iconType = ({
+    const iconType = ({
         info: '',
-        success: 'success',
-        fail: 'fail',
-        offline: 'offline',
-        loading: 'loading'
+        success: Success,
+        fail: Fail,
+        offline: Offline,
+        loading: Loading
     })[type];
 
     let instance = getMessageInstance(mask);
@@ -45,13 +67,13 @@ function notice(content, type, duration = 3, onClose, mask = true) {
         duration,
         style: {},
         content: !!iconType ? (
-            <div className={`${prefixCls}-text ${prefixCls}-text-icon`} role="alert" aria-live="assertive">
+            <div className={`${prefixCls}-text ${prefixCls}-text-icon`} role="alert">
                 {/* <Icon type={iconType} size="lg" /> */}
-                {iconType}
+                <img src={iconType} className={`${prefixCls}-img ${prefixCls}-${type}`}/>
                 <div className={`${prefixCls}-text-info`}>{content}</div>
             </div>
         ) : (
-            <div className={`${prefixCls}-text`} role="alert" aria-live="assertive">
+            <div className={`${prefixCls}-text`} role="alert">
                 <div>{content}</div>
             </div>
         ),
@@ -67,8 +89,6 @@ function notice(content, type, duration = 3, onClose, mask = true) {
 }
 
 export default {
-    SHORT: 3,
-    LONG: 8,
     show(content, duration, mask) {
         return notice(content, 'info', duration, () => {}, mask);
     },

@@ -38,7 +38,7 @@
         display: block;
 
         .@{toastPrefixCls}-text {
-            min-width: 120px;
+            min-width: 140px;
             border-radius: @radius-sm;
             color: @color-text-base-inverse;
             background-color: @toast-fill;
@@ -54,5 +54,20 @@
                 }
             }
         }
+    }
+
+    &-img{
+        width: 80px;
+        height: 80px;
+    }
+
+    &-loading {
+      animation: cirle-anim 1s linear infinite;
+    }
+
+    @keyframes cirle-anim {
+      100% {
+        transform: rotate(360deg);
+      }
     }
 }
