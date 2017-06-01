@@ -1,6 +1,8 @@
 import * as types from './actionTypes';
 import Base64 from 'js-base64';
-export function login(username,password){
+import Toast from 'kyBase/components/ux/Toast';
+
+export function login(username,password,isAccount){
     return (dispatch,getState) => {
         const kyaniSecurity = Base64.Base64.encode('kyani-shop:security');
         $.ajax({
@@ -23,9 +25,27 @@ export function login(username,password){
                     user:{
                         username:username,
                         password:password,
+                        isLogined: true,        // 是否登录
+                        isAccount: isAccount,   // 是否记住帐号
                         token:res.access_token
                     }
                 });
+                $.ajax({
+                    type: 'get',
+                    url: 'http://10.206.41.67:8012/user',
+                    headers: {
+                        Authorization: "Bearer "+ res.access_token
+                    },
+                    success: function(re){
+                        console.log(re)
+                    }
+                });
+            },
+            error: function(err){
+                const response = JSON.parse(err.response);
+                if(response.message === 'Bad credentials'){
+                    Toast.info('用户名或密码错误！', 2);
+                }
             }
         });
     };

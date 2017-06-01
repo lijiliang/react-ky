@@ -13,12 +13,10 @@ import KYFooterBar from 'kyBus/common/views/KYFooterBar';
 
 import Button from 'kyBase/components/ux/Button';
 import Toast from 'kyBase/components/ux/Toast';
-import Icon from 'kyBase/components/ux/Icon';
-// import loading from 'kyBase/resources/svg/loading.svg';
-// import logo from 'kyBase/resources/svg/logo.svg';
+import NavBar from 'kyBase/components/ux/NavBar';
+import 'kyBase/common/sValid';
 
 import Base64 from 'js-base64';
-
 import axios from 'axios';
 import qs from 'qs';
 import { get, post } from 'kyBase/common/fetchData';
@@ -30,68 +28,89 @@ class LoginView extends React.Component{
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-            isAccount: true,
+            username: '',       //用户名
+            password: '',       //密码
+            isAccount: true,    // 是否记住帐户
         };
     }
     componentDidMount(){
-        console.log('1LoginModel: ', this.props.LoginModel);
-
-        this.props.LoginModel.set('account', 'asdfsdaf');
-        console.log(this.props.LoginModel.toObject())
-        const kyaniSecurity = Base64.Base64.encode('kyani-shop:security');
-        // $.ajax({
-        //     type: 'POST',
-        //     url: 'http://10.206.41.67:8012/oauth/token',
-        //     data: {
-        //         grant_type : 'password',
-        //         username :'2771081C',
-        //         password : 'Ky5513687',
-        //         scope : 'read write'
-        //     },
-        //     headers: {
-        //         Authorization: 'Basic ' + kyaniSecurity,
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/x-www-form-urlencoded'
-        //     }
-        // }, function(res){
-        //     console.log(res)
-        // })
-
-        console.log(this.props)
+        this.sValidEvent();
     }
+    // 返回上一页
+    gohistoryHandle(){
+        window.history.go(-1);
+    }
+
     loginHandle(){
-        this.props.dispatch(login("2771081C","Ky5513687"))
-        // const kyaniSecurity = Base64.Base64.encode('kyani-shop' + ':' + 'security');
-        // axios.defaults.headers.common['Authorization'] = 'Basic ' + kyaniSecurity;
-        // // axios.defaults.headers.post['Accept'] = 'application/json';
-        // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-        // const response = post('http://10.206.41.67:8012/oauth/token', qs.stringify({
-        //     grant_type : 'password',
-        //     username :'2771081C',
-        //     password : 'Ky5513687',
-        //     scope : 'read write'
-        // }));
-        // response.then(function(res){
-        //     axios.get('http://10.206.41.67:8012/test/test',{
-        //         headers: {
-        //             Authorization: "Bearer "+ res.data.access_token
-        //         }
-        //     }).then(function(obj){
-        //
-        //     })
-        // })
+        this.props.dispatch(login("2771081C","Ky5513687"));
+    }
+    // 输入用户名
+    changeUsername(){
+        const username = $.trim(this.refs.username.value);
+        this.setState({username:username});
+    }
+    // 输入密码
+    changePassword(){
+        const password = $.trim(this.refs.password.value);
+        this.setState({password:password});
     }
     // 记住帐号
     handleAccountChange(event){
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
+        // const name = target.name;
         this.setState({
-            isAccount: value
+            isAccount: value,
         });
-        Toast.info('请输入用户帐户！', 100);
-        // Toast.offline('网络连接失败!', 100);
-        // Toast.loading('加载中...', 100);
+    }
+    // 登录
+    loginClickHandle(){
+        /* 先验证再执行登录逻辑 */
+        if($.sValid()){
+            this.props.dispatch(login(this.state.username, this.state.password, this.state.isAccount));
+        }
+        // $.ajax({
+        //     type: 'POST',
+        //     url: 'http://10.206.41.67:8012/user/logout',
+        //     data: {
+        //         username: '2771081C'
+        //     },
+        //     headers: {
+        //         Authorization: "Bearer "+ 'd7e4b74e-7d2d-4b2a-a4c0-34f1b4cd04ed'
+        //     },
+        //     success: function(res){
+        //         console.log(res)
+        //     }
+        // });
+    }
+
+    // 验证规则
+    sValidEvent(){
+        $.sValid.init({
+            rules: {
+                username: {
+                    required: true,
+                },
+                password:  'required'
+            },
+            messages: {
+                username: {
+                    required: '请输入会员帐号！'
+                },
+                password: '请输入密码！'
+            },
+            callback: function(eId, eMsg, eRules){
+                if(eId.length > 0){
+                    let i = 0;
+                    $.map(eMsg, function (idx, item) {
+                        if (i === 0) {
+                            Toast.info(idx, 1);
+                        }
+                        i++;
+                    });
+                }
+            }
+        });
     }
     render(){
         return(
@@ -100,22 +119,37 @@ class LoginView extends React.Component{
                 <div className="ky-view-body">
                     <div className="ky-scrollable">
                         <div className="ky-login">
-                            <h2 onClick={this.loginHandle.bind(this)}>登录我的帐户</h2>
-                            <div className="ky-list-body">
+                            <NavBar leftContent=""
+                                mode="tran"
+                                onLeftClick={this.gohistoryHandle.bind(this)}
+                                >登录我的帐户</NavBar>
+                            <div className="ky-login-body">
                                 <div className="ky-input-item">
                                     <div className="ky-input-label ky-center">
-                                        <i className="icon icon-zaixiankefu"></i>
+                                        <i className="icon icon-memberNo"></i>
                                     </div>
                                     <div className="ky-input-control">
-                                        <input type="text" placeholder="用户帐户"/>
+                                        <input
+                                            id="username"
+                                            type="text"
+                                            placeholder="请输入您的中国会员帐号"
+                                            ref='username'
+                                            onChange={this.changeUsername.bind(this)}
+                                        />
                                     </div>
                                 </div>
                                 <div className="ky-input-item">
                                     <div className="ky-input-label ky-center">
-                                        <i className="icon icon-zaixiankefu"></i>
+                                        <i className="icon icon-password"></i>
                                     </div>
                                     <div className="ky-input-control">
-                                        <input type="password" placeholder="密码"/>
+                                        <input
+                                            id="password"
+                                            type="password"
+                                            placeholder="密码"
+                                            ref="password"
+                                            onChange={this.changePassword.bind(this)}
+                                        />
                                     </div>
                                 </div>
                                 <div className="login-other-info">
@@ -132,9 +166,8 @@ class LoginView extends React.Component{
                                     </label>
                                 </div>
                                 <div className="login-btn">
-                                    <Button className="ky-btn" title="登录" type="primary"/>
+                                    <Button className="ky-btn" title="登录" type="primary" onClick={this.loginClickHandle.bind(this)}/>
                                 </div>
-                                {/* <Icon type="loading" size='lg' /> */}
 
                                 <div className="account-other">
                                     <span className="no-account-tit">没有帐号？</span>
@@ -154,8 +187,7 @@ class LoginView extends React.Component{
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
-        LoginModel: state.LoginModel,
-        HomeModel: state.HomeModel
+        LoginModel: state.LoginModel
     };
 }
 

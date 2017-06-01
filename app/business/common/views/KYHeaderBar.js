@@ -7,6 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import NavBar from 'kyBase/components/ux/NavBar';
 import KYSideBar from './KYSideBar';
 import '../resources/KYHeaderBar.less';
 
@@ -38,12 +39,12 @@ class KYHeaderBar extends React.Component{
     render(){
         return(
             <header className="ky-view-header">
-                <div className="ky-navbar">
+                {/* <div className="ky-navbar">
                     <div className="ky-navbar-left">
-                        <i className="icon icon-icon" onClick={this.menuClickHandle.bind(this)}></i>
+                        <i className="icon icon-nagMenu" onClick={this.menuClickHandle.bind(this)}></i>
                     </div>
                     <div className="ky-navbar-center">
-                        <img src="https://kyaniyoupaiyun.b0.upaiyun.com/1479211326563.jpg" alt=""/>
+                        <Link to="/"><i className="icon icon-Kyani"></i></Link>
                     </div>
                     <div className="ky-navbar-right">
                         <div className="login-info">
@@ -51,7 +52,18 @@ class KYHeaderBar extends React.Component{
                             <a href="">注册</a>
                         </div>
                     </div>
-                </div>
+                </div> */}
+                <NavBar leftContent=""
+                    iconName="nagMenu"
+                    mode="top"
+                    onLeftClick={this.menuClickHandle.bind(this)}
+                    rightContent={
+                        <div className="login-info">
+                            <a href="">登录</a><span>/</span>
+                            <a href="">注册</a>
+                        </div>
+                    }
+                    ><Link to="/"><i className="icon icon-Kyani"></i></Link></NavBar>
                 <KYSideBar />
             </header>
         );

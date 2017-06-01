@@ -32,8 +32,8 @@ class KYSideBar extends React.Component{
                 <div className="ky-sideBar-wrap">
                     <div className="sideBar-content">
                         <div className="side-header">
-                            <img src="https://kyaniyoupaiyun.b0.upaiyun.com/1479211326563.jpg" alt=""/>
-                            <i className="icon icon icon-zaixiankefu" onClick={this.closeSideHandle.bind(this)}></i>
+                            <i className="icon icon-Kyani"></i>
+                            <i className="icon icon-close" onClick={this.closeSideHandle.bind(this)}></i>
                         </div>
                         <div className="side-main" ref="sideMain">
                             <KYMenu />

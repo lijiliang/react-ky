@@ -19,7 +19,8 @@
     }
 }
 
-.ky-list-body{
+.ky-login-body{
+    margin-top: 80px;
     padding: 0 10%;
     .ky-input-item{
         width: 100%;
@@ -49,7 +50,7 @@
         .ky-input-control{
             flex: 1;
             input{
-                font-size: 28px;
+                font-size: 30px;
                 appearance: none;
                 width: 100%;
                 padding: 0;
@@ -63,9 +64,12 @@
     }
     .login-other-info{
         margin-bottom: @v-spacing-lg;
-        text-align: right;
+        // display: flex;
         .forget-password{
             color: #5fbcb4;
+        }
+        .login-checkbox{
+            float: right;
         }
     }
     // 没有帐号
@@ -74,9 +78,10 @@
         .no-account-tit{
             width: 100%;
             display: inline-block;
-            padding: 88px 0 58px 0;
+            padding: 40px 0 58px 0;
             text-align: center;
-            color: #fff;
+            font-size: 36px;
+            color: #5b8ab5;
         }
     }
 }

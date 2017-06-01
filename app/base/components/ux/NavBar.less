@@ -1,0 +1,102 @@
+/**
+ * @fileOverview: NavBar 导航栏
+ * @version: 1.0.0(2017-6-1)
+ * @author: Benson
+ * @updatatime:
+ */
+ // 引入变量
+ @import '~varLess';
+@navbar-height: 100px;
+@navbarPrefixCls: ky-navbar;
+@link-button-font-size: 32px;
+
+.@{navbarPrefixCls} {
+  display: flex;
+  align-items: center;
+  height: @navbar-height;
+  background-color: @brand-primary;
+  color: @fill-base;
+
+  &-left,
+  &-title,
+  &-right {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &-left {
+    padding-left: @h-spacing-md;
+    font-size: @link-button-font-size;
+
+    &-icon {
+      margin-right: @h-spacing-sm;
+      display: inherit;
+      .icon{
+          font-size: @icon-size-lg;
+      }
+    }
+  }
+
+  &-title {
+    justify-content: center;
+    font-size: @font-size-display-sm;
+    white-space: nowrap;
+  }
+
+  &-right {
+    justify-content: flex-end;
+    font-size: @link-button-font-size;
+    margin-right: @h-spacing-lg;
+
+    .anticon {
+      margin-right: @h-spacing-sm;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &-content {
+      margin-right: @h-spacing-sm;
+    }
+  }
+
+  // 顶部导航栏
+  &-top {
+    background-color: @fill-base;
+    color: @color-text-base;
+    .@{navbarPrefixCls}-left{
+        color: @color-text-base;
+    }
+    .@{navbarPrefixCls}-title{
+        .icon{
+            font-size: 78px;
+            color: @brand-primary;
+        }
+    }
+  }
+
+  &-light {
+    background-color: @fill-base;
+    color: @brand-primary;
+  }
+
+  // 透明背景
+  &-tran{
+    background: transparent;
+  }
+  // 成功
+  &-success{
+      background: #5ebcb5;
+  }
+  // 失败
+  &-error{
+      background: #787878;
+  }
+
+  &-light &-title {
+    color: @color-text-base;
+  }
+}
