@@ -1,0 +1,51 @@
+/**
+ * @fileOverview: 注册消费者帐号
+ * @version: 1.0.0(2017-6-2)
+ * @author: Benson
+ * @updatatime:
+ */
+
+// 引入变量
+@import '~varLess';
+
+@regConPrefixCls: m-regConsumer;
+
+.@{regConPrefixCls}{
+    background: @brand-gray-p;
+    height: 100%;
+    .regcon-info{
+        background: @brand-gray-p;
+        padding: @h-spacing-sm;
+        text-align: center;
+        p{
+            line-height: 1.6
+            ;
+            font-size: @font-size-subhead;
+        }
+    }
+    .m-reg-body{
+        background: @fill-base;
+        margin-bottom: @v-spacing-sm;
+        border-top: @border-width-lg solid @brand-blue;
+        .reg-view{
+            padding: @v-spacing-sm @h-spacing-lg @v-spacing-xs @h-spacing-lg;
+        }
+        .reg-tit{
+            color: @brand-primary;
+            h2{
+                font-size: @font-size-display-md;
+            }
+            p{
+                font-size: @font-size-caption;
+            }
+        }
+    }
+}
+
+.regcon-btn{
+    background: @brand-green-deep;
+    height: 120px;
+    line-height: 120px;
+    font-size: 48px;
+    color: #fff;
+}

@@ -84,6 +84,7 @@ npm run build
 * 引入 [路径别名] 简化import路径,实现优雅的加载模式
 * [Redux Logger][redux-logger] 打印动作及前后状态变化
 * 利用[postcss-loader]为各个浏览器自动加前缀
+* px自动转rem
 * less
 * webpack2
 * ES6/7
@@ -107,7 +108,7 @@ npm run build
 > 但有了路径别名后，只需要 `import userService from 'SERVICE/userService'`  
 
 * 开发环境**全局变量**，由 `webpack.DefinePlugin` 提供（详见 `build/webpack.base.conf.js`）
-> 默认有 `__DEV__` / `__PROD__` 二个全局变量  
+> 默认有 `__DEV__` / `__PROD__` / `__environment__`三个全局变量  
 ***
 
 ***

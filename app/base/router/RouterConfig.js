@@ -9,7 +9,8 @@ import RouterFilter from './RouterFilter';
 
 import Launch from './Launch';
 import HomeView from 'kyBus/home/views/IndexView';
-import LoginView from 'kyBus/login/views/LoginView';
+import LoginView from 'kyBus/login/views/LoginView';  // 登录
+import RegConsumerView from 'kyBus/user/views/RegConsumerView';  // 消费者注册
 
 /*
  * 路由
@@ -35,6 +36,7 @@ class RouterMap extends React.Component {
                 >
                     <IndexRoute component={HomeView}/>
                     <Route path='login' component={LoginView}/>
+                    <Route path='regconsumer' component={RegConsumerView}/>
                     {/* <Route path='*' component={NotFound}/> */}
                 </Route>
             </Router>
