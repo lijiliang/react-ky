@@ -62,6 +62,10 @@ config.plugins.push(
     ,
     new OpenBrowserPlugin({
         url: 'http://localhost:9002'
+    }),
+    new webpack.DefinePlugin({
+        // 开发环境变量
+        __environment__ : '"local"'
     })
     /*  如果react项目没有开启 module.hot 热加载的话，可以打开这里直接用浏览器代理直接刷新页面实现热加载
     new BrowserSyncPlugin({

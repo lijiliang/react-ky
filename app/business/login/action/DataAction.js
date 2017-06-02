@@ -1,13 +1,14 @@
 import * as types from './actionTypes';
 import Base64 from 'js-base64';
 import Toast from 'kyBase/components/ux/Toast';
+import Urls from 'Urls';
 
 export function login(username,password,isAccount){
     return (dispatch,getState) => {
         const kyaniSecurity = Base64.Base64.encode('kyani-shop:security');
         $.ajax({
             type: 'POST',
-            url: 'http://10.206.41.67:8012/oauth/token',
+            url: Urls.Login,
             data: {
                 grant_type : 'password',
                 username :username,

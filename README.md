@@ -5,7 +5,7 @@ React开发SPA脚手架。 Webapck / ES6 + Babel / Redux / React Router
 ### 更新
 * 2017/4/24 &nbsp; 引入 `cross-env` 解决跨平台问题
 * 2017/4/26 &nbsp; 增加对`favicon`文件的支持
-* 2017/4/27 &nbsp; 增加四个环境变量：`__DEV__`、`__PROD__`
+* 2017/4/27 &nbsp; 增加三个环境变量：`__DEV__`、`__PROD__`、`__environment__`
 * 2017/5/10 &nbsp; 引入`react-addons-pure-render-mixin`提高react性能
 
 ## 快速开始

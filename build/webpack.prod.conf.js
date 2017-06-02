@@ -92,6 +92,10 @@ config.plugins.push(
     new HtmlWebpackPlugin({
         filename: '../index.html',
         template: commonPath.indexHTML
+    }),
+    new webpack.DefinePlugin({
+        // 开发环境变量
+        __environment__ : '"prod"'
     })
     // 图片压缩
     /*

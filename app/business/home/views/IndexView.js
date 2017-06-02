@@ -7,6 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import Urls from 'Urls';
 // 幻灯片组件
 import SlideSwipe from 'kyBase/components/ux/SlideSwipe';
 import '../resources/IndexView.less';
