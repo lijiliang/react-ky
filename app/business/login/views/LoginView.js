@@ -8,8 +8,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
 import {login} from '../action/DataAction';
-import KYHeaderBar from 'kyBus/common/views/KYHeaderBar';
-import KYFooterBar from 'kyBus/common/views/KYFooterBar';
 
 import Button from 'kyBase/components/ux/Button';
 import Toast from 'kyBase/components/ux/Toast';
@@ -34,6 +32,7 @@ class LoginView extends React.Component{
         };
     }
     componentDidMount(){
+        // this.send("topBar->addItem({text:'aaa',handler:function(){alert()}},icon:"class")");
         this.sValidEvent();
     }
     // 返回上一页
@@ -114,72 +113,65 @@ class LoginView extends React.Component{
     }
     render(){
         return(
-            <div className="ky-view-main">
-                <KYHeaderBar  />
-                <div className="ky-view-body">
-                    <div className="ky-scrollable">
-                        <div className="ky-login">
-                            <NavBar leftContent=""
-                                mode="tran"
-                                onLeftClick={this.gohistoryHandle.bind(this)}
-                                >登录我的帐户</NavBar>
-                            <div className="ky-login-body">
-                                <div className="ky-input-item">
-                                    <div className="ky-input-label ky-center">
-                                        <i className="icon icon-memberNo"></i>
-                                    </div>
-                                    <div className="ky-input-control">
-                                        <input
-                                            id="username"
-                                            type="text"
-                                            placeholder="请输入您的中国会员帐号"
-                                            ref='username'
-                                            onChange={this.changeUsername.bind(this)}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="ky-input-item">
-                                    <div className="ky-input-label ky-center">
-                                        <i className="icon icon-password"></i>
-                                    </div>
-                                    <div className="ky-input-control">
-                                        <input
-                                            id="password"
-                                            type="password"
-                                            placeholder="密码"
-                                            ref="password"
-                                            onChange={this.changePassword.bind(this)}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="login-other-info">
-                                    <a href="" className="forget-password">忘记密码？</a>
-                                    <label className="login-checkbox">
-                                        <input
-                                            className="input-checkbox"
-                                            name="isAccount"
-                                            type="checkbox"
-                                            checked={this.state.isAccount}
-                                            onChange={this.handleAccountChange.bind(this)} />
-                                            <span className="checkbox-inner"></span>
-                                        记住帐户
-                                    </label>
-                                </div>
-                                <div className="login-btn">
-                                    <Button className="ky-btn" title="登录" type="primary" onClick={this.loginClickHandle.bind(this)}/>
-                                </div>
-
-                                <div className="account-other">
-                                    <span className="no-account-tit">没有帐号？</span>
-                                    <Button className="ky-btn" title="会员注册"/>
-                                    <Button className="ky-btn" title="消费者注册" onClick={e => console.log(e)}/>
-                                </div>
+            <div className="ky-scrollable">
+                <div className="ky-login">
+                    <NavBar leftContent=""
+                        mode="tran"
+                        onLeftClick={this.gohistoryHandle.bind(this)}
+                        >登录我的帐户</NavBar>
+                    <div className="ky-login-body">
+                        <div className="ky-input-item">
+                            <div className="ky-input-label ky-center">
+                                <i className="icon icon-memberNo"></i>
                             </div>
+                            <div className="ky-input-control">
+                                <input
+                                    id="username"
+                                    type="text"
+                                    placeholder="请输入您的中国会员帐号"
+                                    ref='username'
+                                    onChange={this.changeUsername.bind(this)}
+                                />
+                            </div>
+                        </div>
+                        <div className="ky-input-item">
+                            <div className="ky-input-label ky-center">
+                                <i className="icon icon-password"></i>
+                            </div>
+                            <div className="ky-input-control">
+                                <input
+                                    id="password"
+                                    type="password"
+                                    placeholder="密码"
+                                    ref="password"
+                                    onChange={this.changePassword.bind(this)}
+                                />
+                            </div>
+                        </div>
+                        <div className="login-other-info">
+                            <a href="" className="forget-password">忘记密码？</a>
+                            <label className="login-checkbox">
+                                <input
+                                    className="input-checkbox"
+                                    name="isAccount"
+                                    type="checkbox"
+                                    checked={this.state.isAccount}
+                                    onChange={this.handleAccountChange.bind(this)} />
+                                    <span className="checkbox-inner"></span>
+                                记住帐户
+                            </label>
+                        </div>
+                        <div className="login-btn">
+                            <Button className="ky-btn" title="登录" type="primary" onClick={this.loginClickHandle.bind(this)}/>
+                        </div>
+                        <div className="account-other">
+                            <span className="no-account-tit">没有帐号？</span>
+                            <Button className="ky-btn" title="会员注册"/>
+                            <Button className="ky-btn" title="消费者注册" onClick={e => console.log(e)}/>
                         </div>
                     </div>
                 </div>
-                <KYFooterBar />
-             </div>
+            </div>
         );
     }
 }

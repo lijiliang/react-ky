@@ -1,5 +1,6 @@
 /**
  * @fileOverview 公共底部 view
+ * /order/*
  */
 import React from 'react';
 import { Link } from 'react-router';
@@ -12,13 +13,17 @@ import '../resources/KYFooterBar.less';
 class KYFooterBar extends React.Component{
     constructor(props, context){
         super(props, context);
+        this.state = {
+            isFooter: true
+        };
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
     componentDidMount(){
+        window.KYFooterBar=this;
     }
     render(){
         return(
-            <footer className="ky-view-footer flex-column" id="kyFooter">
+            <footer className="ky-view-footer flex-column" id="kyFooter" ref="kyFooter">
                 <div className="footer-bar flex-row">
                     <div className="footer-bar-list ky-center-v">
                         <div className="bar-item">

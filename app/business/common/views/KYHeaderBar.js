@@ -53,13 +53,13 @@ class KYHeaderBar extends React.Component{
                         </div>
                     </div>
                 </div> */}
-                <NavBar leftContent=""
+                <NavBar
                     iconName="nagMenu"
                     mode="top"
                     onLeftClick={this.menuClickHandle.bind(this)}
                     rightContent={
                         <div className="login-info">
-                            <a href="">登录</a><span>/</span>
+                            <Link to='/login'>登录</Link><span>/</span>
                             <a href="">注册</a>
                         </div>
                     }

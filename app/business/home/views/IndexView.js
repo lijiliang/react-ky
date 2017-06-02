@@ -7,8 +7,6 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import KYHeaderBar from 'kyBus/common/views/KYHeaderBar';
-import KYFooterBar from 'kyBus/common/views/KYFooterBar';
 // 幻灯片组件
 import SlideSwipe from 'kyBase/components/ux/SlideSwipe';
 import '../resources/IndexView.less';
@@ -45,7 +43,7 @@ class IndexView extends React.Component{
         };
     }
     componentDidMount(){
-        console.log('homeInfo: ', this.props.homeInfo);
+        //console.log('homeInfo: ', this.props.homeInfo);
         /*
         async function axiosGet(){
             try{
@@ -59,39 +57,33 @@ class IndexView extends React.Component{
         axiosGet();
         */
 
-        const response = get('/api/2', {
-            a:1,
-            b:2
-        });
-        console.log(response)
-        response.then((res) => {
-            console.log(res);
-        }).catch((err) => {
-            console.log(err);
-        });
+        // const response = get('/api/2', {
+        //     a:1,
+        //     b:2
+        // });
+        // console.log(response)
+        // response.then((res) => {
+        //     console.log(res);
+        // }).catch((err) => {
+        //     console.log(err);
+        // });
     }
     render(){
         return(
-            <div className="ky-view-main">
-                <KYHeaderBar  />
-                <div className="ky-view-body">
-                    <div className="ky-scrollable">
-                        <SlideSwipe List={slideList}/>
-                        123456<br/>22222222<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
-                        body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
-                        body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
-                        body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
-                        body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
-                        body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
-                        body<br/>
-                        body<br/>
-                        09876<br/>
-                        sdfghjmnbvcxz<br/>
+                <div className="ky-scrollable">
+                    <SlideSwipe List={slideList}/>
+                    123456<br/>22222222<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
+                    body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
+                    body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
+                    body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
+                    body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
+                    body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>body<br/>
+                    body<br/>
+                    body<br/>
+                    09876<br/>
+                    sdfghjmnbvcxz<br/>
 
-                    </div>
                 </div>
-                <KYFooterBar />
-             </div>
         );
     }
 }
