@@ -6,10 +6,12 @@
  import PureRenderMixin from 'react-addons-pure-render-mixin';
  import { bindActionCreators } from 'redux';
  import { connect } from 'react-redux';
+ import { createForm } from 'rc-form';
 
  import Button from 'kyBase/components/ux/Button';
  import Toast from 'kyBase/components/ux/Toast';
  import NavBar from 'kyBase/components/ux/NavBar';
+ import InputItem from 'kyBase/components/ux/InputItem';
 
  import '../resources/RegConsumerView.less';
 
@@ -27,6 +29,7 @@
          window.history.go(-1);
      }
      render(){
+         const { getFieldProps } = this.props.form;
          return(
              <div className="ky-scrollable">
                  <div className="m-regConsumer">
@@ -45,6 +48,31 @@
                             </div>
                             <div className="ref-form">
                                 sdfsadsadsad
+                                <InputItem
+                                    placeholder="提示文字"
+                                >标题一</InputItem>
+                                <InputItem
+                                    {...getFieldProps('inputclear')}
+                                    placeholder="推荐人会员号"
+                                    clear
+                                    editable
+                                >推荐人会员号</InputItem>
+                                <InputItem
+                                    placeholder="推荐人会员号"
+                                    clear
+                                    disabled
+                                >推荐人会员号</InputItem>
+                                <InputItem
+                                    type="password"
+                                    placeholder="请输入密码"
+                                    clear
+                                    extra="¥"
+                                >密码</InputItem>
+                                <InputItem
+                                    type="phone"
+                                    placeholder="手机号码"
+                                    clear
+                                >手机号码</InputItem>
                             </div>
                         </div>
                     </div>
@@ -65,5 +93,5 @@
         )
      }
  }
-
- export default RegConsumerView;
+ const RegConsumerViewWrapper = createForm()(RegConsumerView);
+ export default RegConsumerViewWrapper;

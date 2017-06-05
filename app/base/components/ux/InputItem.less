@@ -1,0 +1,171 @@
+/**
+ * @fileOverview: InputItem 文本输入
+ * @version: 1.0.0(2017-6-5)
+ * @author: Benson
+ * @updatatime:
+ */
+ // 引入变量
+ @import '~varLess';
+
+@listPrefixCls: ky-list;
+@inputPrefixCls: ky-input;
+@list-item-height: 70px;
+
+// input
+@input-label-width: 34px; // InputItem、TextareaItem 文字长度基础值
+@input-font-size: 34px;
+@input-color-icon: #ccc;  // input clear icon 的背景色
+@input-color-icon-tap: @brand-primary;
+
+.@{listPrefixCls}-item{
+    &.@{inputPrefixCls}-item{
+        display: flex;
+        align-items: center;
+        height: @list-item-height;
+        padding-left: @h-spacing-lg;
+        padding-right: @h-spacing-lg;
+        border-bottom:2px solid @border-color-base;
+    }
+
+    // input label左边宽度
+    .@{inputPrefixCls}-label {
+        color: @color-text-base;
+        font-size: @font-size-heading;
+        margin-left: 0;
+        margin-right: @h-spacing-sm;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        padding: 4px 0;
+
+        &.@{inputPrefixCls}-label-2 {
+            width: 2 * @input-label-width;
+        }
+
+        &.@{inputPrefixCls}-label-3 {
+          width: 3 * @input-label-width;
+        }
+
+        &.@{inputPrefixCls}-label-4 {
+          width: 4 * @input-label-width;
+        }
+
+        &.@{inputPrefixCls}-label-5 {
+          width: 5 * @input-label-width;
+        }
+
+        &.@{inputPrefixCls}-label-6 {
+          width: 6 * @input-label-width;
+        }
+
+        &.@{inputPrefixCls}-label-7 {
+          width: 7 * @input-label-width;
+        }
+    }
+
+    .@{inputPrefixCls}-control {
+        font-size: @input-font-size;
+        flex: 1;
+
+        input{
+            color: @color-text-base;
+            appearance: none;
+            width: 100%;
+            padding: 4px 0;
+            border: 0;
+            background-color: transparent;
+            line-height: @line-height-base;
+            box-sizing: border-box;
+            // placeholder 文字
+            &::-webkit-input-placeholder {
+                color: @color-text-placeholder;
+                line-height: 1.2;
+            }
+            // 禁用
+            &:disabled {
+                color: @color-text-disabled;
+                background-color: #fff;
+            }
+        }
+    }
+
+    // 消除输入的内容
+    .@{inputPrefixCls}-clear {
+        display: none;
+        width: @icon-size-sm;
+        height: @icon-size-sm;
+        border-radius: @radius-circle;
+        visibility: hidden;
+        font-style: normal;
+        color: @fill-base;
+        background-color: @input-color-icon;
+        background-repeat: no-repeat;
+        background-size: @icon-size-sm auto;
+        background-position: 4px 4px;
+        .encoded-svg-background('input_item_delete');
+
+        &.active {
+            background-color: @input-color-icon-tap;
+        }
+    }
+
+    &.@{inputPrefixCls}-focus {
+        .@{inputPrefixCls}-clear {
+            display: block;
+        }
+    }
+
+    .@{inputPrefixCls}-extra {
+        flex: initial;
+        min-width: 0;
+        max-height: @icon-size-sm;
+        overflow: hidden;
+        padding-right: 0;
+        line-height: @line-height-base;
+        color: @color-text-base;
+        font-size: @font-size-subhead;
+        margin-left: @h-spacing-sm;
+    }
+
+    // 错误提示
+    &.@{inputPrefixCls}-error {
+        .@{inputPrefixCls}-control {
+            input {
+                color: #f50;
+            }
+        }
+
+        .@{inputPrefixCls}-error-extra {
+            height: @icon-size-sm;
+            width: @icon-size-sm;
+            margin-left: @v-spacing-sm;
+            .encoded-svg-background('error');
+
+            background-size: @icon-size-sm auto;
+        }
+    }
+
+    // 禁用
+    &.@{inputPrefixCls}-disabled {
+        .@{inputPrefixCls}-label {
+            color: @color-text-disabled;
+        }
+    }
+}
+
+.@{listPrefixCls}{
+    &-body {
+        .@{listPrefixCls}-item {
+            &:last-child {
+                border-bottom: 0;
+                  &:after {
+                    display: none;
+                  }
+            }
+        }
+    }
+}
+
+.am-list-item.am-input-focus .am-input-clear {
+    display: block
+}
