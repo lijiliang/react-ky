@@ -29,7 +29,8 @@
              confirmPwd: '',   //确认密码
              referenceId: '',  //推荐人编号
              isHasReference: false,   //是否有推荐人编号
-             confirmPwdDirty: false,
+             confirmEmailDirty: false,//两次邮箱是否一致
+             confirmPwdDirty: false,  //两次密码是否一致
          };
      }
      componentDidMount(){
@@ -40,7 +41,30 @@
          window.history.go(-1);
      }
 
-    handleConfirmBlur = (value) => {
+    handleEmailConfirmBlur = (value) => {
+        this.setState({ confirmEmailDirty: this.state.confirmEmailDirty || !!value });
+    }
+
+    // 校验两次邮箱是否一致
+    email = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && this.state.confirmEmailDirty) {
+            form.getFieldValue(['confirmEmail'], { force: true });
+        }
+        callback();
+    }
+
+    // 校验两次邮箱是否一致
+    confirmEmail = (rule, value, callback) => {
+      const form = this.props.form;
+      if(value && value !== form.getFieldValue('email')) {
+          callback('两次输入的邮箱不一致，请重新输入！');
+      } else {
+          callback();
+      }
+    }
+
+    handlePwdConfirmBlur = (value) => {
         this.setState({ confirmPwdDirty: this.state.confirmPwdDirty || !!value });
     }
 
@@ -143,7 +167,9 @@
                                         rules: [{
                                           type: 'email', message: '请输入正确的邮箱地址',
                                         }, {
-                                          required: false, message: '请输入邮箱地址',
+                                          required: true, message: '请输入邮箱地址',
+                                        }, {
+                                            validator: this.email
                                         }],
                                      })}
                                     placeholder="请输入有效的邮箱地址"
@@ -151,9 +177,9 @@
                                 <InputItem
                                     {...getFieldProps('confirmEmail', {
                                         rules: [{
-                                          type: 'email', message: '请输入正确的邮箱地址',
+                                          validator: this.confirmEmail
                                         }, {
-                                          required: false, message: '请再次输入您的邮箱地址',
+                                          required: true, message: '请再次输入您的邮箱地址',
                                         }],
                                      })}
                                     placeholder="请再次输入您的邮箱地址"
@@ -185,7 +211,7 @@
                                     })}
                                     type="password"
                                     placeholder="请再次输入您的密码"
-                                    onBlur={this.handleConfirmBlur}
+                                    onBlur={this.handlePwdConfirmBlur}
                                     extra={<i className={isShowPwdCls} />}
                                     showPwd='true'
                                     onExtraClick={e=>{}}
