@@ -22,8 +22,8 @@
         display: flex;
         align-items: center;
         height: @list-item-height;
-        padding-left: @h-spacing-lg;
-        padding-right: @h-spacing-lg;
+        // padding-left: @h-spacing-lg;
+        // padding-right: @h-spacing-lg;
         border-bottom:2px solid @border-color-base;
     }
 
@@ -125,6 +125,11 @@
         color: @color-text-base;
         font-size: @font-size-subhead;
         margin-left: @h-spacing-sm;
+        &-active{
+            .icon{
+                color: @brand-primary;
+            }
+        }
     }
 
     // 错误提示
@@ -164,8 +169,4 @@
             }
         }
     }
-}
-
-.am-list-item.am-input-focus .am-input-clear {
-    display: block
 }

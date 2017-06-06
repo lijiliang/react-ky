@@ -78,8 +78,7 @@ class Input extends React.Component {
                 ref = "input"
                 onBlur = {this.onInputBlur}
                 onFocus = {this.onInputFocus}
-                { ...otherProps
-            }
+                {...otherProps}
             />
         );
     }

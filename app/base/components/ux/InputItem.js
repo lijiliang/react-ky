@@ -32,7 +32,7 @@ class InputItem extends React.Component {
         onExtraClick: noop,
         error: false,
         onErrorClick: noop,
-        labelNumber: 5,
+        labelNumber: 6,
         updatePlaceholder: false
     };
 
@@ -41,41 +41,59 @@ class InputItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            placeholder: props.placeholder
+            placeholder: props.placeholder,
+            isShowPwd: false,   // 是否显示密码
         };
     }
 
+    // 更新状态
+    componentWillReceiveProps(nextProps) {
+        if ('placeholder' in nextProps && !nextProps.updatePlaceholder) {
+            this.setState({
+                placeholder: nextProps.placeholder,
+            });
+        }
+    }
+
+    //卸载组件
+    componentWillUnmount() {
+        if (this.debounceTimeout) {
+            clearTimeout(this.debounceTimeout);
+            this.debounceTimeout = null;
+        }
+    }
     // change 事件触发的回调函数
     onInputChange = (e) => {
         let value = e.target.value;
+
         const { onChange, type } = this.props;
 
-        switch(type) {
+        switch (type) {
             case 'text':
-                break;
-            case 'bankCard':
-                value = value.replace(/\D/g, '').replace(/(....)(?=.)/g, '$1 ');
-                break;
-            case 'phone':
-                value = value.replace(/\D/g, '').substring(0, 11);
-                const valueLen = value.length;
-                if (valueLen > 3 && valueLen < 8) {
-                        value = `${value.substr(0, 3)} ${value.substr(3)}`;
-                    } else if (valueLen >= 8) {
-                    value = `${value.substr(0, 3)} ${value.substr(3, 4)} ${value.substr(7)}`;
-                }
-                break;
-            case 'number':
-                value = value.replace(/\D/g, '');
-                break;
-            case 'password':
-                break;
-            default:
-                break;
+            break;
+        case 'bankCard':
+            value = value.replace(/\D/g, '').replace(/(....)(?=.)/g, '$1 ');
+            break;
+        case 'phone':
+            value = value.replace(/\D/g, '').substring(0, 11);
+            const valueLen = value.length;
+            if (valueLen > 3 && valueLen < 8) {
+                value = `${value.substr(0, 3)} ${value.substr(3)}`;
+            } else if (valueLen >= 8) {
+                value = `${value.substr(0, 3)} ${value.substr(3, 4)} ${value.substr(7)}`;
+            }
+            break;
+        case 'number':
+            value = value.replace(/\D/g, '');
+            break;
+        case 'password':
+            break;
+        default:
+            break;
         }
 
         if (onChange) {
-            onChange(value)
+            onChange(value);
         }
     }
 
@@ -94,13 +112,13 @@ class InputItem extends React.Component {
     }
 
     // blur 事件触发的回调函数
-    onInputBlur = (vlaue) => {
-        this.debounceTimeout = setTimeout(()=>{
+    onInputBlur = (value) => {
+        this.debounceTimeout = setTimeout(() => {
             this.setState({
                 focus: false,
-            })
+            });
         }, 200);
-        if(this.props.onBlur) {
+        if (this.props.onBlur) {
             this.props.onBlur(value);
         }
     }
@@ -114,6 +132,12 @@ class InputItem extends React.Component {
 
     // extra 点击事件触发的回调函数
     onExtraClick = (e) => {
+        // 处理显示密码
+        if(this.props.showPwd && this.props.onExtraClick){
+            this.setState({
+                isShowPwd: !this.state.isShowPwd
+            })
+        }
         if (this.props.onExtraClick){
             this.props.onExtraClick(e);
         }
@@ -132,14 +156,16 @@ class InputItem extends React.Component {
 
     render(){
         const {
-            prefixCls, prefixListCls, type, value, defaultValue, name, editable, disabled, style, clear, children, error, className, extra, labelNumber, maxLength
+          prefixCls, prefixListCls, type, value, defaultValue,
+          name, editable, disabled, style, clear, children,
+          error, className, extra, labelNumber, maxLength, showPwd
         } = this.props;
 
         const otherProps = omit(this.props, ['prefixCls', 'prefixListCls', 'editable', 'style',
           'clear', 'children', 'error', 'className', 'extra', 'labelNumber', 'onExtraClick', 'onErrorClick',
-          'updatePlaceholder', 'placeholderTextColor', 'type',
+          'updatePlaceholder', 'placeholderTextColor', 'type', 'showPwd',
         ]);
-        console.log(otherProps)
+
         const { placeholder, focus } = this.state;
         // 默认类名
         const wrapCls = classNames({
@@ -167,9 +193,16 @@ class InputItem extends React.Component {
             [`${prefixCls}-control`]: true,
         });
 
+        //右边内容
+        const extraCls = classNames({
+            [`${prefixCls}-extra`]: true,
+            [`${prefixCls}-extra-active`]: this.state.isShowPwd
+        })
         // 文本框类型
         let inputType = 'text';
-        if (type === 'bankCard' || type === 'phone') {
+        if (showPwd && this.state.isShowPwd) {   // 处理显示密码
+            inputType = 'text'
+        } else if (type === 'bankCard' || type === 'phone') {
             inputType = 'tel';
         } else if (type === 'password') {
             inputType = 'password';
@@ -177,6 +210,8 @@ class InputItem extends React.Component {
             inputType = 'number';
         } else if (type !== 'text' && type !== 'number') {
             inputType = type;
+        } else if (showPwd && this.state.isShowPwd) {
+            inputType = 'text'
         }
 
         // value值
@@ -229,10 +264,10 @@ class InputItem extends React.Component {
                     <div
                         className={`${prefixCls}-clear`}
                         onClick={this.clearInput}
-                    >sad</div>
+                    />
                 : null}
                 {error ? (<div className={`${prefixCls}-error-extra`} onClick={this.onErrorClick} />) : null}
-                {extra !== '' ? <div className={`${prefixCls}-extra`} onClick={this.onExtraClick}>{extra}</div> : null}
+                {extra !== '' ? <div className={extraCls} onClick={this.onExtraClick}>{extra}</div> : null}
             </div>
         );
     }
