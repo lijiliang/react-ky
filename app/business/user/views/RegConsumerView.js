@@ -30,6 +30,8 @@
              confirmPwd: '',   //确认密码
              referenceId: '',  //推荐人编号
              isHasReference: false,   //是否有推荐人编号
+             isClickReference: true,  // 点击此处是否可点击
+             buttonDisabled: false,   // 注册按钮是否可点
          };
      }
      componentDidMount(){
@@ -40,16 +42,44 @@
          window.history.go(-1);
      }
 
+     // 设置state
      stateChangeHandle(name, value){
         this.setState({
             [name]: value
         })
+
+        // 设置注册按钮是否为disabled
+        const state = this.state;
+        if(state.surName && state.lastName && state.email && state.confirmEmail && state.password && state.confirmPwd){
+            this.setState({
+                buttonDisabled: true
+            })
+        }else{
+            this.setState({
+                buttonDisabled: false
+            })
+        }
+
+        // 判断如没有推荐人会员号，点击此处按钮是否可写
+        if(name === 'referenceId' && value.length > 0){
+            this.setState({
+                isClickReference: false,
+                isHasReference: false,       // 是否有推荐人编号
+            })
+        }else{
+            this.setState({
+                isClickReference: true
+            })
+        }
      }
      // 没有推荐人号
      referenceHandle = () => {
-         this.setState({
-             isHasReference: !this.state.isHasReference
-         })
+         if(this.state.isClickReference){
+             this.setState({
+                 isHasReference: !this.state.isHasReference,
+                 referenceId: ''
+             })
+         }
      }
      // 提交
      submitHandle = () => {
@@ -60,10 +90,22 @@
             const _confirmEmail = form.getFieldValue('confirmEmail');
             const _password = form.getFieldValue('password');
             const _confirmPwd = form.getFieldValue('confirmPwd');
+
+            if(error){
+                const fieldNames = ['surName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPwd', 'referenceId', 'isHasReference'].reverse();
+                fieldNames.map((item, index) => {
+                    if(form.getFieldError(item)){
+                        Toast.info(form.getFieldError(item), 1)
+                        return;
+                    }
+                })
+            }
+
             // if(_surName && regxRule.trim.test(_surName)){
             //     Toast.info('姓氏不能包含空格', 1);
             //     return;
             // }
+
             // 处理输入两次邮箱不一致
             if(_confirmEmail && (_email !== _confirmEmail)){
                 Toast.info('两次输入的邮箱不一致', 1);
@@ -76,15 +118,7 @@
                 return;
             }
 
-            if(error){
-                const fieldNames = ['surName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPwd', 'referenceId', 'isHasReference'].reverse();
-                fieldNames.map((item, index) => {
-                    if(form.getFieldError(item)){
-                        Toast.info(form.getFieldError(item), 1)
-                        return;
-                    }
-                })
-            }else{
+            else{
                 this.setState(value)
             }
 
@@ -104,6 +138,7 @@
 
      render(){
          console.log(this.state)
+         console.log(this.state.referenceId)
          const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
 
          // 密码
@@ -117,7 +152,7 @@
          const recommendedCls = classNames({
              'reg-view': true,
              'reg-view-recommended': true,
-             'rec-disabled': this.state.isHasReference
+             'rec-disabled': !this.state.isClickReference
          })
 
          const multipleCls = classNames({
@@ -125,6 +160,7 @@
              'icon-multiple': !this.state.isHasReference,
              'icon-multipleActive': this.state.isHasReference
          })
+
         //  console.log(this.state)
          return(
              <div className="ky-scrollable">
@@ -153,87 +189,77 @@
                                         placeholder="请输入您的姓氏"
                                         onChange={this.stateChangeHandle.bind(this, 'surName')}
                                     >姓氏</InputItem>
-                                  )}
-                                {/* <InputItem
-                                    {...getFieldProps('surName', {
-                                        rules: [{
-                                            required: true,
-                                            message: '请输入您的姓氏'
-                                        }],
-                                    })}
-                                    placeholder="请输入您的姓氏"
-                                    onValuesChange={this.stateChangeHandle.bind(this)}
-                                >姓氏</InputItem>
-                                <InputItem
-                                    {...getFieldProps('surName', {
-                                        rules: [{
-                                            required: true,
-                                            message: '请输入您的姓氏'
-                                        }],
-                                    })}
-                                    placeholder="请输入您的姓氏"
-                                    onValuesChange={this.stateChangeHandle.bind(this)}
-                                >姓氏</InputItem> */}
-                                <InputItem
-                                    {...getFieldProps('lastName', {
-                                        rules: [{
-                                            required: true,
-                                            message: '请输入您的名字'
-                                        }],
-                                    })}
-                                    placeholder="请输入您的名字"
-                                >名字</InputItem>
-                                <InputItem
-                                    {...getFieldProps('email', {
-                                        rules: [{
-                                          type: 'email', message: '请输入正确的邮箱地址',
-                                        }, {
-                                          required: true, message: '请输入邮箱地址',
-                                        }],
-                                     })}
-                                    placeholder="请输入有效的邮箱地址"
-                                >邮件地址</InputItem>
-                                <InputItem
-                                    {...getFieldProps('confirmEmail', {
-                                        rules: [{
-                                          type: 'email', message: '请输入正确的邮箱地址',
-                                        }, {
-                                          required: true, message: '请再次输入您的邮箱地址',
-                                        }],
-                                     })}
-                                    placeholder="请再次输入您的邮箱地址"
-                                >邮箱确认</InputItem>
-                                <InputItem
-                                    {...getFieldProps('password', {
-                                        rules: [{
-                                            pattern: regxRule.password,
-                                            message: '密码必须是数字和英文字母组合,必须有一个大写字母'
-                                        },{
-                                            required: true,
-                                            message: '您的密码最少为8个字符'
-                                        }],
-                                    })}
-                                    type="password"
-                                    placeholder="您的密码最少为8个字符"
-                                    showPwd='true'
-                                    extra={<i className={isShowPwdCls} />}
-                                    onExtraClick={e=>{}}
-                                >帐号密码</InputItem>
-                                <InputItem
-                                    {...getFieldProps('confirmPwd', {
-                                        rules: [{
-                                            required: true,
-                                            message: '请再次输入您的密码'
-                                        }],
-                                    })}
-                                    type="password"
-                                    placeholder="请再次输入您的密码"
-                                    extra={<i className={isShowPwdCls} />}
-                                    showPwd='true'
-                                    onExtraClick={e=>{}}
-                                    name='confirmPwd'
-                                    style={{borderBottom: 'none'}}
-                                >确认密码</InputItem>
+                                 )}
+                                 {getFieldDecorator('lastName', {
+                                     rules: [{
+                                         required: true,
+                                         message: '请输入您的名字'
+                                     }],
+                                   })(
+                                     <InputItem
+                                         placeholder="请输入您的名字"
+                                         onChange={this.stateChangeHandle.bind(this, 'lastName')}
+                                     >名字</InputItem>
+                                 )}
+                                 {getFieldDecorator('email', {
+                                     rules: [{
+                                       type: 'email', message: '请输入正确的邮箱地址',
+                                     }, {
+                                       required: true, message: '请输入邮箱地址',
+                                     }],
+                                   })(
+                                     <InputItem
+                                         placeholder="请输入有效的邮箱地址"
+                                         onChange={this.stateChangeHandle.bind(this, 'email')}
+                                     >邮件地址</InputItem>
+                                 )}
+                                 {getFieldDecorator('confirmEmail', {
+                                     rules: [{
+                                       type: 'email', message: '请输入正确的邮箱地址',
+                                     }, {
+                                       required: true, message: '请再次输入您的邮箱地址',
+                                     }],
+                                   })(
+                                     <InputItem
+                                         placeholder="请再次输入您的邮箱地址"
+                                         onChange={this.stateChangeHandle.bind(this, 'confirmEmail')}
+                                     >邮箱确认</InputItem>
+                                 )}
+                                 {getFieldDecorator('password', {
+                                     rules: [{
+                                         pattern: regxRule.password,
+                                         message: '密码必须是数字和英文字母组合,必须有一个大写字母'
+                                     },{
+                                         required: true,
+                                         message: '您的密码最少为8个字符'
+                                     }],
+                                   })(
+                                     <InputItem
+                                         type="password"
+                                         placeholder="您的密码最少为8个字符"
+                                         showPwd='true'
+                                         extra={<i className={isShowPwdCls} />}
+                                         onExtraClick={e=>{}}
+                                         onChange={this.stateChangeHandle.bind(this, 'password')}
+                                     >帐号密码</InputItem>
+                                 )}
+                                 {getFieldDecorator('confirmPwd', {
+                                     rules: [{
+                                         required: true,
+                                         message: '请再次输入您的密码'
+                                     }],
+                                   })(
+                                     <InputItem
+                                         type="password"
+                                         placeholder="请再次输入您的密码"
+                                         extra={<i className={isShowPwdCls} />}
+                                         showPwd='true'
+                                         onExtraClick={e=>{}}
+                                         name='confirmPwd'
+                                         style={{borderBottom: 'none'}}
+                                         onChange={this.stateChangeHandle.bind(this, 'confirmPwd')}
+                                     >确认密码</InputItem>
+                                 )}
                             </div>
                         </div>
                     </div>
@@ -244,15 +270,13 @@
                                 <p>如您是通过凯娅尼会员推荐，请填写他/她的会员号</p>
                             </div>
                             <div className="ref-form">
-                                <InputItem
-                                    {...getFieldProps('referenceId', {
-                                        rules: [{
-                                            required: true,
-                                            message: '请输入推荐人会员号'
-                                        }],
-                                    })}
-                                    placeholder="请输入您的推荐人会员号"
-                                >推荐人会员号</InputItem>
+                                {getFieldDecorator('referenceId')(
+                                    <InputItem
+                                        placeholder="请输入您的推荐人会员号"
+                                        value={this.state.referenceId}
+                                        onChange={this.stateChangeHandle.bind(this, 'referenceId')}
+                                    >推荐人会员号</InputItem>
+                                 )}
                             </div>
                             <div className="no-recommended" onClick={this.referenceHandle}>
                                 <span>如没有推荐人会员号，请点击此处</span><i className={multipleCls}></i>
@@ -260,8 +284,11 @@
                         </div>
 
                     </div>
-                    {/* <Button title="注册" className="regcon-btn" onClick={this.submitHandle} disabled across/> */}
-                    <Button title="注册" className="regcon-btn" onClick={this.submitHandle} across/>
+                    {
+                        this.state.buttonDisabled
+                            ? <Button title="注册" className="regcon-btn" onClick={this.submitHandle} across/>
+                            : <Button title="注册" className="regcon-btn" onClick={this.submitHandle} disabled across/>
+                    }
                  </div>
             </div>
          );
