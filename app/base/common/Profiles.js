@@ -4,7 +4,7 @@
 const profiles = {
     local: {
         preffix: '',
-        host : '10.206.41.67:8012',
+        host : 'dev.kyani.cn:9999',
         sercureEnable: false
     },
     prod: {

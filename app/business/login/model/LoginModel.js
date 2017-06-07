@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 import * as type from '../action/actionTypes';
 
 // const initialState = Immutable.fromJS({ });
-const map = Immutable.Map({
+const map = Immutable.fromJS({
     username: '',  //帐号
     password: '', //密码
     isLogined: false,//是否已登录

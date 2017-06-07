@@ -9,6 +9,8 @@
  import { createForm } from 'rc-form';
  import classNames from 'classnames';
  import regxRule from 'kyBase/common/regxRule';
+ import { get } from 'kyBase/common/fetchData';
+ import Urls from 'kyBase/common/Urls';
 
  import Button from 'kyBase/components/ux/Button';
  import Toast from 'kyBase/components/ux/Toast';
@@ -31,10 +33,20 @@
              referenceId: '',  //推荐人编号
              isHasReference: false,   //是否有推荐人编号
              isClickReference: true,  // 点击此处是否可点击
-             buttonDisabled: false,   // 注册按钮是否可点
+             buttonDisabled: true,   // 注册按钮是否可点
          };
      }
      componentDidMount(){
+         const response = get(Urls.user, {
+                  a:1,
+                 b:2
+              });
+              console.log(response)
+              response.then((res) => {
+                  console.log(res);
+              }).catch((err) => {
+                  console.log(err);
+              });
      }
 
      // 返回上一页
@@ -49,6 +61,7 @@
         })
 
         // 设置注册按钮是否为disabled
+        /*
         const state = this.state;
         if(state.surName && state.lastName && state.email && state.confirmEmail && state.password && state.confirmPwd){
             this.setState({
@@ -59,6 +72,7 @@
                 buttonDisabled: false
             })
         }
+        */
 
         // 判断如没有推荐人会员号，点击此处按钮是否可写
         if(name === 'referenceId' && value.length > 0){

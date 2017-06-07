@@ -17,14 +17,7 @@
 
 import axios from 'axios';
 
-let URL;
-if(__DEV__){
-    URL = 'http://localhost:9002';
-}else{
-    URL = 'http://api.kyain.cn';
-}
-
-axios.defaults.baseURL = URL;  // 基础url前缀
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + 'access_token';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 /*

@@ -5,7 +5,7 @@ import profile from './Profiles';
 
 const Urls = {
     Login: profile.server + '/oauth/token',  // 登录
-    reg: profile.server + '/oauth/reg',      // 注册
+    user: profile.server + '/user',     // POST 注册消费者, GET 获取当前登录会员的消息
 };
 
 export default Urls;
