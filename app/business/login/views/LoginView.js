@@ -17,7 +17,7 @@ import 'kyBase/common/sValid';
 import Base64 from 'js-base64';
 import axios from 'axios';
 import qs from 'qs';
-import { get, post } from 'kyBase/common/fetchData';
+import { get, post } from 'kyBase/common/FetchData';
 
 import '../resources/LoginView.less';
 

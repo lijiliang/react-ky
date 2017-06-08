@@ -9,7 +9,7 @@
  import { createForm } from 'rc-form';
  import classNames from 'classnames';
  import regxRule from 'kyBase/common/regxRule';
- import { get } from 'kyBase/common/fetchData';
+ import { get } from 'kyBase/common/FetchData';
  import Urls from 'kyBase/common/Urls';
 
  import Button from 'kyBase/components/ux/Button';

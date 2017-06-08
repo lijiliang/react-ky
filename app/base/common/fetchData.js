@@ -2,7 +2,7 @@
  * @fileOverview 获取数据方法
  *
  * 使用方法：
- *   import { get, post } from './fetchData';
+ *   import { get, post } from './FetchData';
  *   const response = get('/api/2', {
  *         a:1,
  *         b:2

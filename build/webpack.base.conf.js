@@ -36,9 +36,10 @@ module.exports = {
              */
             kyBase: path.join(commonPath.src, '/base/'),
             kyBus: path.join(commonPath.src, '/business/'),
-            fetchData: path.join(commonPath.src, '/base/common/fetchData.js'),
+            FetchData: path.join(commonPath.src, '/base/common/FetchData.js'),
             busModels: path.join(commonPath.src, '/business/modelIndex.js'),
             Urls: path.join(commonPath.src, '/base/common/Urls.js'),
+            Cache: path.join(commonPath.src, '/base/common/Cache.js'),
             varLess: path.join(commonPath.src, '/base/resources/less/variables.less')   // less的一些变量
         }
     },

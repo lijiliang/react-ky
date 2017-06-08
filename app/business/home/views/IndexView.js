@@ -12,7 +12,7 @@ import Urls from 'Urls';
 import SlideSwipe from 'kyBase/components/ux/SlideSwipe';
 import '../resources/IndexView.less';
 
-import { get, past } from 'kyBase/common/fetchData';
+import { get, past } from 'kyBase/common/FetchData';
 // 幻灯片模拟数据
 import Banner1 from 'kyBus/home/resources/img/banner1.png';
 import Banner2 from 'kyBus/home/resources/img/banner2.png';
