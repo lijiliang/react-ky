@@ -6,6 +6,9 @@
  import PureRenderMixin from 'react-addons-pure-render-mixin';
  import { bindActionCreators } from 'redux';
  import { connect } from 'react-redux';
+ import * as loginAction from '../action/actionTypes';
+ import {regConsumer} from '../action/DataAction';
+
  import { createForm } from 'rc-form';
  import classNames from 'classnames';
  import regxRule from 'kyBase/common/regxRule';
@@ -24,7 +27,7 @@
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
-             surName: '',      //姓
+             firstName: '',      //姓
              lastName: '',     //名
              email: '',        //邮箱
              confirmEmail: '', //确认邮箱
@@ -37,16 +40,6 @@
          };
      }
      componentDidMount(){
-         const response = get(Urls.user, {
-                  a:1,
-                 b:2
-              });
-              console.log(response)
-              response.then((res) => {
-                  console.log(res);
-              }).catch((err) => {
-                  console.log(err);
-              });
      }
 
      // 返回上一页
@@ -63,7 +56,7 @@
         // 设置注册按钮是否为disabled
         /*
         const state = this.state;
-        if(state.surName && state.lastName && state.email && state.confirmEmail && state.password && state.confirmPwd){
+        if(state.firstName && state.lastName && state.email && state.confirmEmail && state.password && state.confirmPwd){
             this.setState({
                 buttonDisabled: true
             })
@@ -99,14 +92,14 @@
      submitHandle = () => {
          const form = this.props.form;
          form.validateFields((error, value) => {
-            const _surName = form.getFieldValue('surName');
+            const _firstName = form.getFieldValue('firstName');
             const _email = form.getFieldValue('email');
             const _confirmEmail = form.getFieldValue('confirmEmail');
             const _password = form.getFieldValue('password');
             const _confirmPwd = form.getFieldValue('confirmPwd');
 
             if(error){
-                const fieldNames = ['surName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPwd', 'referenceId', 'isHasReference'].reverse();
+                const fieldNames = ['firstName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPwd', 'referenceId', 'isHasReference'].reverse();
                 fieldNames.map((item, index) => {
                     if(form.getFieldError(item)){
                         Toast.info(form.getFieldError(item), 1)
@@ -115,7 +108,7 @@
                 })
             }
 
-            // if(_surName && regxRule.trim.test(_surName)){
+            // if(_firstName && regxRule.trim.test(_firstName)){
             //     Toast.info('姓氏不能包含空格', 1);
             //     return;
             // }
@@ -136,23 +129,14 @@
                 this.setState(value)
             }
 
-            //  console.log(error, value)
-            //  if(error.email){
-            //      alert(error.email.errors[0].message)
-            //  }
-            // const _surName = this.props.form.getFieldError('surName');
-            // console.log(_surName)
-            // console.log(this.props.form.getFieldError('email'))
-            // if(_surName){
-            //     Toast.info(_surName, 1)
-            // }
-            // console.log(this.props.form.getFieldsValue())
+            const _state = this.state;
+            //
+            this.props.dispatch(regConsumer(_state.firstName, _state.lastName, _state.email, _state.password, _state.referenceId))
          })
      }
 
      render(){
-         console.log(this.state)
-         console.log(this.state.referenceId)
+        //  console.log(this.state)
          const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
 
          // 密码
@@ -193,7 +177,7 @@
                                 <p>请填写您的个人信息</p>
                             </div>
                             <div className="ref-form">
-                                {getFieldDecorator('surName', {
+                                {getFieldDecorator('firstName', {
                                     rules: [{
                                         required: true,
                                         message: '请输入您的姓氏'
@@ -201,7 +185,7 @@
                                   })(
                                     <InputItem
                                         placeholder="请输入您的姓氏"
-                                        onChange={this.stateChangeHandle.bind(this, 'surName')}
+                                        onChange={this.stateChangeHandle.bind(this, 'firstName')}
                                     >姓氏</InputItem>
                                  )}
                                  {getFieldDecorator('lastName', {
@@ -309,4 +293,14 @@
      }
  }
  const RegConsumerViewWrapper = createForm()(RegConsumerView);
- export default RegConsumerViewWrapper;
+
+ /*  React 与  Redux 绑定 */
+ function mapStateToProps(state){
+     return {
+         RegModel: state.RegModel
+     };
+ }
+
+ export default connect(
+     mapStateToProps
+ )(RegConsumerViewWrapper);

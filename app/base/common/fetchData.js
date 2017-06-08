@@ -16,8 +16,12 @@
  */
 
 import axios from 'axios';
+import Cache from 'Cache';
 
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + 'access_token';
+//获取token
+const access_token = Cache.get(Cache.keys.ky_cache_access_token) || '';
+
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 /*

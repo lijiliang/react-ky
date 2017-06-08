@@ -13,11 +13,7 @@ import Button from 'kyBase/components/ux/Button';
 import Toast from 'kyBase/components/ux/Toast';
 import NavBar from 'kyBase/components/ux/NavBar';
 import 'kyBase/common/sValid';
-
-import Base64 from 'js-base64';
-import axios from 'axios';
-import qs from 'qs';
-import { get, post } from 'kyBase/common/FetchData';
+import Cache from 'Cache';
 
 import '../resources/LoginView.less';
 
@@ -34,6 +30,13 @@ class LoginView extends React.Component{
     componentDidMount(){
         // this.send("topBar->addItem({text:'aaa',handler:function(){alert()}},icon:"class")");
         this.sValidEvent();
+
+        // 设置默认数据
+        const kyCacheIsAccount = JSON.parse(Cache.get(Cache.keys.ky_cache_isAccount));
+        this.setState({
+            username: kyCacheIsAccount ? Cache.get(Cache.keys.ky_cache_login_account) : '',
+            isAccount: kyCacheIsAccount
+        });
     }
     // 返回上一页
     gohistoryHandle(){
@@ -68,19 +71,6 @@ class LoginView extends React.Component{
         if($.sValid()){
             this.props.dispatch(login(this.state.username, this.state.password, this.state.isAccount));
         }
-        // $.ajax({
-        //     type: 'POST',
-        //     url: 'http://10.206.41.67:8012/user/logout',
-        //     data: {
-        //         username: '2771081C'
-        //     },
-        //     headers: {
-        //         Authorization: "Bearer "+ 'd7e4b74e-7d2d-4b2a-a4c0-34f1b4cd04ed'
-        //     },
-        //     success: function(res){
-        //         console.log(res)
-        //     }
-        // });
     }
 
     // 验证规则
@@ -130,6 +120,7 @@ class LoginView extends React.Component{
                                     type="text"
                                     placeholder="请输入您的中国会员帐号"
                                     ref='username'
+                                    value={this.state.username}
                                     onChange={this.changeUsername.bind(this)}
                                 />
                             </div>

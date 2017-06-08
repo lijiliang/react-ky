@@ -1,7 +1,12 @@
+/**
+ * @fileOverview 登录 处理数据action
+ */
 import * as types from './actionTypes';
 import Base64 from 'js-base64';
 import Toast from 'kyBase/components/ux/Toast';
 import Urls from 'Urls';
+import { get } from 'FetchData';
+import Cache from 'Cache';
 
 export function login(username,password,isAccount){
     return (dispatch,getState) => {
@@ -31,21 +36,26 @@ export function login(username,password,isAccount){
                         token:res.access_token
                     }
                 });
-                $.ajax({
-                    type: 'get',
-                    url: 'http://10.206.41.67:8012/user',
-                    headers: {
-                        Authorization: "Bearer "+ res.access_token
-                    },
-                    success: function(re){
-                        console.log(re)
-                    }
+
+                // 保存数据到localStorage
+                Cache.set(Cache.keys.ky_cache_access_token, res.access_token);
+                Cache.set(Cache.keys.ky_cache_login_account, username);
+                Cache.set(Cache.keys.ky_cache_isLogined, true);
+                Cache.set(Cache.keys.ky_cache_isAccount, isAccount);
+                Cache.set(Cache.keys.ky_cache_last_login_time,new Date().getTime());
+
+                // 请求用户信息
+                const userInfo = get(Urls.User);
+                userInfo.then((res) => {
+                    console.log(res);
+                }).catch((err) => {
+                    console.log(err)
                 });
             },
             error: function(err){
                 const response = JSON.parse(err.response);
                 if(response.message === 'Bad credentials'){
-                    Toast.info('用户名或密码错误！', 2);
+                    Toast.fail('用户名或密码错误！', 2);
                 }
             }
         });

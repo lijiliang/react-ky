@@ -1,1 +1,1 @@
-export const LOGIN = 'LOGIN';   // 登录
+export const REGCONSUMER = 'REGCONSUMER';   // 注册消费者帐户

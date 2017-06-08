@@ -1,3 +1,6 @@
+/**
+ * @fileOverview 登录model
+ */
 // import { createReducer } from 'redux-immutablejs';
 import CreateReducer from 'kyBase/reducers/CreateReducer';
 import Immutable from 'immutable';
