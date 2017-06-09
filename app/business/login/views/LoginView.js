@@ -24,7 +24,7 @@ class LoginView extends React.Component{
         this.state = {
             username: '',       //用户名
             password: '',       //密码
-            isAccount: true,    // 是否记住帐户
+            isAccount: false,    // 是否记住帐户
         };
     }
     componentDidMount(){
@@ -32,7 +32,12 @@ class LoginView extends React.Component{
         this.sValidEvent();
 
         // 设置默认数据
-        const kyCacheIsAccount = JSON.parse(Cache.get(Cache.keys.ky_cache_isAccount));
+        let kyCacheIsAccount = JSON.parse(Cache.get(Cache.keys.ky_cache_isAccount));
+        if(kyCacheIsAccount){
+            kyCacheIsAccount: true;
+        }else{
+            kyCacheIsAccount: false;
+        }
         this.setState({
             username: kyCacheIsAccount ? Cache.get(Cache.keys.ky_cache_login_account) : '',
             isAccount: kyCacheIsAccount
@@ -102,6 +107,7 @@ class LoginView extends React.Component{
         });
     }
     render(){
+        console.log('this.state.isAccount', this.state.isAccount)
         return(
             <div className="ky-scrollable">
                 <div className="ky-login">

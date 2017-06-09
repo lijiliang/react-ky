@@ -36,13 +36,14 @@ export function login(username,password,isAccount){
                         token:res.access_token
                     }
                 });
-
+                console.log('isAccount', isAccount)
                 // 保存数据到localStorage
-                Cache.set(Cache.keys.ky_cache_access_token, res.access_token);
                 Cache.set(Cache.keys.ky_cache_login_account, username);
-                Cache.set(Cache.keys.ky_cache_isLogined, true);
                 Cache.set(Cache.keys.ky_cache_isAccount, isAccount);
-                Cache.set(Cache.keys.ky_cache_last_login_time,new Date().getTime());
+                // 保存数据到sessionStorage
+                Cache.sessionSet(Cache.sessionKeys.ky_cache_access_token, res.access_token);
+                Cache.sessionSet(Cache.sessionKeys.ky_cache_isLogined, true);
+                Cache.sessionSet(Cache.sessionKeys.ky_cache_last_login_time,new Date().getTime());
 
                 // 请求用户信息
                 const userInfo = get(Urls.User);

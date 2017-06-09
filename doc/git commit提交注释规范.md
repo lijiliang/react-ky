@@ -8,7 +8,7 @@
 其中， Header是必需的，Body和Footer可以省略
 
 ## Header
-Header部分只有一行，包括两个字段： `type`(必需)和`subject`必需
+Header部分只有一行，包括两个字段： `type`(必需)和`subject`可选
 
 ### type
 type用于说明commit的类别，可以使用以下类别：
