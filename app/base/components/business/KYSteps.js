@@ -32,7 +32,6 @@ class KYSteps extends React.Component{
             [className]: className,
             [prefixCls]: true,
         })
-        console.log(current)
         return(
             <div {...restProps} className={wrapCls}>
                 <div className={current >= 1 ? 'step-item step-item-active' : 'step-item'}><i className="icon icon-creatAC"></i></div>
