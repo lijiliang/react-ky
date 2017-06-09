@@ -81,11 +81,6 @@ module.exports = {
             },
             // {
             //     test: /\.svg$/,
-            //     loader: 'external-svg-sprite-loader',
-            //     include: svgDirs,
-            // },
-            // {
-            //     test: /\.svg$/,
             //     loader: 'svg-sprite-loader',
             //     include: svgDirs,   // 把 svgDirs 路径下的所有 svg 文件交给 svg-sprite-loader 插件处理
             //     options: {
@@ -95,13 +90,42 @@ module.exports = {
             // },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                loader: 'url-loader',
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 4096, // 4KB 以下使用 base64
+                        name: 'img/[name]-[hash:8].[ext]'
+                    }
+                },{
+                    loader: 'img-loader',   // 压缩图片
+                    options: {
+                        // 根据环境判断是否启用资源压缩
+                        enabled: process.env.NODE_ENV === 'production',
+                        gifsicle: {
+                            interlaced: false // 替换使用渐进式渲染
+                        },
+                        mozjpeg: {
+                            progressive: true, // 创建基准jpeg文件
+                        },
+                        optipng: {
+                            optimizationLevel: 3, // 优化级别，0-7，值越大，压缩越多
+                        },
+                        /*
+                        pngquant: {
+                            floyd: 0.9,
+                            speed: 2  // 执行速度，0-10，速度过高质量受损，不建议过高
+                        },
+                        */
+                        svgo: {
+                            plugins: [
+                                { removeTitle: true }, // 去除标题信息
+                                { convertPathData: false } // 转换路径为更短的相对或决定路径
+                            ]
+                        }
+                    }
+                }],
                 // 排除favicon.png, 因为它已经由上面的loader处理了. 如果不排除掉, 它会被这个loader再处理一遍
                 exclude: /favicon\.png$/,
-                query: {
-                    limit: 4096, // 4KB 以下使用 base64
-                    name: 'img/[name]-[hash:8].[ext]'
-                }
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
