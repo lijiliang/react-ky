@@ -1,6 +1,6 @@
 /**
- * @fileOverview: 注册消费者帐号
- * @version: 1.0.0(2017-6-2)
+ * @fileOverview: 注册会员帐号
+ * @version: 1.0.0(2017-6-9)
  * @author: Benson
  * @updatatime:
  */
@@ -8,7 +8,7 @@
 // 引入变量
 @import '~varLess';
 
-@regConPrefixCls: m-regConsumer;
+@regConPrefixCls: m-regMember;
 
 .ky-scrollable{
     background: @brand-gray-p;
@@ -17,8 +17,12 @@
     height: 100%;
     .regcon-info{
         background: @brand-gray-p;
-        padding: @h-spacing-sm;
+        padding: 10px @h-spacing-sm @h-spacing-sm @h-spacing-sm;
         text-align: center;
+        h2{
+            font-size: 36px;
+            color: @brand-primary;
+        }
         p{
             line-height: 1.6;
             font-size: @font-size-subhead;
@@ -51,15 +55,6 @@
                 padding: 0 @h-spacing-lg;
             }
         }
-        .rec-disabled{
-            .ky-input-item{
-                border-bottom:2px solid #fff;
-            }
-            .no-recommended{
-                background: @brand-gray-sf;
-            }
-
-        }
     }
 }
 
@@ -69,26 +64,6 @@
         font-size: 50px;
         color: @brand-gray-sf;
         line-height: .9;
-    }
-}
-
-// 没推荐人会员号
-.no-recommended{
-    display: flex;
-    height: 70px;
-    padding:0 @h-spacing-md;
-    line-height: 70px;
-    font-size: @font-size-subhead;
-    color: @brand-gray-dk;
-    cursor: pointer;
-    box-sizing: border-box;
-    .icon{
-        display: inline-block;
-        line-height: 70px;
-        padding-left: @h-spacing-sm;
-        font-size: @icon-size-xs;
-        color: @brand-gray-dk;
-        transition: all .2s ease;
     }
 }
 

@@ -1,5 +1,5 @@
 /**
- * @fileOverview 注册消费者帐号 View
+ * @fileOverview 注册会员帐号 View
  */
  import React from 'react';
  import { Link } from 'react-router';
@@ -15,12 +15,13 @@
  import { get, getPublic } from 'kyBase/common/FetchData';
  import Urls from 'kyBase/common/Urls';
 
+ import KYSteps from 'kyBase/components/business/KYSteps';
  import Button from 'kyBase/components/ux/Button';
  import Toast from 'kyBase/components/ux/Toast';
  import NavBar from 'kyBase/components/ux/NavBar';
  import InputItem from 'kyBase/components/ux/InputItem';
 
- import '../resources/RegConsumerView.less';
+ import '../resources/RegMemberView.less';
 
  class RegConsumerView extends React.Component{
      constructor(props, context){
@@ -34,7 +35,6 @@
              password: '',     //密码
              confirmPwd: '',   //确认密码
              referenceId: '',  //推荐人编号
-             isHasReference: false,   //是否有推荐人编号
              isClickReference: true,  // 点击此处是否可点击
              buttonDisabled: true,   // 注册按钮是否可点
          };
@@ -66,28 +66,8 @@
             })
         }
         */
+     }
 
-        // 判断如没有推荐人会员号，点击此处按钮是否可写
-        if(name === 'referenceId' && value.length > 0){
-            this.setState({
-                isClickReference: false,
-                isHasReference: false,       // 是否有推荐人编号
-            })
-        }else{
-            this.setState({
-                isClickReference: true
-            })
-        }
-     }
-     // 没有推荐人号
-     referenceHandle = () => {
-         if(this.state.isClickReference){
-             this.setState({
-                 isHasReference: !this.state.isHasReference,
-                 referenceId: ''
-             })
-         }
-     }
      // 提交
      submitHandle = () => {
          const form = this.props.form;
@@ -99,7 +79,7 @@
             const _confirmPwd = form.getFieldValue('confirmPwd');
 
             if(error){
-                const fieldNames = ['firstName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPwd', 'referenceId', 'isHasReference'].reverse();
+                const fieldNames = ['firstName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPwd', 'referenceId'].reverse();
                 fieldNames.map((item, index) => {
                     if(form.getFieldError(item)){
                         Toast.info(form.getFieldError(item), 1)
@@ -158,28 +138,21 @@
              'extra-pwd-active': this.state.isShowPwd
          })
 
-         const recommendedCls = classNames({
-             'reg-view': true,
-             'reg-view-recommended': true,
-             'rec-disabled': !this.state.isClickReference
-         })
-
-         const multipleCls = classNames({
-             'icon': true,
-             'icon-multiple': !this.state.isHasReference,
-             'icon-multipleActive': this.state.isHasReference
-         })
-
          return(
              <div className="ky-scrollable">
-                 <div className="m-regConsumer">
+                 <div className="m-regMember">
                      <NavBar
                          onLeftClick={this.gohistoryHandle.bind(this)}
-                         >注册我的消费者帐户</NavBar>
-                    <div className="regcon-info">
-                        <p>为建立您的帐户我们需要获取您的基本信息</p>
-                        <p>请按照以下指示填写相关信息</p>
+                         >注册我的会员帐户</NavBar>
+                    <div className="m-regstep">
+                        <KYSteps current={1}/>
+                        <div className="regcon-info">
+                            <h2>填写个人信息</h2>
+                            <p>为建立您的帐户我们需要获取您的基本信息</p>
+                            <p>请按照以下指示填写相关信息</p>
+                        </div>
                     </div>
+
                     <div className="m-reg-body">
                         <div className="reg-view">
                             <div className="reg-tit">
@@ -264,15 +237,46 @@
                                          showPwd='true'
                                          onExtraClick={e=>{}}
                                          name='confirmPwd'
-                                         style={{borderBottom: 'none'}}
                                          onChange={this.stateChangeHandle.bind(this, 'confirmPwd')}
                                      >确认密码</InputItem>
+                                 )}
+                                 {getFieldDecorator('phone')(
+                                     <InputItem
+                                         type="phone"
+                                         placeholder="请输入您的手机号"
+                                         onChange={this.stateChangeHandle.bind(this, 'phone')}
+                                     >手机号</InputItem>
+                                 )}
+                                 {getFieldDecorator('telephone')(
+                                     <InputItem
+                                         placeholder="请输入您的固定电话"
+                                         onChange={this.stateChangeHandle.bind(this, 'telephone')}
+                                     >固定电话</InputItem>
+                                 )}
+                                 {getFieldDecorator('idCard')(
+                                     <InputItem
+                                         placeholder="请输入您的身份证号码"
+                                         onChange={this.stateChangeHandle.bind(this, 'idCard')}
+                                     >身份证号码</InputItem>
+                                 )}
+                                 {getFieldDecorator('address')(
+                                     <InputItem
+                                         placeholder="详细地址"
+                                         onChange={this.stateChangeHandle.bind(this, 'address')}
+                                     >详细地址</InputItem>
+                                 )}
+                                 {getFieldDecorator('zipCode')(
+                                     <InputItem
+                                         placeholder="请输入6个数字的邮政编码"
+                                         style={{border:'none'}}
+                                         onChange={this.stateChangeHandle.bind(this, 'zipCode')}
+                                     >邮政编码</InputItem>
                                  )}
                             </div>
                         </div>
                     </div>
                     <div className="m-reg-body">
-                        <div className={recommendedCls}>
+                        <div className="reg-view">
                             <div className="reg-tit">
                                 <h2>推荐人信息</h2>
                                 <p>如您是通过凯娅尼会员推荐，请填写他/她的会员号</p>
@@ -285,17 +289,21 @@
                                         onChange={this.stateChangeHandle.bind(this, 'referenceId')}
                                     >推荐人会员号</InputItem>
                                  )}
-                            </div>
-                            <div className="no-recommended" onClick={this.referenceHandle}>
-                                <span>如没有推荐人会员号，请点击此处</span><i className={multipleCls}></i>
+                                 {getFieldDecorator('confirmReferenceId')(
+                                     <InputItem
+                                         placeholder="请再次输入您的推荐人"
+                                         style={{border:'none'}}
+                                         onChange={this.stateChangeHandle.bind(this, 'confirmReferenceId')}
+                                     >确认推荐人</InputItem>
+                                  )}
                             </div>
                         </div>
 
                     </div>
                     {
                         this.state.buttonDisabled
-                            ? <Button title="注册" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
-                            : <Button title="注册" className="ky-button-primary regcon-btn" onClick={this.submitHandle} disabled across/>
+                            ? <Button title="下一步" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
+                            : <Button title="下一步" className="ky-button-primary regcon-btn" onClick={this.submitHandle} disabled across/>
                     }
                  </div>
             </div>

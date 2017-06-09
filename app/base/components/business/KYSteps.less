@@ -1,0 +1,34 @@
+/**
+     * @fileOverview: 注册步骤条
+ * @version: 1.0.0(2017-6-9)
+ * @author: Benson
+ * @updatatime:
+ */
+
+// 引入变量
+@import '~varLess';
+
+@prefixCls: ky-steps;
+
+.@{prefixCls}{
+    display: flex;
+    margin: @v-spacing-md 0;
+    justify-content: center;
+    .step-item{
+        .icon{
+            display: inline-block;
+            font-size: 50px;
+            color: #b9bec6;
+        }
+        .icon-arrow{
+            padding: 0 20px;
+            transform: rotate(90deg);
+            font-size: @icon-size-xs;
+        }
+    }
+    .step-item-active{
+        .icon{
+            color: @brand-primary;
+        }
+    }
+}

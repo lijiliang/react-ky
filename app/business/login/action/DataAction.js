@@ -36,7 +36,7 @@ export function login(username,password,isAccount){
                         token:res.access_token
                     }
                 });
-                console.log('isAccount', isAccount)
+
                 // 保存数据到localStorage
                 Cache.set(Cache.keys.ky_cache_login_account, username);
                 Cache.set(Cache.keys.ky_cache_isAccount, isAccount);
