@@ -194,6 +194,7 @@
                                     }],
                                   })(
                                     <InputItem
+                                        autoFocus
                                         placeholder="请输入您的姓氏"
                                         onChange={this.stateChangeHandle.bind(this, 'firstName')}
                                     >姓氏</InputItem>
