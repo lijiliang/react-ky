@@ -11,7 +11,7 @@
 
  import { createForm } from 'rc-form';
  import classNames from 'classnames';
- import regxRule from 'kyBase/common/regxRule';
+ import RegxRule from 'kyBase/common/RegxRule';
  import { get, getPublic } from 'kyBase/common/FetchData';
  import Urls from 'kyBase/common/Urls';
 
@@ -114,7 +114,7 @@ const district = datas;
                 return;
             }
 
-            // if(_firstName && regxRule.trim.test(_firstName)){
+            // if(_firstName && RegxRule.trim.test(_firstName)){
             //     Toast.info('姓氏不能包含空格', 1);
             //     return;
             // }
@@ -233,7 +233,7 @@ const district = datas;
                                  )}
                                  {getFieldDecorator('password', {
                                      rules: [{
-                                         pattern: regxRule.password,
+                                         pattern: RegxRule.password,
                                          message: '密码必须是数字和英文字母组合,必须有一个大写字母'
                                      },{
                                          required: true,
