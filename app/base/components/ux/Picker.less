@@ -7,19 +7,17 @@
 
 // 引入变量
 @import '~varLess';
+@import '~kyBase/resources/less/amim.less';
 
-@pickerPopupPrefixCls: am-picker-popup;
-
-@pickerPrefixCls: am-picker;
-@pickerColPrefixCls: am-picker-col;
-
+@pickerPopupPrefixCls: ky-picker-popup;
+@pickerPrefixCls: ky-picker;
+@pickerColPrefixCls: ky-picker-col;
 @picker-item-height: 68px;
 
 .@{pickerPrefixCls} {
   display: flex;
   align-items: center;
   // padding: @v-spacing-sm 0;
-
   &-item {
     flex: 1;
     text-align: center;
@@ -89,7 +87,7 @@
   }
 }
 
-
+// 选择区样式
 .@{pickerPopupPrefixCls} {
   left: 0;
   bottom: 0;
@@ -115,7 +113,7 @@
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: @fill-mask;
+    background-color: rgba(0,0,0, .4);
     height: 100%;
     z-index: @picker-zindex;
 
@@ -144,7 +142,7 @@
   }
 
   &-item {
-    color: @brand-primary;
+    color: @brand-blue-deep;
     font-size: @font-size-heading;
     padding: @v-spacing-md @h-spacing-lg;
 

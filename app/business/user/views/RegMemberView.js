@@ -23,7 +23,7 @@
  import Picker from 'kyBase/components/ux/Picker';
 
 import datas from 'kyBase/components/ux/data'
- import '../resources/RegMemberView.less';
+import '../resources/RegMemberView.less';
 
 
  const CustomChildren = props => (
@@ -53,18 +53,17 @@ const district = datas;
              isClickReference: true,  // 点击此处是否可点击
              buttonDisabled: true,   // 注册按钮是否可点
              data: [],
-            cols: 1,
-            pickerValue: [],
-            asyncValue: [],
+             cols: 1,
+             pickerValue: [],
          };
      }
      onClick = () => {
-   setTimeout(() => {
-     this.setState({
-       data: province,
-     });
-   }, 120);
- };
+         setTimeout(() => {
+             this.setState({
+                 data: province,
+             });
+         }, 120);
+     };
      componentDidMount(){
      }
 
@@ -327,14 +326,14 @@ const district = datas;
 
                     </div>
                     <Picker
-          data={district}
-          title="选择地区"
-          extra="请选择(可选)"
-          value={this.state.pickerValue}
-          onChange={v => this.setState({ pickerValue: v })}
-        >
-          <CustomChildren>选择地区（自定义 children）</CustomChildren>
-        </Picker>
+                        data={district}
+                        title="选择地区"
+                        extra="请选择(可选)"
+                        value={this.state.pickerValue}
+                        onChange={v => this.setState({ pickerValue: v })}
+                    >
+                        <CustomChildren>选择地区（自定义 children）</CustomChildren>
+                    </Picker>
                     {
                         this.state.buttonDisabled
                             ? <Button title="下一步" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>

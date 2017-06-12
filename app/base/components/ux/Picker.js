@@ -10,8 +10,8 @@ import treeFilter from 'array-tree-filter';
 import './Picker.less'
 const popupProps = {
     WrapComponent: 'div',
-    transitionName: 'am-slide-up',
-    maskTransitionName: 'am-fade',
+    transitionName: 'ky-slide-up',
+    maskTransitionName: 'ky-fade',
 };
 
 function getDefaultProps() {
@@ -20,9 +20,9 @@ function getDefaultProps() {
     };
     return {
         triggerType: 'onClick',
-        prefixCls: 'am-picker',
-        pickerPrefixCls: 'am-picker-col',
-        popupPrefixCls: 'am-picker-popup',
+        prefixCls: 'ky-picker',
+        pickerPrefixCls: 'ky-picker-col',
+        popupPrefixCls: 'ky-picker-popup',
         format: defaultFormat,
         cols: 3,
         cascade: true,
@@ -37,7 +37,6 @@ function getDefaultProps() {
 class Picker extends React.Component {
     static defaultProps = getDefaultProps();
 
-
     getSel = () => {
         const value = this.props.value || [];
         let treeChildren;
@@ -47,6 +46,7 @@ class Picker extends React.Component {
             });
         } else {
             treeChildren = value.map((v, i) => {
+                console.log(this.props.data[i].filter(d => d.value === v)[0])
                 return this.props.data[i].filter(d => d.value === v)[0];
             });
         }

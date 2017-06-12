@@ -164,7 +164,7 @@ module.exports = {
             'process.env': { // 这是给 React / Redux 打包用的
                 NODE_ENV: JSON.stringify('production')
             },
-            // ================================
+            // ===============================
             // 配置开发全局常量
             // ================================
             __DEV__: commonPath.env === 'development',
