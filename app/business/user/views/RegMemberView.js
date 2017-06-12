@@ -334,6 +334,15 @@ const district = datas;
                     >
                         <CustomChildren>选择地区（自定义 children）</CustomChildren>
                     </Picker>
+                    <Picker
+                        data={district}
+                        title="选择地区"
+                        extra="请选择(可选)"
+                        value={this.state.pickerValue}
+                        onChange={v => this.setState({ pickerValue: v })}
+                    >
+                        <div></div>
+                    </Picker>
                     {
                         this.state.buttonDisabled
                             ? <Button title="下一步" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
