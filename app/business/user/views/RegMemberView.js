@@ -21,6 +21,9 @@
  import NavBar from 'kyBase/components/ux/NavBar';
  import InputItem from 'kyBase/components/ux/InputItem';
  import Picker from 'kyBase/components/ux/Picker';
+ import List from 'kyBase/components/ux/List';
+ const Item = List.Item;
+ const Brief = Item.Brief;
 
 import datas from 'kyBase/components/ux/data'
 import '../resources/RegMemberView.less';
@@ -52,18 +55,10 @@ const district = datas;
              referenceId: '',  //推荐人编号
              isClickReference: true,  // 点击此处是否可点击
              buttonDisabled: true,   // 注册按钮是否可点
-             data: [],
-             cols: 1,
-             pickerValue: [],
+             pickerValue: [],   // 省市区数据
          };
      }
-     onClick = () => {
-         setTimeout(() => {
-             this.setState({
-                 data: province,
-             });
-         }, 120);
-     };
+
      componentDidMount(){
      }
 
@@ -217,7 +212,7 @@ const district = datas;
                                      <InputItem
                                          placeholder="请输入有效的邮箱地址"
                                          onChange={this.stateChangeHandle.bind(this, 'email')}
-                                     >邮件地址</InputItem>
+                                     >邮箱地址</InputItem>
                                  )}
                                  {getFieldDecorator('confirmEmail', {
                                      rules: [{
@@ -290,6 +285,16 @@ const district = datas;
                                          onChange={this.stateChangeHandle.bind(this, 'address')}
                                      >详细地址</InputItem>
                                  )}
+                                 <Picker
+                                     data={district}
+                                     title="选择地区"
+                                     extra="请选择您所在的省市区"
+                                     value={this.state.pickerValue}
+                                     onChange={v => this.setState({ pickerValue: v })}
+                                     format={(values) => { return values.join(' '); }}
+                                  >
+                                     <List.Item arrow="horizontal" className="picker-city">详细地址</List.Item>
+                                 </Picker>
                                  {getFieldDecorator('zipCode')(
                                      <InputItem
                                          placeholder="请输入6个数字的邮政编码"
@@ -334,15 +339,7 @@ const district = datas;
                     >
                         <CustomChildren>选择地区（自定义 children）</CustomChildren>
                     </Picker>
-                    <Picker
-                        data={district}
-                        title="选择地区"
-                        extra="请选择(可选)"
-                        value={this.state.pickerValue}
-                        onChange={v => this.setState({ pickerValue: v })}
-                    >
-                        <div></div>
-                    </Picker>
+
                     {
                         this.state.buttonDisabled
                             ? <Button title="下一步" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>

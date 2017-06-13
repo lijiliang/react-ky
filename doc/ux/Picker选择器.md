@@ -13,11 +13,11 @@
 | onChange | 选中后的回调 | (val): void | - |
 | onPickerChange | 每列数据选择变化后的回调函数   | (val): void | - |
 | itemStyle | 每列样式  |   Object   | -  |
-| children|  | Object |  |
+| children| 通常是 `List.Item` | Object |  `List.Item`  |
 | okText  | 选中的文案 | String |  `确定`  |
 | dismissText  | 取消选中的文案 | String |  `取消`  |
 | title  | 大标题 | String | - |
-| extra  | Picker children，需要是自定义组件(组件内需处理`onClick`/`extra`属性) | String |  `请选择`  |
+| extra  | Picker children 建议是 `List.Item`, 如果不是，需要是自定义组件(组件内需处理`onClick`/`extra`属性) | String |  `请选择`  |
 | disabled  | 是否不可用 | Boolean | false |
 
 ## 例子
@@ -42,5 +42,28 @@ const CustomChildren = props => (
     onChange={v => this.setState({ pickerValue: v })}
 >
     <CustomChildren>选择地区（自定义 children）</CustomChildren>
+</Picker>
+
+
+// 配合List.Item组件
+<Picker
+  data={district}
+  title="选择地区"
+  extra="请选择"
+  value={this.state.pickerValue}
+  onChange={v => this.setState({ pickerValue: v })}
+>
+  <List.Item arrow="horizontal">选择地区</List.Item>
+</Picker>
+
+<Picker
+  data={district}
+  title="选择地区"
+  extra="请选择"
+  value={this.state.pickerValue}
+  onChange={v => this.setState({ pickerValue: v })}
+  format={(values) => { return values.join(' / '); }}
+>
+  <List.Item arrow="horizontal">选择地区</List.Item>
 </Picker>
 ```

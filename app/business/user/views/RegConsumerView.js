@@ -220,7 +220,7 @@
                                      <InputItem
                                          placeholder="请输入有效的邮箱地址"
                                          onChange={this.stateChangeHandle.bind(this, 'email')}
-                                     >邮件地址</InputItem>
+                                     >邮箱地址</InputItem>
                                  )}
                                  {getFieldDecorator('confirmEmail', {
                                      rules: [{
