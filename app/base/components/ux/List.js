@@ -2,6 +2,7 @@
  * @fileOverview List列表
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Item from './ListItem';
 import './List.less';
@@ -30,5 +31,9 @@ class List extends React.Component{
         );
     }
 }
-
+List.propsType = {
+    renderHeader: PropTypes.func,
+    renderFooter: PropTypes.func,
+    children: PropTypes.element
+}
 export default List;

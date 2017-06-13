@@ -76,7 +76,6 @@ class IndexView extends React.Component{
         return(
                 <div className="ky-scrollable">
                     <SlideSwipe List={slideList}/>
-                    <List>asdf</List>
                     <List renderHeader={() => '基本样式'} className="my-list">
                       <Item extra={'内容内容'}>标题文字</Item>
                     </List>

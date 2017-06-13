@@ -2,6 +2,7 @@
  * @fileOverview List列表 单项
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Touchable from 'rc-touchable';
 import omit from 'omit.js';
@@ -12,6 +13,11 @@ export class Biref extends React.Component {
             <div className="ky-list-brief" style={this.props.style}>{this.props.children}</div>
         );
     }
+}
+Biref.propTypes = {
+    style: PropTypes.object,
+    children: PropTypes.element,
+    wrap: PropTypes.bool
 }
 
 class ListItem extends React.Component {
@@ -126,7 +132,7 @@ class ListItem extends React.Component {
             <div className={lineCls}>
                 {children !== undefined && <div className={`${prefixCls}-content`}>{children}</div>}
                 {extra !== undefined && <div className={`${prefixCls}-extra`}>{extra}</div>}
-                {arrow && <div className={arrowCls} aria-hidden="true" />}
+                {arrow && <div className={arrowCls}/>}
             </div>
             <div style={coverRippleStyle} className={rippleCls} />
         </div>;
@@ -142,5 +148,16 @@ class ListItem extends React.Component {
         );
     }
 }
-
+ListItem.propTypes = {
+    thumb: PropTypes.element,
+    extra: PropTypes.element,
+    arrow: PropTypes.oneOf(['horizontal', 'down', 'up', 'empty']),
+    align: PropTypes.oneOf(['top', 'middle', 'bottom']),
+    onClick: PropTypes.func,
+    multipleLine: PropTypes.bool,
+    error: PropTypes.bool,
+    wrap: PropTypes.bool,
+    activeStyle: PropTypes.object,
+    platform: PropTypes.oneOf(['android', 'ios', 'cross']),
+}
 export default ListItem;
