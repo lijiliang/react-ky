@@ -45,6 +45,7 @@
     }
 }
 
+// ky-list-item 单项
 .@{listPrefixCls}-item {
     position: relative;
     display: flex;
@@ -73,7 +74,7 @@
             animation: ripple 1s linear;
         }
     }
-
+    //Flex 子元素垂直对齐 top
     &.@{listPrefixCls}-item-top {
         .@{listPrefixCls} -line {
             align-items: flex-start;
@@ -83,19 +84,19 @@
             }
         }
     }
-
+    //Flex 子元素垂直对齐 middle
     &.@{listPrefixCls}-item-middle {
         .@{listPrefixCls}-line {
             align-items: center;
         }
     }
-
+    //Flex 子元素垂直对齐 bottom
     &.@{listPrefixCls}-item-bottom {
         .@{listPrefixCls}-line {
             align-items: flex-end;
         }
     }
-
+    // 错误提示
     &.@{listPrefixCls}-item-error {
         .@{listPrefixCls}-line {
             .@{listPrefixCls}-extra {
@@ -111,7 +112,7 @@
     &.@{listPrefixCls}-item-active {
         background-color: @fill-tap;
     }
-
+    // 禁用
     &&-disabled {
     .@{listPrefixCls}-line {
         .@{listPrefixCls}-content,
@@ -128,6 +129,21 @@
     }
     /* list左图片显示*/
     .@{listPrefixCls}-thumb {
+        &:first-child {
+            margin-right: @h-spacing-lg;
+        }
+
+        &:last-child {
+            margin-left: @h-spacing-md;
+        }
+    }
+
+    /* list左icon显示*/
+    .@{listPrefixCls}-icon {
+        .icon{
+            font-size: @icon-size-md;
+            vertical-align: middle;
+        }
         &:first-child {
             margin-right: @h-spacing-lg;
         }
@@ -206,7 +222,7 @@
                 transform: rotate(270deg);
             }
         }
-
+        //多行
         &-multiple {
             padding: 25px @h-spacing-lg 25px 0;
 
@@ -220,7 +236,7 @@
                 padding-bottom: 0;
             }
         }
-
+        // 是否换行
         &-wrap {
             .@{listPrefixCls}-content {
                 white-space: normal;
@@ -231,7 +247,7 @@
             }
         }
     }
-
+    //默认select重置样式
     select {
         position: relative;
         display: block;

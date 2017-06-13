@@ -99,6 +99,14 @@ class IndexView extends React.Component{
                         >
                           标题文字 <Brief>副标题</Brief>
                         </Item>
+                        <Item
+                          arrow="horizontal"
+                          iconName="creatAC"
+                          multipleLine
+                          onClick={() => {}}
+                        >
+                          标题文字 <Brief>副标题</Brief>
+                        </Item>
                     </List>
                     <List renderHeader={() => '右侧自定义（无内容 / 文字 / 图片）'} className="my-list">
                         <Item>标题文字</Item>

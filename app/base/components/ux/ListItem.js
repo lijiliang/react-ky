@@ -86,7 +86,7 @@ class ListItem extends React.Component {
     render(){
         const {
             prefixCls, className, activeStyle, error, align, wrap, disabled,
-            children, multipleLine, thumb, extra, arrow, onClick, ...restProps } = this.props;
+            children, multipleLine, thumb, extra, arrow, onClick, iconName, ...restProps } = this.props;
         const { coverRippleStyle, RippleClicked } = this.state;
 
         // 默认类
@@ -110,14 +110,18 @@ class ListItem extends React.Component {
             [`${prefixCls}-line-multiple`]: multipleLine,
             [`${prefixCls}-line-wrap`]: wrap,
         })
-
+        // 箭头
         const arrowCls = classNames({
             [`${prefixCls}-arrow`]: true,
             [`${prefixCls}-arrow-horizontal`]: arrow === 'horizontal',
             [`${prefixCls}-arrow-vertical`]: arrow === 'down' || arrow === 'up',
             [`${prefixCls}-arrow-vertical-up`]: arrow === 'up',
         })
-
+        // icon
+        const iconCls = classNames({
+            ['icon']: true,
+            [`icon-${iconName}`]: iconName
+        })
         // 主体内容
         const content = <div
             {...omit(restProps, ['platform'])}
@@ -126,6 +130,11 @@ class ListItem extends React.Component {
             }}
             className={classNames(wrapCls)}
         >
+            {/* icon */}
+            {iconName ? <div className={`${prefixCls}-icon`}>
+                {typeof iconName === 'string' ? <i className={iconCls}></i> : iconCls}
+            </div> : null}
+            {/* 图片 */}
             {thumb ? <div className={`${prefixCls}-thumb`}>
                 {typeof thumb === 'string' ? <img src={thumb} /> : thumb}
             </div> : null}
@@ -150,6 +159,7 @@ class ListItem extends React.Component {
 }
 ListItem.propTypes = {
     thumb: PropTypes.element,
+    iconName: PropTypes.string,
     extra: PropTypes.element,
     arrow: PropTypes.oneOf(['horizontal', 'down', 'up', 'empty']),
     align: PropTypes.oneOf(['top', 'middle', 'bottom']),
