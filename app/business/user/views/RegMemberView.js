@@ -25,21 +25,9 @@
  const Item = List.Item;
  const Brief = Item.Brief;
 
-import datas from 'kyBase/components/ux/data'
 import '../resources/RegMemberView.less';
 
-
- const CustomChildren = props => (
-   <div
-     onClick={props.onClick}
-     style={{ backgroundColor: '#fff', padding: '0 0.3rem' }}
-   >
-     <div style={{ display: 'flex', height: '0.9rem', lineHeight: '0.9rem' }}>
-       <div style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.children}</div>
-       <div style={{ textAlign: 'right', color: '#888' }}>{props.extra}</div>
-     </div>
-   </div>
- );
+import datas from 'kyBase/components/ux/data'
 const district = datas;
  class RegConsumerView extends React.Component{
      constructor(props, context){
@@ -56,6 +44,7 @@ const district = datas;
              isClickReference: true,  // 点击此处是否可点击
              buttonDisabled: true,   // 注册按钮是否可点
              pickerValue: [],   // 省市区数据
+             cityExtra: false,  // 是否已选择过省市区
          };
      }
 
@@ -87,7 +76,13 @@ const district = datas;
         }
         */
      }
-
+     // 省市区选择
+     pickerChangeHandle(v){
+        this.setState({
+            pickerValue: v,
+            cityExtra: true
+        })
+     }
      // 提交
      submitHandle = () => {
          const form = this.props.form;
@@ -147,7 +142,7 @@ const district = datas;
      }
 
      render(){
-         console.log(this.state)
+         console.log(this.state, this.state.cityExtra)
          const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
 
          // 密码
@@ -157,7 +152,10 @@ const district = datas;
              'extra-pwd': true,
              'extra-pwd-active': this.state.isShowPwd
          })
-
+         const cityExtraCls = classNames({
+             ['picker-city']: true,
+             ['city-extra-ctive']: this.state.cityExtra
+         })
          return(
              <div className="ky-scrollable">
                  <div className="m-regMember">
@@ -279,21 +277,15 @@ const district = datas;
                                          onChange={this.stateChangeHandle.bind(this, 'idCard')}
                                      >身份证号码</InputItem>
                                  )}
-                                 {getFieldDecorator('address')(
-                                     <InputItem
-                                         placeholder="详细地址"
-                                         onChange={this.stateChangeHandle.bind(this, 'address')}
-                                     >详细地址</InputItem>
-                                 )}
                                  <Picker
                                      data={district}
                                      title="选择地区"
                                      extra="请选择您所在的省市区"
                                      value={this.state.pickerValue}
-                                     onChange={v => this.setState({ pickerValue: v })}
+                                     onChange={this.pickerChangeHandle.bind(this)}
                                      format={(values) => { return values.join(' '); }}
                                   >
-                                     <List.Item arrow="horizontal" className="picker-city">详细地址</List.Item>
+                                     <List.Item arrow="horizontal" className={cityExtraCls}>详细地址</List.Item>
                                  </Picker>
                                  {getFieldDecorator('zipCode')(
                                      <InputItem
@@ -330,16 +322,6 @@ const district = datas;
                         </div>
 
                     </div>
-                    <Picker
-                        data={district}
-                        title="选择地区"
-                        extra="请选择(可选)"
-                        value={this.state.pickerValue}
-                        onChange={v => this.setState({ pickerValue: v })}
-                    >
-                        <CustomChildren>选择地区（自定义 children）</CustomChildren>
-                    </Picker>
-
                     {
                         this.state.buttonDisabled
                             ? <Button title="下一步" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
