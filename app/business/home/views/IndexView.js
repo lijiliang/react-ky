@@ -13,6 +13,7 @@ import SlideSwipe from 'kyBase/components/ux/SlideSwipe';
 import '../resources/IndexView.less';
 
 import { get, past } from 'kyBase/common/FetchData';
+import TextareaItem from 'kyBase/components/ux/TextareaItem';
 import List from 'kyBase/components/ux/List';
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -38,6 +39,8 @@ const slideList = [
         title: 'Banner2'
     }
 ];
+
+import { createForm } from 'rc-form';
 class IndexView extends React.Component{
     constructor(props, context){
         super(props, context);
@@ -73,9 +76,44 @@ class IndexView extends React.Component{
         // });
     }
     render(){
+         const { getFieldProps } = this.props.form;
         return(
                 <div className="ky-scrollable">
                     <SlideSwipe List={slideList}/>
+                    <TextareaItem title="text Title"></TextareaItem>
+                    <TextareaItem
+                        title="标题"
+                        placeholder="auto focus"
+                        data-seed="logId"
+                        autoFocus
+                        autoHeight
+                      />
+                      <TextareaItem
+                          title=' '
+                          placeholder="显示两行"
+                          rows='2'
+                        />
+                        <TextareaItem
+                            title=' '
+                            placeholder="显示两行"
+                            clear
+                            rows='2'
+                            {...getFieldProps('clear2')}
+                          />
+                          <TextareaItem
+                            {...getFieldProps('clear1')}
+                            clear
+                            title="可以删除的多行"
+                            placeholder="displayed clear icon while typing"
+                            labelNumber='7'
+                          />
+                          <TextareaItem
+                            {...getFieldProps('count', {
+                              initialValue: '计数功能,我的意见是...',
+                            })}
+                            rows={5}
+                            count={100}
+                          />
                     <List renderHeader={() => '基本样式'} className="my-list">
                       <Item extra={'内容内容'}>标题文字</Item>
                     </List>
@@ -180,4 +218,4 @@ function mapDispatchToProps(dispatch){
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(IndexView);
+)(createForm()(IndexView));

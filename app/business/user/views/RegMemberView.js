@@ -34,7 +34,7 @@ const district = datas;
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
-             firstName: '',      //姓
+             firstName: '',    //姓
              lastName: '',     //名
              email: '',        //邮箱
              confirmEmail: '', //确认邮箱
@@ -142,7 +142,7 @@ const district = datas;
      }
 
      render(){
-         console.log(this.state, this.state.cityExtra)
+         console.log(this.state)
          const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
 
          // 密码
@@ -154,7 +154,7 @@ const district = datas;
          })
          const cityExtraCls = classNames({
              ['picker-city']: true,
-             ['city-extra-ctive']: this.state.cityExtra
+             ['picker-city-active']: this.state.cityExtra
          })
          return(
              <div className="ky-scrollable">
