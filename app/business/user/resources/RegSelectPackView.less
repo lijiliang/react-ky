@@ -1,0 +1,89 @@
+/**
+ * @fileOverview: 注册会员帐号
+ * @version: 1.0.0(2017-6-9)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+@selectpackCls: m-selectpack;
+@packCls: m-pack;
+
+.@{selectpackCls} {
+    height: 100%;
+    .regcon-info{
+        background: @brand-gray-p;
+        padding: 10px @h-spacing-sm @h-spacing-sm @h-spacing-sm;
+        text-align: center;
+        h2{
+            font-size: 36px;
+            color: @brand-primary;
+        }
+        p{
+            line-height: 1.6;
+            font-size: @font-size-subhead;
+        }
+    }
+}
+
+.@{packCls} {
+    // 单项套组
+    &-item {
+        margin-bottom: @v-spacing-md;
+        border-top: 5px solid @brand-blue-deep;
+        .@{packCls}-header{
+            background: @brand-blue-bady-deep;
+            display: flex;
+            height: 102px;
+            line-height: 102px;
+            padding: 0 @h-spacing-lg;
+            color: @brand-primary;
+            .icon{
+                padding-right: 10px;
+                font-size: 50px;
+                color: #fff;
+            }
+            .pack-name{
+                flex: 1;
+                font-size: 54px;
+                font-weight: normal;
+            }
+            .member-price{
+                flex: 1;
+                justify-content: flex-end;
+                text-align: right;
+                white-space: nowrap;
+                span{
+                    font-size: 30px;
+                    &.price{
+                        padding-left: 8px;
+                        font-size: 40px;
+                    }
+                }
+            }
+        }
+        .@{packCls}-body{
+            background: @fill-base;
+            padding: @v-spacing-lg;
+            border: 15px solid @brand-blue-bady-deep;
+            border-top: none;
+            box-sizing: padding-box;
+        }
+    }
+    // 单项套组高亮显示
+    &-active {
+        margin-bottom: @v-spacing-md;
+        .@{packCls}-header{
+            background: @brand-primary;
+            color: @brand-green-deep;
+            .icon{
+                color: @brand-green-deep;
+            }
+        }
+        .@{packCls}-body{
+            border: 15px solid @brand-primary;
+            border-top: none;
+        }
+    }
+}
