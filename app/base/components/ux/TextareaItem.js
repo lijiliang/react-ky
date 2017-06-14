@@ -176,8 +176,8 @@ class TextareaItem extends React.Component {
 
         const { focus } = this.state;
         const wrapCls = classNames({
-            [`${prefixCls}-item`]: true,
             [`${prefixListCls}-item`]: true,
+            [`${prefixCls}-item`]: true,
             [`${prefixCls}-disabled`]: disabled,
             [`${prefixCls}-item-single-line`]: rows === 1 && !autoHeight,
             [`${prefixCls}-error`]: error,

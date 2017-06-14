@@ -21,6 +21,7 @@
  import NavBar from 'kyBase/components/ux/NavBar';
  import InputItem from 'kyBase/components/ux/InputItem';
  import Picker from 'kyBase/components/ux/Picker';
+ import TextareaItem from 'kyBase/components/ux/TextareaItem';
  import List from 'kyBase/components/ux/List';
  const Item = List.Item;
  const Brief = Item.Brief;
@@ -287,6 +288,12 @@ const district = datas;
                                   >
                                      <List.Item arrow="horizontal" className={cityExtraCls}>详细地址</List.Item>
                                  </Picker>
+                                 <TextareaItem
+                                     title=" "
+                                     placeholder="请输入您的所在地址，产品将会寄住此处"
+                                     labelNumber={6}
+                                     rows={2}
+                                 />
                                  {getFieldDecorator('zipCode')(
                                      <InputItem
                                          placeholder="请输入6个数字的邮政编码"

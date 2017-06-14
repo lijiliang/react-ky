@@ -25,7 +25,7 @@
         padding-left: 0;
         // padding-left: @h-spacing-lg;
         // padding-right: @h-spacing-lg;
-        border-bottom:2px solid @border-color-base;
+        .hairline-bottom(@border-color-base, 0, @border-width-md);
     }
 
     // input label左边宽度
@@ -160,15 +160,21 @@
     }
 }
 
-.@{listPrefixCls}{
-    &-body {
-        .@{listPrefixCls}-item {
-            &:last-child {
-                border-bottom: 0;
-                  &:after {
-                    display: none;
-                  }
-            }
-        }
-    }
+
+// 最后一个去掉border线
+.@{listPrefixCls}-item {
+  &:last-child {
+    .hairline-remove-right-bottom();
+  }
 }
+
+
+// .@{listPrefixCls} {
+//   &-body {
+//     .@{listPrefixCls}-item {
+//       &:last-child {
+//         .hairline-remove-right-bottom();
+//       }
+//     }
+//   }
+// }

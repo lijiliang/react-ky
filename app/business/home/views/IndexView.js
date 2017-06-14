@@ -81,39 +81,7 @@ class IndexView extends React.Component{
                 <div className="ky-scrollable">
                     <SlideSwipe List={slideList}/>
                     <TextareaItem title="text Title"></TextareaItem>
-                    <TextareaItem
-                        title="标题"
-                        placeholder="auto focus"
-                        data-seed="logId"
-                        autoFocus
-                        autoHeight
-                      />
-                      <TextareaItem
-                          title=' '
-                          placeholder="显示两行"
-                          rows='2'
-                        />
-                        <TextareaItem
-                            title=' '
-                            placeholder="显示两行"
-                            clear
-                            rows='2'
-                            {...getFieldProps('clear2')}
-                          />
-                          <TextareaItem
-                            {...getFieldProps('clear1')}
-                            clear
-                            title="可以删除的多行"
-                            placeholder="displayed clear icon while typing"
-                            labelNumber='7'
-                          />
-                          <TextareaItem
-                            {...getFieldProps('count', {
-                              initialValue: '计数功能,我的意见是...',
-                            })}
-                            rows={5}
-                            count={100}
-                          />
+                    <TextareaItem title="text Title"></TextareaItem>
                     <List renderHeader={() => '基本样式'} className="my-list">
                       <Item extra={'内容内容'}>标题文字</Item>
                     </List>

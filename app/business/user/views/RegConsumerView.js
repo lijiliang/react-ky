@@ -284,6 +284,7 @@
                                         placeholder="请输入您的推荐人会员号"
                                         value={this.state.referenceId}
                                         onChange={this.stateChangeHandle.bind(this, 'referenceId')}
+                                        className="ky-input-referenceId"
                                     >推荐人会员号</InputItem>
                                  )}
                             </div>

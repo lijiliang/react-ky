@@ -22,9 +22,11 @@
     align-items: flex-start;
     box-sizing: border-box;
     min-height: @list-item-height;
-    padding-left: @h-spacing-lg;
-    padding-right: @h-spacing-lg;
-    .hairline-bottom(@border-color-base, @h-spacing-lg);
+    // padding-left: @h-spacing-lg;
+    // padding-right: @h-spacing-lg;
+    padding: 0;
+    .hairline-bottom(@border-color-base, 0, @border-width-md);
+    // .hairline-bottom(@border-color-base, @h-spacing-lg);  // 左边15px 一个像素宽
 
     &.@{textareaPrefixCls}-item-single-line {
       align-items: center;
@@ -115,6 +117,7 @@
 
     &::-webkit-input-placeholder {
       color: @color-text-placeholder;
+      font-size: @font-size-caption;
     }
 
     &:disabled {
@@ -184,12 +187,19 @@
   }
 }
 
-.@{listPrefixCls} {
-  &-body {
-    .@{listPrefixCls}-item {
-      &:last-child {
-        .hairline-remove-right-bottom();
-      }
-    }
+// 最后一个去掉border线
+.@{listPrefixCls}-item {
+  &:last-child {
+    .hairline-remove-right-bottom();
   }
 }
+
+// .@{listPrefixCls} {
+//   &-body {
+//     .@{listPrefixCls}-item {
+//       &:last-child {
+//         .hairline-remove-right-bottom();
+//       }
+//     }
+//   }
+// }
