@@ -23,7 +23,8 @@ module.exports = {
     },
     output: {
         path: path.join(commonPath.dist, 'static'),
-        // filename: '[name].js',
+        filename: '[name].js', //主入口文件 名称
+        //chunkFilename: '[id].chunk.js', //分片异步模块
         publicPath: '/static/'
     },
     resolve: {

@@ -10,9 +10,13 @@ import RouterFilter from './RouterFilter';
 import Launch from './Launch';
 import HomeView from 'kyBus/home/views/IndexView';
 import LoginView from 'kyBus/login/views/LoginView';             // 登录
-import RegMemberView from 'kyBus/user/views/RegMemberView';      // 注册会员帐号
+
+// user
+import UserIndexView from 'kyBus/user/views/IndexView';          // 会员中心首页
 import RegConsumerView from 'kyBus/user/views/RegConsumerView';  // 消费者注册
 import RegSuccessView from 'kyBus/user/views/RegSuccessView';    // 消费者注册成功
+import RegMemberView from 'kyBus/user/views/RegMemberView';      // 注册会员帐号
+import RegSelectPackView from 'kyBus/user/views/RegSelectPackView';    // 消费者注册成功
 
 /*
  * 路由
@@ -38,9 +42,12 @@ class RouterMap extends React.Component {
                 >
                     <IndexRoute component={HomeView}/>
                     <Route path='login' component={LoginView}/>
-                    <Route path='regmember' component={RegMemberView}/>
-                    <Route path='regconsumer' component={RegConsumerView}/>
-                    <Route path='regsuccess' component={RegSuccessView}/>
+                    <Route path='/user' component={UserIndexView} >
+                        <Route path='/user/regconsumer' component={RegConsumerView}/>
+                        <Route path='/user/regsuccess' component={RegSuccessView}/>
+                        <Route path='/user/regmember' component={RegMemberView}/>
+                        <Route path='/user/regselectpack' component={RegSelectPackView}/>
+                    </Route>
                     {/* <Route path='*' component={NotFound}/> */}
                 </Route>
             </Router>

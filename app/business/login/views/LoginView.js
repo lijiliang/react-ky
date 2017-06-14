@@ -160,8 +160,8 @@ class LoginView extends React.Component{
                         </div>
                         <div className="account-other">
                             <span className="no-account-tit">没有帐号？</span>
-                            <Link to='/regmember'><Button className="ky-btn" title="会员注册"/></Link>
-                            <Link to='/regconsumer'><Button className="ky-btn" title="消费者注册"/></Link>
+                            <Link to='/user/regmember'><Button className="ky-btn" title="会员注册"/></Link>
+                            <Link to='/user/regconsumer'><Button className="ky-btn" title="消费者注册"/></Link>
                         </div>
                     </div>
                 </div>
