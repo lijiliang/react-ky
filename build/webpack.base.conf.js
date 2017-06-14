@@ -36,6 +36,8 @@ module.exports = {
              */
             kyBase: path.join(commonPath.src, '/base/'),
             kyBus: path.join(commonPath.src, '/business/'),
+            kyComponent: path.join(commonPath.src, '/base/components/business/index.js'),  //ky自用组件
+            uxComponent: path.join(commonPath.src, '/base/components/ux/index.js'),   //智能组件
             FetchData: path.join(commonPath.src, '/base/common/FetchData.js'),
             busModels: path.join(commonPath.src, '/business/modelIndex.js'),
             Urls: path.join(commonPath.src, '/base/common/Urls.js'),

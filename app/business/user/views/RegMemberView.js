@@ -1,30 +1,25 @@
 /**
  * @fileOverview 注册会员帐号 View
  */
- import React from 'react';
- import { Link } from 'react-router';
- import PureRenderMixin from 'react-addons-pure-render-mixin';
- import { bindActionCreators } from 'redux';
- import { connect } from 'react-redux';
- import * as loginAction from '../action/actionTypes';
- import {regConsumer} from '../action/DataAction';
+import React from 'react';
+import { Link } from 'react-router';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as loginAction from '../action/actionTypes';
+import {regConsumer} from '../action/DataAction';
 
- import { createForm } from 'rc-form';
- import classNames from 'classnames';
- import RegxRule from 'kyBase/common/RegxRule';
- import { get, getPublic } from 'kyBase/common/FetchData';
- import Urls from 'kyBase/common/Urls';
+import { createForm } from 'rc-form';
+import classNames from 'classnames';
+import RegxRule from 'kyBase/common/RegxRule';
+import { get, getPublic } from 'kyBase/common/FetchData';
+import Urls from 'kyBase/common/Urls';
 
- import KYSteps from 'kyBase/components/business/KYSteps';
- import Button from 'kyBase/components/ux/Button';
- import Toast from 'kyBase/components/ux/Toast';
- import NavBar from 'kyBase/components/ux/NavBar';
- import InputItem from 'kyBase/components/ux/InputItem';
- import Picker from 'kyBase/components/ux/Picker';
- import TextareaItem from 'kyBase/components/ux/TextareaItem';
- import List from 'kyBase/components/ux/List';
- const Item = List.Item;
- const Brief = Item.Brief;
+//组件
+import { KYSteps } from 'kyComponent';
+import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
+const Item = List.Item;
+const Brief = Item.Brief;
 
 import '../resources/RegMemberView.less';
 
@@ -41,11 +36,17 @@ const district = datas;
              confirmEmail: '', //确认邮箱
              password: '',     //密码
              confirmPwd: '',   //确认密码
+             phone: '',        //手机号
+             telephone: '',    //固定电话
+             idCard: '',       //身份证号码
+             cityValue: [],    //省市区数据
+             address: '',      //详细地址
+             zipCode: '',      //邮政编码
              referenceId: '',  //推荐人编号
+             confirmReferenceId: '',   //确认推荐人
              isClickReference: true,  // 点击此处是否可点击
-             buttonDisabled: true,   // 注册按钮是否可点
-             pickerValue: [],   // 省市区数据
-             cityExtra: false,  // 是否已选择过省市区
+             buttonDisabled: true,    // 注册按钮是否可点
+             cityExtra: false,        // 是否已选择过省市区
          };
      }
 
@@ -80,7 +81,7 @@ const district = datas;
      // 省市区选择
      pickerChangeHandle(v){
         this.setState({
-            pickerValue: v,
+            cityValue: v,
             cityExtra: true
         })
      }
@@ -138,7 +139,7 @@ const district = datas;
                 // return;
             }
             // 将数据dispatch过去
-            this.props.dispatch(regConsumer(_state.firstName, _state.lastName, _state.email, _state.password, _state.referenceId))
+            // this.props.dispatch(regConsumer(_state.firstName, _state.lastName, _state.email, _state.password, _state.referenceId))
          })
      }
 
@@ -261,7 +262,7 @@ const district = datas;
                                  )}
                                  {getFieldDecorator('phone')(
                                      <InputItem
-                                         type="phone"
+                                         type="number"
                                          placeholder="请输入您的手机号"
                                          onChange={this.stateChangeHandle.bind(this, 'phone')}
                                      >手机号</InputItem>
@@ -282,7 +283,7 @@ const district = datas;
                                      data={district}
                                      title="选择地区"
                                      extra="请选择您所在的省市区"
-                                     value={this.state.pickerValue}
+                                     value={this.state.cityValue}
                                      onChange={this.pickerChangeHandle.bind(this)}
                                      format={(values) => { return values.join(' '); }}
                                   >
