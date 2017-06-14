@@ -9,11 +9,9 @@ import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
 import {login} from '../action/DataAction';
 
-import Button from 'kyBase/components/ux/Button';
-import Toast from 'kyBase/components/ux/Toast';
-import NavBar from 'kyBase/components/ux/NavBar';
+import { Button, Toast, NavBar } from 'uxComponent';
+import { Cache } from 'kyCommon';
 import 'kyBase/common/sValid';
-import Cache from 'Cache';
 
 import '../resources/LoginView.less';
 

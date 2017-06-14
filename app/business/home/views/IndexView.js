@@ -7,16 +7,13 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import Urls from 'Urls';
-// 幻灯片组件
-import SlideSwipe from 'kyBase/components/ux/SlideSwipe';
-import '../resources/IndexView.less';
-
 import { get, past } from 'kyBase/common/FetchData';
-import TextareaItem from 'kyBase/components/ux/TextareaItem';
-import List from 'kyBase/components/ux/List';
+import { Urls } from 'kyCommon';
+import { InputItem, TextareaItem, List, SlideSwipe} from 'uxComponent';
 const Item = List.Item;
 const Brief = Item.Brief;
+
+import '../resources/IndexView.less';
 // 幻灯片模拟数据
 import Banner1 from 'kyBus/home/resources/img/banner1.png';
 import Banner2 from 'kyBus/home/resources/img/banner2.png';

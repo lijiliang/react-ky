@@ -3,10 +3,9 @@
  */
 import * as types from './actionTypes';
 import Base64 from 'js-base64';
-import Toast from 'kyBase/components/ux/Toast';
-import Urls from 'Urls';
 import { get } from 'FetchData';
-import Cache from 'Cache';
+import { Cache, Urls } from 'kyCommon';
+import { Toast } from 'uxComponent';
 
 export function login(username,password,isAccount){
     return (dispatch,getState) => {

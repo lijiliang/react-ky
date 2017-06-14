@@ -3,10 +3,10 @@
  */
  import * as types from './actionTypes';
  import Base64 from 'js-base64';
- import Toast from 'kyBase/components/ux/Toast';
- import Urls from 'Urls';
+
  import { post, postPublic } from 'FetchData';
- import Cache from 'Cache';
+ import { Cache, Urls } from 'kyCommon';
+ import { Toast } from 'uxComponent';
 
 // 注册消费者
 export function regConsumer(firstName, lastName, email, password, referenceId){

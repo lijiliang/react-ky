@@ -11,9 +11,8 @@ import {regConsumer} from '../action/DataAction';
 
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
-import RegxRule from 'kyBase/common/RegxRule';
 import { get, getPublic } from 'kyBase/common/FetchData';
-import Urls from 'kyBase/common/Urls';
+import { Urls, RegxRule } from 'kyCommon';
 
 //组件
 import { KYSteps } from 'kyComponent';
