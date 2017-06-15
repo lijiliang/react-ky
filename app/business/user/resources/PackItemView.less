@@ -1,0 +1,140 @@
+/**
+ * @fileOverview: 套组单项
+ * @version: 1.0.0(2017-6-15)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+@packCls: m-pack;
+
+.@{packCls} {
+    // 单项套组
+    &-item {
+        margin-bottom: @v-spacing-md;
+        border-top: 5px solid @brand-blue-deep;
+        // item header
+        .@{packCls}-header{
+            background: @brand-blue-bady-deep;
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            height: 102px;
+            line-height: 102px;
+            padding: 0 @h-spacing-lg;
+            color: @brand-primary;
+            .icon-bg{
+                width: 55px;
+                height: 55px;
+                margin-right: 10px;
+                background: url('./img/radio.svg') no-repeat;
+            }
+            .pack-name{
+                flex: 1;
+                font-size: 54px;
+                font-weight: normal;
+                white-space: nowrap;
+            }
+            .member-price{
+                flex: 1;
+                justify-content: flex-end;
+                text-align: right;
+                white-space: nowrap;
+                span{
+                    font-size: 30px;
+                    &.price{
+                        padding-left: 8px;
+                        font-size: 40px;
+                    }
+                }
+            }
+        }
+        // item body
+        .@{packCls}-body{
+            background: @fill-base;
+            padding: 0 @v-spacing-lg;
+            border: 15px solid @brand-blue-bady-deep;
+            border-top: none;
+            box-sizing: padding-box;
+            .thumb{
+                img{
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
+        // 内容区域
+        .pack-content{
+            .con-tit{
+                background: #e6e6e6;
+                height: 36px;
+                line-height: 36px;
+                text-align: center;
+                font-size: 25px;
+                color: @brand-primary;
+            }
+            .pack-list{
+                position: relative;
+                width: 100%;
+                .hairline-bottom(@border-color-base, @border-width-sm);
+                li{
+                    width: 50%;
+                    height: 34px;
+                    line-height: 34px;
+                    display: inline-block;
+                    border-bottom: 1px solid @border-color-base;
+                    font-size: 24px;
+                    box-sizing: border-box;
+                    color: @brand-gray-dk;
+                    &:nth-child(odd){
+                        padding-right: 10px;
+                    }
+                    &:nth-child(even){
+                        padding-left: 10px;
+                    }
+                    .pack-num{
+                        float: right;
+                    }
+                }
+            }
+            .other-list{
+                li{
+                    width: 100%;
+                    height: 78px;
+                    line-height: 78px;
+                    border-bottom: 1px solid @border-color-base;
+                    font-size: 32px;
+                    color: @brand-gray-dk;
+                    &:last-child{
+                        border-bottom: none;
+                    }
+                    span{
+                        &:last-child{
+                            float: right;
+                        }
+                    }
+                    .price{
+                        text-decoration: line-through;
+                    }
+                }
+            }
+        }
+    }
+    // 单项套组高亮显示
+    &-active {
+        margin-bottom: @v-spacing-md;
+        .@{packCls}-header{
+            background: @brand-primary;
+            color: @brand-green-deep;
+            .icon-bg{
+                background: url('./img/radioSelect.svg') no-repeat;
+            }
+        }
+        .@{packCls}-body{
+            border: 15px solid @brand-primary;
+            border-top: none;
+        }
+    }
+}

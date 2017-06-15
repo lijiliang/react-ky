@@ -11,6 +11,7 @@
 
 import { Button, Toast, NavBar} from 'uxComponent';
 import { KYSteps } from 'kyComponent';
+import PackItemView from './PackItemView';
 
 import '../resources/RegSelectPackView.less';
 
@@ -19,6 +20,7 @@ class RegSelectPackView extends React.Component {
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
+            isActive: true,
         };
     }
 
@@ -44,66 +46,9 @@ class RegSelectPackView extends React.Component {
                         </div>
                     </div>
                     <div className="m-pack">
-                        <div className="m-pack-item m-pack-active">
-                            <div className="m-pack-header">
-                                <span className="icon-bg"></span>
-                                <strong className="pack-name">卓越套组</strong>
-                                <div className="member-price">
-                                    <span>会员价</span>
-                                    <span className="price">￥10,888.00</span>
-                                </div>
-                            </div>
-                            <div className="m-pack-body">
-                                <div className="thumb">
-                                    <img src="http://fpoimg.com/660x300?text=img" alt=""/>
-                                </div>
-                                <div className="pack-content">
-                                    <div className="con-tit">内容</div>
-                                    <ul className="pack-list">
-                                        <li><span className="pack-name">尼多乐(56毫升) </span><span className="pack-num">x1</span></li>
-                                        <li><span className="pack-name">新舒康(90粒) </span><span className="pack-num">x8</span></li>
-                                        <li><span className="pack-name">新乐思便利装(1安士x30包) </span><span className="pack-num">x1</span></li>
-                                        <li><span className="pack-name">尼多乐(56毫升) </span><span className="pack-num">x1</span></li>
-                                        <li><span className="pack-name">新舒康(90粒) </span><span className="pack-num">x1</span></li>
-                                    </ul>
-                                    <ul className="other-list">
-                                        <li><span>原价</span><span className="price">¥1,830.00</span></li>
-                                        <li><span>积分</span><span>125</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="m-pack-item">
-                            <div className="m-pack-header">
-                                <span className="icon-bg"></span>
-                                <strong className="pack-name">卓越套组</strong>
-                                <div className="member-price">
-                                    <span>会员价</span>
-                                    <span className="price">￥10,888.00</span>
-                                </div>
-                            </div>
-                            <div className="m-pack-body">
-                                <div className="thumb">
-                                    <img src="http://fpoimg.com/660x300?text=img" alt=""/>
-                                </div>
-                                <div className="pack-content">
-                                    <div className="con-tit">内容</div>
-                                    <ul className="pack-list">
-                                        <li><span className="pack-name">尼多乐(56毫升) </span><span className="pack-num">x1</span></li>
-                                        <li><span className="pack-name">新舒康(90粒) </span><span className="pack-num">x8</span></li>
-                                        <li><span className="pack-name">新乐思便利装(1安士x30包) </span><span className="pack-num">x1</span></li>
-                                        <li><span className="pack-name">尼多乐(56毫升) </span><span className="pack-num">x1</span></li>
-                                        <li><span className="pack-name">新舒康(90粒) </span><span className="pack-num">x1</span></li>
-                                    </ul>
-                                    <ul className="other-list">
-                                        <li><span>原价</span><span className="price">¥1,830.00</span></li>
-                                        <li><span>积分</span><span>125</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
+                        <PackItemView active icon/>
+                        <PackItemView icon/>
+                        <PackItemView icon listData={{a:123}}/>
                         {/* m-pack-active */}
                         <div className="m-pack-item">
                             <div className="m-pack-header">
