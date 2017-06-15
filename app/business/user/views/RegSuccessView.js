@@ -25,7 +25,7 @@ class RegSuccessView extends React.Component{
     }
     render(){
         return(
-            <div className="ky-scrollable">
+            <div className="ky-scrollable ky-regsuccess">
                 <div className="m-regsuccess">
                     <NavBar iconName={false}>注册成功</NavBar>
                     <div className="regsuccess-view">

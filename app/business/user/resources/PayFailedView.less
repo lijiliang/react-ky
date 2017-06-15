@@ -6,3 +6,40 @@
 
 // 引入变量
 @import '~varLess';
+@regSuccessCls: m-payfailed;
+
+.ky-scrollable.ky-paysuccess{
+    background: @fill-base;
+}
+
+.@{regSuccessCls} {
+    text-align: center;
+    .failed-info{
+        padding: 42px 0;
+        font-size: 40px;
+        color: @brand-gray-dk;
+        p{
+            line-height: 1.5;
+        }
+    }
+    .m-btn{
+        margin: 0 80px;
+        .btn-pay{
+            margin-bottom: 70px;
+            background: @brand-red;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+        }
+        .btn-contact{
+            margin: 35px 0;
+            background: #fff;
+            border: 1px solid #505050;
+            color: @color-text-base;
+        }
+    }
+    .info-item{
+        line-height: 1.4;
+        font-size: 28px;
+    }
+}
