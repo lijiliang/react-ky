@@ -46,7 +46,7 @@ class RegSelectPackView extends React.Component {
                     <div className="m-pack">
                         <div className="m-pack-item m-pack-active">
                             <div className="m-pack-header">
-                                <i className="icon icon-radioSelect"></i>
+                                <span className="icon-bg"></span>
                                 <strong className="pack-name">卓越套组</strong>
                                 <div className="member-price">
                                     <span>会员价</span>
@@ -54,13 +54,29 @@ class RegSelectPackView extends React.Component {
                                 </div>
                             </div>
                             <div className="m-pack-body">
-                                sdafsadf
+                                <div className="thumb">
+                                    <img src="http://fpoimg.com/660x300?text=img" alt=""/>
+                                </div>
+                                <div className="pack-content">
+                                    <div className="con-tit">内容</div>
+                                    <ul className="pack-list">
+                                        <li><span className="pack-name">尼多乐(56毫升) </span><span className="pack-num">x1</span></li>
+                                        <li><span className="pack-name">新舒康(90粒) </span><span className="pack-num">x8</span></li>
+                                        <li><span className="pack-name">新乐思便利装(1安士x30包) </span><span className="pack-num">x1</span></li>
+                                        <li><span className="pack-name">尼多乐(56毫升) </span><span className="pack-num">x1</span></li>
+                                        <li><span className="pack-name">新舒康(90粒) </span><span className="pack-num">x1</span></li>
+                                    </ul>
+                                    <ul className="other-list">
+                                        <li><span>原价</span><span className="price">¥1,830.00</span></li>
+                                        <li><span>积分</span><span>125</span></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
 
                         <div className="m-pack-item">
                             <div className="m-pack-header">
-                                <i className="icon icon-radio"></i>
+                                <span className="icon-bg"></span>
                                 <strong className="pack-name">卓越套组</strong>
                                 <div className="member-price">
                                     <span>会员价</span>
@@ -68,11 +84,43 @@ class RegSelectPackView extends React.Component {
                                 </div>
                             </div>
                             <div className="m-pack-body">
-                                sdafsadf
+                                <div className="thumb">
+                                    <img src="http://fpoimg.com/660x300?text=img" alt=""/>
+                                </div>
+                                <div className="pack-content">
+                                    <div className="con-tit">内容</div>
+                                    <ul className="pack-list">
+                                        <li><span className="pack-name">尼多乐(56毫升) </span><span className="pack-num">x1</span></li>
+                                        <li><span className="pack-name">新舒康(90粒) </span><span className="pack-num">x8</span></li>
+                                        <li><span className="pack-name">新乐思便利装(1安士x30包) </span><span className="pack-num">x1</span></li>
+                                        <li><span className="pack-name">尼多乐(56毫升) </span><span className="pack-num">x1</span></li>
+                                        <li><span className="pack-name">新舒康(90粒) </span><span className="pack-num">x1</span></li>
+                                    </ul>
+                                    <ul className="other-list">
+                                        <li><span>原价</span><span className="price">¥1,830.00</span></li>
+                                        <li><span>积分</span><span>125</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* m-pack-active */}
+                        <div className="m-pack-item">
+                            <div className="m-pack-header">
+                                <span className="icon-bg"></span>
+                                <strong className="pack-name">凯娅尼电子资料包</strong>
+                                <div className="member-price">
+                                    <span className="price">￥100.00</span>
+                                </div>
+                            </div>
+                            <div className="elect-package">
+                                <p>温馨提示 : 当您选择了此套组后，</p>
+                                <p>将会失去购买其他更吸引的加入套组的机会</p>
                             </div>
                         </div>
 
                     </div>
+                    <Button title="立即结算" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
                  </div>
              </div>
         );
