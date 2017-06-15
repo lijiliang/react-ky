@@ -8,9 +8,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
 import {regConsumer} from '../action/DataAction';
-import Button from 'kyBase/components/ux/Button';
-import Toast from 'kyBase/components/ux/Toast';
-import NavBar from 'kyBase/components/ux/NavBar';
+
+import { Button, Toast, NavBar } from 'uxComponent';
 
 import '../resources/RegSuccessView.less';
 

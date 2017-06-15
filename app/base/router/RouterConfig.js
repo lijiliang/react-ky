@@ -16,7 +16,11 @@ import UserIndexView from 'kyBus/user/views/IndexView';          // 会员中心
 import RegConsumerView from 'kyBus/user/views/RegConsumerView';  // 消费者注册
 import RegSuccessView from 'kyBus/user/views/RegSuccessView';    // 消费者注册成功
 import RegMemberView from 'kyBus/user/views/RegMemberView';      // 注册会员帐号
-import RegSelectPackView from 'kyBus/user/views/RegSelectPackView';    // 消费者注册成功
+import RegSelectPackView from 'kyBus/user/views/RegSelectPackView';    // 选购加入套组
+import RegOrderView from 'kyBus/user/views/RegOrderView';        // 确认订单及填写收货地址
+import PayMentView from 'kyBus/user/views/PayMentView';    // 填写支付信息
+import PaySuccessView from 'kyBus/user/views/PaySuccessView';    // 支付成功
+import PayFailedView from 'kyBus/user/views/PayFailedView';      // 支付失败
 
 /*
  * 路由
@@ -47,6 +51,10 @@ class RouterMap extends React.Component {
                         <Route path='/user/regsuccess' component={RegSuccessView}/>
                         <Route path='/user/regmember' component={RegMemberView}/>
                         <Route path='/user/regselectpack' component={RegSelectPackView}/>
+                        <Route path='/user/regorder' component={RegOrderView}/>
+                        <Route path='/user/payment' component={PayMentView}/>
+                        <Route path='/user/paysuccess' component={PaySuccessView}/>
+                        <Route path='/user/payfailed' component={PayFailedView}/>
                     </Route>
                     {/* <Route path='*' component={NotFound}/> */}
                 </Route>
