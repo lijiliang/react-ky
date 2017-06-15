@@ -4,5 +4,48 @@
  * @author: Benson
  */
 
-// 引入变量
-@import '~varLess';
+ // 引入变量
+ @import '~varLess';
+
+ @selectpackCls: m-regorder;
+
+ .@{selectpackCls} {
+     height: 100%;
+     .regcon-info{
+         background: @brand-gray-p;
+         padding: 10px 0 0 0;
+         text-align: center;
+         h2{
+             padding-bottom: 15px;
+             font-size: 36px;
+             color: @brand-primary;
+         }
+         .chosen{
+             height: 74px;
+             line-height: 84px;
+             background: @brand-blue-deep;
+             font-size: 40px;
+             color: #fff;
+         }
+     }
+ }
+
+.m-userinfo{
+    background: @fill-base;
+    border-top: 5px solid @brand-blue;
+    .userinfo-tit{
+        height: 90px;
+        line-height: 90px;
+        display: flex;
+        padding: 0 @v-spacing-lg;
+        h2 {
+
+        }
+        span{
+            float: right;
+        }
+    }
+    .userinfo-form{
+        padding: 0 @v-spacing-lg;
+    }
+}

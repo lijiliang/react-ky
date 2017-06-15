@@ -9,7 +9,7 @@
  import * as loginAction from '../action/actionTypes';
  import {regConsumer} from '../action/DataAction';
 
- import '../resources/PayMentView.less';
+ import '../resources/PayMentview.less';
 
  class RegPaymentView extends React.Component {
      constructor(props, context){
