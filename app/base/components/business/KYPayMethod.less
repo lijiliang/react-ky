@@ -1,0 +1,55 @@
+/**
+ * @fileOverview: 支付方式
+ * @version: 1.0.0(2017-6-16)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+@prefixCls: ky-paymethod;
+
+.@{prefixCls} {
+    background: @fill-base;
+    border-top: 5px solid @brand-blue;
+    &-tit{
+        height: 90px;
+        font-size: 40px;
+        padding: 0 @v-spacing-lg;
+        line-height: 90px;
+        color: @brand-primary;
+    }
+    &-body{
+        padding: 0 @v-spacing-lg;
+        .sel-pay{
+            display: flex;
+            line-height: 55px;
+            font-size: 28px;
+            color: @brand-primary;
+            .icon-bg{
+                display: inline-block;
+                width: 55px;
+                height: 55px;
+                margin-right: 0.1rem;
+                background: url('../../resources/svg/radioSelectPay.svg') no-repeat;
+            }
+        }
+        .pay-list{
+            padding: 20px 0 45px 30px;
+            img{
+                padding-left: 20px;
+                height: 78px;
+            }
+        }
+    }
+    &-foot{
+        background: @brand-gray-p;
+        line-height: 100px;
+        text-align: center;
+        font-size: 36px;
+        color: @brand-primary;
+        .price{
+            padding-left: 15px;
+        }
+    }
+}
