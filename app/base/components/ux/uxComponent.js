@@ -9,3 +9,4 @@ export { default as Picker } from './Picker';        //Picker选择器
 export { default as TextareaItem } from './TextareaItem';//TextareaItem 多行文本输入
 export { default as Toast } from './Toast';             //Toast 轻提示
 export { default as SlideSwipe } from './SlideSwipe';   //SlideSwipe 幻灯片
+export { default as Stepper } from './Stepper';         //Stepper 步进器 用于商品的加减处理
