@@ -11,6 +11,7 @@ import {regConsumer} from '../action/DataAction';
 
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
+import { ValidData } from 'kyCommon';
 import { KYSteps } from 'kyComponent';
 import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
 const Item = List.Item;
@@ -27,6 +28,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
+             select: ['08', '12']
          };
      }
 
@@ -49,7 +51,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
 
          const cityExtraCls = classNames({
              ['picker-city']: true,
-             ['picker-city-active']: this.state.cityExtra
+             ['picker-city-active']: this.state.select.length
          })
          return(
              <div className="ky-scrollable">
@@ -96,18 +98,21 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                        onChange={this.stateChangeHandle.bind(this, 'firstName')}
                                    >持卡人姓名</InputItem>
                                 )}
+
                                <Picker
-                                   data={district}
-                                   title="选择有效期"
-                                   extra="请选择有效期"
-                                   value={this.state.cityValue}
-                                   onChange={this.pickerChangeHandle.bind(this)}
-                                   format={(values) => { return values.join(' / '); }}
-                                   onOk={e => console.log('ok', e)}
-                                   onDismiss={e => console.log('dismiss', e)}
+                                  data={ValidData}
+                                  title="选择有效期"
+                                  cascade={false}
+                                  extra="请选择有效期"
+                                  value={this.state.select}
+                                  onChange={v => this.setState({ select: v })}
+                                //   onChange={this.pickerChangeHandle.bind(this)}
+                                  format={(values) => { return values.join(' / '); }}
+                                  onOk={e => console.log('ok', e)}
+                                  onDismiss={e => console.log('dismiss', e)}
                                 >
-                                   <List.Item className={cityExtraCls}>有效期</List.Item>
-                               </Picker>
+                                  <List.Item className={cityExtraCls}>有效期</List.Item>
+                                </Picker>
                                {getFieldDecorator('firstName', {
                                    rules: [{
                                        required: true,
