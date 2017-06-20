@@ -57,6 +57,7 @@
             text-align: right;
             font-size: 25px;
             color: @brand-primary;
+            white-space: nowrap;
             .price{
                 font-style: normal;
                 color: @brand-green-deep;
@@ -71,12 +72,13 @@
     }
     // 单项内容
     .item-content{
-        display: flex;
-        padding: @h-spacing-md @v-spacing-lg;
+        padding: @h-spacing-md @v-spacing-md;
         .thumb{
-            margin-right: @h-spacing-lg;
+            width: 220px;
+            float: left;
+            margin-right: @h-spacing-md;
             img{
-                width: 230px;
+                width: 220px;
                 display: block;
             }
         }
@@ -94,13 +96,16 @@
                 font-size: 24px;
                 color: @brand-gray-dk;
 
-                .ellipsis()
+                .ellipsis();
+                p{
+                    .ellipsis();
+                }
             }
             .name-tit{
                 font-size: 34px;
             }
             .number{
-                flex-basis: 24%;
+                flex-basis: 26%;
                 text-align: right;
             }
         }
@@ -144,7 +149,7 @@
     }
     .guoups-item{
         .info-foot{
-            padding: 35px 30px 35px 280px;
+            padding: 35px 30px 35px 250px;
             box-sizing: padding-box;
             height: 64px;
             overflow: hidden;
