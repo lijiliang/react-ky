@@ -7,3 +7,88 @@
 
 // 引入变量
 @import '~varLess';
+@prefixCls: ky-cart-order;
+
+//顶部标题
+.m-item-tit{
+    display: flex;
+    min-height: 90px;
+    background: @fill-base;
+    padding: 0 @h-spacing-lg;
+    border-top: 5px solid @brand-blue;
+    color: @brand-primary;
+    align-items: center;
+    font-size: 28px;
+    .tit-content{
+        flex: 1;
+    }
+    h2{
+        flex:1;
+        font-size: 40px;
+    }
+    .extra{
+        flex-basis: 36%;
+        text-align: right;
+    }
+    &.m-item-coupon{
+        height: 140px;
+    }
+}
+.text-primary{
+    .ky-list-extra{
+        color: @brand-primary!important;
+    }
+}
+
+.@{prefixCls} {
+    // 收货人信息
+    .m-receiver{
+        margin:20px 0;
+        background: @fill-base;
+        &-content{
+            display: flex;
+            padding: @v-spacing-md @h-spacing-lg;
+        }
+        .list{
+            padding-left: 10px;
+        }
+        .item{
+            display: flex;
+            font-size: 34px;
+            .name{
+                flex: 30%;
+                color: @brand-gray;
+            }
+            .info{
+                flex: 70%;
+            }
+        }
+    }
+
+    //优惠券
+    .m-conpon{
+        margin-bottom: 20px;
+        background: #fff;
+        &-content{
+            padding:0 @h-spacing-lg;
+        }
+        .ky-input-item{
+            input{
+                text-align: right;
+
+                &::-webkit-input-placeholder{
+                    font-size: 34px;
+                    color: @color-text-base;
+                }
+            }
+        }
+    }
+
+    .m-delivery {
+        margin-bottom: 20px;
+        background: #fff;
+        &-content {
+            padding:0 @h-spacing-lg;
+        }
+    }
+}

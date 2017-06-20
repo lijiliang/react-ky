@@ -180,14 +180,8 @@ class CartIndexView extends React.Component{
                         <div className="m-cart-other">
                             <List small>
                               <Item extra={'14'}>商品数量</Item>
-                            </List>
-                            <List small>
                               <Item extra={'￥21,400.00'}>会员价总计</Item>
-                            </List>
-                            <List small>
                               <Item extra={'￥21,400.00'}>销售价总计</Item>
-                            </List>
-                            <List small>
                               <Item extra={'-￥21,400.00'}>总优惠</Item>
                             </List>
                         </div>

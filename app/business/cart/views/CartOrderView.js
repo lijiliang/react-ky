@@ -9,9 +9,11 @@ import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
 import {login} from '../action/DataAction';
 
-import { Button, Toast, NavBar,Stepper } from 'uxComponent';
 import { Cache } from 'kyCommon';
-import 'kyBase/common/sValid';
+import { KYPayMethod } from 'kyComponent';
+import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
+const Item = List.Item;
+const Brief = Item.Brief;
 
 import '../resources/CartOrderView.less';
 
@@ -34,8 +36,75 @@ class CartIndexView extends React.Component{
     render(){
         return(
             <div className="ky-scrollable">
-                <div className="ky-cart">
-                    cart  核对订单信息
+                <div className="ky-cart-order">
+                    <NavBar
+                        onLeftClick={this.gohistoryHandle.bind(this)}
+                    >核对订单信息</NavBar>
+                    <div className="m-receiver">
+                        <div className="m-item-tit">
+                            <div className="tit-content"><h2>收货人信息</h2></div>
+                            <span className="extra">管理</span>
+                        </div>
+                        <div className="m-receiver-content">
+                            <i className="receiver-icon bg-radioSelect"></i>
+                            <div className="list">
+                                <div className="item">
+                                    <span className="name">收货人</span>
+                                    <span className="info">架夺</span>
+                                </div>
+                                <div className="item">
+                                    <span className="name">手机号</span>
+                                    <span className="info">13503030033</span>
+                                </div>
+                                <div className="item">
+                                    <span className="name">收货地址</span>
+                                    <span className="info">江苏省泰州市江阴区 曲伟胜祥6955号</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="m-conpon">
+                        <div className="m-item-tit m-item-coupon">
+                            <div className="tit-content">
+                                <h2>可用优惠券</h2>
+                                <p>使用优惠券抵消部分金额</p>
+                            </div>
+                        </div>
+                        <div className="m-conpon-content">
+                            <List small>
+                                <Item>您的帐户中没有可使用的优惠券</Item>
+                                <InputItem
+                                    placeholder="[点击输入优惠券码]"
+                                >有优惠券码？</InputItem>
+                                <Item extra={'-￥0.00'} className="text-primary">优惠</Item>
+                            </List>
+                        </div>
+                    </div>
+                    <div className="m-delivery">
+                        <div className="m-item-tit">
+                            <div className="tit-content"><h2>送货清单</h2></div>
+                        </div>
+                        <div className="m-delivery-content">
+                            <List small>
+                                <Item extra={'快递'}>配送方式</Item>
+                                <Item extra={'在线支付'}>支付方式</Item>
+                                <Item extra={'10'}>商品数量</Item>
+                                <Item extra={'3'} className="text-primary">子订单数量</Item>
+                            </List>
+                            <div className="ds">子订单</div>
+                            <List small>
+                                <Item extra={'￥21,400.00'}>会员价总额</Item>
+                                <Item extra={'￥21,400.00'}>销售价总额</Item>
+                                <Item extra={'￥0.00'}>进口关税</Item>
+                                <Item extra={'￥-21,400.00'}>总优惠</Item>
+                                <Item extra={'￥0.00'}>运费</Item>
+                                <Item extra={'525'}>总积分</Item>
+                            </List>
+                        </div>
+                    </div>
+                   <KYPayMethod price="10,888.00"/>
+                   <Button title="立即结算" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
+
                 </div>
             </div>
         );
