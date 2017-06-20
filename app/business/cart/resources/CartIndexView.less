@@ -8,12 +8,201 @@
 // 引入变量
 @import '~varLess';
 
-@prefixCls: ky-cart;
+@prefixCls: m-cart;
+@cartItemCls: cart-item;
 
 //顶部导航
 .navbar-cart-tit{
     .icon{
         padding-right: 10px;
         font-size: 38px;
+    }
+}
+
+.@{prefixCls} {
+    margin-top: @v-spacing-sm;
+}
+
+.@{cartItemCls} {
+    margin-bottom: @v-spacing-sm;
+    background: @fill-base;
+    // 单项头部
+    .item-header{
+        display:flex;
+        align-items: center;
+        height: 80px;
+        padding: 0 @v-spacing-lg;
+        border-bottom: 2px solid @border-color-base;
+        .header-name{
+            display: flex;
+            align-items: center;
+            .icon-bg{
+                display: inline-block;
+                width: 55px;
+                height: 55px;
+                margin-right: 10px;
+                background: url('./svg/radioSelectPay.svg') no-repeat;
+
+            }
+            .name{
+                line-height: 80px;
+                font-size: 36px;
+                color: @brand-primary;
+                white-space: nowrap;
+            }
+        }
+        .header-price{
+            flex: 1;
+            justify-content: flex-end;
+            text-align: right;
+            font-size: 25px;
+            color: @brand-primary;
+            .price{
+                font-style: normal;
+                color: @brand-green-deep;
+                font-size: 38px;
+            }
+            .icon{
+                padding-left: 15px;
+                font-size: 40px;
+                color: @brand-gray-sf;
+            }
+        }
+    }
+    // 单项内容
+    .item-content{
+        display: flex;
+        padding: @h-spacing-md @v-spacing-lg;
+        .thumb{
+            margin-right: @h-spacing-lg;
+            img{
+                width: 230px;
+                display: block;
+            }
+        }
+        .info{
+            flex:1;
+            // width: 100%;
+        }
+        .info-item{
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding-bottom: 8px;
+            .name{
+                flex: 1;
+                font-size: 24px;
+                color: @brand-gray-dk;
+
+                .ellipsis()
+            }
+            .name-tit{
+                font-size: 34px;
+            }
+            .number{
+                flex-basis: 24%;
+                text-align: right;
+            }
+        }
+        //小计
+        .info-subtotal{
+            padding-bottom: 10px;
+            span{
+                font-size: 32px;
+                color: @brand-primary;
+                &.price{
+                    font-size: 38px;
+                }
+            }
+        }
+        // 步计器
+        .info-foot{
+            height: 64px;
+            overflow: hidden;
+            .isstock{
+                float: right;
+                line-height: 80px;
+            }
+        }
+    }
+}
+
+// 组合
+.cart-item-guoups {
+    .item-content{
+        border-bottom: 2px solid @border-color-base;
+        // 套组会员价
+        .info-item-member{
+            padding: 10px 0 0 0;
+            color: @brand-gray;
+            font-size: 30px;
+            .name{
+                font-size: 30px;
+                color: @brand-gray;
+            }
+        }
+    }
+    .guoups-item{
+        .info-foot{
+            padding: 35px 30px 35px 280px;
+            box-sizing: padding-box;
+            height: 64px;
+            overflow: hidden;
+            .isstock{
+                float: right;
+                line-height: 80px;
+            }
+        }
+    }
+}
+
+.m-cart-other{
+    margin-bottom: 20px;
+    background: @fill-base;
+    padding: 0 @h-spacing-lg;
+}
+
+// 立即结算
+.m-settlement{
+    display: flex;
+    background: @brand-green-deep;
+    .select{
+        flex: 16%;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        .icon{
+            padding: 20px 0 0 0;
+            display: inline-block;
+            line-height: 1;
+            font-size: 48px;
+            color: #fff;
+        }
+        span{
+            display: block;
+            font-size: 30px;
+            color: #fff;
+        }
+    }
+    .total {
+        flex: 44%;
+        background: @brand-green;
+        span{
+            display: block;
+            color:#646464;
+            font-size: 30px;
+            line-height: 1.4;
+            padding-left: 20px;
+            &.price{
+                color: @brand-primary;
+                font-size: 40px;
+            }
+            &:first-child {
+                padding-top: 10px;
+            }
+        }
+    }
+    .btn{
+        flex: 40%;
     }
 }

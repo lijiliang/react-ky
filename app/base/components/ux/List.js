@@ -13,9 +13,10 @@ class List extends React.Component{
         prefixCls: 'ky-list'
     }
     render(){
-        let { prefixCls, children, className, style, renderHeader, renderFooter, ...restProps } = this.props;
+        let { prefixCls, children, className, style, small, renderHeader, renderFooter, ...restProps } = this.props;
         const wrapCls = classNames({
             [prefixCls]: true,
+            [`${prefixCls}-small`]: small,
             [className]: className
         })
         return(

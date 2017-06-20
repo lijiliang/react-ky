@@ -27,7 +27,7 @@
     &-body {
         position: relative;
         background-color: @fill-base;
-        .hairline-top(@border-color-base);
+        // .hairline-top(@border-color-base);
         // 注意：如果元素的 overflow 有 scroll 出现，其伪元素 绝对定位 显示将出错，例如 bottom: 0
         &:after {
             display: block;
@@ -40,6 +40,12 @@
         div:not(:last-child) {
             .@{listPrefixCls}-line {
                 .hairline-bottom(@border-color-base);
+            }
+        }
+        &:last-child {
+            .hairline-remove-right-bottom();
+            .@{listPrefixCls}-line {
+                // .hairline-remove-right-bottom();
             }
         }
     }
@@ -264,5 +270,27 @@
     100% {
         opacity: 0;
         transform: scale(2.5);
+    }
+}
+
+// 小列表，专门放左右信息，行高70，
+.@{listPrefixCls}-small {
+    .@{listPrefixCls}-item {
+        min-height: 70px;
+        padding-left: 0;
+        .@{listPrefixCls}-line {
+            min-height: 70px;
+            padding-right: 0;
+            .@{listPrefixCls}{
+                &-content {
+                    font-size: 32px;
+                    color: @brand-gray;
+                }
+                &-extra {
+                    font-size: 32px;
+                    color: @brand-gray-deep;
+                }
+            }
+        }
     }
 }

@@ -29,6 +29,7 @@
 | wrap    | 是否换行，默认情况下，文字超长会被隐藏， | Boolean  | `false`  |
 | activeStyle(`web only`)    | 自定义active的样式 | Object  |   |
 | platform (`web only`) |  设定组件的平台特有样式, 可选值为 `android`, `ios`， 默认为 `cross`， 即组件会自动检测设备 UA 应用不同平台的样式    | String | `'cross'`|
+| small |  小列表，专门放左右信息，行高70， 购物车页面用到   | Boolean | `false`|
 
 ### List.Item.Brief
 
