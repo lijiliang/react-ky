@@ -137,3 +137,72 @@
         }
     }
 }
+
+// 子订单内容
+.m-suborder-box{
+    // padding: 20px 0;
+    // 单项内容
+    .item-content{
+        display: flex;
+        padding: 20px 0;
+        border-bottom: 2px solid @border-color-base;
+        .thumb{
+            width: 90px;
+            margin-right: @h-spacing-md;
+            img{
+                width: 90px;
+                display: block;
+            }
+        }
+        .info{
+            // flex:1;
+            width: 80%;
+            flex-grow: 1;
+        }
+
+        .info-item{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            .name{
+                flex: 1;
+                font-size: 24px;
+                color: @brand-gray-dk;
+
+                .ellipsis();
+                p{
+                    .ellipsis();
+                }
+            }
+            .name-tit{
+                font-size: 34px;
+            }
+            .number{
+                flex-basis: 23%;
+                text-align: right;
+            }
+        }
+
+        .info-price{
+            .name {
+                font-size: 28px;
+                .name-price{
+                    padding-left: 15px;
+                }
+            }
+        }
+    }
+    // 合计
+    .subtotal{
+        padding: 10px 0 20px 0;;
+        text-align: right;
+        span{
+            padding-left: 20px;
+        }
+        .price{
+            font-size: 45px;
+            color: @brand-green-deep;
+        }
+    }
+}
