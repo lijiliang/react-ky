@@ -91,4 +91,49 @@
             padding:0 @h-spacing-lg;
         }
     }
+
+    // 子订单
+    .m-suborder{
+        padding: 20px 0 10px 0;
+        .ky-accordion-item{
+            margin-bottom: 5px;
+        }
+        .ky-accordion-header{
+            background: #c6d5e3;
+            height: 70px;
+            line-height: 70px;
+            i{
+                position: absolute;
+                top: 15px;
+                right: 20px;
+            }
+            &:after{
+                display: none;
+            }
+        }
+        .header-content{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70px;
+            .name{
+                flex: 40%;
+                font-size: 32px;
+                color: @brand-primary;
+                .ellipsis();
+            }
+            .bao{
+                flex: 60%;
+                font-size: 34px;
+                color: #fff;
+                .icon{
+                    float:left;
+                    font-size: 48px;
+                    padding-right: 5px;
+                    line-height: 1;
+                    padding-top: 10px;
+                }
+            }
+        }
+    }
 }

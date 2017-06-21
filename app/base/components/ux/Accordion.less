@@ -1,0 +1,72 @@
+/**
+ * @fileOverview: Accordion 手风琴
+ * @version: 1.0.0(2017-6-21)
+ * @author: Benson
+ */
+ // 引入变量
+ @import '~varLess';
+
+@accordionPrefixCls: ky-accordion;
+
+.@{accordionPrefixCls} {
+  position: relative;
+  // .hairline-top(@border-color-base);
+
+  &-anim-active {
+    transition: all .2s ease-out;
+  }
+
+  & &-item {
+    .@{accordionPrefixCls}-header {
+      position: relative;
+      color: @color-text-base;
+      font-size: @font-size-heading;
+      height: @list-item-height;
+      line-height: @list-item-height;
+      background-color: @fill-base;
+      box-sizing: content-box;
+      overflow: hidden;
+      padding-left: @h-spacing-md;
+      padding-right: 2 * @h-spacing-lg;
+      .hairline-bottom(@border-color-base);
+      .ellipsis();
+
+      i {
+        position: absolute;
+        display: block;
+        top: @h-spacing-lg;
+        right: @h-spacing-md;
+        transform: rotate(180deg);
+        transition: all .3s ease-out;
+        font-family:"iconfont" !important;
+        font-size: 42px;
+        line-height: 1;
+        color: @brand-primary;
+        font-style: normal;
+        &:before { content: "\e618"; }
+      }
+
+      &[aria-expanded~="true"] {
+        i {
+          transform: rotate(360deg);
+        }
+      }
+    }
+
+    .@{accordionPrefixCls}-content {
+      overflow: hidden;
+      background: @fill-base;
+
+      .@{accordionPrefixCls}-content-box {
+        font-size: @font-size-subhead;
+        color: @color-text-base;
+        position: relative;
+        // .hairline-bottom(@border-color-base);
+      }
+
+      &.@{accordionPrefixCls}-content-inactive {
+        display: none;
+      }
+    }
+  }
+}

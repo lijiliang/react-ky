@@ -11,7 +11,7 @@ import {login} from '../action/DataAction';
 
 import { Cache } from 'kyCommon';
 import { KYPayMethod } from 'kyComponent';
-import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
+import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List, Accordion} from 'uxComponent';
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -91,12 +91,46 @@ class CartIndexView extends React.Component{
                                 <Item extra={'10'}>商品数量</Item>
                                 <Item extra={'3'} className="text-primary">子订单数量</Item>
                             </List>
-                            <div className="ds">子订单</div>
+                            <Accordion className="m-suborder">
+                                <Accordion.Panel className="pad" header={
+                                    <div className="header-content">
+                                        <span className="name">子订单1</span>
+                                        <div className="bao">
+                                            <span className="icon icon-bao"></span>
+                                            <span className="bao-shop">保税区商品</span>
+                                        </div>
+                                    </div>
+                                }>
+                                    <div>sadf</div>
+                                </Accordion.Panel>
+                                <Accordion.Panel header={
+                                    <div className="header-content">
+                                        <span className="name">子订单234567809876</span>
+                                        <div className="bao">
+                                            <span className="icon icon-bao"></span>
+                                            <span className="bao-shop">保税区商品</span>
+                                        </div>
+                                    </div>
+                                }>
+                                    <div>sadf</div>
+                                </Accordion.Panel>
+                                <Accordion.Panel header={
+                                    <div className="header-content">
+                                        <span className="name">子订单1</span>
+                                        <div className="bao">
+                                            <span className="icon icon-bao"></span>
+                                            <span className="bao-shop">保税区商品</span>
+                                        </div>
+                                    </div>
+                                }>
+                                    Text text text text text text text text text text text text text text text
+                                </Accordion.Panel>
+                            </Accordion>
                             <List small>
                                 <Item extra={'￥21,400.00'}>会员价总额</Item>
                                 <Item extra={'￥21,400.00'}>销售价总额</Item>
                                 <Item extra={'￥0.00'}>进口关税</Item>
-                                <Item extra={'￥-21,400.00'}>总优惠</Item>
+                                <Item extra={'-￥21,400.00'}>总优惠</Item>
                                 <Item extra={'￥0.00'}>运费</Item>
                                 <Item extra={'525'}>总积分</Item>
                             </List>
