@@ -24,11 +24,12 @@ class KYSideBar extends React.Component{
         sideBarWrap.css({
             transform: 'translate3d(-100%, 0, 0)'
         });
+        $('.ky-popup-mask').hide();  //关闭遮罩层
     }
     render(){
         return(
             <div className="ky-sideBar">
-                {/* <div className="ky-popup-mask"></div> */}
+                <div className="ky-popup-mask" onClick={this.closeSideHandle.bind(this)}></div>
                 <div className="ky-sideBar-wrap">
                     <div className="sideBar-content">
                         <div className="side-header">

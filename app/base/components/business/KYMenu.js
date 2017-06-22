@@ -34,7 +34,9 @@ class KYMenu extends React.Component{
             <div className="ky-menu">
                 <ul className="m-menu-main">
                     <li className="m-menu-submenu m-menu-item-selected">
-                        <li className="m-menu-item">消费者告知书</li>
+                        <div className="menu-submenu-title">
+                            <span>消费者告知书</span>
+                        </div>
                     </li>
                     <li className="m-menu-submenu m-menu-submenu-open">
                         <div className="menu-submenu-title">
@@ -77,10 +79,14 @@ class KYMenu extends React.Component{
                         </ul>
                     </li>
                     <li className="m-menu-submenu">
-                        <li className="m-menu-item">推广优惠及其它</li>
+                        <div className="menu-submenu-title">
+                            <span>推广优惠及其它</span>
+                        </div>
                     </li>
                     <li className="m-menu-submenu">
-                        <li className="m-menu-item">最新消息</li>
+                        <div className="menu-submenu-title">
+                            <span>最新消息</span>
+                        </div>
                     </li>
                     <li className="m-menu-submenu">
                         <div className="menu-submenu-title">
@@ -152,10 +158,14 @@ class KYMenu extends React.Component{
                         </ul>
                     </li>
                     <li className="m-menu-submenu">
-                        <li className="m-menu-item">防伪溯源码</li>
+                        <div className="menu-submenu-title">
+                            <span>防伪溯源码</span>
+                        </div>
                     </li>
                     <li className="m-menu-submenu">
-                        <li className="m-menu-item">关注官方微信</li>
+                        <div className="menu-submenu-title">
+                            <span>关注官方微信</span>
+                        </div>
                     </li>
                 </ul>
             </div>

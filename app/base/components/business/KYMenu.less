@@ -7,6 +7,7 @@
 
 // 引入变量
 @import '~varLess';
+
 // ky-menu
 .ky-menu{
     width: 100%;
@@ -20,7 +21,7 @@
     .m-menu-submenu{
         position: relative;
         line-height: 80px;
-        border-bottom: 1px solid #01244a;
+        border-bottom: 1px solid @brand-primary-deep;
         font-size: 32px;
         // 标题
         .menu-submenu-title{
@@ -59,25 +60,31 @@
         }
         .m-menu-item{
             padding-left: 30px;
-            border-bottom: 1px solid #294664;
+            border-bottom: 1px solid @brand-primary-deep;
             box-sizing: border-box;
         }
         .menu-sub-two{
-            background: #32587d;
+            background: #236093;
             .m-menu-item{
                 padding-left: 60px;
+                &:last-child{
+                    // border-bottom: none;
+                }
+            }
+            .menu-sub-three{
+                border-bottom: none;
             }
         }
         .menu-sub-three{
             & > ul{
-                background: #5c7997;
+                background: #5b8ab5;
             }
             .menu-submenu-title{
-                border-bottom: 1px solid #4a627c;
+                border-bottom: 1px solid @brand-primary-deep;
             }
             .m-menu-item{
                 padding-left: 90px;
-                border-bottom: 1px solid #4a627c;
+                border-bottom: 1px solid @brand-primary-deep;
             }
         }
         .m-menu-sub{

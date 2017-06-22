@@ -23,6 +23,7 @@ class KYHeaderBar extends React.Component{
         const bodyHeight = $(window).height();
         const kyFooter = $('#kyFooter');
         const sideBarWrap = $('.ky-sideBar-wrap');
+        $('.ky-popup-mask').show();  //打开遮罩层
         if(kyFooter){
             const footerHeight = kyFooter.height();
             sideBarWrap.css({
@@ -39,20 +40,6 @@ class KYHeaderBar extends React.Component{
     render(){
         return(
             <header className="ky-view-header">
-                {/* <div className="ky-navbar">
-                    <div className="ky-navbar-left">
-                        <i className="icon icon-nagMenu" onClick={this.menuClickHandle.bind(this)}></i>
-                    </div>
-                    <div className="ky-navbar-center">
-                        <Link to="/"><i className="icon icon-Kyani"></i></Link>
-                    </div>
-                    <div className="ky-navbar-right">
-                        <div className="login-info">
-                            <a href="">登录</a><span>/</span>
-                            <a href="">注册</a>
-                        </div>
-                    </div>
-                </div> */}
                 <NavBar
                     iconName="nagMenu"
                     mode="top"
