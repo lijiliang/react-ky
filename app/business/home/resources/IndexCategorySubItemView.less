@@ -1,0 +1,30 @@
+/**
+ * @fileOverview: 首页 栏目区块  套组或单品
+ * @version: 1.0.0(2017-6-22)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+@prefixCls: category-sub-item;
+
+.@{prefixCls}{
+    border-top: 2px solid #fff;
+    .sub-head{
+        display: flex;
+        line-height: 100px;
+        background: @brand-blue-bady;
+        height: 100px;
+        padding: 0 80px;
+        span, .icon{
+            flex: 1;
+            font-size: 40px;
+            color: @brand-primary;
+        }
+        .icon{
+            font-size: 32px;
+            text-align: right;
+        }
+    }
+}
