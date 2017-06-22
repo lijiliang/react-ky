@@ -25,6 +25,15 @@
         .icon{
             font-size: 32px;
             text-align: right;
+            transition: all .3s;
+        }
+    }
+    //当前选中
+    &-selected{
+        .icon{
+            &:before{
+                content: "\E629";
+            }
         }
     }
 }
