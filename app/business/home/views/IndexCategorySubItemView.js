@@ -35,7 +35,7 @@ class IndexCategorySubItemView extends React.Component {
             <div className={CategortHeadCls}>
                 <div className="sub-head" onClick={this.clickHandle.bind(this)}>
                     <span>{title}</span>
-                    <i className="icon icon-add"></i>
+                    <i className="sub-head-icon icon icon-add"></i>
                 </div>
                 {children && this.state.isChildren ? children : null}
             </div>

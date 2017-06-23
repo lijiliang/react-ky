@@ -1,0 +1,62 @@
+/**
+ * @fileOverview: 套组 商品
+ * @version: 1.0.0(2017-6-23)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+@prefixCls: sub-group-item;
+
+.@{prefixCls} {
+    padding: @h-spacing-md;
+    padding-top: 0;
+    background: #fff;
+    margin-bottom: @h-spacing-md;
+    &:last-child{
+        margin-bottom: 0;
+    }
+    .item-name{
+        text-align: center;
+        border-bottom: 2px solid @border-color-base;
+        h2{
+            font-size: 38px;
+            line-height: 80px;
+            color: @brand-primary;
+        }
+        img{
+            display: inline-block;
+            width: 300px;
+            height: auto;
+        }
+    }
+    .item-other{
+        width: 300px;
+        margin: 15px auto 0 auto;
+    }
+    .info-list{
+        padding-bottom: 10px;
+        font-size: 32px;
+        color: @brand-gray-dk;
+        li{
+            display: flex;
+            &.price{
+                font-weight: bold;
+                color: @brand-primary;
+            }
+            span{
+                &:first-child{
+                    flex-basis: 35%;
+                }
+                &:last-child{
+                    flex-basis: 65%;
+                    text-align: right;
+                }
+            }
+            .center-line{
+                text-decoration: line-through;
+            }
+        }
+    }
+}

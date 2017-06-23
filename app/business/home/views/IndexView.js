@@ -15,6 +15,8 @@ const Brief = Item.Brief;
 
 import IndexCategoryItemView from './IndexCategoryItemView';
 import IndexCategorySubItemView from './IndexCategorySubItemView';
+import SubGroupItem from './SubGroupItem';
+import SubSingleItem from './SubSingleItem';
 
 import '../resources/IndexView.less';
 import ProductsItemImg from 'kyBus/home/resources/img/products-item1.jpg';
@@ -81,76 +83,64 @@ class IndexView extends React.Component{
                     <SlideSwipe List={slideList}/>
 
                     <div className="m-category">
+                        {/* 营养补充品 */}
                         <IndexCategoryItemView title="营养补充品" thumb={ProductsItemImg}>
                             <div className="category-sub">
                                 <IndexCategorySubItemView title="套组">
-                                    <div className="asdf">sadf</div>
+                                    <div className="sub-view clearfix">
+                                        <SubGroupItem />
+                                        <SubGroupItem />
+                                    </div>
                                 </IndexCategorySubItemView>
-                                <div className="category-sub-item">
-                                    <div className="sub-head">
-                                        <span>套组</span>
-                                        <i className="icon icon-add"></i>
+                                <IndexCategorySubItemView title="单品">
+                                    <div className="sub-view clearfix">
+                                        <SubSingleItem />
+                                        <SubSingleItem />
+                                        <SubSingleItem />
+                                        <SubSingleItem />
+                                        <SubSingleItem />
                                     </div>
-                                </div>
-                                <div className="category-sub-item">
-                                    <div className="sub-head">
-                                        <span>单品</span>
-                                        <i className="icon icon-add"></i>
-                                    </div>
-                                </div>
+                                </IndexCategorySubItemView>
                             </div>
                         </IndexCategoryItemView>
 
-                        <div className="m-category-item">
-                            <div className="category-head category-head-selected">
-                                <img src={ProductsItemImg}/>
-                                <div className="head-info">
-                                    <h2>营养补充品</h2>
-                                    <i className="icon icon-down"></i>
-                                </div>
-                            </div>
+                        {/* 营养补充品 */}
+                        <IndexCategoryItemView title="护肤产品" thumb={ProductsItemImg}>
                             <div className="category-sub">
-                                <div className="category-sub-item">
-                                    <div className="sub-head">
-                                        <span>套组</span>
-                                        <i className="icon icon-add"></i>
+                                <IndexCategorySubItemView title="套组">
+                                    <div className="sub-view clearfix">
+                                        <SubGroupItem />
+                                        <SubGroupItem />
                                     </div>
-                                </div>
-                                <div className="category-sub-item">
-                                    <div className="sub-head">
-                                        <span>单品</span>
-                                        <i className="icon icon-add"></i>
+                                </IndexCategorySubItemView>
+                                <IndexCategorySubItemView title="单品">
+                                    <div className="sub-view clearfix">
+                                        <SubSingleItem />
+                                        <SubSingleItem />
+                                        <SubSingleItem />
+                                        <SubSingleItem />
+                                        <SubSingleItem />
                                     </div>
-                                </div>
+                                </IndexCategorySubItemView>
                             </div>
-                        </div>
+                        </IndexCategoryItemView>
 
-                        <div className="m-category-item">
-                            <div className="category-head category-head-selected">
-                                <img src={ProductsItemImg}/>
-                                <div className="head-info">
-                                    <h2>营养补充品</h2>
-                                    <i className="icon icon-down"></i>
-                                </div>
-                            </div>
+                        {/* 营养补充品 */}
+                        <IndexCategoryItemView title="推广优惠及其它" thumb={ProductsItemImg}>
                             <div className="category-sub">
-                                <div className="category-sub-item">
-                                    <div className="sub-head">
-                                        <span>套组</span>
-                                        <i className="icon icon-add"></i>
+                                <IndexCategorySubItemView title="推广优惠">
+                                </IndexCategorySubItemView>
+                                <IndexCategorySubItemView title="其它">
+                                    <div className="sub-view clearfix">
+                                        <SubSingleItem />
+                                        <SubSingleItem />
                                     </div>
-                                </div>
-                                <div className="category-sub-item">
-                                    <div className="sub-head">
-                                        <span>单品</span>
-                                        <i className="icon icon-add"></i>
-                                    </div>
-                                </div>
+                                </IndexCategorySubItemView>
                             </div>
-                        </div>
+                        </IndexCategoryItemView>
+
 
                     </div>
-
                 </div>
         );
     }

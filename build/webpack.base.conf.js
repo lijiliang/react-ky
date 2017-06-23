@@ -100,7 +100,7 @@ module.exports = {
                         limit: 4096, // 4KB 以下使用 base64
                         name: 'img/[name]-[hash:8].[ext]'
                     }
-                },{
+                }],/*{
                     loader: 'img-loader',   // 压缩图片
                     options: {
                         // 根据环境判断是否启用资源压缩
@@ -109,17 +109,11 @@ module.exports = {
                             interlaced: false // 替换使用渐进式渲染
                         },
                         mozjpeg: {
-                            progressive: true, // 创建基准jpeg文件
+                            progressive: false, // 创建基准jpeg文件
                         },
                         optipng: {
                             optimizationLevel: 3, // 优化级别，0-7，值越大，压缩越多
                         },
-                        /*
-                        pngquant: {
-                            floyd: 0.9,
-                            speed: 2  // 执行速度，0-10，速度过高质量受损，不建议过高
-                        },
-                        */
                         svgo: {
                             plugins: [
                                 { removeTitle: true }, // 去除标题信息
@@ -128,6 +122,7 @@ module.exports = {
                         }
                     }
                 }],
+                */
                 // 排除favicon.png, 因为它已经由上面的loader处理了. 如果不排除掉, 它会被这个loader再处理一遍
                 exclude: /favicon\.png$/,
             },
