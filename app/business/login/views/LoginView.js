@@ -106,7 +106,7 @@ class LoginView extends React.Component{
     }
     render(){
         return(
-            <div className="ky-scrollable">
+            <div className="ky-scrollable bg-login">
                 <div className="ky-login">
                     <NavBar leftContent=""
                         mode="tran"
