@@ -171,7 +171,7 @@
          })
 
          return(
-             <div className="ky-container-body flex-column">
+             <div className="ky-container-body">
                  <div className="ky-scrollable">
                      <div className="m-regConsumer">
                          <NavBar
