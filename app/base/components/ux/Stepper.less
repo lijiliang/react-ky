@@ -9,20 +9,6 @@
 
 @stepperPrefixCls: ky-stepper;
 
-.iconfont-mixin() {
-  display: inline-block;
-  font-style: normal;
-  vertical-align: baseline;
-  text-align: center;
-  text-transform: none;
-  text-rendering: auto;
-
-  &:before {
-    display: block;
-    font-family: "anticon" !important;
-  }
-}
-
 .@{stepperPrefixCls}{
     &-main{
         display: inline-block;
@@ -113,16 +99,6 @@
         // }
     }
 
-    //
-    // &-handler-up-inner,
-    // &-handler-down-inner {
-    // .iconfont-mixin();
-    //
-    //     user-select: none;
-    //     right: 4px;
-    //     color: @color-text-base;
-    // }
-
     &-input-wrap {
         display: none;
         width: 100%;
@@ -144,6 +120,7 @@
         padding: 0;
         background: none;
         vertical-align: middle;
+        margin-top: -10px;
         &[disabled] {
             opacity: 1;
             color: @color-text-base;

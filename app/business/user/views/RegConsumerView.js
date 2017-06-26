@@ -171,135 +171,138 @@
          })
 
          return(
-             <div className="ky-scrollable">
-                 <div className="m-regConsumer">
-                     <NavBar
-                         onLeftClick={this.gohistoryHandle.bind(this)}
-                         >注册我的消费者帐户</NavBar>
-                    <div className="regcon-info">
-                        <p>为建立您的帐户我们需要获取您的基本信息</p>
-                        <p>请按照以下指示填写相关信息</p>
-                    </div>
-                    <div className="m-reg-body">
-                        <div className="reg-view">
-                            <div className="reg-tit">
-                                <h2>帐户信息</h2>
-                                <p>请填写您的个人信息</p>
-                            </div>
-                            <div className="ref-form">
-                                {getFieldDecorator('firstName', {
-                                    rules: [{
-                                        required: true,
-                                        message: '请输入您的姓氏'
-                                    }],
-                                  })(
-                                    <InputItem
-                                        autoFocus
-                                        placeholder="请输入您的姓氏"
-                                        onChange={this.stateChangeHandle.bind(this, 'firstName')}
-                                    >姓氏</InputItem>
-                                 )}
-                                 {getFieldDecorator('lastName', {
-                                     rules: [{
-                                         required: true,
-                                         message: '请输入您的名字'
-                                     }],
-                                   })(
-                                     <InputItem
-                                         placeholder="请输入您的名字"
-                                         onChange={this.stateChangeHandle.bind(this, 'lastName')}
-                                     >名字</InputItem>
-                                 )}
-                                 {getFieldDecorator('email', {
-                                     rules: [{
-                                       type: 'email', message: '请输入正确的邮箱地址',
-                                     }, {
-                                       required: true, message: '请输入邮箱地址',
-                                     }],
-                                   })(
-                                     <InputItem
-                                         placeholder="请输入有效的邮箱地址"
-                                         onChange={this.stateChangeHandle.bind(this, 'email')}
-                                     >邮箱地址</InputItem>
-                                 )}
-                                 {getFieldDecorator('confirmEmail', {
-                                     rules: [{
-                                       type: 'email', message: '请输入正确的邮箱地址',
-                                     }, {
-                                       required: true, message: '请再次输入您的邮箱地址',
-                                     }],
-                                   })(
-                                     <InputItem
-                                         placeholder="请再次输入您的邮箱地址"
-                                         onChange={this.stateChangeHandle.bind(this, 'confirmEmail')}
-                                     >邮箱确认</InputItem>
-                                 )}
-                                 {getFieldDecorator('password', {
-                                     rules: [{
-                                         pattern: RegxRule.password,
-                                         message: '密码必须是数字和英文字母组合,必须有一个大写字母'
-                                     },{
-                                         required: true,
-                                         message: '您的密码最少为8个字符'
-                                     }],
-                                   })(
-                                     <InputItem
-                                         type="password"
-                                         placeholder="您的密码最少为8个字符"
-                                         showPwd='true'
-                                         extra={<i className={isShowPwdCls} />}
-                                         onExtraClick={e=>{}}
-                                         onChange={this.stateChangeHandle.bind(this, 'password')}
-                                     >帐号密码</InputItem>
-                                 )}
-                                 {getFieldDecorator('confirmPwd', {
-                                     rules: [{
-                                         required: true,
-                                         message: '请再次输入您的密码'
-                                     }],
-                                   })(
-                                     <InputItem
-                                         type="password"
-                                         placeholder="请再次输入您的密码"
-                                         extra={<i className={isShowPwdCls} />}
-                                         showPwd='true'
-                                         onExtraClick={e=>{}}
-                                         name='confirmPwd'
-                                         style={{borderBottom: 'none'}}
-                                         onChange={this.stateChangeHandle.bind(this, 'confirmPwd')}
-                                     >确认密码</InputItem>
-                                 )}
+             <div className="ky-container-body flex-column">
+                 <div className="ky-scrollable">
+                     <div className="m-regConsumer">
+                         <NavBar
+                             onLeftClick={this.gohistoryHandle.bind(this)}
+                             >注册我的消费者帐户</NavBar>
+                        <div className="regcon-info">
+                            <p>为建立您的帐户我们需要获取您的基本信息</p>
+                            <p>请按照以下指示填写相关信息</p>
+                        </div>
+                        <div className="m-reg-body">
+                            <div className="reg-view">
+                                <div className="reg-tit">
+                                    <h2>帐户信息</h2>
+                                    <p>请填写您的个人信息</p>
+                                </div>
+                                <div className="ref-form">
+                                    {getFieldDecorator('firstName', {
+                                        rules: [{
+                                            required: true,
+                                            message: '请输入您的姓氏'
+                                        }],
+                                      })(
+                                        <InputItem
+                                            placeholder="请输入您的姓氏"
+                                            onChange={this.stateChangeHandle.bind(this, 'firstName')}
+                                        >姓氏</InputItem>
+                                     )}
+                                     {getFieldDecorator('lastName', {
+                                         rules: [{
+                                             required: true,
+                                             message: '请输入您的名字'
+                                         }],
+                                       })(
+                                         <InputItem
+                                             placeholder="请输入您的名字"
+                                             onChange={this.stateChangeHandle.bind(this, 'lastName')}
+                                         >名字</InputItem>
+                                     )}
+                                     {getFieldDecorator('email', {
+                                         rules: [{
+                                           type: 'email', message: '请输入正确的邮箱地址',
+                                         }, {
+                                           required: true, message: '请输入邮箱地址',
+                                         }],
+                                       })(
+                                         <InputItem
+                                             placeholder="请输入有效的邮箱地址"
+                                             onChange={this.stateChangeHandle.bind(this, 'email')}
+                                         >邮箱地址</InputItem>
+                                     )}
+                                     {getFieldDecorator('confirmEmail', {
+                                         rules: [{
+                                           type: 'email', message: '请输入正确的邮箱地址',
+                                         }, {
+                                           required: true, message: '请再次输入您的邮箱地址',
+                                         }],
+                                       })(
+                                         <InputItem
+                                             placeholder="请再次输入您的邮箱地址"
+                                             onChange={this.stateChangeHandle.bind(this, 'confirmEmail')}
+                                         >邮箱确认</InputItem>
+                                     )}
+                                     {getFieldDecorator('password', {
+                                         rules: [{
+                                             pattern: RegxRule.password,
+                                             message: '密码必须是数字和英文字母组合,必须有一个大写字母'
+                                         },{
+                                             required: true,
+                                             message: '您的密码最少为8个字符'
+                                         }],
+                                       })(
+                                         <InputItem
+                                             type="password"
+                                             placeholder="您的密码最少为8个字符"
+                                             showPwd='true'
+                                             extra={<i className={isShowPwdCls} />}
+                                             onExtraClick={e=>{}}
+                                             onChange={this.stateChangeHandle.bind(this, 'password')}
+                                         >帐号密码</InputItem>
+                                     )}
+                                     {getFieldDecorator('confirmPwd', {
+                                         rules: [{
+                                             required: true,
+                                             message: '请再次输入您的密码'
+                                         }],
+                                       })(
+                                         <InputItem
+                                             type="password"
+                                             placeholder="请再次输入您的密码"
+                                             extra={<i className={isShowPwdCls} />}
+                                             showPwd='true'
+                                             onExtraClick={e=>{}}
+                                             name='confirmPwd'
+                                             style={{borderBottom: 'none'}}
+                                             onChange={this.stateChangeHandle.bind(this, 'confirmPwd')}
+                                         >确认密码</InputItem>
+                                     )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="m-reg-body">
-                        <div className={recommendedCls}>
-                            <div className="reg-tit">
-                                <h2>推荐人信息</h2>
-                                <p>如您是通过凯娅尼会员推荐，请填写他/她的会员号</p>
+                        <div className="m-reg-body">
+                            <div className={recommendedCls}>
+                                <div className="reg-tit">
+                                    <h2>推荐人信息</h2>
+                                    <p>如您是通过凯娅尼会员推荐，请填写他/她的会员号</p>
+                                </div>
+                                <div className="ref-form">
+                                    {getFieldDecorator('referenceId')(
+                                        <InputItem
+                                            placeholder="请输入您的推荐人会员号"
+                                            value={this.state.referenceId}
+                                            onChange={this.stateChangeHandle.bind(this, 'referenceId')}
+                                            className="ky-input-referenceId"
+                                        >推荐人会员号</InputItem>
+                                     )}
+                                </div>
+                                <div className="no-recommended" onClick={this.referenceHandle}>
+                                    <span>如没有推荐人会员号，请点击此处</span><i className={multipleCls}></i>
+                                </div>
                             </div>
-                            <div className="ref-form">
-                                {getFieldDecorator('referenceId')(
-                                    <InputItem
-                                        placeholder="请输入您的推荐人会员号"
-                                        value={this.state.referenceId}
-                                        onChange={this.stateChangeHandle.bind(this, 'referenceId')}
-                                        className="ky-input-referenceId"
-                                    >推荐人会员号</InputItem>
-                                 )}
-                            </div>
-                            <div className="no-recommended" onClick={this.referenceHandle}>
-                                <span>如没有推荐人会员号，请点击此处</span><i className={multipleCls}></i>
-                            </div>
-                        </div>
 
-                    </div>
+                        </div>
+                     </div>
+                </div>
+                <div className="m-foot-fixed">
                     {
                         this.state.buttonDisabled
                             ? <Button title="注册" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
                             : <Button title="注册" className="ky-button-primary regcon-btn" onClick={this.submitHandle} disabled across/>
                     }
-                 </div>
+                </div>
             </div>
          );
      }

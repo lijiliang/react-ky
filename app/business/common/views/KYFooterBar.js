@@ -14,7 +14,6 @@ class KYFooterBar extends React.Component{
     constructor(props, context){
         super(props, context);
         this.state = {
-            isFooter: true
         };
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
@@ -23,29 +22,27 @@ class KYFooterBar extends React.Component{
     }
     render(){
         return(
-            <footer className="ky-view-footer flex-column" id="kyFooter" ref="kyFooter">
-                <div className="footer-bar flex-row">
-                    <div className="footer-bar-list ky-center-v">
-                        <div className="bar-item">
-                            <i className="icon icon-news"></i>
-                            <div className="bar-item-text">最新消息</div>
-                        </div>
-                        <div className="bar-item">
-                            <i className="icon icon-onlineCS"></i>
-                            <div className="bar-item-text">在线客服</div>
-                        </div>
-                        <div className="bar-item">
-                            <i className="icon icon-productlist"></i>
-                            <div className="bar-item-text">产品商城</div>
-                        </div>
-                        <div className="bar-item">
-                            <i className="icon icon-shoppingCart"></i>
-                            <div className="bar-item-text">购物车</div>
-                            <div className="cat-num">10</div>
-                        </div>
+            <div className="footer-bar flex-row">
+                <div className="footer-bar-list ky-center-v">
+                    <div className="bar-item">
+                        <i className="icon icon-news"></i>
+                        <div className="bar-item-text">最新消息</div>
+                    </div>
+                    <div className="bar-item">
+                        <i className="icon icon-onlineCS"></i>
+                        <div className="bar-item-text">在线客服</div>
+                    </div>
+                    <div className="bar-item">
+                        <i className="icon icon-productlist"></i>
+                        <div className="bar-item-text">产品商城</div>
+                    </div>
+                    <div className="bar-item">
+                        <i className="icon icon-shoppingCart"></i>
+                        <div className="bar-item-text">购物车</div>
+                        <div className="cat-num">10</div>
                     </div>
                 </div>
-            </footer>
+            </div>
         );
     }
 
