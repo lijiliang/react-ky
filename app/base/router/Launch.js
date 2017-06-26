@@ -12,6 +12,7 @@ import KYFooterBar from 'kyBus/common/views/KYFooterBar';
 
 class Launch extends React.Component {
     static defaultProps = {
+        // 是否显示底部bar配置规则，默认为显示。如果设置了false,则不显示。
         vRouteMap: {
             'user/regconsumer': false,     //消费者注册
             'user/regmember': false,       //会员注册
@@ -29,15 +30,15 @@ class Launch extends React.Component {
     componentDidMount(){
         const _this = this;
         window.AppRoot = this;
-        _this.updateBBar();
+        _this.updateFootBar();
     }
     componentDidUpdate(prevProps, prevState){
-        this.updateBBar();
+        this.updateFootBar();
     }
     /**
-     * [updateBBar 底部 bar 根据规则显示或隐藏]
+     * [updateFootBar 底部 bar 根据规则显示或隐藏]
      */
-    updateBBar(){
+    updateFootBar(){
         // 获取当前路由
         const currRoute = this.props.location.pathname.replace('/', '');
 
@@ -52,7 +53,6 @@ class Launch extends React.Component {
                 footBarVisible: true
             })
         }
-        console.log(isVisible)
 
     }
     render(){

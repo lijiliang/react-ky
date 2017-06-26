@@ -20,17 +20,22 @@ export function regConsumer(firstName, lastName, email, password, referenceId){
         };
         const response = postPublic(Urls.User, _data);
         response.then((res) => {
-            dispatch({
-                type : types.REGCONSUMER,
-                userInfo:{
-                    customer_username: res.data.data.customer_username,
-                    customer_id: res.data.data.customer_id
-                }
-            });
+            if(res.success){
+                dispatch({
+                    type : types.REGCONSUMER,
+                    userInfo:{
+                        customer_username: res.data.data.customer_username,
+                        customer_id: res.data.data.customer_id
+                    }
+                });
 
-            // 保存数据到localStorage
-            Cache.set(Cache.keys.ky_cache_customer_username, res.data.data.customer_username);
-            Cache.set(Cache.keys.ky_cache_customer_id, res.data.data.customer_id);
+                // 保存数据到localStorage
+                Cache.set(Cache.keys.ky_cache_customer_username, res.data.data.customer_username);
+                Cache.set(Cache.keys.ky_cache_customer_id, res.data.data.customer_id);
+            }else{
+                // 如果失败则显示失败信息
+                Toast.info(res.message, 1);
+            }
         }).catch((err) => {
             console.log(err);
         });

@@ -140,9 +140,11 @@
 
                 })
                 // return;
+            }else{
+                // 将数据dispatch过去
+                this.props.dispatch(regConsumer(_state.firstName, _state.lastName, _state.email, _state.password, _state.referenceId))
             }
-            // 将数据dispatch过去
-            this.props.dispatch(regConsumer(_state.firstName, _state.lastName, _state.email, _state.password, _state.referenceId))
+
          })
      }
 
