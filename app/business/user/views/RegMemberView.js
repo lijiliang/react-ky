@@ -330,7 +330,6 @@ const district = datas;
                             </div>
 
                         </div>
-
                      </div>
                 </div>
                 <div className="m-foot-fixed">

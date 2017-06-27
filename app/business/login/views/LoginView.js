@@ -15,6 +15,8 @@ import 'kyBase/common/sValid';
 
 import '../resources/LoginView.less';
 
+import RouterHandle from 'kyBase/common/RouterHandle';
+
 class LoginView extends React.Component{
     constructor(props, context){
         super(props, context);
@@ -43,7 +45,10 @@ class LoginView extends React.Component{
     }
     // 返回上一页
     gohistoryHandle(){
-        window.history.go(-1);
+        // window.history.go(-1);
+        // RouterHandle.go('/user/regconsumer')
+        // RouterHandle.back();
+        //RouterHandle.backToIndex();
     }
 
     loginHandle(){

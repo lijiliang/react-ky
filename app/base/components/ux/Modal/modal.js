@@ -1,0 +1,139 @@
+/**
+ * @fileOverview Modal 对话框
+ */
+import React from 'react';
+import Dialog from 'rc-dialog';
+import classNames from 'classnames';
+import assign from 'object-assign';
+import Touchable from 'rc-touchable';
+
+export default class Modal extends React.Component {
+    static defaultProps = {
+        prefixCls: 'ky-modal',
+        transparent: false,
+        animated: true,
+        style: {},
+        onShow() {},
+        footer: [],
+        closable: false,
+        operation: false,
+        platform: 'cross',
+    }
+
+    isInModal(e) {
+        if (!/\biPhone\b|\biPod\b/i.test(navigator.userAgent)) {
+            return;
+        }
+
+        // fix touch to scroll background page on iOS
+        const prefixCls = this.props.prefixCls;
+        const pNode = (node => {
+         while ( node.parentNode && node.parentNode !== document.body ) {
+           if ( node.classList.contains(prefixCls)) {
+             return node;
+           }
+           node = node.parentNode;
+         }
+        })(e.target);
+        if (!pNode) {
+         e.preventDefault();
+        }
+        return true;
+    }
+
+    renderFooterButton(button, prefixCls, i) {
+        let buttonStyle = {};
+        if (button.style) {
+        buttonStyle = button.style;
+        if (typeof buttonStyle === 'string') {
+          const styleMap = {
+            cancel: { fontWeight: 'bold' },
+            default: {},
+            destructive: { color: 'red' },
+          };
+          buttonStyle = styleMap[buttonStyle] || {};
+        }
+        }
+
+        const onClickFn = function(e) {
+            e.preventDefault();
+            if (button.onPress) {
+              button.onPress();
+            }
+        };
+
+        return (
+        <Touchable activeClassName={`${prefixCls}-button-active`} key={i}>
+          <a className={`${prefixCls}-button`} role="button" style={buttonStyle} href="#" onClick={onClickFn}>
+            {button.text || `Button`}
+          </a>
+        </Touchable>
+        );
+    }
+    render(){
+        const {
+            prefixCls,
+            className,
+            transparent,
+            animated,
+            transitionName,
+            maskTransitionName,
+            style,
+            footer = [],
+            closable,
+            operation,
+            platform,
+        } = this.props;
+
+        // 判断是否安卓
+        // const isAndroid = platform === 'android' ||
+        // (platform === 'cross' && this.props.visible && !!navigator.userAgent.match(/Android/i));
+
+        const wrapCls = classNames({
+            [className]: !!className,
+            [`${prefixCls}-transparent`]: transparent,
+            //[`${prefixCls}-android`]: isAndroid,
+        });
+
+        let anim = transitionName || (animated ? (transparent ? 'ky-fade' : 'ky-slide-up') : null);
+        let maskAnim = maskTransitionName || (animated ? (transparent ? 'ky-fade' : 'ky-slide-up') : null);
+
+        const btnGroupClass = `${prefixCls}-button-group-${footer.length === 2 && !operation ? 'h' : 'v'}`;
+        const footerDom = footer.length ? <div className={btnGroupClass} role="group">
+            {footer.map((button: any, i) => this.renderFooterButton(button, prefixCls, i))}
+        </div> : null;
+
+        // transparent 模式下, 内容默认居中
+        const rootStyle = transparent ? assign({
+            width: '5.4rem',
+            height: 'auto',
+            }, style) : assign({
+            width: '100%',
+            height: '100%',
+        }, style);
+
+        const restProps = assign({}, this.props);
+            ['prefixCls', 'className', 'transparent', 'animated', 'transitionName', 'maskTransitionName',
+            'style', 'footer', 'touchFeedback', 'wrapProps',
+            ].forEach(prop => {
+            if (restProps.hasOwnProperty(prop)) {
+                delete restProps[prop];
+            }
+        });
+
+        const wrapProps = { onTouchStart: e => this.isInModal(e) };
+        return(
+            <Dialog
+                prefixCls={prefixCls}
+                className={wrapCls}
+                transitionName={anim}
+                maskTransitionName={maskAnim}
+                style={rootStyle}
+                footer={footerDom}
+                wrapProps={wrapProps}
+                closable={closable}
+                {...restProps}
+            />
+        )
+    }
+}
