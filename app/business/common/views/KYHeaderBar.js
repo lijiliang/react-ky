@@ -24,7 +24,7 @@ class KYHeaderBar extends React.Component{
         const kyFooter = $('#kyFooter');
         const sideBarWrap = $('.ky-sideBar-wrap');
         $('.ky-popup-mask').show();  //打开遮罩层
-        $('body').css('overflow','hidden');
+        $('.ky-scrollable, .ky-scrollable-white').css('overflow','hidden');
         if(kyFooter){
             const footerHeight = kyFooter.height();
             sideBarWrap.css({

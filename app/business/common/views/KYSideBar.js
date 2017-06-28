@@ -21,7 +21,7 @@ class KYSideBar extends React.Component{
     // 关闭侧边栏
     closeSideHandle(){
         const sideBarWrap = $('.ky-sideBar-wrap');
-        $('body').attr('style', []);
+        $('.ky-scrollable, .ky-scrollable-white').attr('style', []);
         sideBarWrap.css({
             transform: 'translate3d(-100%, 0, 0)'
         });
