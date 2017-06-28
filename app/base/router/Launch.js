@@ -67,7 +67,7 @@ class Launch extends React.Component {
                     </div>
 
                     {this.state.footBarVisible ?
-                        <footer className="ky-view-footer flex-column">
+                        <footer className="ky-view-footer flex-column" id="kyFooter">
                         <KYFooterBar ref="kyFooter" visible={this.state.footBarVisible} currPath = {currPath}/>
                         </footer>
                     : null}
