@@ -19,8 +19,7 @@ import axios from 'axios';
 import Cache from 'Cache';
 
 //获取token
-const access_token = Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token) || '';
-//
+// const access_token = Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token) || '';
 // axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -34,7 +33,7 @@ export const get = (url, param) => {
     return (
         axios.get(`${url}`, {
             //header 是即将发送的自定义请求头
-            headers: { Authorization: 'Bearer ' + access_token},
+            headers: { Authorization: 'Bearer ' + Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token) || ''},
             params: param
         })
     );
@@ -49,7 +48,7 @@ export const get = (url, param) => {
 export const post = (url, param) => {
     return(
         axios.post(`${url}`, param, {
-            headers: { Authorization: 'Bearer ' + access_token},
+            headers: { Authorization: 'Bearer ' + Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token) || ''},
         })
     );
 };
