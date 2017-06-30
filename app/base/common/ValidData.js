@@ -142,14 +142,6 @@ const ValidData = [
             value: '22'
         },
         {
-            label: '21',
-            value: '21'
-        },
-        {
-            label: '22',
-            value: '22'
-        },
-        {
             label: '23',
             value: '23'
         },

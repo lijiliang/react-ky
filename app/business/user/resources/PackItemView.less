@@ -24,7 +24,31 @@
             line-height: 102px;
             padding: 0 @h-spacing-lg;
             color: @brand-primary;
+            // 单选
+            .pack-radio{
+                white-space: nowrap;
+                outline: none;
+                display: inline-block;
+                position: relative;
+                input{
+                    position: absolute;
+                    left: -20px;
+                    top: 0;
+                    bottom: 0;
+                    right: 0;
+                    cursor: pointer;
+                    opacity: 0;
+                    width: 102px;
+                    height: 102px;
+                    z-index: 9999;
+                }
+                span{
+                    position: relative;
+                    top: 15px;
+                }
+            }
             .icon-bg{
+                display: inline-block;
                 width: 55px;
                 height: 55px;
                 margin-right: 10px;

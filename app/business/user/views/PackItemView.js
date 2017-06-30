@@ -34,15 +34,25 @@ class PackItemView extends React.Component {
     componentDidMount(){
     }
     render(){
-        const { prefixCls, active, icon, listData, ...restProps} = this.props;
+        const { prefixCls, active, icon, listData, value, checked, ...restProps} = this.props;
         const wrapCls = classNames({
             [`${prefixCls}-item`]: true,
-            [`${prefixCls}-active`]: active,
+            [`${prefixCls}-active`]: active,            //明确要传过来active才显示高亮
+            [`${prefixCls}-active`]: value === checked,
         })
         return(
             <div  {...restProps} className={wrapCls}>
+
                 <div className="m-pack-header">
-                    {icon ? <span className="icon-bg"></span> : null}
+                    {icon ?
+                        <label>
+                            <div className="pack-radio">
+                                <input type="radio" value={this.props.value} checked={this.props.value === this.props.checked}/>
+                                <span className="icon-bg"></span>
+                            </div>
+                        </label>
+                    : null}
+                    {/* {icon ? <span className="icon-bg"></span> : null} */}
                     <strong className="pack-name">卓越套组</strong>
                     <div className="member-price">
                         <span>会员价</span>

@@ -14,10 +14,12 @@ class Launch extends React.Component {
     static defaultProps = {
         // 是否显示底部bar配置规则，默认为显示。如果设置了false,则不显示。
         vRouteMap: {
-            'user/regconsumer': false,     //消费者注册
-            'user/regmember': false,       //会员注册
             login: false,                  //登录
             'cart/order': false,           //购物车列表
+            'user/regconsumer': false,     //消费者注册
+            'user/regmember': false,       //会员注册
+            'user/regselectpack': false,   //会员注册->选购加入套组
+            'user/regorder': false,        //会员注册->填写订单及填写收货地址
         }
     }
     constructor(props, context){
