@@ -29,9 +29,9 @@ export function regConsumer(firstName, lastName, email, password, referenceId){
                     }
                 });
 
-                // 保存数据到localStorage
-                Cache.set(Cache.keys.ky_cache_customer_username, res.data.data.customer_username);
-                Cache.set(Cache.keys.ky_cache_customer_id, res.data.data.customer_id);
+                // 保存数据到sessionStorage
+                Cache.sessionSet(Cache.sessionKeys.ky_cache_customer_username, res.data.data.customer_username);
+                Cache.sessionSet(Cache.sessionKeys.ky_cache_customer_id, res.data.data.customer_id);
             }else{
                 // 如果失败则显示失败信息
                 Toast.info(res.message, 1);

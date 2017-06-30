@@ -15,10 +15,7 @@
  import { get, getPublic } from 'kyBase/common/FetchData';
  import Urls from 'kyBase/common/Urls';
 
- import Button from 'kyBase/components/ux/Button';
- import Toast from 'kyBase/components/ux/Toast';
- import NavBar from 'kyBase/components/ux/NavBar';
- import InputItem from 'kyBase/components/ux/InputItem';
+ import { Button, Toast, NavBar, InputItem } from 'uxComponent';
 
  import '../resources/RegConsumerView.less';
 

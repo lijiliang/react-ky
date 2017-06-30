@@ -9,13 +9,11 @@ import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
 import {login} from '../action/DataAction';
 
-import { Button, Toast, NavBar } from 'uxComponent';
+import { createForm } from 'rc-form';
+import { Button, Toast, NavBar, InputItem } from 'uxComponent';
 import { Cache } from 'kyCommon';
-import 'kyBase/common/sValid';
 
 import '../resources/LoginView.less';
-
-import RouterHandle from 'kyBase/common/RouterHandle';
 
 class LoginView extends React.Component{
     constructor(props, context){
@@ -29,7 +27,6 @@ class LoginView extends React.Component{
     }
     componentDidMount(){
         // this.send("topBar->addItem({text:'aaa',handler:function(){alert()}},icon:"class")");
-        this.sValidEvent();
 
         // 设置默认数据
         let kyCacheIsAccount = JSON.parse(Cache.get(Cache.keys.ky_cache_isAccount));
@@ -45,25 +42,40 @@ class LoginView extends React.Component{
     }
     // 返回上一页
     gohistoryHandle(){
-        // window.history.go(-1);
-        // RouterHandle.go('/user/regconsumer')
-        // RouterHandle.back();
-        //RouterHandle.backToIndex();
+        window.history.go(-1);
     }
 
     loginHandle(){
-        this.props.dispatch(login("2771081C","Ky5513687"));
+        //this.props.dispatch(login("2771081C","Ky5513687"));
     }
-    // 输入用户名
-    changeUsername(){
-        const username = $.trim(this.refs.username.value);
-        this.setState({username:username});
+
+    // 登录
+    loginClickHandle(){
+        const form = this.props.form;
+        form.validateFields((error, value) => {
+            if(error){
+                const fieldNames = ['username','password'].reverse();
+                fieldNames.map((item, index) => {
+                    if(form.getFieldError(item)){
+                        Toast.info(form.getFieldError(item), 1);
+                        return;
+                    }
+                });
+                return;
+            }else{
+                this.setState(value);
+                this.props.dispatch(login(this.state.username, this.state.password, this.state.isAccount));
+            }
+        });
     }
-    // 输入密码
-    changePassword(){
-        const password = $.trim(this.refs.password.value);
-        this.setState({password:password});
+
+    // 设置state
+    stateChangeHandle(name, value){
+       this.setState({
+           [name]: value
+       })
     }
+
     // 记住帐号
     handleAccountChange(event){
         const target = event.target;
@@ -73,43 +85,8 @@ class LoginView extends React.Component{
             isAccount: value,
         });
     }
-    // 登录
-    loginClickHandle(){
-        /* 先验证再执行登录逻辑 */
-        if($.sValid()){
-            this.props.dispatch(login(this.state.username, this.state.password, this.state.isAccount));
-        }
-    }
-
-    // 验证规则
-    sValidEvent(){
-        $.sValid.init({
-            rules: {
-                username: {
-                    required: true,
-                },
-                password:  'required'
-            },
-            messages: {
-                username: {
-                    required: '请输入会员帐号！'
-                },
-                password: '请输入密码！'
-            },
-            callback: function(eId, eMsg, eRules){
-                if(eId.length > 0){
-                    let i = 0;
-                    $.map(eMsg, function (idx, item) {
-                        if (i === 0) {
-                            Toast.info(idx, 1);
-                        }
-                        i++;
-                    });
-                }
-            }
-        });
-    }
     render(){
+        const { getFieldDecorator} = this.props.form;
         return(
             <div className="ky-scrollable bg-login">
                 <div className="ky-login">
@@ -118,35 +95,35 @@ class LoginView extends React.Component{
                         onLeftClick={this.gohistoryHandle.bind(this)}
                         >登录我的帐户</NavBar>
                     <div className="ky-login-body">
-                        <div className="ky-input-item">
-                            <div className="ky-input-label ky-center">
+                        {getFieldDecorator('username', {
+                            initialValue: this.state.username,
+                            rules: [{
+                                required: true,
+                                message: '输入您的会员帐号'
+                            }]
+                          })(
+                            <InputItem
+                                placeholder="请输入您的中国会员帐号"
+                                onChange={this.stateChangeHandle.bind(this, 'username')}
+                            >
                                 <i className="icon icon-memberNo"></i>
-                            </div>
-                            <div className="ky-input-control">
-                                <input
-                                    id="username"
-                                    type="text"
-                                    placeholder="请输入您的中国会员帐号"
-                                    ref='username'
-                                    value={this.state.username}
-                                    onChange={this.changeUsername.bind(this)}
-                                />
-                            </div>
-                        </div>
-                        <div className="ky-input-item">
-                            <div className="ky-input-label ky-center">
-                                <i className="icon icon-password"></i>
-                            </div>
-                            <div className="ky-input-control">
-                                <input
-                                    id="password"
-                                    type="password"
-                                    placeholder="密码"
-                                    ref="password"
-                                    onChange={this.changePassword.bind(this)}
-                                />
-                            </div>
-                        </div>
+                            </InputItem>
+                         )}
+
+                         {getFieldDecorator('password', {
+                             rules: [{
+                                 required: true,
+                                 message: '请输入您的密码'
+                             }]
+                           })(
+                             <InputItem
+                                 placeholder="请输入您的密码"
+                                 type="password"
+                                 onChange={this.stateChangeHandle.bind(this, 'password')}
+                             >
+                                 <i className="icon icon-memberNo"></i>
+                             </InputItem>
+                          )}
                         <div className="login-other-info">
                             <a href="" className="forget-password">忘记密码？</a>
                             <label className="login-checkbox">
@@ -175,6 +152,7 @@ class LoginView extends React.Component{
     }
 }
 
+const LoginViewWrapper = createForm()(LoginView);
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
@@ -185,4 +163,4 @@ function mapStateToProps(state){
 
 export default connect(
     mapStateToProps
-)(LoginView);
+)(LoginViewWrapper);

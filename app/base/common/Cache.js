@@ -9,8 +9,7 @@ const Cache = {
     keys: {
         ky_cache_login_account: 'ky_cache_login_account', //登录用户
         ky_cache_isAccount: 'ky_cache_isAccount',         //记住帐号
-        ky_cache_customer_username: 'ky_cache_customer_username', //会员名
-        ky_cache_customer_id: 'ky_cache_customer_id', //会员Id
+        ky_cache_cityArea: 'ky_cache_cityArea',           //省市区 城市信息
     },
     /**
      * [sessionKeys 一些默认sessionStorage的keys值]
@@ -19,6 +18,9 @@ const Cache = {
         ky_cache_access_token: 'ky_cache_access_token',   //登陆后记住token
         ky_cache_isLogined: 'ky_cache_isLogined',         //是否已登录
         ky_cache_last_login_time: 'ky_cache_last_login_time', //最后一次登录时间
+        ky_cache_customer_username: 'ky_cache_customer_username', //会员名
+        ky_cache_customer_id: 'ky_cache_customer_id',         //会员Id
+        ky_cache_customer_type: 'ky_cache_customer_type',     //会员类型 0代表消费者，1代表会员
     },
     /*
      * [set 设置localStorage的值]
