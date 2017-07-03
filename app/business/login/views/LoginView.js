@@ -121,7 +121,7 @@ class LoginView extends React.Component{
                                  type="password"
                                  onChange={this.stateChangeHandle.bind(this, 'password')}
                              >
-                                 <i className="icon icon-memberNo"></i>
+                                 <i className="icon icon-password"></i>
                              </InputItem>
                           )}
                         <div className="login-other-info">

@@ -44,20 +44,25 @@ class PackItemView extends React.Component {
             <div  {...restProps} className={wrapCls}>
 
                 <div className="m-pack-header">
-                    {icon ?
-                        <label>
-                            <div className="pack-radio">
-                                <input type="radio" value={this.props.value} checked={this.props.value === this.props.checked}/>
-                                <span className="icon-bg"></span>
-                            </div>
-                        </label>
-                    : null}
-                    {/* {icon ? <span className="icon-bg"></span> : null} */}
-                    <strong className="pack-name">卓越套组</strong>
-                    <div className="member-price">
-                        <span>会员价</span>
-                        <span className="price">￥10,888.00</span>
+                    <div className="head-view">
+                        {icon ?
+                            <label>
+                                <div className="pack-radio">
+                                    <input type="radio" value={this.props.value} checked={this.props.value === this.props.checked}/>
+                                    <span className="icon-bg"></span>
+                                </div>
+                            </label>
+                        : null}
+                        <strong className="pack-name">卓越套组</strong>
+                        <div className="member-price">
+                            <span>会员价</span>
+                            <span className="price">￥10,888.00</span>
+                        </div>
                     </div>
+                    {/* <div className="elect-package">
+                        <p>温馨提示 : 当您选择了此套组后，</p>
+                        <p>将会失去购买其他更吸引的加入套组的机会</p>
+                    </div> */}
                 </div>
                 <div className="m-pack-body">
                     <div className="thumb">

@@ -28,7 +28,7 @@ class RegOrderView extends React.Component {
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
             firstName: 'firstName',
-            cityValue: [1,2,3],    //省市区数据
+            cityValue: ["5", "22", "32"],    //省市区数据
         };
     }
     // 设置state
