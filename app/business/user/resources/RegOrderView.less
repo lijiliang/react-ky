@@ -53,7 +53,17 @@
         }
     }
     .userinfo-form{
+        position: relative;
         padding: 0 @v-spacing-lg;
+        .form-mask{
+            position: absolute;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            // background: rgba(0,0,0, .5);
+        }
         .ky-list-item .ky-input-label{
             color: @brand-gray;
             margin-right: 25px;

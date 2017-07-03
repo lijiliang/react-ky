@@ -28,7 +28,8 @@ class RegOrderView extends React.Component {
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-
+            accouontMask: true,   //帐户信息遮罩
+            consigneeMask: true,  //收货信息遮罩
         };
     }
     componentDidMount(){
@@ -92,7 +93,19 @@ class RegOrderView extends React.Component {
 
         })
     }
+    //帐户信息是否可修改遮罩
+    accouontMaskHandle(){
+        this.setState({
+            accouontMask: !this.state.accouontMask
+        })
+    }
 
+    //收货信息是否可修改遮罩
+    consigneeMaskHandle(){
+        this.setState({
+            consigneeMask: !this.state.consigneeMask
+        })
+    }
     render(){
         console.log(this.state)
         const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
@@ -121,10 +134,14 @@ class RegOrderView extends React.Component {
                        <div className="m-userinfo">
                            <div className="userinfo-tit">
                                <h2>帐户信息</h2>
-                               <span className="modify">修改</span>
+                               <span className="modify" onClick={this.accouontMaskHandle.bind(this)}>
+                                   {this.state.accouontMask ? '修改' : '确定' }
+                               </span>
                            </div>
                            <div className="userinfo-form">
-
+                               {
+                                   this.state.accouontMask ? <div className="form-mask"></div> : null
+                               }
                                {getFieldDecorator('cityValue',{
                                    initialValue: this.state.cityValue,
                                    rules: [{
@@ -174,7 +191,7 @@ class RegOrderView extends React.Component {
                                    <InputItem
                                        placeholder="请输入6个数字的邮政编码"
                                        labelNumber={5}
-                                       maxLength={5}
+                                       maxLength={6}
                                        type="number"
                                        style={{border:'none'}}
                                        onChange={this.stateChangeHandle.bind(this, 'addrPostcode')}
@@ -272,9 +289,14 @@ class RegOrderView extends React.Component {
                        <div className="m-userinfo">
                            <div className="userinfo-tit">
                                <h2>收货信息</h2>
-                               <span className="modify">修改</span>
+                               <span className="modify" onClick={this.consigneeMaskHandle.bind(this)}>
+                                   {this.state.consigneeMask ? '修改' : '确定' }
+                               </span>
                            </div>
                            <div className="userinfo-form">
+                               {
+                                   this.state.consigneeMask ? <div className="form-mask"></div> : null
+                               }
                                {getFieldDecorator('consigneeName', {
                                    initialValue: this.state.consigneeName,
                                    rules: [{

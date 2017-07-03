@@ -20,6 +20,7 @@ class Launch extends React.Component {
             'user/regmember': false,       //会员注册
             'user/regselectpack': false,   //会员注册->选购加入套组
             'user/regorder': false,        //会员注册->填写订单及填写收货地址
+            'user/payment': false,         //填写支付信息
         }
     }
     constructor(props, context){
