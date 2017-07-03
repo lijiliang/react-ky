@@ -9,6 +9,7 @@
  import * as loginAction from '../action/actionTypes';
  import {regConsumer} from '../action/DataAction';
 
+import { Urls, RegxRule, Cache } from 'kyCommon';
 import { Button, Toast, NavBar} from 'uxComponent';
 import { KYSteps } from 'kyComponent';
 import PackItemView from './PackItemView';
@@ -20,15 +21,19 @@ class RegSelectPackView extends React.Component {
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-            isActive: true,
             value: 'c'
         };
     }
 
-  handleChanges(event) {
-    this.setState({value: event.target.value});
-  }
+    handleChanges(event) {
+        this.setState({value: event.target.value});
+    }
     componentDidMount(){
+        // 获取session
+        const regmember_info = Cache.sessionGet(Cache.sessionKeys.ky_cache_regmember_info);
+        if(regmember_info){
+            this.setState(regmember_info);
+        }
     }
     // 返回上一页
     gohistoryHandle(){
@@ -40,7 +45,7 @@ class RegSelectPackView extends React.Component {
             {value: 'c', label: 'label0'},
             {value: 'd', label: 'label1'},
             {value: 'e', label: 'label2'}
-        ]
+        ];
         return(
              <div className="ky-container-body">
                  <div className="ky-scrollable">
@@ -57,20 +62,12 @@ class RegSelectPackView extends React.Component {
                             </div>
                         </div>
                         <div className="m-pack">
-                            <label>
-                               Name:
-                               <input type="radio" value='c' checked = {this.state.value === 'c'} onChange={this.handleChanges.bind(this)} />
-                             </label>
-                             <label>
-                                Name:
-                                <input type="radio" value='d' checked = {this.state.value === 'd'} onChange={this.handleChanges.bind(this)} />
-                              </label>
-                             {data.map( i => (
+                             {/* {data.map( i => (
                                  <label>
                                      {i.label}
                                     <input type="radio" value={i.value} checked = {this.state.value === i.value} onChange={this.handleChanges.bind(this)} />
                                   </label>
-                             ))}
+                             ))} */}
 
                              {data.map( i => (
                                 <PackItemView icon value={i.value} checked={this.state.value} onChange={this.handleChanges.bind(this)}/>

@@ -21,6 +21,7 @@ const Cache = {
         ky_cache_customer_username: 'ky_cache_customer_username', //会员名
         ky_cache_customer_id: 'ky_cache_customer_id',         //会员Id
         ky_cache_customer_type: 'ky_cache_customer_type',     //会员类型 0代表消费者，1代表会员
+        ky_cache_regmember_info: 'ky_cache_regmember_info',   //注册会员相关信息，用于会员注册相关步骤的数据保存
     },
     /*
      * [set 设置localStorage的值]

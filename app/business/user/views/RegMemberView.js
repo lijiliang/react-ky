@@ -12,7 +12,7 @@ import {regConsumer} from '../action/DataAction';
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
 import { get, getPublic } from 'kyBase/common/FetchData';
-import { Urls, RegxRule } from 'kyCommon';
+import { Urls, RegxRule, Cache } from 'kyCommon';
 
 //组件
 import { KYSteps } from 'kyComponent';
@@ -43,12 +43,25 @@ const district = datas;
              addrPostcode: '', //邮政编码
              recommender: '',  //推荐人编号
              reRecommender: '',//确认推荐人(安置人)
-             buttonDisabled: true,    // 注册按钮是否可点
-             cityExtra: false,        // 是否已选择过省市区
+             buttonDisabled: true,     // 注册按钮是否可点
+             cityExtra: false,         // 是否已选择过省市区
+             consigneeName: '',        // 收货人姓名
+             consigneeCityValue: '',   // 收货人省市区数据
+             consigneeAddrDetail: '',  // 收货人详细地址
+             consigneeAddrPostcode: '',// 收货人邮编
+             consigneePhoneNumber: '', // 收货人手机号码
+             consigneeIdCard: '',      // 收货人身份证号码
+             consigneeTelNumber: '',   // 收货人固定电话号码
+
          };
      }
 
      componentDidMount(){
+         // 获取session
+         const regmember_info = Cache.sessionGet(Cache.sessionKeys.ky_cache_regmember_info);
+         if(regmember_info){
+             this.setState(regmember_info);
+         }
      }
 
      // 返回上一页
@@ -112,6 +125,20 @@ const district = datas;
             }
 
             const _state = this.state;
+
+            // 处理数据并保存到session
+            const consigneeInfo = {
+                consigneeName: value.firstName + value.lastName,    // 收货人姓名
+                consigneeCityValue: value.cityValue,       // 收货人省市区数据
+                consigneeAddrDetail: value.addrDetail,     // 收货人详细的街道门牌号等
+                consigneeAddrPostcode: value.addrPostcode, // 收货人邮编
+                consigneePhoneNumber: value.phoneNumber,   // 收货人手机号码
+                consigneeIdCard: value.idCard,             // 收货人身份证号码
+                consigneeTelNumber: value.telNumber,       // 收货人固定电话号码
+            }
+            const regMemberInfo = Object.assign(this.state, consigneeInfo);
+            Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, regMemberInfo);
+
             // 如果填写了会员号ID,需先判断是否存在
             if(_state.recommender){
                 const response = getPublic(Urls.UserExist + '/' + _state.recommender);
@@ -166,8 +193,9 @@ const district = datas;
                                 </div>
                                 <div className="ref-form">
                                     {getFieldDecorator('firstName', {
+                                        initialValue: this.state.firstName,
                                         rules: [{
-                                            required: false,
+                                            required: true,
                                             message: '请输入您的姓氏'
                                         }],
                                       })(
@@ -177,8 +205,9 @@ const district = datas;
                                         >姓氏</InputItem>
                                      )}
                                      {getFieldDecorator('lastName', {
+                                         initialValue: this.state.lastName,
                                          rules: [{
-                                             required: false,
+                                             required: true,
                                              message: '请输入您的名字'
                                          }],
                                        })(
@@ -188,10 +217,11 @@ const district = datas;
                                          >名字</InputItem>
                                      )}
                                      {getFieldDecorator('email', {
+                                         initialValue: this.state.email,
                                          rules: [{
                                            type: 'email', message: '请输入正确的邮箱地址',
                                          }, {
-                                           required: false, message: '请输入邮箱地址',
+                                           required: true, message: '请输入邮箱地址',
                                          }],
                                        })(
                                          <InputItem
@@ -200,10 +230,11 @@ const district = datas;
                                          >邮箱地址</InputItem>
                                      )}
                                      {getFieldDecorator('confirmEmail', {
+                                         initialValue: this.state.confirmEmail,
                                          rules: [{
                                            type: 'email', message: '请输入正确的邮箱地址',
                                          }, {
-                                           required: false, message: '请再次输入您的邮箱地址',
+                                           required: true, message: '请再次输入您的邮箱地址',
                                          }],
                                        })(
                                          <InputItem
@@ -212,11 +243,12 @@ const district = datas;
                                          >邮箱确认</InputItem>
                                      )}
                                      {getFieldDecorator('password', {
+                                         initialValue: this.state.password,
                                          rules: [{
                                              pattern: RegxRule.password,
                                              message: '密码必须是数字和英文字母组合,必须有一个大写字母'
                                          },{
-                                             required: false,
+                                             required: true,
                                              message: '您的密码最少为8个字符'
                                          }],
                                        })(
@@ -230,8 +262,9 @@ const district = datas;
                                          >帐号密码</InputItem>
                                      )}
                                      {getFieldDecorator('confirmPwd', {
+                                         initialValue: this.state.confirmPwd,
                                          rules: [{
-                                             required: false,
+                                             required: true,
                                              message: '请再次输入您的密码'
                                          }],
                                        })(
@@ -246,11 +279,12 @@ const district = datas;
                                          >确认密码</InputItem>
                                      )}
                                      {getFieldDecorator('phoneNumber', {
+                                         initialValue: this.state.phoneNumber,
                                          rules: [{
                                              pattern: RegxRule.phone,
                                              message: '请输入正确的手机号'
                                          },{
-                                             required: false,
+                                             required: true,
                                              message: '请输入您的手机号'
                                          }],
                                        })(
@@ -262,6 +296,7 @@ const district = datas;
                                          >手机号</InputItem>
                                      )}
                                      {getFieldDecorator('telNumber',{
+                                         initialValue: this.state.telNumber,
                                          rules: [{
                                              pattern: RegxRule.telPhone,
                                              message: '请输入正确的固定电话'
@@ -273,11 +308,12 @@ const district = datas;
                                          >固定电话</InputItem>
                                      )}
                                      {getFieldDecorator('idCard',{
+                                         initialValue: this.state.idCard,
                                          rules: [{
                                              pattern: RegxRule.idCard,
                                              message: '请输入正确的身份证号'
                                          },{
-                                             required: false,
+                                             required: true,
                                              message: '请输入您的身份证号码'
                                          }],
                                        })(
@@ -287,8 +323,9 @@ const district = datas;
                                          >身份证号码</InputItem>
                                      )}
                                      {getFieldDecorator('cityValue',{
+                                         initialValue: this.state.cityValue,
                                          rules: [{
-                                             required: false,
+                                             required: true,
                                              message: '请选择您所在的省市区'
                                          }],
                                        })(
@@ -305,8 +342,9 @@ const district = datas;
                                      )}
 
                                      {getFieldDecorator('addrDetail',{
+                                         initialValue: this.state.addrDetail,
                                          rules: [{
-                                             required: false,
+                                             required: true,
                                              message: '请输入详细地址'
                                          }],
                                        })(
@@ -315,14 +353,17 @@ const district = datas;
                                              placeholder="请输入您的所在地址，产品将会寄住此处"
                                              labelNumber={6}
                                              rows={2}
+                                             value={this.state.addrDetail}
+                                             onChange={this.stateChangeHandle.bind(this, 'addrDetail')}
                                          />
                                      )}
                                      {getFieldDecorator('addrPostcode',{
+                                         initialValue: this.state.addrPostcode,
                                          rules: [{
                                              pattern: RegxRule.zipCode,
                                              message: '请输入正确的邮政编码'
                                          },{
-                                             required: false,
+                                             required: true,
                                              message: '请输入邮政编码'
                                          }],
                                        })(
@@ -345,6 +386,7 @@ const district = datas;
                                 </div>
                                 <div className="ref-form">
                                     {getFieldDecorator('recommender',{
+                                        initialValue: this.state.recommender,
                                         rules: [{
                                             pattern: RegxRule.referenceId,
                                             message: '推荐人会员号不正确'
@@ -360,6 +402,7 @@ const district = datas;
                                         >推荐人会员号</InputItem>
                                      )}
                                      {getFieldDecorator('reRecommender',{
+                                         initialValue: this.state.reRecommender,
                                          rules: [{
                                              pattern: RegxRule.referenceId,
                                              message: '推荐人会员号不正确'
