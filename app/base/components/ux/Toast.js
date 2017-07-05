@@ -47,7 +47,7 @@ function getMessageInstance(mask) {
     messageInstance = Notification.newInstance({
         prefixCls,
         style: { top: (mask ? 0 : '50%')  },
-        transitionName: 'am-fade',
+        transitionName: 'ky-fade',
         className: mask ? `${prefixCls}-mask` : '',
     });
     return messageInstance;

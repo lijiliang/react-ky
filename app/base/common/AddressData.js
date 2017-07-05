@@ -1,5 +1,7 @@
 /**
  * @fileOverview 获取所有地址数据
+    callback 方式调用  在另外一个模块里调用
+    AddressData(function(e){//后面的都放到这里执行});
  */
 import Cache from './Cache';
 import Urls from './Urls';
@@ -27,6 +29,7 @@ function getAddress(callback){
                 Toast.hide();
             }
         }).catch((err) => {
+            Toast.hide();
             console.log(err);
         });
     }
@@ -35,8 +38,3 @@ function getAddress(callback){
 AddressData = getAddress;
 
 export default AddressData;
-
-/*
-callback 方式调用  在另外一个模块里调用
-AddressData(function(e){//后面的都放到这里执行});
- */
