@@ -46,7 +46,7 @@ class Picker extends React.Component {
             });
         } else {
             treeChildren = value.map((v, i) => {
-                console.log(this.props.data[i].filter(d => d.value === v)[0])
+                // console.log(this.props.data[i].filter(d => d.value === v)[0])
                 return this.props.data[i].filter(d => d.value === v)[0];
             });
         }

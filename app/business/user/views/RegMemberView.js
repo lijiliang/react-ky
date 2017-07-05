@@ -12,7 +12,7 @@ import {regConsumer} from '../action/DataAction';
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
 import { get, getPublic } from 'kyBase/common/FetchData';
-import { Urls, RegxRule, Cache } from 'kyCommon';
+import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
 
 //组件
 import { KYSteps } from 'kyComponent';
@@ -22,8 +22,9 @@ const Brief = Item.Brief;
 
 import '../resources/RegMemberView.less';
 
-import datas from 'kyBase/components/ux/data'
-const district = datas;
+// 省市区数据
+const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
+
  class RegConsumerView extends React.Component{
      constructor(props, context){
          super(props, context);
@@ -52,6 +53,7 @@ const district = datas;
              consigneePhoneNumber: '', // 收货人手机号码
              consigneeIdCard: '',      // 收货人身份证号码
              consigneeTelNumber: '',   // 收货人固定电话号码
+             cityAreaData: cityAreaData, // 全部省市区数据
 
          };
      }
@@ -81,6 +83,15 @@ const district = datas;
             cityValue: v,
             cityExtra: true
         })
+     }
+     // 点击获取省市区
+     onCitykHandle(){
+         const _this = this;
+         AddressData(function(e){
+             _this.setState({
+                 cityAreaData: e
+             })
+         });
      }
      // 提交
      submitHandle = () => {
@@ -330,14 +341,14 @@ const district = datas;
                                          }],
                                        })(
                                          <Picker
-                                             data={district}
+                                             data={this.state.cityAreaData}
                                              title="选择地区"
                                              extra="请选择您所在的省市区"
                                              value={this.state.cityValue}
                                              onChange={this.pickerChangeHandle.bind(this)}
                                              format={(values) => { return values.join(' '); }}
                                           >
-                                             <List.Item arrow="horizontal" className={cityExtraCls}>详细地址</List.Item>
+                                             <List.Item arrow="horizontal" onClick={this.onCitykHandle.bind(this)} className={cityExtraCls}>详细地址</List.Item>
                                          </Picker>
                                      )}
 

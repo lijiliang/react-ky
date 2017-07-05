@@ -44,3 +44,30 @@ response.then(function(res){
     })
 })
 ```
+
+```js
+async function axiosGet(){
+    try{
+        const response = await get(`/api/2`);
+        await response;
+        console.log(response.data);
+    }catch(err){
+        console.log(err);
+    }
+}
+axiosGet();
+
+async function getAdd(){
+    try{
+        const response = await getPublic(Urls.Address);
+        await response;
+        if(response.data.success){
+            console.log('response.data.data', response.data.data)
+            return response.data.data;
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+getAdd();
+```

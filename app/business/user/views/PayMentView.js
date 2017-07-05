@@ -11,7 +11,7 @@ import {regConsumer} from '../action/DataAction';
 
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
-import { ValidData } from 'kyCommon';
+import { Urls, RegxRule, Cache, ValidData } from 'kyCommon';
 import { KYSteps } from 'kyComponent';
 import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
 const Item = List.Item;
@@ -25,8 +25,20 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
-             select: ['08', '12']
+             validSelect: ['05', '29'],  //有效期
          };
+     }
+     componentDidMount(){
+         // 获取session
+         const regmember_info = Cache.sessionGet(Cache.sessionKeys.ky_cache_regmember_info);
+         if(regmember_info){
+             this.setState(regmember_info);
+         }
+     }
+
+     // 返回上一页
+     gohistoryHandle(){
+         window.history.go(-1);
      }
 
      // 设置state
@@ -36,25 +48,47 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
          });
      }
 
-     // 省市区选择
-     pickerChangeHandle(v){
+     // 有效期选择
+     validChangeHandle(v){
          this.setState({
-             cityValue: v,
-             cityExtra: true
+             validSelect: v
          });
      }
+     submitHandle(){
+        const form = this.props.form;
+        form.validateFields((error, value) => {
+            if(error){
+                const fieldNames = ['cardNumber', 'cardName', 'validSelect', 'securityCode'].reverse();
+                fieldNames.map((item, index) => {
+                    if(form.getFieldError(item)){
+                        Toast.info(form.getFieldError(item), 1);
+                        return;
+                    }
+                });
+                return;
+            }
+
+            if(!error){
+                this.setState(value);
+            }
+
+            // 更新session数据
+            Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
+        });
+     }
      render(){
-         const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
+         console.log(this.state)
+         const { getFieldDecorator} = this.props.form;
 
          const cityExtraCls = classNames({
              ['picker-city']: true,
-             ['picker-city-active']: this.state.select.length
+             ['picker-city-active']: this.state.validSelect.length
          })
          return(
              <div className="ky-container-body">
                  <div className="ky-scrollable">
                      <div className="m-payment">
-                         <NavBar iconName="">填写支付信息</NavBar>
+                         <NavBar onLeftClick={this.gohistoryHandle.bind(this)}>填写支付信息</NavBar>
 
                          <div className="m-regstep">
                              <KYSteps current={4}/>
@@ -72,7 +106,8 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                               </div>
 
                               <div className="m-payment-form">
-                                  {getFieldDecorator('firstName', {
+
+                                  {getFieldDecorator('cardNumber', {
                                       rules: [{
                                           required: true,
                                           message: '请输入您的卡号'
@@ -81,101 +116,116 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                       <InputItem
                                           labelNumber={5}
                                           placeholder="请输入您的卡号"
-                                          onChange={this.stateChangeHandle.bind(this, 'firstName')}
+                                          onChange={this.stateChangeHandle.bind(this, 'cardNumber')}
                                       >卡号</InputItem>
                                    )}
-                                   {getFieldDecorator('firstName', {
+                                   {getFieldDecorator('cardName', {
                                        rules: [{
                                            required: true,
-                                           message: '请输入您的卡号'
+                                           message: '请输入持卡人姓名'
                                        }],
                                      })(
                                        <InputItem
                                            labelNumber={5}
-                                           placeholder="请输入您的持卡人姓名"
-                                           onChange={this.stateChangeHandle.bind(this, 'firstName')}
+                                           placeholder="请输入持卡人姓名"
+                                           onChange={this.stateChangeHandle.bind(this, 'cardName')}
                                        >持卡人姓名</InputItem>
                                     )}
 
-                                   <Picker
-                                      data={ValidData}
-                                      title="选择有效期"
-                                      cascade={false}
-                                      extra="请选择有效期"
-                                      value={this.state.select}
-                                      onChange={v => this.setState({ select: v })}
-                                    //   onChange={this.pickerChangeHandle.bind(this)}
-                                      format={(values) => { return values.join(' / '); }}
-                                      onOk={e => console.log('ok', e)}
-                                      onDismiss={e => console.log('dismiss', e)}
-                                    >
-                                      <List.Item className={cityExtraCls}>有效期</List.Item>
-                                    </Picker>
-                                   {getFieldDecorator('firstName', {
+                                    {getFieldDecorator('validSelect', {
+                                        initialValue: this.state.validSelect,
+                                        rules: [{
+                                            required: true,
+                                            message: '请选择有效期'
+                                        }],
+                                      })(
+                                       <Picker
+                                          data={ValidData}
+                                          title="选择有效期"
+                                          cascade={false}
+                                          extra="请选择有效期"
+                                          onChange={this.validChangeHandle.bind(this)}
+                                          format={(values) => { return values.join(' / '); }}
+                                        >
+                                          <List.Item className={cityExtraCls}>有效期</List.Item>
+                                        </Picker>
+                                    )}
+
+                                   {getFieldDecorator('securityCode', {
                                        rules: [{
                                            required: true,
-                                           message: '请输入您的卡号'
+                                           message: '请输入您的安全码'
                                        }],
                                      })(
                                        <InputItem
                                            labelNumber={5}
+                                           maxLength={3}
                                            placeholder="安全码"
+                                           type="number"
                                            extra={<div className="pay-behind">信用卡背后3位数字<i className="icon icon-csc"></i></div>}
-                                           onChange={this.stateChangeHandle.bind(this, 'firstName')}
+                                           onChange={this.stateChangeHandle.bind(this, 'securityCode')}
                                        >安全码</InputItem>
                                     )}
                                    <TextareaItem
                                        title="帐单地址"
-                                       placeholder=""
+                                       placeholder="帐单地址"
                                        labelNumber={5}
                                        rows={2}
                                    />
-                                   {getFieldDecorator('firstName', {
+                                   {getFieldDecorator('city', {
                                        rules: [{
                                            required: true,
-                                           message: '请输入您的卡号'
+                                           message: '城市不能为空'
                                        }],
                                      })(
                                        <InputItem
                                            labelNumber={5}
                                            placeholder="城市"
-                                           onChange={this.stateChangeHandle.bind(this, 'firstName')}
+                                           onChange={this.stateChangeHandle.bind(this, 'city')}
                                        >城市</InputItem>
                                     )}
-                                    {getFieldDecorator('firstName', {
+                                    {getFieldDecorator('province', {
                                         rules: [{
                                             required: true,
-                                            message: '请输入您的卡号'
+                                            message: '省份不能为空'
                                         }],
                                       })(
                                         <InputItem
                                             labelNumber={5}
                                             placeholder="省份"
-                                            onChange={this.stateChangeHandle.bind(this, 'firstName')}
+                                            onChange={this.stateChangeHandle.bind(this, 'province')}
                                         >省份</InputItem>
                                      )}
-                                     {getFieldDecorator('firstName', {
-                                         rules: [{
-                                             required: true,
-                                             message: '请输入您的卡号'
-                                         }],
-                                       })(
-                                         <InputItem
-                                             labelNumber={5}
-                                             placeholder="省份"
-                                             onChange={this.stateChangeHandle.bind(this, 'firstName')}
-                                         >邮政编码</InputItem>
+
+                                      {getFieldDecorator('payPostcode',{
+                                          initialValue: this.state.payPostcode,
+                                          rules: [{
+                                              pattern: RegxRule.zipCode,
+                                              message: '请输入正确的邮政编码'
+                                          },{
+                                              required: true,
+                                              message: '请输入邮政编码'
+                                          }],
+                                        })(
+                                          <InputItem
+                                              placeholder="邮政编码"
+                                              labelNumber={5}
+                                              maxLength={6}
+                                              type="number"
+                                              onChange={this.stateChangeHandle.bind(this, 'payPostcode')}
+                                          >邮政编码</InputItem>
                                       )}
-                                      {getFieldDecorator('firstName', {
+
+                                      {getFieldDecorator('country', {
                                           rules: [{
                                               required: true,
-                                              message: '请输入您的卡号'
+                                              message: '国家不能为空'
                                           }],
                                         })(
                                           <InputItem
                                               labelNumber={5}
-                                              placeholder="省份"
-                                              onChange={this.stateChangeHandle.bind(this, 'firstName')}
+                                              placeholder="国家"
+                                              onChange={this.stateChangeHandle.bind(this, 'country')}
                                           >国家</InputItem>
                                        )}
                               </div>
@@ -196,7 +246,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                      </div>
                  </div>
                  <div className="m-foot-fixed">
-                      <Button title="立即结算" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
+                      <Button title="立即结算" className="ky-button-primary regcon-btn" onClick={this.submitHandle.bind(this)} across/>
                  </div>
              </div>
          );

@@ -13,7 +13,7 @@ import { createForm } from 'rc-form';
 import classNames from 'classnames';
 
 import PackItemView from './PackItemView';
-import { Urls, RegxRule, Cache } from 'kyCommon';
+import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
 import { KYSteps, KYPayMethod } from 'kyComponent';
 import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
 const Item = List.Item;
@@ -21,8 +21,9 @@ const Brief = Item.Brief;
 
 import '../resources/RegOrderView.less';
 
-import datas from 'kyBase/components/ux/data'
-const district = datas;
+// 省市区数据
+const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
+
 class RegOrderView extends React.Component {
     constructor(props, context){
         super(props, context);
@@ -59,6 +60,16 @@ class RegOrderView extends React.Component {
         this.setState({
             consigneeCityValue: v,
             cityExtra: true
+        });
+    }
+
+    // 点击获取省市区
+    onCitykHandle(){
+        const _this = this;
+        AddressData(function(e){
+            _this.setState({
+                cityAreaData: e
+            })
         });
     }
 
@@ -150,14 +161,14 @@ class RegOrderView extends React.Component {
                                    }],
                                  })(
                                    <Picker
-                                       data={district}
+                                       data={this.state.cityAreaData}
                                        title="选择地区"
                                        extra="请选择您所在的省市区"
                                        value={this.state.cityValue}
                                        onChange={this.pickerChangeHandle.bind(this)}
                                        format={(values) => { return values.join(' '); }}
                                     >
-                                       <List.Item arrow="horizontal" className={cityExtraCls}>收货地区</List.Item>
+                                       <List.Item arrow="horizontal" onClick={this.onCitykHandle.bind(this)} className={cityExtraCls}>收货地区</List.Item>
                                    </Picker>
                                )}
 
@@ -319,14 +330,14 @@ class RegOrderView extends React.Component {
                                     }],
                                   })(
                                     <Picker
-                                        data={district}
+                                        data={this.state.cityAreaData}
                                         title="选择地区"
                                         extra="请选择您所在的省市区"
                                         value={this.state.consigneeCityValue}
                                         onChange={this.pickerConsigneeChangeHandle.bind(this)}
                                         format={(values) => { return values.join(' '); }}
                                      >
-                                        <List.Item arrow="horizontal" className={cityExtraCls}>收货地区</List.Item>
+                                        <List.Item arrow="horizontal" onClick={this.onCitykHandle.bind(this)} className={cityExtraCls}>收货地区</List.Item>
                                     </Picker>
                                 )}
 
