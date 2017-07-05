@@ -16,11 +16,11 @@ export default class Stepper extends React.Component {
         useTouch: true,
     }
     // 确定 点击事件触发的回调函数
-    onOkClick = (e) => {
-        if (this.props.onOkClick){
-            this.props.onOkClick(e);
-        }
-    }
+    // onOkClick = (e) => {
+    //     if (this.props.onOkClick){
+    //         this.props.onOkClick(e);
+    //     }
+    // }
     render(){
         const { className, showNumber, isRed, ...restProps } = this.props;
 
@@ -43,9 +43,9 @@ export default class Stepper extends React.Component {
                     ref="inputNumber"
                     className={stepperClass}
                 />
-                  <div className="ky-stepper-extra" onClick={this.onOkClick}>
+                  {/* <div className="ky-stepper-extra" onClick={this.onOkClick}>
                       <span>确定</span>
-                  </div>
+                  </div> */}
             </div>
         )
     }

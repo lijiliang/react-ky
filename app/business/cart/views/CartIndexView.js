@@ -41,6 +41,7 @@ class CartIndexView extends React.Component{
         console.log(e)
     }
     render(){
+        console.log(this.state)
         return(
             <div className="ky-scrollable">
                 <div className="ky-cart">

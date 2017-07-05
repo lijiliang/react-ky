@@ -19,7 +19,9 @@ import SubGroupItem from './SubGroupItem';
 import SubSingleItem from './SubSingleItem';
 
 import '../resources/IndexView.less';
-import ProductsItemImg from 'kyBus/home/resources/img/products-item1.jpg';
+import ProductsItemImg1 from 'kyBus/home/resources/img/products-item1.jpg';
+import ProductsItemImg2 from 'kyBus/home/resources/img/products-item2.jpg';
+import ProductsItemImg3 from 'kyBus/home/resources/img/products-item3.jpg';
 // 幻灯片模拟数据
 import Banner1 from 'kyBus/home/resources/img/banner1.png';
 import Banner2 from 'kyBus/home/resources/img/banner2.png';
@@ -84,7 +86,7 @@ class IndexView extends React.Component{
 
                     <div className="m-category">
                         {/* 营养补充品 */}
-                        <IndexCategoryItemView title="营养补充品" thumb={ProductsItemImg}>
+                        <IndexCategoryItemView title="营养补充品" thumb={ProductsItemImg1}>
                             <div className="category-sub">
                                 <IndexCategorySubItemView title="套组">
                                     <div className="sub-view clearfix">
@@ -105,7 +107,7 @@ class IndexView extends React.Component{
                         </IndexCategoryItemView>
 
                         {/* 营养补充品 */}
-                        <IndexCategoryItemView title="护肤产品" thumb={ProductsItemImg}>
+                        <IndexCategoryItemView title="护肤产品" thumb={ProductsItemImg2}>
                             <div className="category-sub">
                                 <IndexCategorySubItemView title="套组">
                                     <div className="sub-view clearfix">
@@ -126,7 +128,7 @@ class IndexView extends React.Component{
                         </IndexCategoryItemView>
 
                         {/* 营养补充品 */}
-                        <IndexCategoryItemView title="推广优惠及其它" thumb={ProductsItemImg}>
+                        <IndexCategoryItemView title="推广优惠及其它" thumb={ProductsItemImg3}>
                             <div className="category-sub">
                                 <IndexCategorySubItemView title="推广优惠">
                                 </IndexCategorySubItemView>

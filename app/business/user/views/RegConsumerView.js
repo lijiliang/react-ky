@@ -33,7 +33,7 @@
              referenceId: '',  //推荐人编号
              isHasReference: false,   //是否有推荐人编号
              isClickReference: true,  // 点击此处是否可点击
-             buttonDisabled: true,   // 注册按钮是否可点
+             buttonDisabled: true,    // 注册按钮是否可点
          };
      }
      componentDidMount(){
@@ -123,11 +123,17 @@
                 return;
             }
 
+            if(!this.state.isHasReference){
+                Toast.info('如果没有推荐人号，请点击打勾', 1);
+                return;
+            }
+
             if(!error){
                 this.setState(value)
             }
 
             const _state = this.state;
+
             // 如果填写了会员号ID,需先判断是否存在
             if(_state.referenceId){
                 const response = getPublic(Urls.UserExist + '/' + _state.referenceId);
@@ -244,7 +250,7 @@
                                        })(
                                          <InputItem
                                              type="password"
-                                             placeholder="您的密码最少为8个字符"
+                                             placeholder="密码最少为8个字符"
                                              showPwd='true'
                                              extra={<i className={isShowPwdCls} />}
                                              onExtraClick={e=>{}}
@@ -278,7 +284,12 @@
                                     <p>如您是通过凯娅尼会员推荐，请填写他/她的会员号</p>
                                 </div>
                                 <div className="ref-form">
-                                    {getFieldDecorator('referenceId')(
+                                    {getFieldDecorator('referenceId', {
+                                        rules: [{
+                                            pattern: RegxRule.referenceId,
+                                            message: '推荐人会员号不正确'
+                                        }]
+                                    })(
                                         <InputItem
                                             placeholder="请输入您的推荐人会员号"
                                             value={this.state.referenceId}
