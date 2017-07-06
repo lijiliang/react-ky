@@ -9,7 +9,7 @@ import { getPublic } from './FetchData';
 import { Toast } from 'uxComponent';
 
 let AddressData;
-/**
+/*
  * [getAddress 获取所有省市区数据]
  * @param  {Function} callback [回调函数]
  */

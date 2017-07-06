@@ -15,6 +15,8 @@ import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
 import {regConsumer} from '../action/DataAction';
 
+import { KYGroupProductList } from 'kyComponent';
+
 import '../resources/PackItemView.less';
 
 class PackItemView extends React.Component {
@@ -70,13 +72,7 @@ class PackItemView extends React.Component {
                     </div>
                     <div className="pack-content">
                         <div className="con-tit">内容</div>
-                        <ul className="pack-list">
-                            <li><span className="pack-name">尼多乐(56毫升) </span><span className="pack-num">x1</span></li>
-                            <li><span className="pack-name">新舒康(90粒) </span><span className="pack-num">x8</span></li>
-                            <li><span className="pack-name">新乐思便利装(1安士x30包) </span><span className="pack-num">x1</span></li>
-                            <li><span className="pack-name">尼多乐(56毫升) </span><span className="pack-num">x1</span></li>
-                            <li><span className="pack-name">新舒康(90粒) </span><span className="pack-num">x1</span></li>
-                        </ul>
+                        <KYGroupProductList />
                         <ul className="other-list">
                             <li><span>原价</span><span className="price">¥1,830.00</span></li>
                             <li><span>积分</span><span>125</span></li>

@@ -71,3 +71,5 @@ async function getAdd(){
 }
 getAdd();
 ```
+
+统一处理错误：https://github.com/youngwind/blog/issues/67
