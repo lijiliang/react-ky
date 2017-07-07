@@ -16,28 +16,23 @@ class CartIndexView extends React.Component{
     constructor(props, context){
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-        this.state = {
-            showNumber: 2
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.delectItemHandle = this.delectItemHandle.bind(this);
     }
     componentDidMount(){
 
     }
-    onChange = (val) => {
-        // console.log(val);
-        this.setState({ showNumber: val });
+
+    numItemChangeHandle = (val) => {
+        this.props.numItem(this.props.index, val);
     }
 
     //处理单选框的变化事件
-    handleChange(e) {
+    handleChange = (e) => {
         //修改那个任务，修改的值是什么
         this.props.changeStatus(this.props.index, e.target.checked);
     }
 
     // 删除某一项
-    delectItemHandle(){
+    delectItemHandle = () => {
         this.props.deleteItem(this.props.index);
     }
 
@@ -67,7 +62,7 @@ class CartIndexView extends React.Component{
                     </div>
                     <div className="header-price">
                         <span>合计 <i className="price">￥4,200.00</i></span>
-                        <i className="icon icon-cancel" onClick={this.delectItemHandle}></i>
+                        <i className="icon icon-cancel" onClick={()=>{this.props.deleteItem(this.props.index)}}></i>
                     </div>
                 </div>
                 <div className="item-content">
@@ -95,8 +90,9 @@ class CartIndexView extends React.Component{
                                 showNumber
                                 min={1}
                                 max={500}
-                                value={this.state.showNumber}
-                                onChange={this.onChange}
+                                value={ListItem.num}
+                                // onChange={this.numItemChangeHandle}
+                                onChange={(val)=>{this.props.numItem(this.props.index, val)}}
                             />
                             <span className="isstock">有货</span>
                         </div>

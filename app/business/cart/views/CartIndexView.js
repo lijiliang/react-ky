@@ -26,7 +26,7 @@ class CartIndexView extends React.Component{
         this.state = {
             showNumber: 2,
             list: [
-                {text:'6点起床',isChecked:true, num: 1},
+                {text:'6点起床',isChecked:false, num: 1},
                 {text:'7点出门',isChecked:true, num: 2},
                 {text:'8点吃早饭',isChecked:true, num: 3},
                 {text:'9点上班',isChecked:true, num: 4},
@@ -53,18 +53,20 @@ class CartIndexView extends React.Component{
         this.setState({value: event.target.value});
     }
 
-
-
-    handleChange(index, e){
-        const isChecked = e.target.checked;
-        this.state.list[index].isChecked = isChecked;
+    //改变数量
+    numItemChangeHandle(index, num){
+        this.state.list[index].num = num;
         this.setState({
-            list : this.state.list,
+            list: this.state.list,
+            refresh:Math.random()
         })
-        this.checkAll();
     }
-
-    //单个商品单选框的属性
+    /**
+     * @description 单个商品单选框的属性
+     * @param {number} index 索引
+     * @param {boolean} isChecked 是否选中
+     * @returns {Voild}
+    */
     changeStatus(index,isChecked) {
         console.log('单选：', index, isChecked)
         this.state.list[index].isChecked = isChecked;
@@ -90,9 +92,9 @@ class CartIndexView extends React.Component{
     }
 
     /**
-     * 判断是否全选
+     * @description 判断是否全选
      * 如果所有产品都选择了，就设置isAllChecked为true
-     */
+    */
     checkAll(){
         if(this.state.list.every(function(list){ return list.isChecked })){
             this.setState({
@@ -106,7 +108,8 @@ class CartIndexView extends React.Component{
     }
 
     /**
-     * 全选
+      * @description 全选
+      * @param {object} e 事件对象
      */
     changeAllStatus(e){
         const checked = e.target.checked;
@@ -138,18 +141,7 @@ class CartIndexView extends React.Component{
                             <div className="m-cart">
                                 {this.state.list.map((item, index)=>{
                                     return(
-                                        <label>
-                                            <div className="pack-radio">
-                                                {item.text}
-                                                <input type="checkbox" value={item.text} checked={item.isChecked} onChange={this.handleChange.bind(this, index)} />
-                                                {/* <i className="icon icon-radio"></i> */}
-                                            </div>
-                                        </label>
-                                    )
-                                })}
-                                {this.state.list.map((item, index)=>{
-                                    return(
-                                        <CartItemView key={index} index={index} ListItem={item} deleteItem={this.deleteItemHandle.bind(this)} changeStatus={this.changeStatus} />
+                                        <CartItemView key={index} index={index} ListItem={item} deleteItem={this.deleteItemHandle.bind(this)} changeStatus={this.changeStatus} numItem={this.numItemChangeHandle.bind(this)}/>
                                     )
                                 })}
 
