@@ -23,145 +23,145 @@
     margin-top: @v-spacing-sm;
 }
 
-.@{cartItemCls} {
-    margin-bottom: @v-spacing-sm;
-    background: @fill-base;
-    // 单项头部
-    .item-header{
-        display:flex;
-        align-items: center;
-        height: 80px;
-        padding: 0 @v-spacing-md;
-        border-bottom: @border-width-md solid @border-color-base;
-
-        .header-name{
-            display: flex;
-            align-items: center;
-            // 多选
-            .pack-radio{
-                white-space: nowrap;
-                outline: none;
-                display: inline-block;
-                position: relative;
-                input{
-                    position: absolute;
-                    left: -30px;
-                    top: 0;
-                    bottom: 0;
-                    right: 0;
-                    cursor: pointer;
-                    opacity: 0;
-                    width: 400px;
-                    height: 80px;
-                    z-index: 9999;
-                }
-                span{
-                    position: relative;
-                    top: 15px;
-                }
-            }
-            .icon-radio{
-                font-size: 50px;
-                color: #787878;
-                padding-right: 10px;
-            }
-            .icon-selectFill{
-                color: #5ebcb5;
-            }
-
-            .name{
-                line-height: 80px;
-                font-size: 36px;
-                color: @brand-primary;
-                white-space: nowrap;
-            }
-        }
-        .header-price{
-            flex: 1;
-            justify-content: flex-end;
-            text-align: right;
-            font-size: 25px;
-            color: @brand-primary;
-            white-space: nowrap;
-            .price{
-                font-style: normal;
-                color: @brand-green-deep;
-                font-size: 38px;
-            }
-            .icon{
-                padding-left: 15px;
-                font-size: 40px;
-                color: @brand-gray-sf;
-            }
-        }
-
-        // 选项高度
-        &-active{
-
-        }
-    }
-    // 单项内容
-    .item-content{
-        min-height: 268px;
-        padding: @h-spacing-md @v-spacing-md;
-        .thumb{
-            width: 220px;
-            float: left;
-            margin-right: @h-spacing-md;
-            img{
-                width: 220px;
-                display: block;
-            }
-        }
-        .info{
-            flex:1;
-            // width: 100%;
-        }
-        .info-item{
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            padding-bottom: 8px;
-            .name{
-                flex: 1;
-                font-size: 24px;
-                color: @brand-gray-dk;
-
-                .ellipsis();
-                p{
-                    .ellipsis();
-                }
-            }
-            .name-tit{
-                font-size: 34px;
-            }
-            .number{
-                flex-basis: 26%;
-                text-align: right;
-            }
-        }
-        //小计
-        .info-subtotal{
-            padding-bottom: 10px;
-            span{
-                font-size: 32px;
-                color: @brand-primary;
-                &.price{
-                    font-size: 38px;
-                }
-            }
-        }
-        // 步计器
-        .info-foot{
-            height: 64px;
-            overflow: hidden;
-            .isstock{
-                float: right;
-                line-height: 80px;
-            }
-        }
-    }
-}
+// .@{cartItemCls} {
+//     margin-bottom: @v-spacing-sm;
+//     background: @fill-base;
+//     // 单项头部
+//     .item-header{
+//         display:flex;
+//         align-items: center;
+//         height: 80px;
+//         padding: 0 @v-spacing-md;
+//         border-bottom: @border-width-md solid @border-color-base;
+//
+//         .header-name{
+//             display: flex;
+//             align-items: center;
+//             // 多选
+//             .pack-radio{
+//                 white-space: nowrap;
+//                 outline: none;
+//                 display: inline-block;
+//                 position: relative;
+//                 input{
+//                     position: absolute;
+//                     left: -30px;
+//                     top: 0;
+//                     bottom: 0;
+//                     right: 0;
+//                     cursor: pointer;
+//                     opacity: 0;
+//                     width: 400px;
+//                     height: 80px;
+//                     z-index: 9999;
+//                 }
+//                 span{
+//                     position: relative;
+//                     top: 15px;
+//                 }
+//             }
+//             .icon-radio{
+//                 font-size: 50px;
+//                 color: #787878;
+//                 padding-right: 10px;
+//             }
+//             .icon-selectFill{
+//                 color: #5ebcb5;
+//             }
+//
+//             .name{
+//                 line-height: 80px;
+//                 font-size: 36px;
+//                 color: @brand-primary;
+//                 white-space: nowrap;
+//             }
+//         }
+//         .header-price{
+//             flex: 1;
+//             justify-content: flex-end;
+//             text-align: right;
+//             font-size: 25px;
+//             color: @brand-primary;
+//             white-space: nowrap;
+//             .price{
+//                 font-style: normal;
+//                 color: @brand-green-deep;
+//                 font-size: 38px;
+//             }
+//             .icon{
+//                 padding-left: 15px;
+//                 font-size: 40px;
+//                 color: @brand-gray-sf;
+//             }
+//         }
+//
+//         // 选项高度
+//         &-active{
+//
+//         }
+//     }
+//     // 单项内容
+//     .item-content{
+//         min-height: 268px;
+//         padding: @h-spacing-md @v-spacing-md;
+//         .thumb{
+//             width: 220px;
+//             float: left;
+//             margin-right: @h-spacing-md;
+//             img{
+//                 width: 220px;
+//                 display: block;
+//             }
+//         }
+//         .info{
+//             flex:1;
+//             // width: 100%;
+//         }
+//         .info-item{
+//             display: flex;
+//             align-items: center;
+//             overflow: hidden;
+//             padding-bottom: 8px;
+//             .name{
+//                 flex: 1;
+//                 font-size: 24px;
+//                 color: @brand-gray-dk;
+//
+//                 .ellipsis();
+//                 p{
+//                     .ellipsis();
+//                 }
+//             }
+//             .name-tit{
+//                 font-size: 34px;
+//             }
+//             .number{
+//                 flex-basis: 26%;
+//                 text-align: right;
+//             }
+//         }
+//         //小计
+//         .info-subtotal{
+//             padding-bottom: 10px;
+//             span{
+//                 font-size: 32px;
+//                 color: @brand-primary;
+//                 &.price{
+//                     font-size: 38px;
+//                 }
+//             }
+//         }
+//         // 步计器
+//         .info-foot{
+//             height: 64px;
+//             overflow: hidden;
+//             .isstock{
+//                 float: right;
+//                 line-height: 80px;
+//             }
+//         }
+//     }
+// }
 
 // 组合
 .cart-item-guoups {
@@ -203,16 +203,42 @@
     display: flex;
     background: @brand-green-deep;
     .select{
-        flex: 16%;
+        flex: 118px;
+        // flex: 15%;
         align-items: center;
         justify-content: center;
         text-align: center;
-        .icon{
-            padding: 16px 0 0 0;
+        // 全选
+        .pack-radio{
+            white-space: nowrap;
+            outline: none;
             display: inline-block;
+            position: relative;
+            padding-top: 12px;
+            input{
+                position: absolute;
+                left: -30px;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                cursor: pointer;
+                opacity: 0;
+                width: 120px;
+                height: 120px;
+                z-index: 10;
+            }
+        }
+        .icon{
             line-height: 1;
-            font-size: 48px;
+            font-size: 50px;
+            color: #787878;
+            padding-right: 10px;
             color: #fff;
+        }
+        .icon-radioSelect{
+            &:before{
+                content: "\E636";
+            }
         }
         span{
             display: block;
@@ -242,13 +268,4 @@
     .btn{
         flex: 40%;
     }
-}
-
-.icon-radio{
-    font-size: 50px;
-    color: #787878;
-    padding-right: 10px;
-}
-.icon-selectFill{
-    color: #5ebcb5;
 }

@@ -20,6 +20,7 @@ class CartIndexView extends React.Component{
             showNumber: 2
         };
         this.handleChange = this.handleChange.bind(this);
+        this.delectItemHandle = this.delectItemHandle.bind(this);
     }
     componentDidMount(){
 
@@ -35,6 +36,11 @@ class CartIndexView extends React.Component{
         this.props.changeStatus(this.props.index, e.target.checked);
     }
 
+    // 删除某一项
+    delectItemHandle(){
+        this.props.deleteItem(this.props.index);
+    }
+
     render(){
         const { ListItem } = this.props;
         const cartItemCls = classNames({
@@ -46,7 +52,7 @@ class CartIndexView extends React.Component{
             [`icon-radio`]: true,
             [`icon-selectFill`]: ListItem.isChecked,
         });
-        console.log(this.props)
+        // console.log(this.props)
         return(
             <div className="cart-item">
                 <div className="item-header">
@@ -57,11 +63,11 @@ class CartIndexView extends React.Component{
                                 <i className={radioItemCls}></i>
                             </div>
                         </label>
-                        <span className="name">新乐思</span>
+                        <span className="name">{ListItem.text}</span>
                     </div>
                     <div className="header-price">
                         <span>合计 <i className="price">￥4,200.00</i></span>
-                        <i className="icon icon-cancel"></i>
+                        <i className="icon icon-cancel" onClick={this.delectItemHandle}></i>
                     </div>
                 </div>
                 <div className="item-content">

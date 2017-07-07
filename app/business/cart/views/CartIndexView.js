@@ -28,15 +28,16 @@ class CartIndexView extends React.Component{
             list: [
                 {text:'6点起床',isChecked:true, num: 1},
                 {text:'7点出门',isChecked:true, num: 2},
-                {text:'8点吃早饭',isChecked:false, num: 3},
+                {text:'8点吃早饭',isChecked:true, num: 3},
                 {text:'9点上班',isChecked:true, num: 4},
-                {text:'12点下班',isChecked:false, num: 5}
+                {text:'12点下班',isChecked:true, num: 5}
             ],
             isAllChecked: false,
         };
+        this.changeStatus = this.changeStatus.bind(this);
     }
     componentDidMount(){
-        // this.send("topBar->addItem({text:'aaa',handler:function(){alert()}},icon:"class")");
+        this.checkAll();
     }
     // 返回上一页
     gohistoryHandle(){
@@ -53,29 +54,79 @@ class CartIndexView extends React.Component{
     }
 
 
-    //处理单选框的变化事件
-    // handleChange:function(e){
-    //     //修改那个任务，修改的值是什么
-    //     this.props.changeStatus(this.props.index,e.target.checked);
-    // },
-    handleChange(e, index){
-        console.log(e.target.checked)
+
+    handleChange(index, e){
+        const isChecked = e.target.checked;
+        this.state.list[index].isChecked = isChecked;
+        this.setState({
+            list : this.state.list,
+        })
+        this.checkAll();
     }
 
     //单个商品单选框的属性
     changeStatus(index,isChecked) {
-        console.log(index, isChecked)
-        this.state.list[index].isChecked = isChecked
-        console.log(this.state.list[index].isChecked = isChecked)
+        console.log('单选：', index, isChecked)
+        this.state.list[index].isChecked = isChecked;
         this.setState({
-            list : this.state.list
+            list: this.state.list,
+            refresh:Math.random()
         })
-        // this.checkAll();
+        this.checkAll();
     }
 
+     /**
+      * @description 删除指定的一项
+      * @param {number} index 索引
+      * @returns {Voild}
+     */
+    deleteItemHandle(index){
+        this.state.list.splice(index,1);
+        //删除完成后来更新下页面的内容
+        this.setState({
+            list : this.state.list,
+            refresh:Math.random()
+        });
+    }
+
+    /**
+     * 判断是否全选
+     * 如果所有产品都选择了，就设置isAllChecked为true
+     */
+    checkAll(){
+        if(this.state.list.every(function(list){ return list.isChecked })){
+            this.setState({
+                isAllChecked: true
+            });
+        }else {
+            this.setState({
+                isAllChecked: false
+            });
+        }
+    }
+
+    /**
+     * 全选
+     */
+    changeAllStatus(e){
+        const checked = e.target.checked;
+        //修改每个产品的状态
+        this.state.list.forEach(function(list){
+            list.isChecked = checked;
+        });
+        //修改isAllChecked里面的值
+        this.setState({
+            list:this.state.list,
+            isAllChecked:checked
+        });
+    }
     render(){
         console.log(this.state)
-
+        const isAllCheckedCls = classNames({
+            [`icon`]: true,
+            [`icon-radio`]: true,
+            [`icon-radioSelect`]: this.state.isAllChecked,
+        });
         return(
             <div className="ky-container-body">
                 <div className="ky-scrollable">
@@ -86,12 +137,11 @@ class CartIndexView extends React.Component{
 
                             <div className="m-cart">
                                 {this.state.list.map((item, index)=>{
-                                    console.log(item)
                                     return(
                                         <label>
                                             <div className="pack-radio">
                                                 {item.text}
-                                                <input type="checkbox" value={item.text} checked={item.isChecked} onChange={this.handleChange.bind(this)} />
+                                                <input type="checkbox" value={item.text} checked={item.isChecked} onChange={this.handleChange.bind(this, index)} />
                                                 {/* <i className="icon icon-radio"></i> */}
                                             </div>
                                         </label>
@@ -99,7 +149,7 @@ class CartIndexView extends React.Component{
                                 })}
                                 {this.state.list.map((item, index)=>{
                                     return(
-                                        <CartItemView key={index} index={index} ListItem={item} changeStatus={this.changeStatus.bind(this)} />
+                                        <CartItemView key={index} index={index} ListItem={item} deleteItem={this.deleteItemHandle.bind(this)} changeStatus={this.changeStatus} />
                                     )
                                 })}
 
@@ -251,7 +301,12 @@ class CartIndexView extends React.Component{
                     {/* 立即结算 */}
                     <div className="m-settlement">
                         <div className="select">
-                            <i className="icon icon-radioSelect"></i>
+                            <label>
+                                <div className="pack-radio">
+                                    <input type="checkbox" checked={this.state.isAllChecked} onChange={this.changeAllStatus.bind(this)}/>
+                                    <i className={isAllCheckedCls}></i>
+                                </div>
+                            </label>
                             <span>全选</span>
                         </div>
                         <div className="total">
