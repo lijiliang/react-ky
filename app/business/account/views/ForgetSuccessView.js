@@ -4,20 +4,9 @@
 import React from 'react';
 import { Link } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as loginAction from '../action/actionTypes';
-import {regConsumer} from '../action/DataAction';
-
-import { createForm } from 'rc-form';
-import classNames from 'classnames';
-import { get, getPublic } from 'kyBase/common/FetchData';
-import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
 
 //组件
-import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
-const Item = List.Item;
-const Brief = Item.Brief;
+import { Button, NavBar} from 'uxComponent';
 
 import '../resources/ForgetSuccessView.less';
 
@@ -30,25 +19,8 @@ class ForgetpwdView extends React.Component{
         };
     }
     componentDidMount(){}
-    // 返回上一页
-    gohistoryHandle(){
-        window.history.go(-1);
-    }
-    // 设置state
-    stateChangeHandle(name, value){
-       this.setState({
-           [name]: value
-       })
-    }
+
     render() {
-        const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
-        // 密码
-        const isShowPwdCls = classNames({
-            icon: true,
-            'icon-eye': true,
-            'extra-pwd': true,
-            'extra-pwd-active': this.state.isShowPwd
-        });
         return(
             <div className="ky-container-body">
                 <div className="ky-scrollable-white">
@@ -70,15 +42,4 @@ class ForgetpwdView extends React.Component{
     }
 }
 
-const ForgetpwdViewWrapper = createForm()(ForgetpwdView);
-
-/*  React 与  Redux 绑定 */
-function mapStateToProps(state){
-    return {
-        RegModel: state.RegModel
-    };
-}
-
-export default connect(
-    mapStateToProps
-)(ForgetpwdViewWrapper);
+export default ForgetpwdView;

@@ -1,0 +1,112 @@
+/**
+ * @fileOverview: 会员中心首页
+ * @version: 1.0.0(2017-7-19)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+.navbar-user{
+    background: @brand-primary-deep;
+    .signout{
+        display: block;
+        width: 140px;
+        height: 100px;
+        line-height: 100px;
+        margin-right: -30px;
+        text-align: center;
+        background: @brand-blue-deep;
+        span{
+            color: #fff;
+            font-size: 36px;
+        }
+    }
+}
+
+.m-account-view{
+    .account-info{
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        background: @brand-primary;
+        padding: 20px 30px;
+        .account-thumb{
+            flex: 0 0 120px;
+            width: 120px;
+            height: 120px;
+            padding-right: 20px;
+            img{
+                display: inline-block;
+            }
+        }
+        .account-name{
+            display: flex;
+            flex: 1;
+            font-size: 42px;
+            color: #fff;
+        }
+    }
+    // 重置 ky-list-item
+    .ky-list-item {
+        padding-left: 0;
+        .ky-list-content{
+            padding-left: 30px;
+            color: @brand-primary;
+        }
+    }
+    // 帐户类型
+    .m-account-type{
+        .ky-list-item{
+            background: @brand-blue-deep;
+            .ky-list-line{
+                .ky-list-content {
+                    color:  #d3dde6;
+                }
+                .ky-list-extra {
+                    color:  #fff;
+                    font-weight: bold;
+                }
+                &:after {
+                    border-bottom: 1px solid #5b8ab5;
+                }
+            }
+        }
+    }
+    // 全部订单
+    .m-order-all{
+        margin-bottom: 10px;
+    }
+    // 订单
+    .order-view{
+        display: flex;
+        align-items: center;
+        .order-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px 0;
+            color: @brand-primary;
+            .icon{
+                display: block;
+                line-height: 1.2;
+                font-size: 52px;
+            }
+            span{
+                font-size: 28px;
+            }
+        }
+    }
+    .m-other-view{
+        margin-bottom: 20px;
+        // 优惠券
+        .coupon-r{
+            display: inline-block;
+            background: #c72b66;
+            color: #fff;
+            padding: 2px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 28px;
+        }
+    }
+}
