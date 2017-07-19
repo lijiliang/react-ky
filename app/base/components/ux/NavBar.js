@@ -4,7 +4,7 @@
  *
  * 参数说明：
  * @param  {[any]} children [导航内容]
- * @param {[string]} mode [导航模式]  默认值： dark  可选{'dark', 'light', 'tran', 'success', 'error'}
+ * @param {[string]} mode [导航模式]  默认值： dark  可选{'dark', 'light', 'tran', 'success', 'error', 'blue'}
  * @param {[string/false/null]} iconName [左边的 iconname (设置为 false/null 不渲染此图标)]  默认值：'left'
  * @param {[any]} leftContent [导航左边内容]
  * @param {[any]} rightContent [导航右边内容]
@@ -34,6 +34,10 @@
          mode="error"
          iconName={false}
          >支付失败</NavBar>
+     <NavBar
+         onLeftClick={this.gohistoryHandle.bind(this)}
+         mode="blue"
+         >重置密码</NavBar>
  */
  import React from 'react';
  import classNames from 'classnames';

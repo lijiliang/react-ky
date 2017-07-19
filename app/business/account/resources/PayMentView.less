@@ -1,0 +1,116 @@
+/**
+ * @fileOverview: 填写支付信息
+ * @version: 1.0.0(2017-6-15)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+@prefixCls: m-payment;
+
+.@{prefixCls} {
+    height: 100%;
+    .regcon-info{
+        background: @brand-gray-p;
+        padding: 10px 0 0 0;
+        text-align: center;
+        h2{
+            padding-bottom: 15px;
+            font-size: 36px;
+            color: @brand-primary;
+        }
+    }
+    // 信用卡支付
+    &-info {
+        background: @fill-base;
+        border-top: 5px solid @brand-blue;
+        margin-bottom: 20px;
+        padding: 0 30px;
+        .info-tit{
+            height: 90px;
+            line-height: 90px;
+            font-size: 40px;
+            color: @brand-primary;
+        }
+        .pay-list {
+            img{
+                display: inline-block;
+                margin-right: 20px;
+                width: 170px;
+            }
+        }
+    }
+
+    // 省市区样式
+    .picker-city{
+        padding-left: 0;
+        .ky-list-line{
+            padding-right: 0;
+            &:after{
+                border-bottom: @border-width-md solid @border-color-base;
+            }
+        }
+        .ky-list-content{
+            flex: initial;
+            width: 185px;
+            color: @brand-gray;
+        }
+        .ky-list-extra{
+            flex: 1;
+            text-align: left;
+            color: @brand-gray-sf;
+        }
+        &-active{
+            .ky-list-extra{
+                color: @color-text-base;
+            }
+        }
+    }
+
+    // 安全码右边
+    .pay-behind{
+        display: flex;
+        align-items: center;
+        font-size: 22px;
+        color: @brand-primary;
+        .icon{
+            padding-left: 10px;;
+            font-size: 50px;
+        }
+    }
+
+    //安全加密
+    &-safety{
+        .m-safety{
+            display: flex;
+            padding: 20px 10px 20px 30px;
+            margin: 0 60px;
+            background: @brand-blue-bady;
+            border: 1px solid @brand-green-deep;
+            .icon{
+                padding-right: 10px;
+                line-height: 1;
+                font-size: 60px;
+                color: @brand-primary;
+            }
+            .safety-info{
+                p{
+                    font-size: 28px;
+                    color: @brand-primary;
+                    // white-space: nowrap;
+                }
+            }
+        }
+        .payable{
+            text-align: center;
+            line-height: 148px;
+            font-size: 36px;
+            color: @brand-primary;
+            .price{
+                padding-left: 15px;
+            }
+        }
+    }
+
+}

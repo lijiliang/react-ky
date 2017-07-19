@@ -125,7 +125,8 @@ class LoginView extends React.Component{
                              </InputItem>
                           )}
                         <div className="login-other-info">
-                            <a href="" className="forget-password">忘记密码？</a>
+                            <Link to='/account/forgetpwd' className="forget-password">忘记密码？</Link>
+                            <a href="" className="forget-password">忘记帐户？</a>
                             <label className="login-checkbox">
                                 <input
                                     className="input-checkbox"
@@ -142,8 +143,8 @@ class LoginView extends React.Component{
                         </div>
                         <div className="account-other">
                             <span className="no-account-tit">没有帐号？</span>
-                            <Link to='/user/regmember'><Button className="ky-btn" title="会员注册"/></Link>
-                            <Link to='/user/regconsumer'><Button className="ky-btn" title="消费者注册"/></Link>
+                            <Link to='/account/regmember'><Button className="ky-btn" title="会员注册"/></Link>
+                            <Link to='/account/regconsumer'><Button className="ky-btn" title="消费者注册"/></Link>
                         </div>
                     </div>
                 </div>

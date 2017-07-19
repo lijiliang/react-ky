@@ -1,0 +1,105 @@
+/**
+ * @fileOverview: 确认订单及填写收货地址
+ * @version: 1.0.0(2017-6-15)
+ * @author: Benson
+ */
+
+ // 引入变量
+ @import '~varLess';
+
+ @selectpackCls: m-regorder;
+
+ .@{selectpackCls} {
+     height: 100%;
+     .regcon-info{
+         background: @brand-gray-p;
+         padding: 10px 0 0 0;
+         text-align: center;
+         h2{
+             padding-bottom: 15px;
+             font-size: 36px;
+             color: @brand-primary;
+         }
+         .chosen{
+             height: 74px;
+             line-height: 84px;
+             background: @brand-blue-deep;
+             font-size: 40px;
+             color: #fff;
+         }
+     }
+ }
+
+.m-userinfo{
+    background: @fill-base;
+    border-top: 5px solid @brand-blue;
+    margin-bottom: 20px;
+    .userinfo-tit{
+        height: 90px;
+        line-height: 90px;
+        display: flex;
+        padding: 0 @v-spacing-lg;
+        h2 {
+            flex:1;
+            font-size: 40px;
+            color: @brand-primary;
+        }
+        .modify{
+            flex:1;
+            justify-content: flex-end;
+            text-align: right;
+            color: @brand-primary;
+            font-size: 30px;
+        }
+    }
+    .userinfo-form{
+        position: relative;
+        padding: 0 @v-spacing-lg;
+        .form-mask{
+            position: absolute;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            // background: rgba(0,0,0, .5);
+        }
+        .ky-list-item .ky-input-label{
+            color: @brand-gray;
+            margin-right: 25px;
+        }
+        .ky-textarea-label {
+            margin-right: 25px;
+        }
+        // 省市区样式
+        .picker-city{
+            padding-left: 0;
+            .ky-list-line{
+                padding-right: 0;
+                &:after{
+                    border-bottom: @border-width-md solid @border-color-base;
+                }
+            }
+            .ky-list-content{
+                flex: initial;
+                width: 195px;
+                color: @brand-gray;
+            }
+            .ky-list-extra{
+                flex: 1;
+                text-align: left;
+                color: @brand-gray-sf;
+            }
+            &-active{
+                .ky-list-extra{
+                    color: @color-text-base;
+                }
+            }
+        }
+        // 详细地址重置样式
+        .ky-textarea-label{
+            color: @brand-gray;
+        }
+
+    }
+}

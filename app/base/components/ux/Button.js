@@ -2,6 +2,7 @@
  * @fileOverview 按钮组件
  *
  * 使用举例：
+ <Button title="返回登录页面" type="primaryWhite"/>
  <Button className="ky-btn" title="登录" type="primary"/>
  <Button className="ky-btn" title="可点击" onClick={e => console.log(e)}/>
  <Button title="会员注册" />
@@ -42,6 +43,7 @@ class Button extends React.Component{
             [className]: className,
             [prefixCls]: true,
             [`${prefixCls}-primary`]: type === 'primary',
+            [`${prefixCls}-primaryWhite`]: type === 'primaryWhite',
             [`${prefixCls}-small`]: size === 'small',
             [`${prefixCls}-inline`]: inline,
             [`${prefixCls}-disabled`]: disabled,

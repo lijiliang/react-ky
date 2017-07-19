@@ -1,0 +1,51 @@
+/**
+ * @fileOverview: 注册消费者帐号 成功
+ * @version: 1.0.0(2017-6-8)
+ * @author: Benson
+ * @updatatime:
+ */
+
+// 引入变量
+@import '~varLess';
+
+@regSuccessCls: m-regsuccess;
+
+.ky-scrollable.ky-regsuccess{
+    background: @fill-base;
+}
+.@{regSuccessCls} {
+    text-align: center;
+    .icon{
+        display: block;
+        margin: 90px 0 20px 0;
+        line-height: 1;
+        font-size: 160px;
+        color: @brand-green-deep;
+
+    }
+    h2{
+        padding-bottom: 20px;
+        font-size: 46px;
+        color: @brand-green-deep;
+    }
+    p{
+        font-size: 40px;
+        line-height: 1.5;
+        &.customer{
+            padding: 15px 0;
+            color: @brand-primary;
+            font-size: 48px;
+        }
+        &.more{
+            font-size: 30px;
+            color: @brand-primary;
+        }
+    }
+    .goshop{
+        margin: 50px 80px;
+    }
+    .shop-btn{
+        background: #fff;
+        border: 3px solid @brand-green-deep;
+    }
+}

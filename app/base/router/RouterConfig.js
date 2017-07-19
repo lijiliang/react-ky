@@ -2,7 +2,7 @@
  * fileOverview 路由配置文件
  */
 import React from 'react';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory, Redirect } from 'react-router';
 import { Provider } from 'react-redux';
 import ConfigureStore from '../store/ConfigureStore';
 import RouterFilter from './RouterFilter';
@@ -11,16 +11,21 @@ import Launch from './Launch';
 import HomeView from 'kyBus/home/views/IndexView';
 import LoginView from 'kyBus/login/views/LoginView';             // 登录
 
+// account 用户注册相关
+import AccountIndexView from 'kyBus/account/views/IndexView';          // 会员中心首页
+import RegConsumerView from 'kyBus/account/views/RegConsumerView';  // 消费者注册
+import RegSuccessView from 'kyBus/account/views/RegSuccessView';    // 消费者注册成功
+import RegMemberView from 'kyBus/account/views/RegMemberView';      // 注册会员帐号
+import RegSelectPackView from 'kyBus/account/views/RegSelectPackView';    // 选购加入套组
+import RegOrderView from 'kyBus/account/views/RegOrderView';        // 确认订单及填写收货地址
+import PayMentView from 'kyBus/account/views/PayMentView';          // 填写支付信息
+import PaySuccessView from 'kyBus/account/views/PaySuccessView';    // 支付成功
+import PayFailedView from 'kyBus/account/views/PayFailedView';      // 支付失败
+import ForgetpwdView from 'kyBus/account/views/ForgetpwdView';      // 忘记密码
+import ForgetSuccessView from 'kyBus/account/views/ForgetSuccessView';      // 重置密码成功页
+
 // user
 import UserIndexView from 'kyBus/user/views/IndexView';          // 会员中心首页
-import RegConsumerView from 'kyBus/user/views/RegConsumerView';  // 消费者注册
-import RegSuccessView from 'kyBus/user/views/RegSuccessView';    // 消费者注册成功
-import RegMemberView from 'kyBus/user/views/RegMemberView';      // 注册会员帐号
-import RegSelectPackView from 'kyBus/user/views/RegSelectPackView';    // 选购加入套组
-import RegOrderView from 'kyBus/user/views/RegOrderView';        // 确认订单及填写收货地址
-import PayMentView from 'kyBus/user/views/PayMentView';          // 填写支付信息
-import PaySuccessView from 'kyBus/user/views/PaySuccessView';    // 支付成功
-import PayFailedView from 'kyBus/user/views/PayFailedView';      // 支付失败
 
 // cart 购物车
 import CartIndexView from 'kyBus/cart/views/IndexView';          // 购物车首页
@@ -49,15 +54,21 @@ class RouterMap extends React.Component {
                 >
                     <IndexRoute component={HomeView}/>
                     <Route path='login' component={LoginView}/>
+                    <Redirect from="/account" to="/account/regmember"/>
+                    <Route path='/account' component={AccountIndexView} >
+                        <Route path='/account/regconsumer' component={RegConsumerView}/>
+                        <Route path='/account/regsuccess' component={RegSuccessView}/>
+                        <Route path='/account/regmember' component={RegMemberView}/>
+                        <Route path='/account/regselectpack' component={RegSelectPackView}/>
+                        <Route path='/account/regorder' component={RegOrderView}/>
+                        <Route path='/account/payment' component={PayMentView}/>
+                        <Route path='/account/paysuccess' component={PaySuccessView}/>
+                        <Route path='/account/payfailed' component={PayFailedView}/>
+                        <Route path='/account/forgetpwd' component={ForgetpwdView}/>
+                        <Route path='/account/forgetsuccess' component={ForgetSuccessView}/>
+                    </Route>
                     <Route path='/user' component={UserIndexView} >
                         <Route path='/user/regconsumer' component={RegConsumerView}/>
-                        <Route path='/user/regsuccess' component={RegSuccessView}/>
-                        <Route path='/user/regmember' component={RegMemberView}/>
-                        <Route path='/user/regselectpack' component={RegSelectPackView}/>
-                        <Route path='/user/regorder' component={RegOrderView}/>
-                        <Route path='/user/payment' component={PayMentView}/>
-                        <Route path='/user/paysuccess' component={PaySuccessView}/>
-                        <Route path='/user/payfailed' component={PayFailedView}/>
                     </Route>
                     <Route path='/cart' component={CartIndexView} >
                         <Route path='/cart/order' component={CartOrderView}/>

@@ -1,0 +1,105 @@
+/**
+ * @fileOverview: 注册会员帐号
+ * @version: 1.0.0(2017-6-9)
+ * @author: Benson
+ * @updatatime:
+ */
+
+// 引入变量
+@import '~varLess';
+
+@regConPrefixCls: m-regMember;
+
+.ky-scrollable{
+    background: @brand-gray-p;
+}
+.@{regConPrefixCls}{
+    height: 100%;
+    .regcon-info{
+        background: @brand-gray-p;
+        padding: 10px @h-spacing-sm @h-spacing-sm @h-spacing-sm;
+        text-align: center;
+        h2{
+            font-size: 36px;
+            color: @brand-primary;
+        }
+        p{
+            line-height: 1.6;
+            font-size: @font-size-subhead;
+        }
+    }
+    .m-reg-body{
+
+        margin-bottom: @v-spacing-sm;
+        border-top: @border-width-lg solid @brand-blue;
+        .reg-tit{
+            color: @brand-primary;
+            h2{
+                font-size: @font-size-display-md;
+            }
+            p{
+                font-size: @font-size-caption;
+            }
+        }
+        .reg-view{
+            background: @fill-base;
+            padding: @v-spacing-sm @h-spacing-lg @v-spacing-xs @h-spacing-lg;
+        }
+        // 推荐人信息
+        .reg-view-recommended{
+            padding: 0;
+            .reg-tit{
+                padding: @v-spacing-sm @h-spacing-lg 0 @h-spacing-lg;
+            }
+            .ref-form{
+                padding: 0 @h-spacing-lg;
+            }
+        }
+    }
+    // 省市区样式
+    .picker-city{
+        padding-left: 0;
+        .ky-list-line{
+            padding-right: 0;
+            &:after{
+                border-bottom: @border-width-md solid @border-color-base;
+            }
+        }
+        .ky-list-content{
+            flex: initial;
+            width: 219px;
+            color: @brand-gray;
+        }
+        .ky-list-extra{
+            flex: 1;
+            text-align: left;
+            color: @brand-gray-sf;
+        }
+        &-active{
+            .ky-list-extra{
+                color: @color-text-base;
+            }
+        }
+    }
+}
+
+.ref-form{
+    .extra-pwd{
+        cursor: pointer;
+        font-size: 50px;
+        color: @brand-gray-sf;
+        line-height: .9;
+    }
+}
+
+.regcon-btn{
+    // position: fixed;
+    // bottom: 0;
+    // left: 0;
+    // z-index: 100;
+    background: @brand-green-deep;
+    height: 120px;
+    line-height: 120px;
+    font-size: 48px;
+    color: #fff;
+}

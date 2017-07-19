@@ -1,0 +1,54 @@
+/**
+ * @fileOverview: 注册会员帐号 选购加入套组
+ * @version: 1.0.0(2017-6-15)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+@selectpackCls: m-selectpack;
+@packCls: m-pack;
+
+.@{selectpackCls} {
+    height: 100%;
+    .regcon-info{
+        background: @brand-gray-p;
+        padding: 10px @h-spacing-sm @h-spacing-sm @h-spacing-sm;
+        text-align: center;
+        h2{
+            font-size: 36px;
+            color: @brand-primary;
+        }
+        p{
+            line-height: 1.6;
+            font-size: @font-size-subhead;
+        }
+    }
+}
+
+// 电子资料包
+.@{packCls} {
+    .elect-package{
+        background: @brand-blue-bady-deep;
+        padding-bottom: 10px;
+        padding-left: 102px;
+    }
+    //高亮显示
+    &-active{
+        .elect-package{
+            background: @brand-primary;
+            color: @brand-green-deep;
+        }
+    }
+    // 最尾部说明文字
+    &-other{
+        padding: 20px 0 40px 0;
+        text-align: center;
+        p{
+            line-height: 1.6;
+            font-size: 28px;
+            color: @color-text-base;
+        }
+    }
+}

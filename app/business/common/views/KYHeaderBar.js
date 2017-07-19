@@ -48,7 +48,7 @@ class KYHeaderBar extends React.Component{
                     rightContent={
                         <div className="login-info">
                             <Link to='/login'>登录</Link><span>/</span>
-                            <Link to='/user/regconsumer'>注册</Link>
+                            <Link to='/account/regconsumer'>注册</Link>
                         </div>
                     }
                     ><Link to="/"><i className="icon icon-Kyani"></i></Link></NavBar>

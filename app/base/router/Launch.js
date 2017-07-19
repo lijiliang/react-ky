@@ -16,11 +16,11 @@ class Launch extends React.Component {
         vRouteMap: {
             login: false,                  //登录
             'cart/order': false,           //购物车列表
-            'user/regconsumer': false,     //消费者注册
-            'user/regmember': false,       //会员注册
-            'user/regselectpack': false,   //会员注册->选购加入套组
-            'user/regorder': false,        //会员注册->填写订单及填写收货地址
-            'user/payment': false,         //填写支付信息
+            'account/regconsumer': false,     //消费者注册
+            'account/regmember': false,       //会员注册
+            'account/regselectpack': false,   //会员注册->选购加入套组
+            'account/regorder': false,        //会员注册->填写订单及填写收货地址
+            'account/payment': false,         //填写支付信息
         }
     }
     constructor(props, context){
