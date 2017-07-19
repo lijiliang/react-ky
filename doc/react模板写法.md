@@ -41,6 +41,7 @@ class App extends Component {
     }
 
     // 箭头函数写法
+    // 使用箭头函数后就不用bind(this)了
     onChange = (val) => {
 
     }
@@ -75,4 +76,9 @@ onChange={this.numItemChangeHandle.bind(this, 参数一，参数二,...)}
 numItemChangeHandle(参数一，参数二, e){
 
 }
+```
+
+## react  无状态组件的写法
+```js
+const HelloBenson = (props) => <div>Hello {props.name}</div>
 ```

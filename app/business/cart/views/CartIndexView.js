@@ -44,22 +44,13 @@ class CartIndexView extends React.Component{
         window.history.go(-1);
     }
 
-    onChange = (val) => {
-        // console.log(val);
-        this.setState({ showNumber: val });
-    }
-
-    handleChanges(event) {
-        this.setState({value: event.target.value});
-    }
-
     //改变数量
     numItemChangeHandle(index, num){
         this.state.list[index].num = num;
         this.setState({
             list: this.state.list,
             refresh:Math.random()
-        })
+        });
     }
     /**
      * @description 单个商品单选框的属性
@@ -73,7 +64,7 @@ class CartIndexView extends React.Component{
         this.setState({
             list: this.state.list,
             refresh:Math.random()
-        })
+        });
         this.checkAll();
     }
 
@@ -91,7 +82,7 @@ class CartIndexView extends React.Component{
         });
     }
 
-    /**
+    /*
      * @description 判断是否全选
      * 如果所有产品都选择了，就设置isAllChecked为true
     */
@@ -107,7 +98,7 @@ class CartIndexView extends React.Component{
         }
     }
 
-    /**
+    /*
       * @description 全选
       * @param {object} e 事件对象
      */
