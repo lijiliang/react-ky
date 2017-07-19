@@ -26,6 +26,9 @@ import ForgetSuccessView from 'kyBus/account/views/ForgetSuccessView';      // �
 
 // user
 import UserIndexView from 'kyBus/user/views/IndexView';          // 会员中心首页
+import SafetyView from 'kyBus/user/views/SafetyView';            // 帐户安全
+import SafetyPwdView from 'kyBus/user/views/SafetyPwdView';      // 帐户安全 - 修改密码
+import SafetySuccessView from 'kyBus/user/views/SafetySuccessView';            // 帐户安全 - 修改密码成功
 
 // cart 购物车
 import CartIndexView from 'kyBus/cart/views/IndexView';          // 购物车首页
@@ -68,7 +71,9 @@ class RouterMap extends React.Component {
                         <Route path='/account/forgetsuccess' component={ForgetSuccessView}/>
                     </Route>
                     <Route path='/user' component={UserIndexView} >
-                        <Route path='/user/regconsumer' component={RegConsumerView}/>
+                        <Route path='/user/safety' component={SafetyView}/>
+                        <Route path='/user/safetypwd' component={SafetyPwdView}/>
+                        <Route path='/user/safetysuccess' component={SafetySuccessView}/>
                     </Route>
                     <Route path='/cart' component={CartIndexView} >
                         <Route path='/cart/order' component={CartOrderView}/>
