@@ -1,0 +1,90 @@
+/**
+ * @fileOverview: 优惠券
+ * @version: 1.0.0(2017-7-20)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+.m-coupon-view{
+    margin: 0 8%;
+    .coupon-tab{
+        display: flex;
+        align-items: center;
+        padding: 40px 0;
+        .tab-item{
+            flex: 1;
+            height: 60px;
+            line-height: 60px;
+            margin-left: 15px;
+            text-align: center;
+            border:1px solid @brand-green;
+            color: @brand-green;
+            font-size: 30px;
+            border-radius: 5px;
+            box-sizing: border-box;
+            &:first-child{
+                margin-left: 0;
+            }
+        }
+        .tab-active{
+            background: @brand-green;
+            color: #fff;
+        }
+    }
+    // 没有优惠券时的tab
+    .coupon-tab-no{
+        .tab-item {
+            color: @brand-gray;
+            border: 1px solid @brand-gray;
+        }
+        .tab-active{
+            color: #fff;
+            background: @brand-gray;
+        }
+    }
+
+    .coupon-wrapper{
+        display: flex;
+        flex-direction: column;
+        // 单个优惠券
+        .item{
+            background: @brand-blue;
+            margin-bottom: 20px;
+            padding: 8px 0;
+            text-align: center;
+            box-sizing: border-box;
+            color: #fff;
+            .tit{
+                font-size: 40px;
+                span{
+                    padding: 0 10px;
+                }
+            }
+            .price{
+                line-height: 1.2;
+                font-size: 94px;
+                span{
+                    font-size: 70px;
+                }
+            }
+            .time{
+                font-size: 24px;
+            }
+            // 已用
+            &-used {
+                background: @brand-gray;
+            }
+        }
+        .coupon-no{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: @brand-primary;
+            font-size: 40px;
+        }
+    }
+}
