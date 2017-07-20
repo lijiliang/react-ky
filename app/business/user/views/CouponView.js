@@ -4,21 +4,11 @@
 import React from 'react';
 import { Link } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as loginAction from '../action/actionTypes';
-import {regConsumer} from '../action/DataAction';
-
-import { createForm } from 'rc-form';
-import classNames from 'classnames';
 import { get, getPublic } from 'kyBase/common/FetchData';
-import { Urls, RegxRule} from 'kyCommon';
 
 //组件
-import { Button, Toast, NavBar, InputItem} from 'uxComponent';
-
+import {NavBar} from 'uxComponent';
 import '../resources/CouponView.less';
-
 
 class CouponView extends React.Component {
     constructor(props, context){
