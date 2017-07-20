@@ -14,6 +14,7 @@
  <Button title="小尺寸" size="small"/>
  <Button title="点击无反馈" activeStyle={false}/>
  <Button title="自定义点击反馈" activeStyle={{ backgroundColor: 'red' }}/>
+ <Button title="提交" type="submit" onClick={this.submitHandle} across/>
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -44,6 +45,7 @@ class Button extends React.Component{
             [prefixCls]: true,
             [`${prefixCls}-primary`]: type === 'primary',
             [`${prefixCls}-primaryWhite`]: type === 'primaryWhite',
+            [`${prefixCls}-submit`]: type === 'submit',
             [`${prefixCls}-small`]: size === 'small',
             [`${prefixCls}-inline`]: inline,
             [`${prefixCls}-disabled`]: disabled,

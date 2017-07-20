@@ -120,7 +120,7 @@ class SafetyPwdView extends React.Component {
                     </div>
                 </div>
                 <div className="m-foot-fixed">
-                    <Button title="完成" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
+                    <Button title="完成" type="submit" onClick={this.submitHandle} across/>
                 </div>
             </div>
         );

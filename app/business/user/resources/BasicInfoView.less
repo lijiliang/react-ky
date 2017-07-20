@@ -1,0 +1,90 @@
+/**
+ * @fileOverview: 基本信息
+ * @version: 1.0.0(2017-7-20)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+.m-basic-view{
+    .account-info{
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 30px 20px;
+        box-shadow: 0 6px 30px #e0e0e0;
+        .account-thumb{
+            position: relative;
+            width: 230px;
+            height: 230px;
+            margin: 0 50px;
+            img{
+                display: block;
+                width: 230px;
+                height: 230px;
+            }
+            .modify{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 40px;
+                background: #7e95aa;
+                text-align: center;
+                color: #fff;
+            }
+        }
+        .account-name{
+            flex: 1;
+            .tit{
+                font-size: 34px;
+                color: @brand-gray;
+            }
+            .name{
+                font-size: 40px;
+            }
+        }
+    }
+    // 表单
+    .m-basic-form{
+        margin: 35px 30px;
+        border-top: 2px solid @brand-gray-p;
+        border-bottom: 2px solid @brand-gray-p;
+        // 重置
+        .ky-list-item{
+            padding-left: 0;
+            .ky-list-content{
+                flex: initial;
+                width: 185px;
+                color: @brand-gray;
+            }
+        }
+        .picker-city .ky-list-extra{
+            flex: 1;
+            text-align: left;
+            color: @brand-gray-sf;
+        }
+        .picker-city-active .ky-list-extra {
+            color: @brand-gray-deep;
+        }
+    }
+
+    // 编辑
+    .basic-edit{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        .edit-btn{
+            display: inline-block;
+            width: 390px;
+            height: 68px;
+            line-height: 68px;
+            text-align: center;
+            border: 2px solid @brand-green;
+            color: @brand-green;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+    }
+}
