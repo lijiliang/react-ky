@@ -11,8 +11,6 @@
  //组件
  import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
  import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
- const Item = List.Item;
- const Brief = Item.Brief;
  import '../resources/BasicInfoView.less';
 
  import Avatar from '../resources/img/avatar-big.png'
@@ -24,6 +22,15 @@
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
+             cityAreaData: cityAreaData,
+             cityExtra: true,
+             cityValue: ['8','60','619'],
+             addrDetail: '林和西路9号耀中广场918号林和西路9号耀中广场918号',
+             addrPostcode: '432222',
+             chatNumber: '13599699696',
+             phoneNumber: '13594949946',
+             email: '23456532@qq.com',
+             isEdit: false,  // 是否可编辑
          };
      }
      componentDidMount(){}
@@ -53,10 +60,38 @@
              })
          });
      }
+     // 点击编辑
+     onEditHandle = () => {
+         this.setState({
+             isEdit: true
+         })
+     }
+     // 提交
+     submitHandle = () => {
+         const form = this.props.form;
+         form.validateFields((error, value) => {
+             if(error){
+                 const fieldNames = ['cityValue', 'addrDetail', 'addrPostcode', 'chatNumber', 'phoneNumber', 'email'].reverse();
+                 fieldNames.map((item, index) => {
+                     if(form.getFieldError(item)){
+                         Toast.info(form.getFieldError(item), 1)
+                         return;
+                     }
+                 })
+                 return;
+             }
+             if(!error){
+                 this.setState(value)
+             }
+         })
+     }
      render(){
-         console.log(this.state)
          const { getFieldDecorator} = this.props.form;
 
+        const basicFormCls = classNames({
+            ['m-basic-form']: true,
+            ['m-basic-diablad']: !this.state.isEdit
+        })
          const cityExtraCls = classNames({
              ['picker-city']: true,
              ['picker-city-active']: this.state.cityExtra
@@ -80,7 +115,10 @@
                                      <p className="name">丛征</p>
                                  </div>
                              </div>
-                             <div className="m-basic-form">
+                             <div className={basicFormCls}>
+                                 {
+                                     !this.state.isEdit ? <div className="basic-mask"></div> : null
+                                 }
                                  {getFieldDecorator('cityValue',{
                                      initialValue: this.state.cityValue,
                                      rules: [{
@@ -184,15 +222,20 @@
                                      >邮箱地址</InputItem>
                                  )}
                              </div>
-                             <div className="basic-edit">
-                                 <span className="edit-btn">编辑</span>
-                             </div>
+                             {
+                                 !this.state.isEdit ? <div className="basic-edit">
+                                     <span className="edit-btn" onClick={this.onEditHandle}>编辑</span>
+                                 </div> : ''
+                             }
+
                          </div>
                      </div>
                  </div>
-                 <div className="m-foot-fixed">
-                     <Button title="提交" type="submit" onClick={this.submitHandle} across/>
-                 </div>
+                 {
+                     this.state.isEdit ? <div className="m-foot-fixed">
+                         <Button title="提交" type="submit" onClick={this.submitHandle} across/>
+                     </div> : ''
+                 }
              </div>
          );
      }

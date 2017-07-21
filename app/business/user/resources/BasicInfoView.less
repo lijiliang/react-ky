@@ -48,9 +48,19 @@
     }
     // 表单
     .m-basic-form{
+        position: relative;
         margin: 35px 30px;
         border-top: 2px solid @brand-gray-p;
         border-bottom: 2px solid @brand-gray-p;
+        .basic-mask {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            height: 100%;
+            z-index: 1000;
+        }
         // 重置
         .ky-list-item{
             padding-left: 0;
@@ -67,6 +77,17 @@
         }
         .picker-city-active .ky-list-extra {
             color: @brand-gray-deep;
+        }
+    }
+
+    // 基本信息不可编辑状态
+    .m-basic-diablad{
+        border-top: 2px solid #fff;
+        border-bottom: 2px solid #fff;
+        .ky-list-item .ky-textarea-item:after, .ky-list-item.ky-input-item:after,
+        .ky-list-item .ky-list-line:after,
+        .ky-list-item.ky-textarea-item:after{
+            border-bottom: 0.02rem solid #fff;
         }
     }
 
