@@ -6,3 +6,179 @@
 
 // 引入变量
 @import '~varLess';
+
+.m-order-view{
+    margin-top: 20px;
+    .order-item {
+        background: #fff;
+        margin-bottom: 20px;
+        .order-header{
+            display: flex;
+            align-items: center;
+            padding: 6px 20px;
+            border-bottom:1px solid #b4b4b4;
+            .orderno{
+                flex-basis: 80%;
+                line-height: 1.6;
+                font-size: 26px;
+                .ellipsis();
+                span{
+                    padding-right: 20px;
+                }
+            }
+            .lump-sum {
+                flex-basis: 20%;
+                text-align: center;
+                font-size: 26px;
+                .price{
+                    font-weight: bold;
+                    color: @brand-primary;
+                }
+            }
+        }
+        .order-status{
+            padding: 18px 0;
+            text-align: right;
+            border-bottom: 1px solid @brand-gray-sf;
+            .status-btn{
+                margin-right: 30px;
+            }
+        }
+        .order-body{
+            background: #f5f5f5;
+            .suborder-item{
+                padding: 20px 0 20px 30px;
+                display: flex;
+                border-bottom: 1px solid #c8c8c8;
+            }
+            .suborder-info{
+                flex-basis: 72%;
+                padding-right: 20px;
+                box-sizing: border-box;
+                h2 {
+                    line-height: 50px;
+                    padding-bottom: 10px;
+                }
+            }
+            // 子订单 右侧 状态
+            .suborder-status {
+                flex-basis: 28%;
+                // padding-left: 20px;
+                border-left: 1px solid #c8c8c8;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+                box-sizing: border-box;
+                margin: 0 auto;
+                .status{
+                    display: block;
+                    color: @brand-green-deep;
+                }
+                .suborder-btn{
+                    .status-btn {
+                        display: block;
+                        margin: 30px auto 0 auto;
+                    }
+                }
+            }
+            // 子订单 内容
+            .suborder-content{
+                display: flex;
+                padding: 8px 0;
+                .thumb {
+                    flex-basis: 100px;
+                    width: 100px;
+                    height: 100px;
+                    padding-right: 20px;
+                    img{
+                        display: block;
+                        width: 100px;
+                        height: 100px;
+                    }
+                }
+                .content{
+                    p{
+                        line-height: 1.4;
+                        font-size: 25px;
+                        color: @brand-gray-dk;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 按钮状态
+.status-btn {
+    display: inline-block;
+    width: 155px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border: 1px solid @brand-gray-deep;
+    color: @brand-gray-deep;
+    font-size: 26px;
+    border-radius: 5px;
+    &.btn-pay {
+        border: 1px solid #c72b66;
+        color: #c72b66;
+    }
+    &.btn-order {
+        border: 1px solid @brand-primary;
+        color: @brand-primary;
+    }
+}
+
+// 弹出层 取消订单原因
+.m-order-modal {
+    .ky-modal-body{
+        padding: 20px 15px!important;
+    }
+}
+.reason-list{
+    width: 100%;
+    .reason-item{
+        width: 50%;
+        float: left;
+        text-align:left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        // 单选
+        .reason-radio{
+            white-space: nowrap;
+            outline: none;
+            display: inline-block;
+            position: relative;
+            input{
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                cursor: pointer;
+                opacity: 0;
+                width: 200px;
+                height: 60px;
+                z-index: 9999;
+            }
+            i{
+                vertical-align: 10px;
+                font-size: 42px;
+            }
+        }
+        .reason-radio-active {
+            i{
+                color: @brand-green-deep;
+            }
+            .icon-radio:before{
+                content: "\E639"
+            }
+        }
+        .name{
+            padding-left: 5px;
+            font-size: 28px;
+            color: #a0a0a0;
+        }
+    }
+}

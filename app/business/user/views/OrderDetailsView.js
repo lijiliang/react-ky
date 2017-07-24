@@ -91,7 +91,7 @@
                                  <div className="orderdetail-head">送货清单</div>
                                  <div className="order-list-body">
                                      <List small>
-                                         <Item extra={'87654345678765435678'}>订单编号</Item>
+                                         <Item extra={'87654345678765435678'} className="orderno">订单编号</Item>
                                          <Item extra={'快递'}>配送方式</Item>
                                          <Item extra={'在线支付'}>支付方式</Item>
                                          <Item extra={'10'}>商品数量</Item>
