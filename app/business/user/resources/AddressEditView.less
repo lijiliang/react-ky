@@ -1,0 +1,33 @@
+/**
+ * @fileOverview: 管理收货地址 - 新增、编辑
+ * @version: 1.0.0(2017-7-21)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+.m-address-edit-view{
+    margin-top: 20px;
+    border-top: 5px solid @brand-blue;
+}
+.m-addressedit-form{
+    padding: 0 30px 30px 30px;
+    // 重置
+    .ky-list-item{
+        padding-left: 0;
+        .ky-list-content{
+            flex: initial;
+            width: 215px;
+            color: @brand-gray;
+        }
+    }
+    .picker-city .ky-list-extra{
+        flex: 1;
+        text-align: left;
+        color: @brand-gray-sf;
+    }
+    .picker-city-active .ky-list-extra {
+        color: @brand-gray-deep;
+    }
+}

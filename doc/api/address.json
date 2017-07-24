@@ -1,0 +1,13 @@
+{
+    "code": 0,
+    "data": [
+        {
+            "addressId": "1000",
+            "userName": "Benson",
+            "streetName": "广州市天河区",
+            "postCode": "100009",
+            "tel": "234567645",
+            "isDefault": true
+        }
+    ]
+}

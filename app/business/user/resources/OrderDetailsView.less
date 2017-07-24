@@ -1,0 +1,131 @@
+/**
+ * @fileOverview: 订单详情
+ * @version: 1.0.0(2017-7-24)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+.m-orderdetail-view{
+    .detail-item{
+        background: #fff;
+        margin-bottom: 20px;
+    }
+    .paymethod-price{
+        text-align: center;
+        font-size: 40px;
+        color: @brand-primary;
+        padding: 10px 0 30px 0;
+    }
+}
+.orderdetail-head{
+    margin-top: 20px;
+    padding: 20px 0 0 30px;
+    border-top: 5px solid @brand-blue;
+    font-size: 40px;
+    color: @brand-primary
+}
+.orderdetail-body{
+    padding: 20px 30px;
+    .list{
+        .item{
+            display: flex;
+            padding: 5px 0;
+            font-size: 34px;
+            color: @brand-gray;
+            .name{
+                flex: 0 0 180px
+            }
+            .info{
+                flex: 1;
+                width: 100%;
+                color: @brand-gray-deep;
+                .copy{
+                    display: inline-block;
+                    height: 38px;
+                    line-height: 38px;
+                    padding: 0 10px;
+                    font-size: 24px;
+                    color: @brand-gray;
+                    border: 1px solid @brand-gray;
+                }
+            }
+        }
+    }
+    .gobtn{
+        width: 388px;
+        height: 58px;
+        line-height: 58px;
+        margin: 20px auto;
+        text-align: center;
+        font-size: 34px;
+        color: @brand-green-deep;
+        border: 1px solid @brand-green-deep;
+        border-radius: 5px;
+    }
+}
+
+// 送货清单
+.order-list-body{
+    padding: 0 30px;
+    // 子订单内容
+    .suborder-box{
+        // padding: 20px 0;
+        // 单项内容
+        .item-content{
+            display: flex;
+            padding: 20px 0;
+            border-bottom: 2px solid @border-color-base;
+            .thumb{
+                width: 90px;
+                margin-right: @h-spacing-md;
+                img{
+                    width: 90px;
+                    display: block;
+                }
+            }
+            .info{
+                // flex:1;
+                width: 80%;
+                flex-grow: 1;
+            }
+
+            .info-item{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                overflow: hidden;
+                .name{
+                    flex: 1;
+                    font-size: 24px;
+                    color: @brand-gray-dk;
+
+                    .ellipsis();
+                    p{
+                        .ellipsis();
+                    }
+                }
+                .name-tit{
+                    font-size: 34px;
+                }
+                .number{
+                    flex-basis: 23%;
+                    text-align: right;
+                }
+            }
+
+            .info-price{
+                .name {
+                    font-size: 28px;
+                    .name-price{
+                        padding-left: 15px;
+                    }
+                }
+            }
+        }
+    }
+    .m-quota .ky-list-line:after{
+        border-bottom: none!important;
+    }
+}

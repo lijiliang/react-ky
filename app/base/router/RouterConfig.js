@@ -31,6 +31,10 @@ import SafetyPwdView from 'kyBus/user/views/SafetyPwdView';      // 帐户安全
 import SafetySuccessView from 'kyBus/user/views/SafetySuccessView';    // 帐户安全 - 修改密码成功
 import CouponView from 'kyBus/user/views/CouponView';            // 我的优惠券
 import BasicInfoView from 'kyBus/user/views/BasicInfoView';      // 基本信息
+import AddressView from 'kyBus/user/views/AddressView';          // 收货地址
+import AddressEditView from 'kyBus/user/views/AddressEditView';  // 收货地址 新增、编辑
+import OrderView from 'kyBus/user/views/OrderView';              // 订单列表
+import OrderDetailsView from 'kyBus/user/views/OrderDetailsView';// 订单详情
 
 // cart 购物车
 import CartIndexView from 'kyBus/cart/views/IndexView';          // 购物车首页
@@ -78,6 +82,10 @@ class RouterMap extends React.Component {
                         <Route path='/user/safetysuccess' component={SafetySuccessView}/>
                         <Route path='/user/coupon' component={CouponView}/>
                         <Route path='/user/basicinfo' component={BasicInfoView}/>
+                        <Route path='/user/address' component={AddressView}/>
+                        <Route path='/user/addredit' component={AddressEditView}/>
+                        <Route path='/user/order' component={OrderView}/>
+                        <Route path='/user/orderdetail' component={OrderDetailsView}/>
                     </Route>
                     <Route path='/cart' component={CartIndexView} >
                         <Route path='/cart/order' component={CartOrderView}/>
