@@ -6,3 +6,108 @@
 
 // 引入变量
 @import '~varLess';
+
+.m-address-view{
+    margin-top: 20px;
+}
+.address-item{
+    position: relative;
+    margin-bottom: 20px;
+    border-top: 1px solid @brand-gray;
+    background: #fff;
+    box-sizing: border-box;
+    .address-border{
+        display: none;
+    }
+    .address-body{
+        padding: 20px 20px 20px 30px;
+    }
+    .item {
+        display: flex;
+        line-height: 1.6;
+        .name {
+            flex-basis: 180px;
+            font-size: 28px;
+            color: @brand-gray;
+        }
+        .info {
+            flex: 1;
+            width: 100%;
+            font-size: 28px;
+        }
+    }
+    .address-foot{
+        display: flex;
+        align-items: center;
+        padding: 5px 0;
+        border-top: 1px solid @brand-gray;
+        .select {
+            flex: 1;
+            padding-left: 30px;
+        }
+        // 单选
+        .select-radio{
+            white-space: nowrap;
+            outline: none;
+            display: inline-block;
+            position: relative;
+            padding-right: 10px;
+            input{
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                cursor: pointer;
+                opacity: 0;
+                width: 200px;
+                height: 60px;
+                z-index: 9999;
+            }
+            i{
+                vertical-align: 10px;
+                font-size: 42px;
+            }
+        }
+        .edit-btn{
+            z-index: 2;
+            .btn {
+                display: inline-block;
+                width: 125px;
+                height: 40px;
+                margin-right: 20px;
+                border: 1px solid @brand-gray;
+                text-align: center;
+                line-height: 40px;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+// 高亮
+.address-item-active{
+    border-top: 1px solid #f5f5f9;
+    .address-border{
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: 5px solid @brand-green;
+        transition: all .3s;
+        z-index: 1;
+    }
+    .select {
+        .name {
+            color: @brand-green;
+        }
+    }
+    .icon-radio{
+        color: @brand-green;
+        &:before{
+            content: "\E636"
+        }
+    }
+}

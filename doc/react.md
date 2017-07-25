@@ -58,3 +58,4 @@ state
 
 ## 参考
 [组件的生命周期方法](https://segmentfault.com/a/1190000007828783)
+[React-Mixins](http://egorsmirnov.me/2015/09/30/react-and-es6-part4.html)
