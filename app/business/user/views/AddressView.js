@@ -8,7 +8,7 @@
  import classNames from 'classnames';
 
  //组件
- import { Button, Toast, NavBar, Modal} from 'uxComponent';
+ import { Button, Toast, NavBar, Modal, Result} from 'uxComponent';
  import '../resources/AddressView.less';
 
  class AddressView extends React.Component {
@@ -33,6 +33,14 @@
                      iphone: '13503077896',
                      idCard: '44088218272615',
                      streetName: '广州市天河区耀中广场918号',
+                     isDefault: false
+                 },
+                 {
+                     addressId: '3',
+                     userName: '李先生',
+                     iphone: '1360307436',
+                     idCard: '44076543456787654345',
+                     streetName: '棋顶起仍枯做朋友有理脾工90892号',
                      isDefault: false
                  }
              ]
@@ -81,7 +89,7 @@
                                  this.state.addressData.map((item, index) => {
                                      const addressCls = classNames({
                                          [`address-item`]: true,
-                                         ['address-item-active']: item.isDefault
+                                         [`address-item-active`]: item.isDefault
                                      })
                                      return (
                                          <div className={addressCls}>
@@ -128,42 +136,16 @@
                                      );
                                  })
                              }
-                             {/* <div className="address-item address-item-active">
-                                 <div className="address-body">
-                                     <div className="item">
-                                         <div className="name">收货人</div>
-                                         <div className="info">李先生</div>
-                                     </div>
-                                     <div className="item">
-                                         <div className="name">手机号</div>
-                                         <div className="info">13504040040304</div>
-                                     </div>
-                                     <div className="item">
-                                         <div className="name">身份证号码</div>
-                                         <div className="info">440882156789876787645</div>
-                                     </div>
-                                     <div className="item">
-                                         <div className="name">收货地址</div>
-                                         <div className="info">广东省广州市天河区加safl是仍 圆顶时9号</div>
-                                     </div>
-                                 </div>
-                                 <div className="address-foot">
-                                    <div className="select">
-                                        <label>
-                                            <div className="select-radio">
-                                                <input type="radio" value="2" checked={this.state.value} onChange={this.reasonChange}/>
-                                                <i className="icon icon-radio"></i>
-                                          </div>
-                                          <span className="name">设为默认</span>
-                                      </label>
-                                    </div>
-                                    <div className="edit-btn">
-                                        <a href="" className="btn">编辑</a>
-                                        <a href="" className="btn">删除</a>
-                                    </div>
-                                 </div>
-                             </div> */}
                          </div>
+                         {
+                             this.state.addressData.length <= 0 ? <div className="loading-container">
+                                 <Result
+                                    img={<i className="icon icon-paymentDone"></i>}
+                                    message="您还没有添加收货地址哦，赶紧添加一个吧"
+                                  />
+                              </div>
+                             : null
+                         }
                      </div>
                  </div>
                  <div className="m-foot-fixed">

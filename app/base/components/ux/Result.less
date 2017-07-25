@@ -1,0 +1,55 @@
+/**
+ * @fileOverview: 结果页
+ * @version: 1.0.0(2017-7-25)
+ * @author: Benson
+ */
+ // 引入变量
+ @import '~varLess';
+
+@resultPrefixCls: ky-result;
+
+.@{resultPrefixCls} {
+  position: relative;
+  text-align: center;
+  width: 100%;
+  padding-top: @v-spacing-lg;
+  padding-bottom: @v-spacing-lg;
+  // background-color: @fill-base;
+  .hairline-bottom(@border-color-base);
+
+  & &-pic {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    line-height: 120px;
+    background-size: 120px 120px;
+    .icon{
+        font-size: 100px;
+        color: @brand-gray;
+    }
+  }
+
+  & &-title,
+  & &-message {
+    font-size: @font-size-display-md;
+    line-height: @line-height-paragraph;
+    color: @color-text-base;
+    padding-left: @h-spacing-lg;
+    padding-right: @h-spacing-lg;
+  }
+
+  & &-title {
+    margin-top: @v-spacing-lg;
+  }
+
+  & &-message {
+    margin-top: @v-spacing-md;
+    font-size: @font-size-caption;
+    color: @color-text-caption;
+  }
+
+  & &-button {
+    padding: 0 @h-spacing-lg;
+    margin-top: @v-spacing-lg;
+  }
+}
