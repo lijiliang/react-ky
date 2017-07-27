@@ -24,7 +24,8 @@ class ForgetpwdView extends React.Component{
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-
+            phoneCodeTip: '获取短信验证码',
+            codeFlag: true,   // 获取短信验证码按钮是否可点击
         };
     }
     componentDidMount(){}
@@ -38,8 +39,84 @@ class ForgetpwdView extends React.Component{
            [name]: value
        })
     }
+    submitHandle() {
+        const form = this.props.form;
+        const _password = form.getFieldValue('password');
+        const _confirmPwd = form.getFieldValue('confirmPwd');
+        form.validateFields((error, value) => {
+            if(error){
+                const fieldNames = ['username', 'phoneNumber', 'phoneCode', 'password', 'confirmPwd'].reverse();
+                fieldNames.map((item, index) => {
+                    if(form.getFieldError(item)){
+                        Toast.info(form.getFieldError(item), 1);
+                        return;
+                    }
+                });
+                return;
+            }
+
+            // 处理输入两次密码不一致
+            if(_confirmPwd && (_password !== _confirmPwd)){
+                Toast.info('两次输入的密码不一致', 1);
+                return;
+            }
+
+        })
+    }
+    // 获取短信验证码
+    getPhoneCodeHandle = () => {
+        const _this = this;
+        const _phoneNumber = this.state.phoneNumber || '';
+        if(this.state.codeFlag){
+            if(!RegxRule.phone.test(_phoneNumber)){
+                Toast.info('请输入正确的手机号', 1)
+                return;
+            } else {
+                // 请求发送短信验证码
+                const tipInfo = '短信验证码已发送到' + _phoneNumber
+                Toast.info(tipInfo, 1)
+
+                // 倒计时
+                this.changeSendStatus('phoneCodeTip', 60)
+            }
+        }
+    }
+    /**
+     * 倒计时
+     * @param elem 元素
+     * @param closeCount  Number 设置时间，可选
+     */
+    changeSendStatus(elem, closeCount) {
+        let count = 60;
+        let _self = this;
+        let wait
+        if(closeCount){
+            count = closeCount
+        }
+        wait = function () {
+            _self.timer = setTimeout(() => {
+                count--;
+                if(count > 0) {
+                    _self.setState({
+                        [elem]: count + '秒后重新发送',
+                        codeFlag: false
+                    })
+                    wait()
+                } else {
+                    if(_self.timer){
+                        clearTimeout(_self.timer);
+                    }
+                    _self.setState({
+                        [elem]: '获取短信验证码',
+                        codeFlag: true
+                    })
+                }
+            }, 1000)
+        }
+        wait()
+    }
     render() {
-        console.log(this.state)
+        // console.log(this.state)
         const { getFieldDecorator} = this.props.form;
         // 密码
         const isShowPwdCls = classNames({
@@ -48,6 +125,10 @@ class ForgetpwdView extends React.Component{
             'extra-pwd': true,
             'extra-pwd-active': this.state.isShowPwd
         });
+        const codeCls = classNames({
+            'getCode': true,
+            'getCodeDisabled': !this.state.codeFlag
+        })
         return(
             <div className="ky-container-body">
                 <div className="ky-scrollable-white">
@@ -57,16 +138,16 @@ class ForgetpwdView extends React.Component{
                             mode="blue"
                             >重置密码</NavBar>
                         <div className="forget-view">
-                            {getFieldDecorator('firstName', {
-                                initialValue: this.state.firstName,
+                            {getFieldDecorator('username', {
+                                initialValue: this.state.username,
                                 rules: [{
                                     required: true,
-                                    message: '请输入您的姓氏'
+                                    message: '请输入中国会员帐号'
                                 }],
                               })(
                                 <InputItem
-                                    placeholder="CN********"
-                                    onChange={this.stateChangeHandle.bind(this, 'firstName')}
+                                    placeholder="请输入中国会员帐号"
+                                    onChange={this.stateChangeHandle.bind(this, 'username')}
                                 >中国会员帐号</InputItem>
                              )}
                              {getFieldDecorator('phoneNumber', {
@@ -86,17 +167,17 @@ class ForgetpwdView extends React.Component{
                                      maxLength={11}
                                  >手机号</InputItem>
                              )}
-                             {getFieldDecorator('firstName', {
-                                 initialValue: this.state.firstName,
+                             {getFieldDecorator('phoneCode', {
+                                 initialValue: this.state.phoneCode,
                                  rules: [{
                                      required: true,
-                                     message: '请输入您的姓氏'
+                                     message: '请输入短信验证码'
                                  }],
                                })(
                                  <InputItem
                                      placeholder="验证码"
-                                     onChange={this.stateChangeHandle.bind(this, 'firstName')}
-                                     extra={<span className="getCode">获取短信验证码</span>}
+                                     onChange={this.stateChangeHandle.bind(this, 'phoneCode')}
+                                     extra={<span className={codeCls} onClick={this.getPhoneCodeHandle}>{this.state.phoneCodeTip}</span>}
                                  >短信验证码</InputItem>
                               )}
                               {getFieldDecorator('password', {
@@ -148,7 +229,7 @@ class ForgetpwdView extends React.Component{
                     </div>
                 </div>
                 <div className="m-foot-fixed">
-                    <Button title="完成" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
+                    <Button title="完成" className="ky-button-primary regcon-btn" onClick={this.submitHandle.bind(this)} across/>
                 </div>
             </div>
         );

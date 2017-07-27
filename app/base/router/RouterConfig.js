@@ -39,6 +39,7 @@ import OrderDetailsView from 'kyBus/user/views/OrderDetailsView';// 订单详情
 // cart 购物车
 import CartIndexView from 'kyBus/cart/views/IndexView';          // 购物车首页
 import CartOrderView from 'kyBus/cart/views/CartOrderView';      // 购物车->核对订单信息
+
 /*
  * 路由
  */
