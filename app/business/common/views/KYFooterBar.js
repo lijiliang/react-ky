@@ -24,10 +24,10 @@ class KYFooterBar extends React.Component{
         return(
             <div className="footer-bar flex-row">
                 <div className="footer-bar-list ky-center-v">
-                    <div className="bar-item">
+                    <Link to="/user" activeClassName="active" className="bar-item">
                         <i className="icon icon-news"></i>
                         <div className="bar-item-text">最新消息</div>
-                    </div>
+                    </Link>
                     <div className="bar-item">
                         <i className="icon icon-onlineCS"></i>
                         <div className="bar-item-text">在线客服</div>
@@ -36,11 +36,11 @@ class KYFooterBar extends React.Component{
                         <i className="icon icon-productlist"></i>
                         <div className="bar-item-text">产品商城</div>
                     </div>
-                    <div className="bar-item">
+                    <Link to="/cart" activeClassName="active" className="bar-item">
                         <i className="icon icon-shoppingCart"></i>
                         <div className="bar-item-text">购物车</div>
                         <div className="cat-num">10</div>
-                    </div>
+                    </Link>
                 </div>
             </div>
         );

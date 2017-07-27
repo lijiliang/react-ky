@@ -1,6 +1,7 @@
 /**
  * @fileOverview 全部ux组件
  */
+export { default as Loading } from './Loading';         //Loading 指示
 export { default as Accordion } from './Accordion';     //Accordion 手风琴
 export { default as Button } from './Button';        //Button 按钮组件
 //export { default as Drawer } from './Drawer';        //Drawer 抽屉, 用于屏幕边缘显示应用导航

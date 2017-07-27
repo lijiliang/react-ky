@@ -1,0 +1,86 @@
+/**
+ * @fileOverview: Loading 指示， 表明某个任务正在进行中
+ * @version: 1.0.0(2017-7-27)
+ * @author: Benson
+ * @updatatime:
+ */
+// 引入变量
+@import '~varLess';
+@LoadingPrefixCls: ky-loading;
+
+@fill-overlay-inverse: rgba(58, 58, 58, 0.9);// 浮层背景 - 反色，用于 toast
+@toast-fill: @fill-overlay-inverse;
+
+.@{LoadingPrefixCls} {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+
+  &-spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    .encoded-svg-background('loading');
+
+    background-position: 50%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    animation: spinner-anime 1s linear infinite;
+  }
+
+  &-tip {
+    font-size: @font-size-base;
+    margin-left: @h-spacing-md;
+    color: @color-text-base;
+    opacity: 0.4;
+  }
+
+  &.@{LoadingPrefixCls}-toast {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: @toast-zindex;
+
+    .@{LoadingPrefixCls}-spinner {
+      margin: 0;
+    }
+
+    .@{LoadingPrefixCls}-toast {
+      display: inline-block;
+      position: relative;
+      top: 8px;
+    }
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: @v-spacing-lg @h-spacing-lg;
+    border-radius: @radius-lg;
+    background-clip: padding-box;
+    color: @color-text-base-inverse;
+    background-color: @toast-fill;
+    font-size: @font-size-subhead;
+    line-height: 40px;
+  }
+
+  &-spinner-lg {
+    width: 64px;
+    height: 64px;
+  }
+
+  @keyframes spinner-anime {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

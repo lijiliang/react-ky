@@ -55,6 +55,11 @@ class App extends Component {
         return <div>This is a demo.</div>;
     }
 }
+
+Drawer.propTypes = {
+    sidebar: PropTypes.element,  //抽屉里的内容
+}
+
 ```
 ## 子级调用父级函数
 ```js

@@ -15,7 +15,7 @@ import { get, getPublic } from 'kyBase/common/FetchData';
 import { Urls, RegxRule} from 'kyCommon';
 
 //组件
-import { Button, Toast, NavBar, InputItem} from 'uxComponent';
+import { Button, Toast, NavBar, InputItem, Loading} from 'uxComponent';
 
 import '../resources/ForgetpwdView.less';
 
