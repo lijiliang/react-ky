@@ -22,6 +22,7 @@
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
+             avatar: Avatar,
              cityAreaData: cityAreaData,
              cityExtra: true,
              cityValue: ['8','60','619'],
@@ -85,6 +86,26 @@
              }
          })
      }
+     changeUpFile(e) {
+         const _this = this;
+         var file = e.target.files[0]  // 获取图片资源
+
+         // 只选择图片文件
+          if (!file.type.match('image.*')) {
+            return false;
+          }
+
+          var reader = new FileReader();
+          reader.readAsDataURL(file); // 读取文件
+
+          reader.onload = function(arg) {
+              console.log(arg)
+              _this.setState({
+                  avatar: arg.target.result
+              })
+          }
+        // http://www.open-open.com/lib/view/open1460474353494.html
+     }
      render(){
          const { getFieldDecorator} = this.props.form;
 
@@ -107,7 +128,10 @@
                          <div className="m-basic-view">
                              <div className="account-info">
                                  <div className="account-thumb">
-                                     <img src={Avatar} alt=""/>
+                                     <label htmlFor="img_input" onChange={this.changeUpFile.bind(this)} id="img_label">
+                                         <input id="img_input" type="file" accept="image/*"/>
+                                     </label>
+                                     <img src={this.state.avatar}/>
                                      <div className="modify">点此修改头像</div>
                                  </div>
                                  <div className="account-name">
@@ -217,7 +241,7 @@
                                    })(
                                      <InputItem
                                          labelNumber={5}
-                                         placeholder="请输入有效的邮箱地址"
+                                         placeholder="请输入邮箱地址"
                                          onChange={this.stateChangeHandle.bind(this, 'email')}
                                      >邮箱地址</InputItem>
                                  )}
