@@ -46,7 +46,7 @@ class CartIndexView extends React.Component{
                             <span className="extra">管理</span>
                         </div>
                         <div className="m-receiver-content">
-                            <i className="receiver-icon bg-radioSelect"></i>
+                            <i className="icon icon-selectFill"></i>
                             <div className="list">
                                 <div className="item">
                                     <span className="name">收货人</span>

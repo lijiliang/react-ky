@@ -14,14 +14,8 @@ export default class Loading extends React.Component {
         panelColor: 'rgba(34,34,34,0.6)',
         toast: false
     }
-    static propTypes = {
-        animating: PropTypes.bool,   // 显隐状态
-        size: PropTypes.oneOf(['small', 'large']),  //spinner大小，可选small/large
-        toast: PropTypes.bool,  // loading样式类型
-        text: PropTypes.string, // loading文本
-        color: PropTypes.string // 	spinner颜色
-    };
     render() {
+        console.log('loading')
         const { prefixCls, className, animating, toast, size, text } = this.props;
         const wrapClass = classNames({
             [`${prefixCls}`]: true,
@@ -69,3 +63,11 @@ export default class Loading extends React.Component {
         }
     }
 }
+
+Loading.propTypes = {
+    animating: PropTypes.bool,   // 显隐状态
+    size: PropTypes.oneOf(['small', 'large']),  //spinner大小，可选small/large
+    toast: PropTypes.bool,  // loading样式类型
+    text: PropTypes.string, // loading文本
+    color: PropTypes.string // 	spinner颜色
+};

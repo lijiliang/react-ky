@@ -26,7 +26,7 @@ export default class KYPayMethod extends React.Component {
                 <div className={`${prefixCls}-tit`}>支付方式</div>
                 <div className={`${prefixCls}-body`}>
                     <div className="sel-pay">
-                        <i className="icon-bg"></i>
+                        <i className="icon icon-selectFill"></i>
                         <span>信用卡支付</span>
                     </div>
                     <div className="pay-list">
