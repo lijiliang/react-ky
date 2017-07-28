@@ -16,8 +16,6 @@
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
-             value: '1',
-             currentIndex: 0,
              addressData: [
                  {
                      addressId: '1',
@@ -91,6 +89,10 @@
                                          [`address-item`]: true,
                                          [`address-item-active`]: item.isDefault
                                      })
+                                     const iconCls = classNames({
+                                         [`icon icon-radio`]: true,
+                                         [`icon-selectFill`]: item.isDefault
+                                     })
                                      return (
                                          <div className={addressCls}>
                                              <div className="address-border"></div>
@@ -117,7 +119,7 @@
                                                     <label>
                                                         <div className="select-radio">
                                                             <input type="radio" value={item.isDefault} checked={item.isDefault} onChange={this.radioChange.bind(this, item.addressId)}/>
-                                                            <i className="icon icon-radio"></i>
+                                                            <i className={iconCls}></i>
                                                       </div>
                                                       <span className="name">{item.isDefault ? '默认地址' : '设为默认'}</span>
                                                   </label>

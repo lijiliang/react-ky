@@ -22,7 +22,7 @@ class CartIndexView extends React.Component{
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-
+            value: 'a'
         };
     }
     componentDidMount(){
@@ -33,6 +33,13 @@ class CartIndexView extends React.Component{
         window.history.go(-1);
     }
 
+    handleChanges(event) {
+        this.setState({value: event.target.value});
+    }
+    // 按此使用
+    useConponHandl = () => {
+        console.log('a')
+    }
     render(){
         return(
             <div className="ky-scrollable">
@@ -72,11 +79,47 @@ class CartIndexView extends React.Component{
                         </div>
                         <div className="m-conpon-content">
                             <List small>
-                                <Item>您的帐户中没有可使用的优惠券</Item>
-                                <InputItem
-                                    placeholder="[点击输入优惠券码]"
-                                >有优惠券码？</InputItem>
-                                <Item extra={'-￥0.00'} className="text-primary">优惠</Item>
+                                <Item className={this.state.value === 'a' ? 'coupon-active' : ''}>
+                                    <div className="select">
+                                        <label>
+                                            <div className="select-radio">
+                                                <input type="radio" value="a" checked={this.state.value === 'a'} onChange={this.handleChanges.bind(this)}/>
+                                                <i className="icon icon-radio"></i>
+                                          </div>
+                                          <span className="name">不使用优惠券</span>
+                                      </label>
+                                    </div>
+                                </Item>
+                                <Item
+                                    className={this.state.value === 'b' ? 'coupon-active' : ''}
+                                    extra={<span className="conpon-use" onClick={this.useConponHandl}>按此使用</span>}
+                                >
+                                    <div className="select">
+                                        <label>
+                                            <div className="select-radio">
+                                                <input type="radio" value="b" checked={this.state.value === 'b'} onChange={this.handleChanges.bind(this)}/>
+                                                <i className="icon icon-radio"></i>
+                                          </div>
+                                          <span className="name">您的帐户有可使用的优惠券</span>
+                                      </label>
+                                    </div>
+                                </Item>
+                                <Item
+                                    className={this.state.value === 'c' ? 'coupon-active coupon-code' : 'coupon-code'}
+                                    extra={<InputItem placeholder="点击输入优惠券券码"></InputItem>}
+                                >
+                                    <div className="select">
+                                        <label>
+                                            <div className="select-radio">
+                                                <input type="radio" value="c" checked={this.state.value === 'c'} onChange={this.handleChanges.bind(this)}/>
+                                                <i className="icon icon-radio"></i>
+                                          </div>
+                                          <span className="name">有优惠券券码？</span>
+                                      </label>
+                                    </div>
+                                </Item>
+
+                                <Item extra={'-￥0.00'} className="coupon-bottom text-primary">优惠</Item>
                             </List>
                         </div>
                     </div>

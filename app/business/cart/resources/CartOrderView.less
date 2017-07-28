@@ -76,6 +76,13 @@
         background: #fff;
         &-content{
             padding:0 @h-spacing-lg;
+            .ky-list-item .ky-list-line .ky-list-content{
+                padding:0;
+            }
+            .ky-list-line .ky-list-extra{
+                flex-basis: 23%;
+                padding:0;
+            }
         }
         .ky-input-item{
             input{
@@ -84,6 +91,86 @@
                 &::-webkit-input-placeholder{
                     font-size: 34px;
                     color: @color-text-base;
+                }
+            }
+        }
+        .select {
+            flex: 1;
+        }
+        // 单选
+        .select-radio{
+            white-space: nowrap;
+            outline: none;
+            display: inline-block;
+            position: relative;
+            padding-right: 10px;
+            input{
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                cursor: pointer;
+                opacity: 0;
+                width: 250px;
+                height: 60px;
+                z-index: 9999;
+            }
+            i.icon{
+                vertical-align: 10px;
+                font-size: 46px;
+            }
+        }
+        .conpon-use{
+            padding: 2px 10px;
+            font-size: 26px;
+            color: @brand-gray;
+            border: 1px solid @brand-gray;
+            border-radius: 5px;
+        }
+        // 优惠券券码
+        .coupon-code{
+            .ky-list-line .ky-list-extra{
+                flex-basis: 50%;
+                .ky-input-control{
+                    margin-top: -10px;
+                }
+                input::-webkit-input-placeholder {
+                    font-size: 30px;
+                    color: @brand-gray;
+                }
+            }
+        }
+        // 去掉优惠下划线
+        .coupon-bottom{
+            .ky-list-line:after{
+                border-bottom: none;
+            }
+        }
+
+        // 当前选中 高亮
+        .coupon-active {
+            .select{
+                i.icon{
+                    color: @brand-green-deep;
+                }
+                span{
+                    color: @brand-primary;
+                }
+                .icon-radio:before {
+                    content: "\E639";
+                }
+            }
+            .conpon-use{
+                border: 1px solid @brand-primary;
+                color: @brand-primary;
+            }
+            .ky-list-line .ky-list-extra{
+                input {
+                    color: @brand-primary;
+                }
+                input::-webkit-input-placeholder {
+                    color: @brand-primary;
                 }
             }
         }
