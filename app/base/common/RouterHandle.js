@@ -66,7 +66,6 @@ const RouterHandle = {
                 this.backToIndex(index);
             }
         }else{
-            console.log(this.routeHashs)
             //path没有传，直接跳转
             //hashHistory，只能正向跳转
             this.routeHashs.pop();
@@ -230,7 +229,6 @@ const RouterHandle = {
     },
 
     pushToHash:function(path){
-        console.log(path)
         if (this.routeHashs.length > 0){
             const lastHash = this.routeHashs[this.routeHashs.length-1];
             if(path !== lastHash){

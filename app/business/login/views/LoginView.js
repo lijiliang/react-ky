@@ -42,7 +42,7 @@ class LoginView extends React.Component{
     }
     // 返回上一页
     gohistoryHandle(){
-        window.history.go(-1);
+        window.history.back();
     }
 
     loginHandle(){

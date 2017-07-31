@@ -8,12 +8,11 @@ import Urls from './Urls';
 import { getPublic } from './FetchData';
 import { Toast } from 'uxComponent';
 
-let AddressData;
 /*
- * [getAddress 获取所有省市区数据]
+ * [AddressData 获取所有省市区数据]
  * @param  {Function} callback [回调函数]
  */
-function getAddress(callback){
+function AddressData(callback){
     const cache_cityArea = Cache.getObj(Cache.keys.ky_cache_cityArea);
     // 如果在localStorage已经存在数据，则直接读取
     if(cache_cityArea){
@@ -34,7 +33,5 @@ function getAddress(callback){
         });
     }
 }
-
-AddressData = getAddress;
 
 export default AddressData;

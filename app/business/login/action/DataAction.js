@@ -35,7 +35,6 @@ export function login(username,password,isAccount){
                         token:res.access_token
                     }
                 });
-
                 // 保存数据到localStorage
                 Cache.set(Cache.keys.ky_cache_login_account, username);
                 Cache.set(Cache.keys.ky_cache_isAccount, isAccount);
@@ -45,7 +44,7 @@ export function login(username,password,isAccount){
                 Cache.sessionSet(Cache.sessionKeys.ky_cache_last_login_time,new Date().getTime());
 
                 // 请求用户信息
-                const userInfo = get(Urls.User);
+                const userInfo = get(Urls.UserCurrent);
                 userInfo.then((res) => {
                     console.log(res);
                 }).catch((err) => {

@@ -41,7 +41,7 @@
 
      // 返回上一页
      gohistoryHandle(){
-         window.history.go(-1);
+         window.history.back();
      }
 
      // 设置state
@@ -49,20 +49,6 @@
         this.setState({
             [name]: value
         })
-
-        // 设置注册按钮是否为disabled
-        /*
-        const state = this.state;
-        if(state.firstName && state.lastName && state.email && state.confirmEmail && state.password && state.confirmPwd){
-            this.setState({
-                buttonDisabled: true
-            })
-        }else{
-            this.setState({
-                buttonDisabled: false
-            })
-        }
-        */
 
         // 判断如没有推荐人会员号，点击此处按钮是否可写
         if(name === 'referenceId' && value.length > 0){
@@ -123,7 +109,7 @@
                 return;
             }
 
-            if(!this.state.isHasReference){
+            if(!this.state.isHasReference && !this.state.referenceId){
                 Toast.info('如果没有推荐人号，请点击打勾', 1);
                 return;
             }
@@ -133,20 +119,8 @@
             }
 
             const _state = this.state;
-
-            // 如果填写了会员号ID,需先判断是否存在
-            if(_state.referenceId){
-                const response = getPublic(Urls.UserExist + '/' + _state.referenceId);
-                response.then((res) => {
-                    console.log(res)
-                }).catch((err) => {
-
-                })
-                // return;
-            }else{
-                // 将数据dispatch过去
-                this.props.dispatch(regConsumer(_state.firstName, _state.lastName, _state.email, _state.password, _state.referenceId))
-            }
+            // 将数据dispatch过去
+            this.props.dispatch(regConsumer(_state.firstName, _state.lastName, _state.email, _state.password, _state.referenceId))
 
          })
      }

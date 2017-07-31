@@ -20,16 +20,19 @@ class App extends Component {
     componentWillMount() {
         // ...
     }
+    //组件加载完成执行的动作(第一轮执行)
     componentDidMount() {
         // ...
     }
 
     /* 以下是4个是组件更新过程的生命周期 */
     componentWillReceiveProps(nextProps) {
-    // this.setState({})
+        //props更新，用于设置state(第二轮开始执行)
+        //注意，这里setState并不会引发新的一轮更新
+        // this.setState({})
     }
     shouldComponentUpdate(nextProps, nextState) {
-
+        //决定组件是否更新(第二轮开始执行)
 
         // return true;
     }

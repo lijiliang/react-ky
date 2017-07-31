@@ -19,7 +19,7 @@ export default CreateReducer(map, {
     [type.LOGIN](state, action){
         console.log(action)
         const newState = state.set('username', action.user.username)
-                            .set('password', action.user.password)
+                            // .set('password', action.user.password)
                             .set('isLogined', action.user.isLogined)
                             .set('isAccount', action.user.isAccount)
                             .set('token', action.user.token)

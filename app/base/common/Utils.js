@@ -1,8 +1,34 @@
 /**
- * @fileOverview 工具函数
+ * @fileOverview 工具类
  */
-const Utils = {
 
-};
+/*
+ * [hideLoading 显示加载状态]
+ */
+export function showLoading() {
 
-export default Utils;
+}
+
+/*
+ * [hideLoading 关闭加载状态]
+ */
+export function hideLoading() {
+
+}
+
+/*
+ * [debounce 截流]
+ * @param  {[Function]} func  [传入一个函数]
+ * @param  {[Number]} delay [延迟秒数s
+ */
+export function debounce(func, delay) {
+    let timer;
+    return function(...args) {
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    };
+}

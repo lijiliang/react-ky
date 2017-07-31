@@ -2,10 +2,11 @@
  * @fileOverview 会员中心首页
  */
  import React from 'react';
- import { Link } from 'react-router';
+ import { Link, hashHistory } from 'react-router';
  import PureRenderMixin from 'react-addons-pure-render-mixin';
  import { bindActionCreators } from 'redux';
 
+import {Utils} from 'kyCommon'
  import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
  const Item = List.Item;
  const Brief = Item.Brief;
@@ -24,7 +25,7 @@ class UserIndexView extends React.Component {
     }
     // 返回上一页
     gohistoryHandle(){
-        window.history.go(-1);
+        window.history.back()
     }
     render(){
         return(
@@ -54,7 +55,7 @@ class UserIndexView extends React.Component {
                                 <Item extra={'CN45678909876'}>帐户号码</Item>
                             </List>
                             <List className="m-order-all">
-                                <Item arrow="horizontal" onClick={() => {}}>全部订单</Item>
+                                <Item arrow="horizontal" onClick={() => { hashHistory.push('user/order') }}>全部订单</Item>
                                 <div className="order-view">
                                     <div className="order-item">
                                         <i className="icon icon-shipped"></i>
@@ -75,10 +76,10 @@ class UserIndexView extends React.Component {
                                 </div>
                             </List>
                             <List className="m-other-view">
-                                <Item arrow="horizontal" onClick={() => {}}>基本信息</Item>
-                                <Item arrow="horizontal" onClick={() => {}}>帐户安全</Item>
-                                <Item extra={<div className="coupon-r">2</div>} arrow="horizontal" onClick={() => {}}>我的优惠券</Item>
-                                <Item arrow="horizontal" onClick={() => {}}>收货地址</Item>
+                                <Item arrow="horizontal" onClick={() => { hashHistory.push('user/basicinfo')}}>基本信息</Item>
+                                <Item arrow="horizontal" onClick={() => { hashHistory.push('user/safety')}}>帐户安全</Item>
+                                <Item extra={<div className="coupon-r">2</div>} arrow="horizontal" onClick={() => { hashHistory.push('user/coupon')}}>我的优惠券</Item>
+                                <Item arrow="horizontal" onClick={() => { hashHistory.push('user/address')}}>收货地址</Item>
                             </List>
                         </div>
                     </div>
