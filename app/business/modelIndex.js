@@ -9,4 +9,4 @@ export {default as HomeModel} from './home/model/HomeModel';
 export {default as LoginModel} from './login/model/LoginModel';
 
 // 注册的数据模型MODEL
-export {default as RegModel} from './user/model/RegModel';
+export {default as RegModel} from './account/model/RegModel';

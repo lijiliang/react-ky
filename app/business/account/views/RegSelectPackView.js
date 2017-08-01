@@ -2,15 +2,12 @@
  * @fileOverview 注册会员帐号 选购加入套组
  */
  import React from 'react';
- import { Link } from 'react-router';
+ import { Link, hashHistory } from 'react-router';
  import PureRenderMixin from 'react-addons-pure-render-mixin';
- import { bindActionCreators } from 'redux';
- import { connect } from 'react-redux';
- import * as loginAction from '../action/actionTypes';
- import {regConsumer} from '../action/DataAction';
 
 import { Urls, RegxRule, Cache } from 'kyCommon';
 import { Button, Toast, NavBar} from 'uxComponent';
+import { getPublic } from 'FetchData';
 import { KYSteps } from 'kyComponent';
 import PackItemView from './PackItemView';
 
@@ -21,31 +18,59 @@ class RegSelectPackView extends React.Component {
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-            value: 'c'
+            groupList: [],
+            groupId: null,
+            groupItem: {}  // 选中的套组
         };
     }
-
-    handleChanges(event) {
-        this.setState({value: event.target.value});
-    }
     componentDidMount(){
+        // 获取套组
+        this._getGroupReg();
         // 获取session
         const regmember_info = Cache.sessionGet(Cache.sessionKeys.ky_cache_regmember_info);
         if(regmember_info){
             this.setState(regmember_info);
         }
+
     }
     // 返回上一页
     gohistoryHandle(){
         window.history.go(-1);
     }
+    // 选中套组
+    handleChanges(item, event) {
+        this.setState({
+            groupId: Number(event.target.value),
+            groupItem: item,
+        });
+    }
+    // 立即结算
+    submitHandle = () => {
+        const _state = this.state;
+        if(_state.groupId == null){
+            Toast.info('必须要选择一款套组', 1);
+            return;
+        }
+        Toast.loading('加载中...');
+        Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, _state);
+        setTimeout(() => {
+            hashHistory.push('/account/regorder');
+            Toast.hide();
+        }, 1200)
+    }
+    // 获取会员注册的套组信息
+    _getGroupReg() {
+        const response = getPublic(Urls.GroupReg);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success) {
+                this.setState({
+                    groupList: res.data,
+                });
+            }
+        });
+    }
     render(){
-        console.log(this.state)
-        const data = [
-            {value: 'c', label: 'label0'},
-            {value: 'd', label: 'label1'},
-            {value: 'e', label: 'label2'}
-        ];
         return(
              <div className="ky-container-body">
                  <div className="ky-scrollable">
@@ -62,35 +87,9 @@ class RegSelectPackView extends React.Component {
                             </div>
                         </div>
                         <div className="m-pack">
-                             {/* {data.map( i => (
-                                 <label>
-                                     {i.label}
-                                    <input type="radio" value={i.value} checked = {this.state.value === i.value} onChange={this.handleChanges.bind(this)} />
-                                  </label>
-                             ))} */}
-
-                             {data.map( i => (
-                                <PackItemView icon value={i.value} checked={this.state.value} onChange={this.handleChanges.bind(this)}/>
+                             {this.state.groupList.map(item => (
+                                <PackItemView icon value={item.groupId} checked={this.state.groupId} listData={item} onChange={this.handleChanges.bind(this, item)}/>
                              ))}
-
-
-                            {/* <PackItemView active icon/>
-                            <PackItemView icon/>
-                            <PackItemView icon listData={{a:123}}/> */}
-                            {/* m-pack-active */}
-                            <div className="m-pack-item">
-                                <div className="m-pack-header">
-                                    <span className="icon-bg"></span>
-                                    <strong className="pack-name">凯娅尼电子资料包</strong>
-                                    <div className="member-price">
-                                        <span className="price">￥100.00</span>
-                                    </div>
-                                </div>
-                                <div className="elect-package">
-                                    <p>温馨提示 : 当您选择了此套组后，</p>
-                                    <p>将会失去购买其他更吸引的加入套组的机会</p>
-                                </div>
-                            </div>
 
                             <div className="m-pack-other">
                                 <p>只须购买100元的会藉或购买以上</p>
@@ -109,4 +108,4 @@ class RegSelectPackView extends React.Component {
     }
 }
 
-export default RegSelectPackView;
+export default RegSelectPackView

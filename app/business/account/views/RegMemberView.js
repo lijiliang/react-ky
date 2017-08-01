@@ -2,12 +2,12 @@
  * @fileOverview 注册会员帐号 View
  */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as loginAction from '../action/actionTypes';
-import {regConsumer} from '../action/DataAction';
+import * as actionTypes from '../action/actionTypes';
+import { CheckDealerReg } from '../action/DataAction';
 
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
@@ -41,7 +41,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
              idCard: '',       //身份证号码
              cityValue: [],    //省市区数据
              addrDetail: '',   //详细地址
-             addrPostcode: '', //邮政编码
+             postcode: '', //邮政编码
              recommender: '',  //推荐人编号
              reRecommender: '',//确认推荐人(安置人)
              buttonDisabled: true,     // 注册按钮是否可点
@@ -49,7 +49,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
              consigneeName: '',        // 收货人姓名
              consigneeCityValue: '',   // 收货人省市区数据
              consigneeAddrDetail: '',  // 收货人详细地址
-             consigneeAddrPostcode: '',// 收货人邮编
+             consigneepostcode: '',// 收货人邮编
              consigneePhoneNumber: '', // 收货人手机号码
              consigneeIdCard: '',      // 收货人身份证号码
              consigneeTelNumber: '',   // 收货人固定电话号码
@@ -104,7 +104,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
             const _confirmPwd = form.getFieldValue('confirmPwd');
 
             if(error){
-                const fieldNames = ['firstName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPwd', 'phoneNumber', 'telNumber', 'idCard', 'cityValue', 'addrDetail', 'addrPostcode', 'recommender', 'reRecommender'].reverse();
+                const fieldNames = ['firstName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPwd', 'phoneNumber', 'telNumber', 'idCard', 'cityValue', 'addrDetail', 'postcode', 'recommender', 'reRecommender'].reverse();
                 fieldNames.map((item, index) => {
                     if(form.getFieldError(item)){
                         Toast.info(form.getFieldError(item), 1)
@@ -136,37 +136,28 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
             }
 
             const _state = this.state;
-
             // 处理数据并保存到session
             const consigneeInfo = {
-                consigneeName: value.firstName + value.lastName,    // 收货人姓名
-                consigneeCityValue: value.cityValue,       // 收货人省市区数据
-                consigneeAddrDetail: value.addrDetail,     // 收货人详细的街道门牌号等
-                consigneeAddrPostcode: value.addrPostcode, // 收货人邮编
-                consigneePhoneNumber: value.phoneNumber,   // 收货人手机号码
-                consigneeIdCard: value.idCard,             // 收货人身份证号码
-                consigneeTelNumber: value.telNumber,       // 收货人固定电话号码
+                consigneeName: _state.consigneeName ?  _state.consigneeName : value.firstName + value.lastName,    // 收货人姓名
+                consigneeCityValue: _state.consigneeCityValue ?  _state.consigneeCityValue : value.cityValue,       // 收货人省市区数据
+                consigneeAddrDetail: _state.consigneeAddrDetail ?  _state.consigneeAddrDetail : value.addrDetail,     // 收货人详细的街道门牌号等
+                consigneepostcode: _state.consigneepostcode ?  _state.consigneepostcode : value.postcode,             // 收货人邮编
+                consigneePhoneNumber: _state.consigneePhoneNumber ?  _state.consigneePhoneNumber : value.phoneNumber,   // 收货人手机号码
+                consigneeIdCard: _state.consigneeIdCard ?  _state.consigneeIdCard : value.idCard,             // 收货人身份证号码
+                consigneeTelNumber: _state.consigneeTelNumber ?  _state.consigneeTelNumber : value.telNumber,       // 收货人固定电话号码
             }
             const regMemberInfo = Object.assign(this.state, consigneeInfo);
             Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, regMemberInfo);
 
-            // 如果填写了会员号ID,需先判断是否存在
-            if(_state.recommender){
-                const response = getPublic(Urls.UserExist + '/' + _state.recommender);
-                response.then((res) => {
-                    console.log(res)
-                }).catch((err) => {
-
-                })
-                // return;
-            }
             // 将数据dispatch过去
-            // this.props.dispatch(regConsumer(_state.firstName, _state.lastName, _state.email, _state.password, _state.recommender))
+            this.props.dispatch(CheckDealerReg(_state.cityValue[0], _state.cityValue[1], _state.cityValue[2], _state.addrDetail, _state.email, _state.firstName, _state.idCard, _state.lastName, _state.password, _state.phoneNumber, _state.postcode, _state.reRecommender, _state.recommender, _state.telNumber, this.successFn))
          })
      }
-
+     // 下一步 验证数据成功的回调
+     successFn = () => {
+         hashHistory.push('/account/regselectpack')
+     }
      render(){
-         console.log(this.state)
          const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
 
          // 密码
@@ -368,8 +359,8 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
                                              onChange={this.stateChangeHandle.bind(this, 'addrDetail')}
                                          />
                                      )}
-                                     {getFieldDecorator('addrPostcode',{
-                                         initialValue: this.state.addrPostcode,
+                                     {getFieldDecorator('postcode',{
+                                         initialValue: this.state.postcode,
                                          rules: [{
                                              pattern: RegxRule.zipCode,
                                              message: '请输入正确的邮政编码'
@@ -383,7 +374,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
                                              maxLength={6}
                                              type="number"
                                              style={{border:'none'}}
-                                             onChange={this.stateChangeHandle.bind(this, 'addrPostcode')}
+                                             onChange={this.stateChangeHandle.bind(this, 'postcode')}
                                          >邮政编码</InputItem>
                                      )}
                                 </div>
@@ -402,7 +393,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
                                             pattern: RegxRule.referenceId,
                                             message: '推荐人会员号不正确'
                                         },{
-                                            required: true,
+                                            required: false,
                                             message: '请输入推荐人会员号'
                                         }],
                                       })(
@@ -418,7 +409,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
                                              pattern: RegxRule.referenceId,
                                              message: '推荐人会员号不正确'
                                          },{
-                                             required: true,
+                                             required: false,
                                              message: '请再次输入您的推荐人'
                                          }],
                                        })(

@@ -8,7 +8,14 @@ import { post, postPublic } from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
 
-// 注册消费者
+/*
+ * [regConsumer 注册消费者]
+ * @param  {[String]} firstName   [姓氏]
+ * @param  {[String]} lastName    [名字]
+ * @param  {[String]} email       [邮箱]
+ * @param  {[String]} password    [密码]
+ * @param  {[String]} referenceId [推荐人会员号]
+ */
 export function regConsumer(firstName, lastName, email, password, referenceId){
     return (dispatch, getState) => {
         const _data = {
@@ -49,6 +56,102 @@ export function regConsumer(firstName, lastName, email, password, referenceId){
             }
         }).catch((err) => {
             console.log(err);
+        });
+    };
+}
+
+/*
+ * [CheckDealerReg 注册会员帐号 验证：会员注册帐户信息表单专用]
+ * @param {[String]} addrPrivonce  [省]
+ * @param {[String]} addrCity      [市]
+ * @param {[String]} addrCounty    [区]
+ * @param {[String]} addrDetail    [详细地址]
+ * @param {[String]} email         [邮箱]
+ * @param {[String]} firstName     [姓氏]
+ * @param {[String]} idCard        [身份证号]
+ * @param {[String]} lastName      [名字]
+ * @param {[String]} password      [密码]
+ * @param {[String]} phoneNumber   [手机号]
+ * @param {[String]} postcode      [邮编]
+ * @param {[String]} reRecommender [确认推荐人（安置人） ]
+ * @param {[String]} recommender   [推荐人]
+ * @param {[String]} telNumber     [固定电话号码]
+ * @param {[Function]} callback    [回调函数]
+ */
+export function CheckDealerReg(addrPrivonce, addrCity, addrCounty, addrDetail, email, firstName, idCard, lastName, password, phoneNumber, postcode, reRecommender,  recommender, telNumber, callback){
+    return (dispatch, getState) => {
+        const _data = {
+            addrPrivonce,
+            addrCity,
+            addrCounty,
+            addrDetail,
+            email,
+            firstName,
+            idCard,
+            lastName,
+            password,
+            phoneNumber,
+            postcode,
+            reRecommender,
+            recommender,
+            telNumber
+        };
+        Toast.loading('加载中...');
+        const response = postPublic(Urls.CheckDealerReg, _data);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback();
+                }
+            }else{
+                Toast.info(res.message, 1);
+            }
+        });
+    };
+}
+
+/*
+ * [CheckAddress  验证：收货信息表单]
+ * @param {[String]} addrPrivonce  [省]
+ * @param {[String]} addrCity      [市]
+ * @param {[String]} addrCounty    [区]
+ * @param {[String]} addrDetail    [详细地址]
+ * @param {[String]} consignee     [收件人]
+ * @param {[String]} idCard        [身份证号]
+ * @param {[String]} phoneNumber   [手机号码]
+ * @param {[String]} postcode      [邮编]
+ * @param {[String]} telNumber     [电话号码]
+ * @param {Boolean} isDefault      [是否默认]
+ * @param {[Function]} callback    [回调函数]
+ */
+export function CheckAddress(addrPrivonce, addrCity, addrCounty, addrDetail, consignee, idCard, phoneNumber, postcode, telNumber, isDefault, callback) {
+    return(dispatch, getState) => {
+        const _data = {
+            addrPrivonce,
+            addrCity,
+            addrCounty,
+            addrDetail,
+            consignee,
+            idCard,
+            phoneNumber,
+            postcode,
+            telNumber,
+            isDefault
+        };
+        Toast.loading('加载中...');
+        const response = postPublic(Urls.CheckAddress, _data);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback();
+                }
+            }else{
+                Toast.info(res.message, 1);
+            }
         });
     };
 }

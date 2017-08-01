@@ -71,13 +71,15 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
             if(!error){
                 this.setState(value);
             }
-
+            alert('a')
+            console.log('state', this.state)
             // 更新session数据
             Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
         });
      }
      render(){
          console.log(this.state)
+         const _state = this.state;
          const { getFieldDecorator} = this.props.form;
 
          const cityExtraCls = classNames({
@@ -108,6 +110,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                               <div className="m-payment-form">
 
                                   {getFieldDecorator('cardNumber', {
+                                      initialValue: this.state.cardNumber,
                                       rules: [{
                                           required: true,
                                           message: '请输入您的卡号'
@@ -120,6 +123,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                       >卡号</InputItem>
                                    )}
                                    {getFieldDecorator('cardName', {
+                                       initialValue: this.state.cardName,
                                        rules: [{
                                            required: true,
                                            message: '请输入持卡人姓名'
@@ -152,6 +156,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                     )}
 
                                    {getFieldDecorator('securityCode', {
+                                       initialValue: this.state.securityCode,
                                        rules: [{
                                            required: true,
                                            message: '请输入您的安全码'
@@ -166,15 +171,26 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                            onChange={this.stateChangeHandle.bind(this, 'securityCode')}
                                        >安全码</InputItem>
                                     )}
-                                   <TextareaItem
-                                       title="帐单地址"
-                                       placeholder="帐单地址"
-                                       labelNumber={5}
-                                       rows={2}
-                                   />
+                                    {getFieldDecorator('billingAddrDetail',{
+                                        initialValue: this.state.billingAddrDetail,
+                                        rules: [{
+                                            required: false,
+                                            message: '请输入帐单地址'
+                                        }],
+                                      })(
+                                       <TextareaItem
+                                           title="帐单地址"
+                                           placeholder="帐单地址"
+                                           labelNumber={5}
+                                           rows={2}
+                                           value={this.state.billingAddrDetail}
+                                           onChange={this.stateChangeHandle.bind(this, 'billingAddrDetail')}
+                                       />
+                                   )}
                                    {getFieldDecorator('city', {
+                                       initialValue: this.state.city,
                                        rules: [{
-                                           required: true,
+                                           required: false,
                                            message: '城市不能为空'
                                        }],
                                      })(
@@ -185,8 +201,9 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                        >城市</InputItem>
                                     )}
                                     {getFieldDecorator('province', {
+                                        initialValue: this.state.province,
                                         rules: [{
-                                            required: true,
+                                            required: false,
                                             message: '省份不能为空'
                                         }],
                                       })(
@@ -203,7 +220,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                               pattern: RegxRule.zipCode,
                                               message: '请输入正确的邮政编码'
                                           },{
-                                              required: true,
+                                              required: false,
                                               message: '请输入邮政编码'
                                           }],
                                         })(
@@ -217,8 +234,9 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                       )}
 
                                       {getFieldDecorator('country', {
+                                          initialValue: this.state.country,
                                           rules: [{
-                                              required: true,
+                                              required: false,
                                               message: '国家不能为空'
                                           }],
                                         })(
@@ -240,7 +258,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                  </div>
                              </div>
                              <div className="payable">
-                                 应付金额<span className="price">￥10,888.00</span>
+                                 应付金额<span className="price">￥{_state.groupItem ? _state.groupItem.salePrice : '0'}</span>
                              </div>
                          </div>
                      </div>

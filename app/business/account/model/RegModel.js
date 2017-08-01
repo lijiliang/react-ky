@@ -10,6 +10,7 @@ const regConsumerMap = Immutable.fromJS({
     customer_id: '',       //用户Id
 });
 
+// 注册消费者帐户
 export default CreateReducer(regConsumerMap, {
     [type.REGCONSUMER](state, action){
         const newState = state.set('customer_username', action.userInfo.customer_username)

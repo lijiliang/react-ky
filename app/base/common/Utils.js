@@ -32,3 +32,12 @@ export function debounce(func, delay) {
         }, delay);
     };
 }
+
+/*
+ * [dedupe 数组去重]
+ * @param  {[Array]} array [一个数组]
+ * @return {[Object]}      [返回一个处理后的数组]
+ */
+export function dedupe (array) {
+    return Array.from(new Set(array));
+}

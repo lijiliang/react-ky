@@ -2,12 +2,12 @@
  * @fileOverview 确认订单及填写收货地址
  */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
-import {regConsumer} from '../action/DataAction';
+import { CheckDealerReg, CheckAddress } from '../action/DataAction';
 
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
@@ -80,10 +80,88 @@ class RegOrderView extends React.Component {
 
     // 提交
     submitHandle = () => {
+        const _state = this.state;
+        if(!_state.accouontMask){
+            Toast.info('您修改的帐户信息还没保存', 1);
+            return;
+        }
+        if(!_state.consigneeMask){
+            Toast.info('您修改的收货信息还没保存', 1);
+            return;
+        }
+        this._verifyFormHandle(() => {
+            // 确保收货信息里面的收货人与身份证号码相匹配
+            // 将数据dispatch过去  验证：收货信息表单
+            this.props.dispatch(CheckAddress(_state.consigneeCityValue[0], _state.consigneeCityValue[1], _state.consigneeCityValue[2], _state.consigneeAddrDetail, _state.consigneeName, _state.consigneeIdCard, _state.consigneePhoneNumber, _state.consigneepostcode, _state.consigneeTelNumber, true, this.successSubmitFn))
+        });
+    }
+    // 提交成功，回调函数
+    successSubmitFn = () => {
+        hashHistory.push('/account/payment')
+    }
+    //修改帐户信息
+    accouontMaskHandle(){
+        const _state = this.state;
+        // 如果收货信息也在修改状态，提示用户保存
+        if(!_state.consigneeMask){
+            Toast.info('您修改的收货信息还没保存', 1);
+            return;
+        }
+        if (!_state.accouontMask) {
+            this._verifyFormHandle(() => {
+                // 将数据dispatch过去
+                this.props.dispatch(CheckDealerReg(_state.cityValue[0], _state.cityValue[1], _state.cityValue[2], _state.addrDetail, _state.email, _state.firstName, _state.idCard, _state.lastName, _state.password, _state.phoneNumber, _state.postcode, _state.reRecommender, _state.recommender, _state.telNumber, this.successAccouontFn))
+            });
+        }else{
+            this.setState({
+                accouontMask: false
+            })
+        }
+    }
+    // 帐户信息 修改成功回调函数
+    successAccouontFn = () => {
+        Toast.success('修改成功', 1);
+        this.setState({
+            accouontMask: true
+        })
+        // 更新session数据
+        Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
+    }
+
+    //修改收货信息
+    consigneeMaskHandle(){
+        const _state = this.state;
+        // 如果帐户信息也在修改状态，提示用户保存
+        if(!_state.accouontMask){
+            Toast.info('您修改的帐户信息还没保存', 1);
+            return;
+        }
+        if (!_state.consigneeMask) {
+            this._verifyFormHandle(() => {
+                // 将数据dispatch过去  验证：收货信息表单
+                this.props.dispatch(CheckAddress(_state.consigneeCityValue[0], _state.consigneeCityValue[1], _state.consigneeCityValue[2], _state.consigneeAddrDetail, _state.consigneeName, _state.consigneeIdCard, _state.consigneePhoneNumber, _state.consigneepostcode, _state.consigneeTelNumber, true, this.successConsigneeFn))
+            });
+        }else{
+            this.setState({
+                consigneeMask: false
+            })
+        }
+    }
+    // 收货信息 修改成功回调函数
+    successConsigneeFn = () => {
+        Toast.success('修改成功', 1);
+        this.setState({
+            consigneeMask: true
+        })
+        // 更新session数据
+        Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
+    }
+    // 验证表单数据
+    _verifyFormHandle(callback) {
         const form = this.props.form;
         form.validateFields((error, value) => {
            if(error){
-               const fieldNames = ['cityValue', 'addrDetail', 'addrPostcode', 'phoneNumber', 'recommender', 'reRecommender', 'idCard', 'telNumber', 'consigneeName', 'consigneeCityValue', 'consigneeAddrDetail', 'consigneeAddrPostcode', 'consigneePhoneNumber', 'consigneeIdCard', 'consigneeTelNumber'].reverse();
+               const fieldNames = ['cityValue', 'addrDetail', 'postcode', 'phoneNumber', 'recommender', 'reRecommender', 'idCard', 'telNumber', 'consigneeName', 'consigneeCityValue', 'consigneeAddrDetail', 'consigneepostcode', 'consigneePhoneNumber', 'consigneeIdCard', 'consigneeTelNumber'].reverse();
                fieldNames.map((item, index) => {
                    if(form.getFieldError(item)){
                        Toast.info(form.getFieldError(item), 1)
@@ -97,28 +175,17 @@ class RegOrderView extends React.Component {
                this.setState(value)
            }
 
-           const _state = this.state;
-
+           if(callback && typeof callback === 'function'){
+               callback();
+           }
            // 更新session数据
-           Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
+           //const _state = this.state;
+           //Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
 
-        })
-    }
-    //帐户信息是否可修改遮罩
-    accouontMaskHandle(){
-        this.setState({
-            accouontMask: !this.state.accouontMask
-        })
-    }
-
-    //收货信息是否可修改遮罩
-    consigneeMaskHandle(){
-        this.setState({
-            consigneeMask: !this.state.consigneeMask
         })
     }
     render(){
-        console.log(this.state)
+        const _state = this.state;
         const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
 
         const cityExtraCls = classNames({
@@ -140,13 +207,13 @@ class RegOrderView extends React.Component {
                            </div>
                        </div>
                        <div className="m-pack">
-                           <PackItemView active listData={{a:123}}/>
+                           <PackItemView active listData={this.state.groupItem}/>
                        </div>
                        <div className="m-userinfo">
                            <div className="userinfo-tit">
                                <h2>帐户信息</h2>
                                <span className="modify" onClick={this.accouontMaskHandle.bind(this)}>
-                                   {this.state.accouontMask ? '修改' : '确定' }
+                                   {this.state.accouontMask ? '修改' : '保存' }
                                </span>
                            </div>
                            <div className="userinfo-form">
@@ -189,8 +256,8 @@ class RegOrderView extends React.Component {
                                    />
                                )}
 
-                               {getFieldDecorator('addrPostcode',{
-                                   initialValue: this.state.addrPostcode,
+                               {getFieldDecorator('postcode',{
+                                   initialValue: this.state.postcode,
                                    rules: [{
                                        pattern: RegxRule.zipCode,
                                        message: '请输入正确的邮政编码'
@@ -205,7 +272,7 @@ class RegOrderView extends React.Component {
                                        maxLength={6}
                                        type="number"
                                        style={{border:'none'}}
-                                       onChange={this.stateChangeHandle.bind(this, 'addrPostcode')}
+                                       onChange={this.stateChangeHandle.bind(this, 'postcode')}
                                    >邮政编码</InputItem>
                                )}
 
@@ -234,7 +301,7 @@ class RegOrderView extends React.Component {
                                        pattern: RegxRule.referenceId,
                                        message: '推荐人编号不正确'
                                    },{
-                                       required: true,
+                                       required: false,
                                        message: '请输入推荐人编号'
                                    }],
                                  })(
@@ -252,7 +319,7 @@ class RegOrderView extends React.Component {
                                         pattern: RegxRule.referenceId,
                                         message: '推荐人会员号不正确'
                                     },{
-                                        required: true,
+                                        required: false,
                                         message: '请再次输入您的推荐人'
                                     }],
                                   })(
@@ -301,7 +368,7 @@ class RegOrderView extends React.Component {
                            <div className="userinfo-tit">
                                <h2>收货信息</h2>
                                <span className="modify" onClick={this.consigneeMaskHandle.bind(this)}>
-                                   {this.state.consigneeMask ? '修改' : '确定' }
+                                   {this.state.consigneeMask ? '修改' : '保存' }
                                </span>
                            </div>
                            <div className="userinfo-form">
@@ -358,8 +425,8 @@ class RegOrderView extends React.Component {
                                     />
                                 )}
 
-                                {getFieldDecorator('consigneeAddrPostcode',{
-                                    initialValue: this.state.consigneeAddrPostcode,
+                                {getFieldDecorator('consigneepostcode',{
+                                    initialValue: this.state.consigneepostcode,
                                     rules: [{
                                         pattern: RegxRule.zipCode,
                                         message: '请输入正确的邮政编码'
@@ -374,7 +441,7 @@ class RegOrderView extends React.Component {
                                         maxLength={5}
                                         type="number"
                                         style={{border:'none'}}
-                                        onChange={this.stateChangeHandle.bind(this, 'consigneeAddrPostcode')}
+                                        onChange={this.stateChangeHandle.bind(this, 'consigneepostcode')}
                                     >邮政编码</InputItem>
                                 )}
 
@@ -430,7 +497,7 @@ class RegOrderView extends React.Component {
 
                            </div>
                        </div>
-                        <KYPayMethod price="10,888.00"/>
+                        <KYPayMethod price={_state.groupItem ? _state.groupItem.salePrice : '0'}/>
                     </div>
                 </div>
                 <div className="m-foot-fixed">
@@ -441,4 +508,14 @@ class RegOrderView extends React.Component {
     }
 }
 const RegOrderViewWrapper = createForm()(RegOrderView);
-export default RegOrderViewWrapper;
+
+/*  React 与  Redux 绑定 */
+function mapStateToProps(state){
+    return {
+        RegModel: state.RegModel
+    };
+}
+
+export default connect(
+    mapStateToProps
+)(RegOrderViewWrapper);

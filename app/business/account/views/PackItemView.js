@@ -10,11 +10,6 @@ import { Link } from 'react-router';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as loginAction from '../action/actionTypes';
-import {regConsumer} from '../action/DataAction';
-
 import { KYGroupProductList } from 'kyComponent';
 
 import '../resources/PackItemView.less';
@@ -36,7 +31,12 @@ class PackItemView extends React.Component {
     componentDidMount(){
     }
     render(){
-        const { prefixCls, active, icon, listData, value, checked, ...restProps} = this.props;
+        const { prefixCls, active, icon, value, checked, ...restProps} = this.props;
+        const listData = this.props.listData || [];
+        let productListLen = 0;  // 产品数量  目前用来区别 “体验包” 与其它套组的区别
+        if(typeof listData.productList != 'undefined'){
+            productListLen = listData.productList.length;
+        }
         const wrapCls = classNames({
             [`${prefixCls}-item`]: true,
             [`${prefixCls}-active`]: active,            //明确要传过来active才显示高亮
@@ -55,30 +55,47 @@ class PackItemView extends React.Component {
                                 </div>
                             </label>
                         : null}
-                        <strong className="pack-name">卓越套组</strong>
+                        <strong className="pack-name">{listData.groupName}</strong>
                         <div className="member-price">
-                            <span>会员价</span>
-                            <span className="price">￥10,888.00</span>
+                            {
+                                productListLen > 1
+                                ? <span>会员价</span>
+                                : null
+                            }
+                            <span className="price">￥{listData.salePrice}</span>
                         </div>
                     </div>
-                    {/* <div className="elect-package">
-                        <p>温馨提示 : 当您选择了此套组后，</p>
-                        <p>将会失去购买其他更吸引的加入套组的机会</p>
-                    </div> */}
+                    {
+                        productListLen === 1
+                        ? <div className="elect-package">
+                            <p>温馨提示 : 当您选择了此套组后，</p>
+                            <p>将会失去购买其他更吸引的加入套组的机会</p>
+                        </div>
+                        : null
+                    }
                 </div>
-                <div className="m-pack-body">
-                    <div className="thumb">
-                        <img src="http://fpoimg.com/660x300?text=img" alt=""/>
+                {/* 内容 */}
+                {
+                    productListLen > 1
+                    ? <div className="m-pack-body">
+                        {
+                            listData.groupImage
+                            ? <div className="thumb">
+                                <img src={listData.groupImage}/>
+                            </div>
+                            : null
+                        }
+                        <div className="pack-content">
+                            <div className="con-tit">内容</div>
+                            <KYGroupProductList productList={listData.productList}/>
+                            <ul className="other-list">
+                                <li><span>原价</span><span className="price">¥{listData.originalPrice}</span></li>
+                                <li><span>积分</span><span>{listData.qv ? listData.qv : '0'}</span></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div className="pack-content">
-                        <div className="con-tit">内容</div>
-                        <KYGroupProductList />
-                        <ul className="other-list">
-                            <li><span>原价</span><span className="price">¥1,830.00</span></li>
-                            <li><span>积分</span><span>125</span></li>
-                        </ul>
-                    </div>
-                </div>
+                    : null
+                }
             </div>
         );
     }
