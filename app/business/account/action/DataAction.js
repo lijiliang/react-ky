@@ -17,7 +17,7 @@ import { failLoading } from 'Utils';
  * @param  {[String]} password    [密码]
  * @param  {[String]} referenceId [推荐人会员号]
  */
-export function regConsumer(firstName, lastName, email, password, referenceId){
+export function regConsumer(firstName, lastName, email, password, referenceId, callback){
     return (dispatch, getState) => {
         const _data = {
             firstName: firstName,
@@ -49,7 +49,11 @@ export function regConsumer(firstName, lastName, email, password, referenceId){
                 Toast.info('恭喜您，注册成功', 1);
                 setTimeout(() => {
                     hashHistory.push('/');
-                }, 1500)
+                }, 1500);
+
+                if(callback && typeof callback === 'function'){
+                    callback();
+                }
             }else{
                 Toast.hide();
                 // 如果失败则显示失败信息
@@ -148,6 +152,79 @@ export function CheckAddress(addrPrivonce, addrCity, addrCounty, addrDetail, con
         response.then((result) => {
             const res = result.data;
             if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback();
+                }
+            }else{
+                Toast.info(res.message, 1);
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+/*
+ * [UserDealer 注册会员/经销商
+ * @param {[Object]}   data     [注册需要的字段]
+ * @param {Function} callback [成功回调函数]
+ */
+export function UserDealer(data, callback) {
+    return (dispatch, getState) => {
+        // const _data = {
+        //     orderOriginalPrice: '', //订单原金额
+        //     orderPayAmount: '',     //订单应付金额
+        //     orderPreferential: '',  //订单优惠
+        //     payType: '',             //支付类型
+        //     productGroupId: '', // 产品套组ID
+        //     dealer: {  //会员信息
+        //         addrCity: '', //市
+        //         addrCounty: '', //县/区
+        //         addrDetail: '', //详细地址
+        //         addrPrivonce: '', //省
+        //         email: '', // 邮箱
+        //         firstName: '', //姓氏
+        //         idCard: '', //身份证号码
+        //         lastName: '', //名字
+        //         password: '', //密码
+        //         phoneNumber: '',//手机号码
+        //         postcode: '', //邮编
+        //         reRecommender: '', //确认推荐人（安置人)
+        //         recommender: '', //推荐人，KID，例如：CN123456或123456
+        //         telNumber: '' //固定电话号码
+        //     },
+        //     shippingInfo: {  //收货信息
+        //         addrPrivonce: '',  // 省
+        //         addrCity: '', //市
+        //         addrCounty: '', //区
+        //         addrDetail: '', //详细地址
+        //         consignee: '', //收件人
+        //         idCard: '', //身份证号码
+        //         isDefault: '', //是否默认
+        //         phoneNumber: '', //手机号码
+        //         postcode: '', //邮编
+        //         telNumber: '', //固定电话号码
+        //     },
+        //     payCardInfo: {  //支付信息
+        //         addrCity: '', //省份
+        //         addrDetail: '', //账单地址
+        //         addrPrivonce: '', //城市
+        //         cardName: '', //持卡人姓名
+        //         cardNumber: '', //卡号
+        //         cardType: '', //卡类型
+        //         country: '', //国家
+        //         cvv: '', //发全码
+        //         expDate: '', //有效期
+        //         postcode: '', //邮政编码
+        //     }
+        // };
+        console.log(data)
+        Toast.loading('加载中...', 200);
+        const response = postPublic(Urls.UserDealer, data);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success) {
                 Toast.hide();
                 if(callback && typeof callback === 'function'){
                     callback();

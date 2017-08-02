@@ -49,3 +49,10 @@ export function debounce(func, delay) {
 export function dedupe (array) {
     return Array.from(new Set(array));
 }
+
+// 导出
+// export default {
+//     failLoading,
+//     debounce,
+//     dedupe
+// };

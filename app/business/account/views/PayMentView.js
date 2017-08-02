@@ -7,7 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
-import {regConsumer} from '../action/DataAction';
+import { UserDealer } from '../action/DataAction';
 
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
@@ -25,7 +25,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
-             validSelect: [],  //有效期
+             expDate: [],  //有效期
          };
      }
      componentDidMount(){
@@ -38,7 +38,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
 
      // 返回上一页
      gohistoryHandle(){
-         window.history.go(-1);
+         window.history.back();
      }
 
      // 设置state
@@ -51,14 +51,14 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
      // 有效期选择
      validChangeHandle(v){
          this.setState({
-             validSelect: v
+             expDate: v
          });
      }
      submitHandle(){
         const form = this.props.form;
         form.validateFields((error, value) => {
             if(error){
-                const fieldNames = ['cardNumber', 'cardName', 'validSelect', 'securityCode'].reverse();
+                const fieldNames = ['cardNumber', 'cardName', 'expDate', 'cvv', 'payAddrDetail', 'city', 'province', 'payPostcode', 'country'].reverse();
                 fieldNames.map((item, index) => {
                     if(form.getFieldError(item)){
                         Toast.info(form.getFieldError(item), 1);
@@ -72,8 +72,60 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                 this.setState(value);
             }
 
+            const _state = this.state;
+            // 注册会员需要的数据
+            const _data = {
+                orderOriginalPrice: _state.groupItem.originalPrice, //订单原金额
+                orderPayAmount: _state.groupItem.salePrice,     //订单应付金额
+                orderPreferential: _state.groupItem.preferential,  //订单优惠
+                payType: '1',//支付类型
+                productGroupId: _state.groupId, // 产品套组ID
+                dealer: {  //会员信息
+                    addrPrivonce: _state.cityValue[0], //省
+                    addrCity: _state.cityValue[1], //市
+                    addrCounty: _state.cityValue[2], //县/区
+                    addrDetail: _state.addrDetail, //详细地址
+                    email: _state.email, // 邮箱
+                    firstName: _state.firstName, //姓氏
+                    idCard: _state.idCard, //身份证号码
+                    lastName: _state.lastName, //名字
+                    password: _state.password, //密码
+                    phoneNumber: _state.phoneNumber,//手机号码
+                    postcode: _state.postcode, //邮编
+                    reRecommender: _state.reRecommender, //确认推荐人（安置人)
+                    recommender: _state.recommender, //推荐人，KID，例如：CN123456或123456
+                    telNumber: _state.telNumber //固定电话号码
+                },
+                shippingInfo: {  //收货信息
+                    addrPrivonce: _state.consigneeCityValue[0],  // 省
+                    addrCity: _state.consigneeCityValue[1], //市
+                    addrCounty: _state.consigneeCityValue[2], //区
+                    addrDetail: _state.consigneeAddrDetail, //详细地址
+                    consignee: _state.consigneeName, //收件人
+                    idCard: _state.consigneeIdCard, //身份证号码
+                    isDefault: true, //是否默认
+                    phoneNumber: _state.consigneePhoneNumber, //手机号码
+                    postcode: _state.consigneepostcode, //邮编
+                    telNumber: _state.consigneeTelNumber, //固定电话号码
+                },
+                payCardInfo: {  //支付信息
+                    cardName: _state.cardName, //持卡人姓名
+                    cardNumber: _state.cardNumber, //卡号
+                    expDate: _state.expDate.join(''), //有效期
+                    cvv: _state.cvv, //发全码
+                    addrDetail: _state.payAddrDetail, //账单地址
+                    addrPrivonce: _state.province, //省份
+                    addrCity: _state.city, //城市
+                    postcode: _state.payPostcode, //邮政编码
+                    country: _state.country, //国家
+                    cardType: '1', //卡类型
+                }
+            };
+            console.log(_data)
             // 更新session数据
-            Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
+            Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, _state);
+
+            this.props.dispatch(UserDealer(_data))
         });
      }
      render(){
@@ -83,7 +135,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
 
          const cityExtraCls = classNames({
              ['picker-city']: true,
-             ['picker-city-active']: this.state.validSelect.length
+             ['picker-city-active']: this.state.expDate.length
          })
          return(
              <div className="ky-container-body">
@@ -135,8 +187,8 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                        >持卡人姓名</InputItem>
                                     )}
 
-                                    {getFieldDecorator('validSelect', {
-                                        initialValue: this.state.validSelect,
+                                    {getFieldDecorator('expDate', {
+                                        initialValue: this.state.expDate,
                                         rules: [{
                                             required: true,
                                             message: '请选择有效期'
@@ -154,8 +206,8 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                         </Picker>
                                     )}
 
-                                   {getFieldDecorator('securityCode', {
-                                       initialValue: this.state.securityCode,
+                                   {getFieldDecorator('cvv', {
+                                       initialValue: this.state.cvv,
                                        rules: [{
                                            required: true,
                                            message: '请输入您的安全码'
@@ -167,13 +219,13 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                            placeholder="安全码"
                                            type="number"
                                            extra={<div className="pay-behind">信用卡背后3位数字<i className="icon icon-csc"></i></div>}
-                                           onChange={this.stateChangeHandle.bind(this, 'securityCode')}
+                                           onChange={this.stateChangeHandle.bind(this, 'cvv')}
                                        >安全码</InputItem>
                                     )}
-                                    {getFieldDecorator('billingAddrDetail',{
-                                        initialValue: this.state.billingAddrDetail,
+                                    {getFieldDecorator('payAddrDetail',{
+                                        initialValue: this.state.payAddrDetail,
                                         rules: [{
-                                            required: false,
+                                            required: true,
                                             message: '请输入帐单地址'
                                         }],
                                       })(
@@ -182,15 +234,15 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                            placeholder="帐单地址"
                                            labelNumber={5}
                                            rows={2}
-                                           value={this.state.billingAddrDetail}
-                                           onChange={this.stateChangeHandle.bind(this, 'billingAddrDetail')}
+                                           value={this.state.payAddrDetail}
+                                           onChange={this.stateChangeHandle.bind(this, 'payAddrDetail')}
                                        />
                                    )}
                                    {getFieldDecorator('city', {
                                        initialValue: this.state.city,
                                        rules: [{
-                                           required: false,
-                                           message: '城市不能为空'
+                                           required: true,
+                                           message: '请输入城市'
                                        }],
                                      })(
                                        <InputItem
@@ -202,8 +254,8 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                     {getFieldDecorator('province', {
                                         initialValue: this.state.province,
                                         rules: [{
-                                            required: false,
-                                            message: '省份不能为空'
+                                            required: true,
+                                            message: '请输入省份'
                                         }],
                                       })(
                                         <InputItem
@@ -219,7 +271,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                               pattern: RegxRule.zipCode,
                                               message: '请输入正确的邮政编码'
                                           },{
-                                              required: false,
+                                              required: true,
                                               message: '请输入邮政编码'
                                           }],
                                         })(
@@ -235,8 +287,8 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                       {getFieldDecorator('country', {
                                           initialValue: this.state.country,
                                           rules: [{
-                                              required: false,
-                                              message: '国家不能为空'
+                                              required: true,
+                                              message: '请输入国家'
                                           }],
                                         })(
                                           <InputItem
@@ -271,4 +323,14 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
  }
 
 const PaymentViewWrapper = createForm()(RegPaymentView);
-export default PaymentViewWrapper;
+
+/*  React 与  Redux 绑定 */
+function mapStateToProps(state){
+    return {
+        RegModel: state.RegModel
+    };
+}
+
+export default connect(
+    mapStateToProps
+)(PaymentViewWrapper);

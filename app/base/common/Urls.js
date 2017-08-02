@@ -6,6 +6,7 @@ import profile from './Profiles';
 const Urls = {
     Login: profile.server + '/oauth/token',  //登录
     User: profile.server + '/starspower/shop/service/v1/user',           //POST 注册消费者
+    UserDealer: profile.server + '/starspower/shop/service/v1/user/dealer',     //POST 注册会员/经销商
     UserCurrent: profile.server + '/starspower/shop/service/v1/user/current',   // GET 获取当前登录会员的消息
     UserLogout: profile.server + '/starspower/shop/service/v1/user/logout',     // 退出登录
     GroupReg: profile.server + '/starspower/shop/service/v1/product/group/reg', // 获取会员注册的套组信息
