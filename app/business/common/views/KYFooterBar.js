@@ -28,10 +28,10 @@ class KYFooterBar extends React.Component{
                         <i className="icon icon-news"></i>
                         <div className="bar-item-text">最新消息</div>
                     </Link>
-                    <div className="bar-item">
+                    <a href="http://wpa.qq.com/msgrd?v=3&uin=1951828835&site=qq&menu=yes" className="bar-item">
                         <i className="icon icon-onlineCS"></i>
                         <div className="bar-item-text">在线客服</div>
-                    </div>
+                    </a>
                     <div className="bar-item">
                         <i className="icon icon-productlist"></i>
                         <div className="bar-item-text">产品商城</div>
