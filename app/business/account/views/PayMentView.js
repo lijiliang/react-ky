@@ -25,7 +25,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
-             validSelect: ['05', '29'],  //有效期
+             validSelect: [],  //有效期
          };
      }
      componentDidMount(){
@@ -71,8 +71,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
             if(!error){
                 this.setState(value);
             }
-            alert('a')
-            console.log('state', this.state)
+
             // 更新session数据
             Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
         });

@@ -42,6 +42,7 @@ module.exports = {
             uxComponent: path.join(commonPath.src, '/base/components/ux/uxComponent.js'),   //智能组件
             FetchData: path.join(commonPath.src, '/base/common/FetchData.js'),
             busModels: path.join(commonPath.src, '/business/modelIndex.js'),
+            Utils: path.join(commonPath.src, '/base/common/Utils.js'),
             Urls: path.join(commonPath.src, '/base/common/Urls.js'),
             Cache: path.join(commonPath.src, '/base/common/Cache.js'),
             varLess: path.join(commonPath.src, '/base/resources/less/variables.less')   // less的一些变量

@@ -42,6 +42,11 @@ class PackItemView extends React.Component {
             [`${prefixCls}-active`]: active,            //明确要传过来active才显示高亮
             [`${prefixCls}-active`]: value === checked,
         })
+        const radioItemCls = classNames({
+            [`icon`]: true,
+            [`icon-fill`]: true,
+            [`icon-selectFill`]: value === checked,
+        });
         return(
             <div  {...restProps} className={wrapCls}>
 
@@ -52,6 +57,7 @@ class PackItemView extends React.Component {
                                 <div className="pack-radio">
                                     <input type="radio" value={this.props.value} checked={this.props.value === this.props.checked}/>
                                     <span className="icon-bg"></span>
+                                    {/* <i className={radioItemCls}></i> */}
                                 </div>
                             </label>
                         : null}

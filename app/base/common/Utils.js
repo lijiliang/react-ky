@@ -1,7 +1,7 @@
 /**
  * @fileOverview 工具类
  */
-
+import { Toast } from 'uxComponent';
 /*
  * [hideLoading 显示加载状态]
  */
@@ -14,6 +14,14 @@ export function showLoading() {
  */
 export function hideLoading() {
 
+}
+
+/*
+ * [failLoading 请求服务器错误]
+ */
+export function failLoading(err) {
+    Toast.hide();
+    Toast.fail('服务器请求错误!');
 }
 
 /*

@@ -7,6 +7,7 @@ import {hashHistory} from 'react-router'
 import { post, postPublic } from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
+import { failLoading } from 'Utils';
 
 /*
  * [regConsumer 注册消费者]
@@ -25,7 +26,7 @@ export function regConsumer(firstName, lastName, email, password, referenceId){
             password: password,
             recommender:referenceId
         };
-        Toast.loading('注册中...', 1000);
+        Toast.loading('注册中...', 200);
         const response = postPublic(Urls.User, _data);
         response.then((result) => {
             const res = result.data;
@@ -55,7 +56,7 @@ export function regConsumer(firstName, lastName, email, password, referenceId){
                 Toast.info(res.message, 1);
             }
         }).catch((err) => {
-            console.log(err);
+            failLoading(err);
         });
     };
 }
@@ -96,7 +97,7 @@ export function CheckDealerReg(addrPrivonce, addrCity, addrCounty, addrDetail, e
             recommender,
             telNumber
         };
-        Toast.loading('加载中...');
+        Toast.loading('加载中...', 200);
         const response = postPublic(Urls.CheckDealerReg, _data);
         response.then((result) => {
             const res = result.data;
@@ -108,6 +109,8 @@ export function CheckDealerReg(addrPrivonce, addrCity, addrCounty, addrDetail, e
             }else{
                 Toast.info(res.message, 1);
             }
+        }).catch((err) => {
+            failLoading(err);
         });
     };
 }
@@ -140,7 +143,7 @@ export function CheckAddress(addrPrivonce, addrCity, addrCounty, addrDetail, con
             telNumber,
             isDefault
         };
-        Toast.loading('加载中...');
+        Toast.loading('加载中...', 200);
         const response = postPublic(Urls.CheckAddress, _data);
         response.then((result) => {
             const res = result.data;
@@ -152,6 +155,8 @@ export function CheckAddress(addrPrivonce, addrCity, addrCounty, addrDetail, con
             }else{
                 Toast.info(res.message, 1);
             }
+        }).catch((err) => {
+            failLoading(err);
         });
     };
 }

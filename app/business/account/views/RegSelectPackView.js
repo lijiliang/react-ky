@@ -6,9 +6,10 @@
  import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import { Urls, RegxRule, Cache } from 'kyCommon';
-import { Button, Toast, NavBar} from 'uxComponent';
+import { Button, Toast, NavBar, Loading} from 'uxComponent';
 import { getPublic } from 'FetchData';
 import { KYSteps } from 'kyComponent';
+import { failLoading } from 'Utils';
 import PackItemView from './PackItemView';
 
 import '../resources/RegSelectPackView.less';
@@ -60,14 +61,18 @@ class RegSelectPackView extends React.Component {
     }
     // 获取会员注册的套组信息
     _getGroupReg() {
+        Toast.loading('加载中...', 200);
         const response = getPublic(Urls.GroupReg);
         response.then((result) => {
             const res = result.data;
+            Toast.hide();
             if(res.success) {
                 this.setState({
                     groupList: res.data,
                 });
             }
+        }).catch((err) => {
+            failLoading(err);
         });
     }
     render(){
@@ -90,7 +95,6 @@ class RegSelectPackView extends React.Component {
                              {this.state.groupList.map(item => (
                                 <PackItemView icon value={item.groupId} checked={this.state.groupId} listData={item} onChange={this.handleChanges.bind(this, item)}/>
                              ))}
-
                             <div className="m-pack-other">
                                 <p>只须购买100元的会藉或购买以上</p>
                                 <p>任何一款的产品套组就马上可以成为凯娅尼会员。</p>
@@ -107,5 +111,4 @@ class RegSelectPackView extends React.Component {
         );
     }
 }
-
 export default RegSelectPackView
