@@ -44,7 +44,8 @@
              ]
          };
      }
-     componentDidMount(){}
+     componentDidMount(){
+     }
      // 返回上一页
      gohistoryHandle(){
          window.history.go(-1);

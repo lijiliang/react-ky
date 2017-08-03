@@ -44,7 +44,7 @@ class CartIndexView extends React.Component{
         });
         const radioItemCls = classNames({
             [`icon`]: true,
-            [`icon-radio`]: true,
+            [`icon-radio`]: !ListItem.isChecked,
             [`icon-selectFill`]: ListItem.isChecked,
         });
         // console.log(this.props)

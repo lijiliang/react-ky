@@ -167,7 +167,7 @@ export function CheckAddress(addrPrivonce, addrCity, addrCounty, addrDetail, con
 
 /*
  * [UserDealer 注册会员/经销商
- * @param {[Object]}   data     [注册需要的字段]
+ * @param {[Object]} data     [注册需要的字段]
  * @param {Function} callback [成功回调函数]
  */
 export function UserDealer(data, callback) {
