@@ -125,7 +125,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
             // 更新session数据
             Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, _state);
 
-            this.props.dispatch(UserDealer(_data))
+            this.props.dispatch(UserDealer(_data));
         });
      }
      render(){

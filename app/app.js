@@ -10,8 +10,8 @@ import RouterConfig from 'kyBase/router/RouterConfig';
 //解决移动端300毫秒延迟
 FastClick.attach(document.body);
 
+// 手机调试工具，仅做调试用。正式环境需要手动隐藏
 import vconsole from 'vconsole';
-console.log('a')
 
 render(
     <RouterConfig />,

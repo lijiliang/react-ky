@@ -27,7 +27,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
  * [get get请求]
  * @param  {[string]} url   [请求地址]
  * @param  {[object]} param [传入的参数]
- * @return {[object]}       [返回成功或失败的数据]
+ * @return {[object]}       [返回Promise]
  */
 export const get = (url, param) => {
     return (
@@ -43,10 +43,10 @@ export const get = (url, param) => {
  * [post post请求]
  * @param  {[string]} url   [请求地址]
  * @param  {[object]} param [传入的参数]
- * @return {[object]}       [返回成功或失败的数据]
+ * @return {[object]}       [返回Promise]
  */
 export const post = (url, param) => {
-    return(
+    return (
         axios.post(`${url}`, param, {
             headers: { Authorization: 'Bearer ' + Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token) || ''},
         })
@@ -57,7 +57,7 @@ export const post = (url, param) => {
  * [公开get get请求，不需要带token]
  * @param  {[string]} url   [请求地址]
  * @param  {[object]} param [传入的参数]
- * @return {[object]}       [返回成功或失败的数据]
+ * @return {[object]}       [返回Promise]
  */
 export const getPublic = (url, param) => {
     return (
@@ -71,10 +71,37 @@ export const getPublic = (url, param) => {
  * [公开post post请求，不需要带token]
  * @param  {[string]} url   [请求地址]
  * @param  {[object]} param [传入的参数]
- * @return {[object]}       [返回成功或失败的数据]
+ * @return {[object]}       [返回Promise]
  */
 export const postPublic = (url, param) => {
-    return(
+    return (
         axios.post(`${url}`, param)
+    );
+};
+
+/*
+ * [putFetch  put请求]
+ * @param  {[string]} url   [请求地址]
+ * @param  {[object]} param [传入的参数]
+ * @return {[object]}       [返回Promise]
+ */
+export const putFetch = (url, param) => {
+    return (
+        axios.put(`${url}`, param, {
+            headers: { Authorization: 'Bearer ' + Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token) || ''},
+        })
+    );
+};
+
+/*
+ * [deleteFetch delete请求]
+ * @param  {[string]} url   [请求地址]
+ * @return {[object]}       [返回Promise]
+ */
+export const deleteFetch = (url) => {
+    return (
+        axios.delete(`${url}`, {
+            headers: { Authorization: 'Bearer ' + Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token) || ''},
+        })
     );
 };

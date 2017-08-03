@@ -39,6 +39,31 @@ class SafetyPwdView extends React.Component {
            [name]: value
        })
     }
+
+    // 完成
+    submitHandle = () => {
+        const form = this.props.form;
+        form.validateFields((error, value) => {
+            const _newPassword = form.getFieldValue('newPassword');
+            const _confirmPwd = form.getFieldValue('confirmPwd');
+            if (error) {
+                const fieldNames = ['password', 'newPassword', 'confirmPwd'].reverse();
+                fieldNames.map((item, index) => {
+                    if(form.getFieldError(item)){
+                        Toast.info(form.getFieldError(item), 1);
+                        return;
+                    }
+                });
+                return;
+            }
+
+            if (_confirmPwd && (_newPassword !== _confirmPwd)) {
+                Toast.info('两次输入的密码不一致', 1);
+                return;
+            }
+        })
+
+    }
     render(){
         const { getFieldDecorator} = this.props.form;
         // 密码
@@ -64,7 +89,7 @@ class SafetyPwdView extends React.Component {
                                     message: '密码必须是数字和英文字母组合,必须有一个大写字母'
                                 },{
                                     required: true,
-                                    message: '您的密码最少为8个字符'
+                                    message: '请输入您的原密码'
                                 }],
                               })(
                                 <InputItem
@@ -74,16 +99,16 @@ class SafetyPwdView extends React.Component {
                                     extra={<i className={isShowPwdCls} />}
                                     onExtraClick={e=>{}}
                                     onChange={this.stateChangeHandle.bind(this, 'password')}
-                                >现有密码</InputItem>
+                                >原密码</InputItem>
                             )}
-                              {getFieldDecorator('password', {
-                                  initialValue: this.state.password,
+                              {getFieldDecorator('newPassword', {
+                                  initialValue: this.state.newPassword,
                                   rules: [{
                                       pattern: RegxRule.password,
                                       message: '密码必须是数字和英文字母组合,必须有一个大写字母'
                                   },{
                                       required: true,
-                                      message: '您的密码最少为8个字符'
+                                      message: '请输入您的新密码'
                                   }],
                                 })(
                                   <InputItem
@@ -92,14 +117,14 @@ class SafetyPwdView extends React.Component {
                                       showPwd='true'
                                       extra={<i className={isShowPwdCls} />}
                                       onExtraClick={e=>{}}
-                                      onChange={this.stateChangeHandle.bind(this, 'password')}
+                                      onChange={this.stateChangeHandle.bind(this, 'newPassword')}
                                   >新密码</InputItem>
                               )}
                               {getFieldDecorator('confirmPwd', {
                                   initialValue: this.state.confirmPwd,
                                   rules: [{
                                       required: true,
-                                      message: '请再次输入您的密码'
+                                      message: '请再次输入您的新密码'
                                   }],
                                 })(
                                   <InputItem

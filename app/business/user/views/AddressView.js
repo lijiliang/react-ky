@@ -90,7 +90,8 @@
                                          [`address-item-active`]: item.isDefault
                                      })
                                      const iconCls = classNames({
-                                         [`icon icon-radio`]: true,
+                                         [`icon`]: true,
+                                         [`icon-radio`]: !item.isDefault,
                                          [`icon-selectFill`]: item.isDefault
                                      })
                                      return (
