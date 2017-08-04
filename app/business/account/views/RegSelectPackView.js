@@ -4,6 +4,9 @@
  import React from 'react';
  import { Link, hashHistory } from 'react-router';
  import PureRenderMixin from 'react-addons-pure-render-mixin';
+ import { bindActionCreators } from 'redux';
+ import { connect } from 'react-redux';
+ import { getGroupReg } from '../action/DataAction';
 
 import { Urls, RegxRule, Cache } from 'kyCommon';
 import { Button, Toast, NavBar, Loading} from 'uxComponent';
@@ -20,7 +23,7 @@ class RegSelectPackView extends React.Component {
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
             groupList: [],
-            groupId: null,
+            groupId: '',
             groupItem: {}  // 选中的套组
         };
     }
@@ -36,12 +39,12 @@ class RegSelectPackView extends React.Component {
     }
     // 返回上一页
     gohistoryHandle(){
-        window.history.go(-1);
+        window.history.back();
     }
     // 选中套组
     handleChanges(item, event) {
         this.setState({
-            groupId: Number(event.target.value),
+            groupId: event.target.value,
             groupItem: item,
         });
     }
@@ -61,19 +64,12 @@ class RegSelectPackView extends React.Component {
     }
     // 获取会员注册的套组信息
     _getGroupReg() {
-        Toast.loading('加载中...', 200);
-        const response = getPublic(Urls.GroupReg);
-        response.then((result) => {
-            const res = result.data;
-            Toast.hide();
-            if(res.success) {
-                this.setState({
-                    groupList: res.data,
-                });
-            }
-        }).catch((err) => {
-            failLoading(err);
-        });
+        const _self = this;
+        this.props.dispatch(getGroupReg((res)=>{
+            _self.setState({
+                groupList: res.data,
+            });
+        }))
     }
     render(){
         return(
@@ -111,4 +107,13 @@ class RegSelectPackView extends React.Component {
         );
     }
 }
-export default RegSelectPackView
+/*  React 与  Redux 绑定 */
+function mapStateToProps(state){
+    return {
+        RegModel: state.RegModel
+    };
+}
+
+export default connect(
+    mapStateToProps
+)(RegSelectPackView);

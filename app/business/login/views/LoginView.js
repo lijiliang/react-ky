@@ -64,7 +64,9 @@ class LoginView extends React.Component{
                 return;
             }else{
                 this.setState(value);
-                this.props.dispatch(login(this.state.username, this.state.password, this.state.isAccount));
+                this.props.dispatch(login(this.state.username, this.state.password, this.state.isAccount, () => {
+                    console.log('success')
+                }));
             }
         });
     }

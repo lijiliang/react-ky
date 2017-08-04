@@ -16,6 +16,9 @@ const Cache = {
      */
     sessionKeys: {
         ky_cache_access_token: 'ky_cache_access_token',   //登陆后记住token
+        ky_cache_memberFlag: 'ky_cache_memberFlag',       //是否会员 true是会员，false是消费者
+        ky_cache_realName: 'ky_cache_realName',           //真实名称
+        ky_cache_userName: 'ky_cache_userName',           //用户帐号
         ky_cache_isLogined: 'ky_cache_isLogined',         //是否已登录
         ky_cache_last_login_time: 'ky_cache_last_login_time', //最后一次登录时间
         ky_cache_customer_username: 'ky_cache_customer_username', //会员名

@@ -4,7 +4,7 @@
 import * as types from './actionTypes';
 import Base64 from 'js-base64';
 import {hashHistory} from 'react-router'
-import { post, postPublic } from 'FetchData';
+import { post, getPublic, postPublic } from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
 import { failLoading } from 'Utils';
@@ -57,6 +57,31 @@ export function regConsumer(firstName, lastName, email, password, referenceId, c
             }else{
                 Toast.hide();
                 // 如果失败则显示失败信息
+                Toast.info(res.message, 1);
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+/*
+ * [getGroupReg 获取会员注册的套组信息]
+ * @param  {Function} callback [回调函数]
+ * @return {[type]}            [description]
+ */
+export function getGroupReg(callback){
+    return(dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = getPublic(Urls.GroupReg);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback(res);
+                }
+            }else{
                 Toast.info(res.message, 1);
             }
         }).catch((err) => {

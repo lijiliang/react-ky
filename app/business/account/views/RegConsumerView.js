@@ -24,7 +24,7 @@
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
-             firstName: '',      //姓
+             firstName: '',    //姓
              lastName: '',     //名
              email: '',        //邮箱
              confirmEmail: '', //确认邮箱
