@@ -2,7 +2,7 @@
  * @fileOverview 管理收货地址
  */
  import React from 'react';
- import { Link } from 'react-router';
+ import { Link, hashHistory } from 'react-router';
  import PureRenderMixin from 'react-addons-pure-render-mixin';
  import { get, getPublic } from 'kyBase/common/FetchData';
  import classNames from 'classnames';
@@ -73,6 +73,13 @@
              random: Math.random()
          });
      }
+     onEditHandle(index){
+         hashHistory.push(`/user/addredit/${index}`)
+     }
+     // 新增收货地址
+     submitHandle = () => {
+         hashHistory.push('/user/addredit')
+     }
      render(){
          console.log(this.state)
          return(
@@ -127,7 +134,7 @@
                                                   </label>
                                                 </div>
                                                 <div className="edit-btn">
-                                                    <a href="javascript:;" className="btn">编辑</a>
+                                                    <a href="javascript:;" className="btn" onClick={this.onEditHandle.bind(this, index)}>编辑</a>
                                                     <a href="javascript:;"
                                                         onClick={() => Modal.alert('删除', '确定删除么?', [
                                                           { text: '取消'},

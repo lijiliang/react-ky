@@ -20,6 +20,7 @@
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
+             title: '',
              cityAreaData: cityAreaData,
              cityExtra: true,
              userName: '李先生',
@@ -29,10 +30,30 @@
              cityValue: ['8','60','619'],
              addrDetail: '林和西路9号耀中广场918号林和西路9号耀中广场918号',
              addrPostcode: '432222',
-             isEdit: false,  // 是否可编辑
          };
      }
-     componentDidMount(){}
+     componentDidMount(){
+         const edit = this.props.params.edit;
+         if(edit == null) {
+             // 新增
+             this.setState({
+                 title: '新增收货地址',
+                 cityExtra: false,
+                 userName: '',
+                 phoneNumber: '',
+                 idCard: '',
+                 telNumber: '',
+                 cityValue: [],
+                 addrDetail: '',
+                 addrPostcode: '',
+             })
+         } else {
+             // 编辑
+             this.setState({
+                 title: '编辑收货地址'
+             })
+         }
+     }
      // 返回上一页
      gohistoryHandle(){
          window.history.go(-1);
@@ -58,12 +79,6 @@
                  cityAreaData: e
              })
          });
-     }
-     // 点击编辑
-     onEditHandle = () => {
-         this.setState({
-             isEdit: true
-         })
      }
      // 提交
      submitHandle = () => {
@@ -98,7 +113,7 @@
                          <NavBar
                              onLeftClick={this.gohistoryHandle.bind(this)}
                              mode="blue"
-                             >编辑收货地址</NavBar>
+                             >{this.state.title}</NavBar>
                          <div className="m-address-edit-view">
                              <div className="m-addressedit-form">
                                  {getFieldDecorator('userName', {

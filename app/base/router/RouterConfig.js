@@ -63,7 +63,7 @@ class RouterMap extends React.Component {
                 }
                 >
                     <IndexRoute component={HomeView}/>
-                    <Route path='login' component={LoginView}/>
+                    <Route path='login(/:router)' component={LoginView}/>
                     <Redirect from="/account" to="/account/regmember"/>
                     <Route path='/account' component={AccountIndexView} >
                         <Route path='/account/regconsumer' component={RegConsumerView}/>
@@ -84,9 +84,9 @@ class RouterMap extends React.Component {
                         <Route path='/user/coupon' component={CouponView}/>
                         <Route path='/user/basicinfo' component={BasicInfoView}/>
                         <Route path='/user/address' component={AddressView}/>
-                        <Route path='/user/addredit' component={AddressEditView}/>
+                        <Route path='/user/addredit(/:edit)' component={AddressEditView}/>
                         <Route path='/user/order' component={OrderView}/>
-                        <Route path='/user/orderdetail' component={OrderDetailsView}/>
+                        <Route path='/user/orderdetail/:id' component={OrderDetailsView}/>
                     </Route>
                     <Route path='/cart' component={CartIndexView} >
                         <Route path='/cart/order' component={CartOrderView}/>
