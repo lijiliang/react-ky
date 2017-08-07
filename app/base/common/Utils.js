@@ -2,11 +2,19 @@
  * @fileOverview 工具类
  */
 import { Toast } from 'uxComponent';
-/*
- * [hideLoading 显示加载状态]
- */
-export function showLoading() {
+import { Cache } from 'kyCommon';
+import { hashHistory } from 'react-router';
 
+
+function goLogined(flag){
+    const _href = window.location.href;
+    const _url = window.location.origin + '/#/login';
+    if(flag){
+        // window.location.href = _url + '?backUrl=' + encodeURIComponent(_href);
+        hashHistory.push('/login?backUrl=' + encodeURIComponent(_href))
+    }else{
+        window.location.href = _url;
+    }
 }
 
 /*
@@ -22,6 +30,37 @@ export function hideLoading() {
 export function failLoading(err) {
     Toast.hide();
     Toast.fail('服务器请求错误!');
+}
+
+/*
+ * [checkMember 检测用户是否登录]
+ */
+export function checkMember(){
+    const _token = Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token);
+    const _isLogined = Cache.sessionGet(Cache.sessionKeys.ky_cache_isLogined);
+    console.log(_token, _isLogined)
+    if (_token && _isLogined){
+        //return true;
+    } else {
+        console.log('df')
+        goLogined(true);
+        //goLogined(true);//带返回地址
+        // return false;
+    }
+}
+
+/*
+ * [goLogin 跳转到登陆页面]
+ * @param  {[Boolean]} flag  [是否需要跳到登录页]
+ */
+export function goLogin(flag) {
+    const _href = window.location.href;
+    const _url = window.location.origin + '/#/login';
+    if(flag){
+        window.location.href = _url + '?backUrl=' + encodeURIComponent(_href);
+    }else{
+        window.location.href = _url;
+    }
 }
 
 /*

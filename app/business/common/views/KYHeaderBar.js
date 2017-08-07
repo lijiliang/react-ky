@@ -22,9 +22,15 @@ class KYHeaderBar extends React.Component{
     }
     componentDidMount(){
         // 获取用户是否登录
-        const isLogined = Cache.sessionGet('ky_cache_isLogined');
+        const isLogin = Cache.sessionGet('ky_cache_isLogined') || false;
         this.setState({
-            isLogin: isLogined
+            isLogin: isLogin
+        });
+    }
+    componentWillReceiveProps(nextProps) {
+        const isLogin = Cache.sessionGet('ky_cache_isLogined') || false;
+        this.setState({
+            isLogin: isLogin
         });
     }
     // 处理menu
@@ -48,7 +54,6 @@ class KYHeaderBar extends React.Component{
         }
     }
     render(){
-        // console.log(this.props)
         const user = this.props.user;
         const isLogined = user.get('isLogined') || false;
         return(

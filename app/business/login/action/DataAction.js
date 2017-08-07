@@ -29,7 +29,7 @@ export function login(username, password, isAccount, callback){
             success: function(res){
                 const _token = res.access_token;
 
-                // 保存数据到localStorage
+                // 保存用户名和是否记录帐户到localStorage
                 Cache.set(Cache.keys.ky_cache_login_account, username);
                 Cache.set(Cache.keys.ky_cache_isAccount, isAccount);
                 // 保存数据到sessionStorage
@@ -59,7 +59,7 @@ export function login(username, password, isAccount, callback){
                                 token: _token,        //用户token
                             }
                         });
-                        Toast.success('登录成功');
+                        Toast.success('登录成功', 1);
                         // 登录成功，回调
                         if(callback && typeof callback === 'function'){
                             callback();

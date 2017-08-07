@@ -1,43 +1,51 @@
 /**
- * @fileOverview 注册 处理数据action
+ * @fileOverview 用户中心 处理数据action
  */
- import * as types from './actionTypes';
- import Base64 from 'js-base64';
+import * as types from './actionTypes';
+import { post, postPublic, putFetch} from 'FetchData';
+import { Cache, Urls } from 'kyCommon';
+import { Toast } from 'uxComponent';
+import { failLoading } from 'Utils';
 
- import { post, postPublic } from 'FetchData';
- import { Cache, Urls } from 'kyCommon';
- import { Toast } from 'uxComponent';
-
-// 注册消费者
-export function regConsumer(firstName, lastName, email, password, referenceId){
+/*
+ * [signout 退出登录]
+ * @param  {Function} callback [回调函数]
+ * @return {[type]}            [description]
+ */
+export function signout(callback) {
     return (dispatch, getState) => {
-        const _data = {
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: password,
-            recommender:referenceId
-        };
-        const response = postPublic(Urls.User, _data);
-        response.then((res) => {
+        Toast.loading('加载中...', 200);
+        const isAccount = Boolean(Cache.get(Cache.keys.ky_cache_isAccount));
+        const response = putFetch(Urls.UserLogout);
+        response.then((result) => {
+            const res = result.data;
             if(res.success){
+                Toast.hide();
+                // 删除sessionStorage
+                Cache.sessionRemove(Cache.sessionKeys.ky_cache_access_token);
+                Cache.sessionRemove(Cache.sessionKeys.ky_cache_realName);
+                Cache.sessionRemove(Cache.sessionKeys.ky_cache_userName);
+                Cache.sessionRemove(Cache.sessionKeys.ky_cache_memberFlag);
+                Cache.sessionRemove(Cache.sessionKeys.ky_cache_isLogined);
+                Cache.sessionRemove(Cache.sessionKeys.ky_cache_last_login_time);
                 dispatch({
-                    type : types.REGCONSUMER,
-                    userInfo:{
-                        customer_username: res.data.data.customer_username,
-                        customer_id: res.data.data.customer_id
+                    type : types.LOGIN,
+                    user:{
+                        userName: '',   //用户帐号
+                        memberFlag: '', //是否会员
+                        realName: '',   //真实名称
+                        isLogined: false, //是否已登录
+                        isAccount: isAccount, //是否记住帐号
+                        token: '',        //用户token
                     }
                 });
-
-                // 保存数据到sessionStorage
-                Cache.sessionSet(Cache.sessionKeys.ky_cache_customer_username, res.data.data.customer_username);
-                Cache.sessionSet(Cache.sessionKeys.ky_cache_customer_id, res.data.data.customer_id);
-            }else{
-                // 如果失败则显示失败信息
-                Toast.info(res.message, 1);
+                Toast.success('退出成功', 1);
+                if(callback && typeof callback === 'function'){
+                    callback();
+                }
             }
         }).catch((err) => {
-            console.log(err);
+            failLoading(err);
         });
     };
 }

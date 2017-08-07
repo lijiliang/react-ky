@@ -2,7 +2,7 @@
  * @fileOverview 登录 View
  */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -65,7 +65,9 @@ class LoginView extends React.Component{
             }else{
                 this.setState(value);
                 this.props.dispatch(login(this.state.username, this.state.password, this.state.isAccount, () => {
-                    console.log('success')
+                    setTimeout(() => {
+                        hashHistory.push('/user');
+                    }, 1000);
                 }));
             }
         });

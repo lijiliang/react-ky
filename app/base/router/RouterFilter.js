@@ -1,3 +1,4 @@
+import { checkMember } from 'Utils';
 
 const RouterFilter={
     process:function(nextState, replace, callback,prevState){
@@ -14,7 +15,8 @@ const RouterFilter={
         // console.log(nextState,prevState)
         if(nextState.location.pathname=="/login"){
         }
+        // checkMember();
     }
 }
 
-module.exports=RouterFilter;
+export default RouterFilter;

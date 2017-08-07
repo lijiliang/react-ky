@@ -5,6 +5,9 @@
  import { Link, hashHistory } from 'react-router';
  import PureRenderMixin from 'react-addons-pure-render-mixin';
  import { bindActionCreators } from 'redux';
+ import { connect } from 'react-redux';
+ import { signout } from '../action/DataAction';
+ import { checkMember } from 'Utils';
 
 import {Utils} from 'kyCommon'
  import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
@@ -23,9 +26,20 @@ class UserIndexView extends React.Component {
 
         };
     }
+    componentDidMount(){
+        checkMember();
+    }
     // 返回上一页
     gohistoryHandle(){
-        window.history.back()
+        window.history.back();
+    }
+    // 退出登录
+    signoutHandle(){
+        this.props.dispatch(signout(() => {
+            setTimeout(() => {
+                hashHistory.push('/');
+            }, 1000);
+        }));
     }
     render(){
         return(
@@ -36,7 +50,7 @@ class UserIndexView extends React.Component {
                             className="navbar-user"
                             onLeftClick={this.gohistoryHandle.bind(this)}
                             rightContent={
-                                <div className="signout">
+                                <div className="signout" onClick={this.signoutHandle.bind(this)}>
                                     <span>登出</span>
                                 </div>
                             }
@@ -89,4 +103,13 @@ class UserIndexView extends React.Component {
     }
 }
 
-export default UserIndexView;
+/*  React 与  Redux 绑定 */
+function mapStateToProps(state){
+    return {
+        RegModel: state.RegModel
+    };
+}
+
+export default connect(
+    mapStateToProps
+)(UserIndexView);
