@@ -12,9 +12,12 @@ import {login} from '../action/DataAction';
 import { createForm } from 'rc-form';
 import { Button, Toast, NavBar, InputItem } from 'uxComponent';
 import { Cache } from 'kyCommon';
+import { getQueryString } from 'Utils';
 
 import '../resources/LoginView.less';
 
+// const _backUrl = getQueryString(this.props.location.search, 'backUrl');
+// console.log(_backUrl)
 class LoginView extends React.Component{
     constructor(props, context){
         super(props, context);
@@ -90,6 +93,7 @@ class LoginView extends React.Component{
         });
     }
     render(){
+        console.log(this.props.location.search)
         const { getFieldDecorator} = this.props.form;
         return(
             <div className="ky-scrollable bg-login">

@@ -64,6 +64,18 @@ export function goLogin(flag) {
 }
 
 /*
+ * [getQueryString Url查询，获取某个查询]
+ * @param  {[String]} name [要查询的key]
+ */
+export function getQueryString(name){
+    const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+    const r = window.location.href.substr(1).match(reg);
+    console.log('r', r)
+    if (r !== null) return unescape(r[2]);
+    return null;
+}
+
+/*
  * [debounce 截流]
  * @param  {[Function]} func  [传入一个函数]
  * @param  {[Number]} delay [延迟秒数s
