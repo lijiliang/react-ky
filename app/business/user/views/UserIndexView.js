@@ -27,7 +27,7 @@ class UserIndexView extends React.Component {
         };
     }
     componentDidMount(){
-        checkMember();
+        // checkMember();
     }
     // 返回上一页
     gohistoryHandle(){

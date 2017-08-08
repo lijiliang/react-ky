@@ -16,8 +16,6 @@ import { getQueryString } from 'Utils';
 
 import '../resources/LoginView.less';
 
-// const _backUrl = getQueryString(this.props.location.search, 'backUrl');
-// console.log(_backUrl)
 class LoginView extends React.Component{
     constructor(props, context){
         super(props, context);
@@ -30,7 +28,6 @@ class LoginView extends React.Component{
     }
     componentDidMount(){
         // this.send("topBar->addItem({text:'aaa',handler:function(){alert()}},icon:"class")");
-
         // 设置默认数据
         let kyCacheIsAccount = JSON.parse(Cache.get(Cache.keys.ky_cache_isAccount));
         if(kyCacheIsAccount){
@@ -69,7 +66,13 @@ class LoginView extends React.Component{
                 this.setState(value);
                 this.props.dispatch(login(this.state.username, this.state.password, this.state.isAccount, () => {
                     setTimeout(() => {
-                        hashHistory.push('/user');
+                        // 如果有需要跳转的链接，则跳转过去，否则直接返回首页
+                        const _backUrl = getQueryString('backUrl');
+                        if(_backUrl){
+                            location.href = _backUrl;
+                        }else{
+                            hashHistory.push('/');
+                        }
                     }, 1000);
                 }));
             }
@@ -93,7 +96,6 @@ class LoginView extends React.Component{
         });
     }
     render(){
-        console.log(this.props.location.search)
         const { getFieldDecorator} = this.props.form;
         return(
             <div className="ky-scrollable bg-login">

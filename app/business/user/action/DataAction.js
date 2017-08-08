@@ -5,7 +5,7 @@ import * as types from './actionTypes';
 import { post, postPublic, putFetch} from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
-import { failLoading } from 'Utils';
+import { failLoading, clearUserSession } from 'Utils';
 
 /*
  * [signout 退出登录]
@@ -22,12 +22,8 @@ export function signout(callback) {
             if(res.success){
                 Toast.hide();
                 // 删除sessionStorage
-                Cache.sessionRemove(Cache.sessionKeys.ky_cache_access_token);
-                Cache.sessionRemove(Cache.sessionKeys.ky_cache_realName);
-                Cache.sessionRemove(Cache.sessionKeys.ky_cache_userName);
-                Cache.sessionRemove(Cache.sessionKeys.ky_cache_memberFlag);
-                Cache.sessionRemove(Cache.sessionKeys.ky_cache_isLogined);
-                Cache.sessionRemove(Cache.sessionKeys.ky_cache_last_login_time);
+                clearUserSession();
+
                 dispatch({
                     type : types.LOGIN,
                     user:{
