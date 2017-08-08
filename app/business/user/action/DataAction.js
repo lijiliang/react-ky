@@ -2,7 +2,7 @@
  * @fileOverview 用户中心 处理数据action
  */
 import * as types from './actionTypes';
-import { post, postPublic, putFetch} from 'FetchData';
+import { get, post, postPublic, putFetch} from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
 import { failLoading, clearUserSession } from 'Utils';
@@ -38,6 +38,28 @@ export function signout(callback) {
                 Toast.success('退出成功', 1);
                 if(callback && typeof callback === 'function'){
                     callback();
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+/*
+ * [getCurrentUserInfo 获取当前登录会员的消息]
+ * @param  {Function} callback [回调函数]
+ */
+export function getCurrentUserInfo(callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = get(Urls.UserCurrent);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
                 }
             }
         }).catch((err) => {

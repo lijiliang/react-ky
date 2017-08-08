@@ -1,18 +1,18 @@
 /**
  * @fileOverview 会员中心首页
  */
- import React from 'react';
- import { Link, hashHistory } from 'react-router';
- import PureRenderMixin from 'react-addons-pure-render-mixin';
- import { bindActionCreators } from 'redux';
- import { connect } from 'react-redux';
- import { signout } from '../action/DataAction';
- import { checkMember } from 'Utils';
+import React from 'react';
+import { Link, hashHistory } from 'react-router';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { signout, getCurrentUserInfo } from '../action/DataAction';
+import { checkMember } from 'Utils';
+import { Cache } from 'kyCommon';
 
-import {Utils} from 'kyCommon'
- import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
- const Item = List.Item;
- const Brief = Item.Brief;
+import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
+const Item = List.Item;
+const Brief = Item.Brief;
 
 import '../resources/UserIndexView.less';
 
@@ -23,11 +23,22 @@ class UserIndexView extends React.Component {
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-
+            userName: '',
+            memberFlag: false,
+            realName: '',
         };
     }
     componentDidMount(){
-        // checkMember();
+        const isToken = Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token) || '';
+        if(isToken){
+            this.props.dispatch(getCurrentUserInfo((res) => {
+                this.setState({
+                    userName: res.userName,
+                    memberFlag: res.memberFlag,
+                    realName: res.realName,
+                });
+            }));
+        }
     }
     // 返回上一页
     gohistoryHandle(){
@@ -42,6 +53,7 @@ class UserIndexView extends React.Component {
         }));
     }
     render(){
+        console.log(this.state)
         return(
             <div className="ky-container-body">
                 <div className="ky-scrollable">
@@ -58,15 +70,15 @@ class UserIndexView extends React.Component {
                         <div className="m-account-view">
                             <div className="account-info">
                                 <div className="account-thumb">
-                                    <img src={Avatar} alt=""/>
+                                    <img src={Avatar}/>
                                 </div>
                                 <div className="account-name">
-                                    <p>丛征，欢迎您！</p>
+                                    <p>{this.state.realName}，欢迎您！</p>
                                 </div>
                             </div>
                             <List className="m-account-type">
-                                <Item extra={'会员'}>帐户类型</Item>
-                                <Item extra={'CN45678909876'}>帐户号码</Item>
+                                <Item extra={this.state.memberFlag ? '会员' : '消费者'}>帐户类型</Item>
+                                <Item extra={this.state.userName}>帐户号码</Item>
                             </List>
                             <List className="m-order-all">
                                 <Item arrow="horizontal" onClick={() => { hashHistory.push('user/order') }}>全部订单</Item>
