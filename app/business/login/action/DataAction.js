@@ -59,7 +59,6 @@ export function login(username, password, isAccount, callback){
                                 token: _token,        //用户token
                             }
                         });
-                        Toast.success('登录成功', 1);
                         // 登录成功，回调
                         if(callback && typeof callback === 'function'){
                             callback();

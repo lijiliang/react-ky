@@ -2,18 +2,21 @@
  * @fileOverview 注册消费者帐号 View
  */
  import React from 'react';
- import { Link } from 'react-router';
+ import { Link, hashHistory } from 'react-router';
  import PureRenderMixin from 'react-addons-pure-render-mixin';
  import { bindActionCreators } from 'redux';
  import { connect } from 'react-redux';
  import * as loginAction from '../action/actionTypes';
  import {regConsumer} from '../action/DataAction';
+ import {login} from 'kyBus/login/action/DataAction';
+
 
  import { createForm } from 'rc-form';
  import classNames from 'classnames';
  import RegxRule from 'kyBase/common/RegxRule';
  import { get, getPublic } from 'kyBase/common/FetchData';
  import Urls from 'kyBase/common/Urls';
+ import { Cache } from 'kyCommon';
 
  import { Button, Toast, NavBar, InputItem } from 'uxComponent';
 
@@ -120,13 +123,29 @@
 
             const _state = this.state;
             // 将数据dispatch过去
-            this.props.dispatch(regConsumer(_state.firstName, _state.lastName, _state.email, _state.password, _state.referenceId))
+            this.props.dispatch(regConsumer(_state.firstName, _state.lastName, _state.email, _state.password, _state.referenceId, this.regSuccessFn))
 
          })
      }
-
+     /**
+      * [regSuccessFn 返回注册后的用户信息，利用用户信息进行自动登录]
+      * @param  {[string]} userName [用户名]
+      * @param  {[string]} password [密码]
+      */
+     regSuccessFn = (userName, password) => {
+         const _self = this;
+         const isAccount = Cache.get(Cache.keys.ky_cache_isAccount) && true;
+         console.log(userName, password, isAccount)
+         const _userName = userName.substr(2); //去掉返回用户名前面的'cn'
+         _self.props.dispatch(login(_userName, password, isAccount, () => {
+             Toast.info('恭喜您，注册成功', 1);
+             setTimeout(() => {
+                 hashHistory.push('/');
+             }, 1000);
+         }));
+     }
      render(){
-         console.log(this.state)
+        //  console.log(this.state)
          const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
 
          // 密码
@@ -296,7 +315,7 @@
  /*  React 与  Redux 绑定 */
  function mapStateToProps(state){
      return {
-         RegModel: state.RegModel
+         LoginModel: state.LoginModel
      };
  }
 

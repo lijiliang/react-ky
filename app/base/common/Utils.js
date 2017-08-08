@@ -78,7 +78,6 @@ export function getQueryString(name){
  * [clearUserSession 清除用户相关sessionStorage]
  */
 export function clearUserSession() {
-    // 删除 用户相关sessionStorage
     Cache.sessionRemove(Cache.sessionKeys.ky_cache_access_token);
     Cache.sessionRemove(Cache.sessionKeys.ky_cache_realName);
     Cache.sessionRemove(Cache.sessionKeys.ky_cache_userName);
