@@ -15,7 +15,7 @@ const RouterFilter={
         const _pathname = nextState.location.pathname;
         // 如果没有登录，跳到登录页面
         if(_pathname.indexOf('user') > -1){
-            checkMember();
+            //checkMember();
         }
     }
 };

@@ -7,6 +7,7 @@
  import { get, getPublic } from 'kyBase/common/FetchData';
  import { createForm } from 'rc-form';
  import classNames from 'classnames';
+ import CopyToClipboard from 'react-copy-to-clipboard';
 
  //组件
  import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
@@ -34,6 +35,14 @@
              isEdit: true
          })
      }
+     // 复制单号
+     copyTextHandle = (text, result) => {
+         if(result){
+             Toast.success('复制单号成功！', 1);
+         }else{
+             Toast.fail('不能复制单号，请手动填写！', 1);
+         }
+     }
      render(){
          return(
              <div className="ky-container-body">
@@ -54,7 +63,12 @@
                                          </div>
                                          <div className="item">
                                              <div className="name">物流单号</div>
-                                             <div className="info">0000000000000000 <span className="copy">复制单号</span></div>
+                                             <div className="info">
+                                                 <span className="order-no">0000000000000000</span>
+                                                 <CopyToClipboard text='asdfghjklkjhgf' onCopy={this.copyTextHandle.bind(this)}>
+                                                     <span className="copy">复制单号</span>
+                                                </CopyToClipboard>
+                                             </div>
                                          </div>
                                          <div className="gobtn">快递100官网查询</div>
                                      </div>
