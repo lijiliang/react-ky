@@ -40,7 +40,7 @@
          if(result){
              Toast.success('复制单号成功！', 1);
          }else{
-             Toast.fail('不能复制单号，请手动填写！', 1);
+             Toast.fail('复制单号出错，请手动填写！', 1);
          }
      }
      render(){

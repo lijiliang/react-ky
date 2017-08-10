@@ -24,7 +24,7 @@ class UserIndexView extends React.Component {
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
             userName: '',
-            memberFlag: false,
+            memberFlag: true,
             realName: '',
         };
     }
@@ -53,7 +53,6 @@ class UserIndexView extends React.Component {
         }));
     }
     render(){
-        console.log(this.state)
         return(
             <div className="ky-container-body">
                 <div className="ky-scrollable">
