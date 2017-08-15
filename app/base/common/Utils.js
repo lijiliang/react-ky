@@ -34,7 +34,7 @@ export function failLoading(err) {
 }
 
 /*
- * [checkMember 检测用户是否登录]
+ * [checkMember 检测用户是否登录,如果没登录就跳到登录页面]
  */
 export function checkMember(){
     const _token = Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token);
@@ -43,6 +43,19 @@ export function checkMember(){
         return true;
     } else {
         goLogin(true); //带返回地址
+        return false;
+    }
+}
+
+/*
+ * [hasMember 检测用户是否登录]
+ */
+export function hasMember(){
+    const _token = Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token);
+    const _isLogined = Cache.sessionGet(Cache.sessionKeys.ky_cache_isLogined);
+    if (_token && _isLogined){
+        return true;
+    } else {
         return false;
     }
 }

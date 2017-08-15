@@ -16,7 +16,6 @@ class KYSideBar extends React.Component{
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
     componentDidMount(){
-
     }
     // 关闭侧边栏
     closeSideHandle(){
@@ -38,7 +37,7 @@ class KYSideBar extends React.Component{
                             <i className="icon icon-close" onClick={this.closeSideHandle.bind(this)}></i>
                         </div>
                         <div className="side-main" ref="sideMain">
-                            <KYMenu />
+                            <KYMenu isLogin={this.props.isLogin}/>
                         </div>
                     </div>
                 </div>
@@ -51,15 +50,11 @@ class KYSideBar extends React.Component{
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
+        CommonModel: state.CommonModel
     };
 }
 
-function mapDispatchToProps(dispatch){
-    return {
-    };
-}
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
 )(KYSideBar);

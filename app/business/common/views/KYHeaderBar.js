@@ -7,6 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Cache } from 'kyCommon';
+import {getNav} from '../action/DataAction';
 
 import NavBar from 'kyBase/components/ux/NavBar';
 import KYSideBar from './KYSideBar';
@@ -52,6 +53,9 @@ class KYHeaderBar extends React.Component{
                 height: '100%'
             });
         }
+
+        // 获取导航菜单数据
+        this.props.dispatch(getNav());
     }
     render(){
         const user = this.props.user;
@@ -73,7 +77,7 @@ class KYHeaderBar extends React.Component{
                         </div>
                     }
                     ><Link to="/"><i className="icon icon-Kyani"></i></Link></NavBar>
-                <KYSideBar />
+                <KYSideBar isLogin={this.state.isLogin}/>
             </header>
         );
     }
@@ -86,11 +90,6 @@ function mapStateToProps(state){
         user: state.LoginModel
     };
 }
-
-function mapDispatchToProps(dispatch){
-}
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
 )(KYHeaderBar);

@@ -80,6 +80,49 @@ export const postPublic = (url, param) => {
 };
 
 /*
+ * [getHasFetch get请求,有无token都可以]
+ * @param  {[string]} url   [请求地址]
+ * @param  {[object]} param [传入的参数]
+ * @return {[object]}       [返回Promise]
+ */
+export const getHasFetch = (url, param) => {
+    const _token = Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token);
+    let _param = {};
+    if(_token){
+        _param = {
+            headers: { Authorization: 'Bearer ' + _token || ''},
+            params: param
+        };
+    }else {
+        _param = {
+            params: param
+        };
+    }
+    return (
+        axios.get(`${url}`, _param)
+    );
+};
+
+/*
+ * [postHasFetch post请求,有无token都可以]
+ * @param  {[string]} url   [请求地址]
+ * @param  {[object]} param [传入的参数]
+ * @return {[object]}       [返回Promise]
+ */
+export const postHasFetch = (url, param) => {
+    const _token = Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token);
+    let _headers = {};
+    if(_token){
+        _headers = {
+            headers: { Authorization: 'Bearer ' + _token || ''}
+        };
+    }
+    return (
+        axios.post(`${url}`, param, _headers)
+    );
+};
+
+/*
  * [putFetch  put请求]
  * @param  {[string]} url   [请求地址]
  * @param  {[object]} param [传入的参数]

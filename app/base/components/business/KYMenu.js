@@ -2,8 +2,10 @@
  * @fileOverview Menu组件
  */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
+import { connect } from 'react-redux';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import {hasMember} from 'Utils';
 import './KYMenu.less';
 
 class KYMenu extends React.Component{
@@ -12,7 +14,8 @@ class KYMenu extends React.Component{
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     }
     componentDidMount(){
-        $('.menu-submenu-title').on('click', function(){
+        $(document).on('click', '.menu-submenu-title', function(){
+        // $('.menu-submenu-title').on('click', function(){
             const mMenuSub = $(this).siblings('.m-menu-sub');
             if(!mMenuSub.hasClass('m-menu-open')){
                 mMenuSub.addClass('m-menu-open');
@@ -29,7 +32,27 @@ class KYMenu extends React.Component{
             }
         });
     }
+    goUrl(url, event){
+        event.preventDefault();
+        // 关闭侧边栏
+        const sideBarWrap = $('.ky-sideBar-wrap');
+        $('.ky-scrollable, .ky-scrollable-white').attr('style', []);
+        sideBarWrap.css({
+            transform: 'translate3d(-100%, 0, 0)'
+        });
+        $('.ky-popup-mask').hide();  //关闭遮罩层
+
+        hashHistory.push(url);
+    }
     render(){
+        const isLogin = this.props.isLogin;  // 是否登录
+        const _nav = this.props.nav;
+        const groupProduct = _nav.get('groupProduct') || [];
+        const about = _nav.get('about')|| [];
+        const help = _nav.get('help')|| [];
+        const singleProduct = _nav.get('singleProduct')|| [];
+        const skinProduct = _nav.get('skinProduct')|| [];    // 护肤产品
+        console.log(about)
         return(
             <div className="ky-menu">
                 <ul className="m-menu-main">
@@ -38,31 +61,71 @@ class KYMenu extends React.Component{
                             <span>消费者告知书</span>
                         </div>
                     </li>
-                    <li className="m-menu-submenu m-menu-submenu-open">
-                        <div className="menu-submenu-title">
-                            <span>登入/注册</span>
-                            <i className="i-right"></i>
-                        </div>
-                        <ul className="m-menu-sub menu-sub-two">
-                            <li className="m-menu-item">登入我的帐号</li>
-                            <li className="m-menu-item">消费者帐户</li>
-                            <li className="m-menu-item">注册会员帐户</li>
-                        </ul>
-                    </li>
+                    {
+                        !isLogin ?
+                                <li className="m-menu-submenu m-menu-submenu-open">
+                                    <div className="menu-submenu-title">
+                                        <span>登入/注册</span>
+                                        <i className="i-right"></i>
+                                    </div>
+                                    <ul className="m-menu-sub menu-sub-two">
+                                        <li className="m-menu-item" onClick={this.goUrl.bind(this, '/login')}>登入我的帐号</li>
+                                        <li className="m-menu-item" onClick={this.goUrl.bind(this, '/account/regconsumer')}>消费者帐户</li>
+                                        <li className="m-menu-item" onClick={this.goUrl.bind(this, '/account/regmember')}>注册会员帐户</li>
+                                    </ul>
+                                </li>
+                        : null
+                    }
+
                     <li className="m-menu-submenu m-menu-submenu-open">
                         <div className="menu-submenu-title">
                             <span>营养补充品</span>
                             <i className="i-right"></i>
                         </div>
-                        <ul className="m-menu-sub menu-sub-two">
-                            <li className="m-menu-item">尼多乐</li>
-                            <li className="m-menu-item">至尊尼多乐</li>
-                            <li className="m-menu-item">至尊尼多乐冲粉</li>
-                            <li className="m-menu-item">新东思（瓶装）</li>
-                            <li className="m-menu-item">新东思（便利装)</li>
-                            <li className="m-menu-item">新思康</li>
-                            <li className="m-menu-item">诺丽茶</li>
-                        </ul>
+
+                        {
+                            isLogin ?
+                                <ul className="m-menu-sub menu-sub-two">
+                                <li className="m-menu-submenu menu-sub-three">
+                                    <div className="menu-submenu-title">
+                                        <span>套组</span>
+                                        <i className="i-right"></i>
+                                    </div>
+                                    <ul className="m-menu-sub">
+                                        {
+                                            groupProduct.map((item) => {
+                                                return(
+                                                    <li className="m-menu-item" data-id={item.id}>{item.name}</li>
+                                                );
+                                            })
+                                        }
+                                    </ul>
+                                </li>
+                                <li className="m-menu-submenu menu-sub-three">
+                                    <div className="menu-submenu-title">
+                                        <span>单品</span>
+                                        <i className="i-right"></i>
+                                    </div>
+                                    <ul className="m-menu-sub">
+                                        {
+                                            singleProduct.map((item) => {
+                                                return(
+                                                    <li className="m-menu-item" data-id={item.id}>{item.name}</li>
+                                                );
+                                            })
+                                        }
+                                    </ul>
+                                </li>
+                                </ul>
+                            :
+                                singleProduct.map((item) => {
+                                    return(
+                                        <ul className="m-menu-sub menu-sub-two">
+                                            <li className="m-menu-item" data-id={item.id}>{item.name}</li>
+                                        </ul>
+                                    );
+                                })
+                        }
                     </li>
                     <li className="m-menu-submenu m-menu-submenu-open">
                         <div className="menu-submenu-title">
@@ -70,12 +133,13 @@ class KYMenu extends React.Component{
                             <i className="i-right"></i>
                         </div>
                         <ul className="m-menu-sub menu-sub-two">
-                            <li className="m-menu-item">菲柔诗护肤系列套装</li>
-                            <li className="m-menu-item">菲柔诗洗面奶</li>
-                            <li className="m-menu-item">菲柔诗日霜</li>
-                            <li className="m-menu-item">菲柔诗精华素</li>
-                            <li className="m-menu-item">菲柔诗晚霜</li>
-                            <li className="m-menu-item">菲柔诗眼霜</li>
+                            {
+                                skinProduct.map((item) => {
+                                    return(
+                                        <li className="m-menu-item" data-id={item.id}>{item.name}</li>
+                                    );
+                                })
+                            }
                         </ul>
                     </li>
                     <li className="m-menu-submenu">
@@ -94,23 +158,33 @@ class KYMenu extends React.Component{
                             <i className="i-right"></i>
                         </div>
                         <ul className="m-menu-sub menu-sub-two">
-                            <li className="m-menu-item">公司简介</li>
-                            <li className="m-menu-item">携手关爱计划</li>
-                            <li className="m-menu-submenu menu-sub-three">
-                                <div className="menu-submenu-title">
-                                    <span>研发理念</span>
-                                    <i className="i-right"></i>
-                                </div>
-                                <ul className="m-menu-sub">
-                                    <li className="m-menu-item">健康三角组合</li>
-                                    <li className="m-menu-item">优质保证</li>
-                                    <li className="m-menu-item">科学咨询委员会</li>
-                                    <li className="m-menu-item">超强组件成分</li>
-                                    <li className="m-menu-item">干细胞研究</li>
-                                </ul>
-                            </li>
-                            <li className="m-menu-item">跨境电子商务</li>
-                            <li className="m-menu-item">联系我们</li>
+                            {
+                                about.map((item) => {
+                                    if(item.sub && item.sub.length>0){
+                                        return(
+                                            <li className="m-menu-submenu menu-sub-three">
+                                                <div className="menu-submenu-title">
+                                                    <span>{item.name}</span>
+                                                    <i className="i-right"></i>
+                                                </div>
+                                                <ul className="m-menu-sub">
+                                                    {
+                                                        item.sub.map((subItem) => {
+                                                            return(
+                                                                <li className="m-menu-item" data-id={subItem.id}>{subItem.name}</li>
+                                                            );
+                                                        })
+                                                    }
+                                                </ul>
+                                            </li>
+                                        );
+                                    }else{
+                                        return(
+                                            <li className="m-menu-item" data-id={item.id}>{item.name}</li>
+                                        );
+                                    }
+                                })
+                            }
                         </ul>
                     </li>
                     <li className="m-menu-submenu">
@@ -119,18 +193,27 @@ class KYMenu extends React.Component{
                             <i className="i-right"></i>
                         </div>
                         <ul className="m-menu-sub menu-sub-two">
-                            <li className="m-menu-submenu menu-sub-three">
-                                <div className="menu-submenu-title">
-                                    <span>售后服务</span>
-                                    <i className="i-right"></i>
-                                </div>
-                                <ul className="m-menu-sub">
-                                    <li className="m-menu-item">退货承诺</li>
-                                    <li className="m-menu-item">换货承诺</li>
-                                    <li className="m-menu-item">帐户安全</li>
-                                </ul>
-                            </li>
-                            <li className="m-menu-submenu menu-sub-three">
+                            {help.map((item) => {
+                                return(
+                                    <li className="m-menu-submenu menu-sub-three">
+                                        <div className="menu-submenu-title">
+                                            <span>{item.name}</span>
+                                            <i className="i-right"></i>
+                                        </div>
+                                        <ul className="m-menu-sub">
+                                            {
+                                                item.sub.map((subItem) => {
+                                                    return(
+                                                        <li className="m-menu-item" data-id={subItem.id}>{subItem.name}</li>
+                                                    );
+                                                })
+                                            }
+                                        </ul>
+                                    </li>
+                                );
+                            })}
+
+                             {/* <li className="m-menu-submenu menu-sub-three">
                                 <div className="menu-submenu-title">
                                     <span>购物指南</span>
                                     <i className="i-right"></i>
@@ -140,31 +223,12 @@ class KYMenu extends React.Component{
                                     <li className="m-menu-item">常见问题</li>
                                     <li className="m-menu-item">微信支付教学</li>
                                 </ul>
-                            </li>
-                            <li className="m-menu-submenu menu-sub-three">
-                                <div className="menu-submenu-title">
-                                    <span>政策及程序</span>
-                                    <i className="i-right"></i>
-                                </div>
-                                <ul className="m-menu-sub">
-                                    <li className="m-menu-item">消费者告知书</li>
-                                    <li className="m-menu-item">海关总署公告</li>
-                                    <li className="m-menu-item">跨境商务规范简说</li>
-                                    <li className="m-menu-item">网站使用条款</li>
-                                    <li className="m-menu-item">法律声明</li>
-                                    <li className="m-menu-item">正品保障</li>
-                                </ul>
-                            </li>
+                            </li> */}
                         </ul>
                     </li>
                     <li className="m-menu-submenu">
                         <div className="menu-submenu-title">
                             <span>防伪溯源码</span>
-                        </div>
-                    </li>
-                    <li className="m-menu-submenu">
-                        <div className="menu-submenu-title">
-                            <span>关注官方微信</span>
                         </div>
                     </li>
                 </ul>
@@ -173,4 +237,12 @@ class KYMenu extends React.Component{
     }
 }
 
-export default KYMenu;
+/*  React 与  Redux 绑定 */
+function mapStateToProps(state){
+    return {
+        nav: state.NavModel
+    };
+}
+export default connect(
+    mapStateToProps,
+)(KYMenu);
