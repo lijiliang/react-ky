@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import {getHome} from '../action/DataAction'
 
 import { get, past } from 'kyBase/common/FetchData';
 import { Urls } from 'kyCommon';
@@ -27,22 +28,26 @@ import Banner1 from 'kyBus/home/resources/img/banner1.png';
 import Banner2 from 'kyBus/home/resources/img/banner2.png';
 const slideList = [
     {
-        src: Banner1,
+        imgPath: Banner1,
         href: '',
-        title: 'Banner1'
+        name: 'Banner1',
+        id: '',
     },{
-        src: Banner2,
+        imgPath: Banner2,
         href: '',
-        title: 'Banner2'
+        name: 'Banner2',
+        id: '',
     },{
-        src: Banner1,
+        imgPath: 'https://kyaniyoupaiyun.b0.upaiyun.com/1470639673288.jpg',
         href: '',
-        title: 'Banner2'
+        name: 'Banner3',
+        id: '',
     },{
-        src: Banner2,
+        imgPath: 'https://kyaniyoupaiyun.b0.upaiyun.com/1488422579954.jpg',
         href: '',
-        title: 'Banner2'
-    }
+        name: 'Banner4',
+        id: '',
+    },
 ];
 
 class IndexView extends React.Component{
@@ -54,35 +59,16 @@ class IndexView extends React.Component{
         };
     }
     componentDidMount(){
-        //console.log('homeInfo: ', this.props.homeInfo);
-        /*
-        async function axiosGet(){
-            try{
-                const response = await get(`/api/2`);
-                await response;
-                console.log(response.data);
-            }catch(err){
-                console.log(err);
-            }
-        }
-        axiosGet();
-        */
-
-        // const response = get('/api/2', {
-        //     a:1,
-        //     b:2
-        // });
-        // console.log(response)
-        // response.then((res) => {
-        //     console.log(res);
-        // }).catch((err) => {
-        //     console.log(err);
-        // });
+        // 获取首页数据
+        this.props.dispatch(getHome());
     }
     render(){
+        const homeData = this.props.home;
+        const _bannerList = homeData.get('banner');
+        console.log(_bannerList, slideList)
         return(
                 <div className="ky-scrollable-white">
-                    <SlideSwipe List={slideList}/>
+                    <SlideSwipe List={_bannerList}/>
 
                     <div className="m-category">
                         {/* 营养补充品 */}
@@ -151,16 +137,10 @@ class IndexView extends React.Component{
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
-        homeInfo: state.HomeModel
-    };
-}
-
-function mapDispatchToProps(dispatch){
-    return {
+        home: state.HomeModel
     };
 }
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(IndexView);

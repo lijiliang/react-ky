@@ -15,7 +15,6 @@ export default class Loading extends React.Component {
         toast: false
     }
     render() {
-        console.log('loading')
         const { prefixCls, className, animating, toast, size, text } = this.props;
         const wrapClass = classNames({
             [`${prefixCls}`]: true,

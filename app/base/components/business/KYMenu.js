@@ -52,7 +52,6 @@ class KYMenu extends React.Component{
         const help = _nav.get('help')|| [];
         const singleProduct = _nav.get('singleProduct')|| [];
         const skinProduct = _nav.get('skinProduct')|| [];    // 护肤产品
-        console.log(about)
         return(
             <div className="ky-menu">
                 <ul className="m-menu-main">

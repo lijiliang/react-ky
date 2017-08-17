@@ -1,11 +1,18 @@
-import * as actionTypes from '../action/actionTypes';
-const initialState = {ishome: false};
+/**
+ * @fileOverview 首页 model
+ */
+import CreateReducer from 'kyBase/reducers/CreateReducer';
+import Immutable from 'immutable';
+import * as type from '../action/actionTypes';
 
-export default function userinfo (state = initialState, action) {
-    switch (action.type) {
-    case actionTypes.USERINFO_UPDATE:
-        return action.data;
-    default:
-        return state;
+const navCommonMap = Immutable.fromJS({
+    banner: [],
+});
+
+export default CreateReducer(navCommonMap, {
+    [type.HOME](state, action){
+        const newState = state.set('banner', action.home.banner)
+        ;
+        return newState;
     }
-}
+});

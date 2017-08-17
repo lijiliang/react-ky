@@ -3,9 +3,10 @@
  * 需要传入的参数是：List
  * [
  *  {
-         src: '',
+         imgPath: '',
          href: '',
-         title: ''
+         name: '',
+         id: '',
      }
  * ]
  */
@@ -13,6 +14,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ReactSwipe from 'react-swipe';
+import { Loading} from 'uxComponent';
 
 import './SlideSwipe.less';
 class SlideSwipe extends React.Component{
@@ -33,24 +35,34 @@ class SlideSwipe extends React.Component{
         const list = this.props.List;
         return(
             <div className="ky-slide-swipe">
-                <ReactSwipe className="carousel" swipeOptions={opt}>
-                    {
-                        list.map((item, index) => {
-                            return(
-                                <div className="slide-item" key={index}><img src={item.src} alt={item.title}/></div>
-                            );
-                        })
-                    }
-                </ReactSwipe>
-                <div className="slide-dot">
-                    <ul>
-                        {
-                            list.map((item, index) => {
-                                return(<li className={this.state.index === index ? 'selected' : ''} key={index}></li>);
-                            })
-                        }
-                    </ul>
-                </div>
+                {
+                    list.length > 1 ?
+                        <div class="m-slide-swipe">
+                            <ReactSwipe className="carousel" swipeOptions={opt}>
+                                {
+                                    list.map((item, index) => {
+                                        return(
+                                            <div className="slide-item" key={index}><img src={item.imgPath} alt={item.name}/></div>
+                                        );
+                                    })
+                                }
+                            </ReactSwipe>
+                            <div className="slide-dot">
+                                <ul>
+                                    {
+                                        list.map((item, index) => {
+                                            return(<li className={this.state.index === index ? 'selected' : ''} key={index}></li>);
+                                        })
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    :
+                        <div className="m-home-loading">
+                            <Loading/>
+                        </div>
+                }
+
             </div>
         );
     }
