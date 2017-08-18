@@ -19,35 +19,34 @@ export default class SubGroupItem extends React.Component {
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-            showNumber: 1,
         };
     }
     render(){
+        const _item = this.props.data || {};
+        const imgPath = _item.imgPath + '!/fwfh/600x600/format/webp';  // 产品图片，用webp图片格式
         return(
             <div className="sub-single-item">
                 <div className="item-name">
-                    <h2>诺丽茶5盒装</h2>
-                    <img src="http://fpoimg.com/300x300?text=img"/>
+                    <h2>{_item.name}</h2>
+                    <img src={imgPath}/>
                 </div>
-                <div className="single-product-item">
-                    菲柔诗精华素 (30毫升)
-                </div>
+                <div className="single-product-item">{_item.specName}</div>
                 <div className="item-other">
                     <ul className="info-list">
                         <li className="price">
                             <span>会员价</span>
-                            <span>￥6,888.00</span>
+                            <span>￥{_item.salePrice}</span>
                         </li>
                         <li>
                             <span>原价</span>
-                            <span className="center-line">￥6,888.00</span>
+                            <span className="center-line">￥{_item.originalPrice}</span>
                         </li>
                         <li>
                             <span>积分</span>
-                            <span>125</span>
+                            <span>{_item.qv}</span>
                         </li>
                     </ul>
-                    <IndexAddCart />
+                    <IndexAddCart id={_item.id}/>
                 </div>
             </div>
         );

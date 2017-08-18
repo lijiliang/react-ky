@@ -23,32 +23,6 @@ import '../resources/IndexView.less';
 import ProductsItemImg1 from 'kyBus/home/resources/img/products-item1.jpg';
 import ProductsItemImg2 from 'kyBus/home/resources/img/products-item2.jpg';
 import ProductsItemImg3 from 'kyBus/home/resources/img/products-item3.jpg';
-// 幻灯片模拟数据
-import Banner1 from 'kyBus/home/resources/img/banner1.png';
-import Banner2 from 'kyBus/home/resources/img/banner2.png';
-const slideList = [
-    {
-        imgPath: Banner1,
-        href: '',
-        name: 'Banner1',
-        id: '',
-    },{
-        imgPath: Banner2,
-        href: '',
-        name: 'Banner2',
-        id: '',
-    },{
-        imgPath: 'https://kyaniyoupaiyun.b0.upaiyun.com/1470639673288.jpg',
-        href: '',
-        name: 'Banner3',
-        id: '',
-    },{
-        imgPath: 'https://kyaniyoupaiyun.b0.upaiyun.com/1488422579954.jpg',
-        href: '',
-        name: 'Banner4',
-        id: '',
-    },
-];
 
 class IndexView extends React.Component{
     constructor(props, context){
@@ -65,7 +39,7 @@ class IndexView extends React.Component{
     render(){
         const homeData = this.props.home;
         const _bannerList = homeData.get('banner');
-        console.log(_bannerList, slideList)
+        const _product = homeData.get('product');
         return(
                 <div className="ky-scrollable-white">
                     <SlideSwipe List={_bannerList}/>
@@ -76,52 +50,71 @@ class IndexView extends React.Component{
                             <div className="category-sub">
                                 <IndexCategorySubItemView title="套组">
                                     <div className="sub-view clearfix">
-                                        <SubGroupItem />
-                                        <SubGroupItem />
+                                        {
+                                            _product.nutritionGroup && _product.nutritionGroup.map((item) => {
+                                                return(
+                                                    <SubGroupItem data={item}/>
+                                                );
+                                            })
+                                        }
                                     </div>
                                 </IndexCategorySubItemView>
                                 <IndexCategorySubItemView title="单品">
                                     <div className="sub-view clearfix">
-                                        <SubSingleItem />
-                                        <SubSingleItem />
-                                        <SubSingleItem />
-                                        <SubSingleItem />
-                                        <SubSingleItem />
+                                        {
+                                            _product.nutrition && _product.nutrition.map((item) => {
+                                                return(
+                                                    <SubSingleItem data={item}/>
+                                                );
+                                            })
+                                        }
                                     </div>
                                 </IndexCategorySubItemView>
                             </div>
                         </IndexCategoryItemView>
 
-                        {/* 营养补充品 */}
+                        {/* 护肤产品 */}
                         <IndexCategoryItemView title="护肤产品" thumb={ProductsItemImg2}>
                             <div className="category-sub">
                                 <IndexCategorySubItemView title="套组">
                                     <div className="sub-view clearfix">
-                                        <SubGroupItem />
-                                        <SubGroupItem />
+                                        {
+                                            _product.skinGroup && _product.skinGroup.map((item) => {
+                                                return(
+                                                    <SubGroupItem data={item}/>
+                                                );
+                                            })
+                                        }
                                     </div>
                                 </IndexCategorySubItemView>
                                 <IndexCategorySubItemView title="单品">
                                     <div className="sub-view clearfix">
-                                        <SubSingleItem />
-                                        <SubSingleItem />
-                                        <SubSingleItem />
-                                        <SubSingleItem />
-                                        <SubSingleItem />
+                                        {
+                                            _product.skin && _product.skin.map((item) => {
+                                                return(
+                                                    <SubSingleItem data={item}/>
+                                                );
+                                            })
+                                        }
                                     </div>
                                 </IndexCategorySubItemView>
                             </div>
                         </IndexCategoryItemView>
 
-                        {/* 营养补充品 */}
+                        {/* 推广优惠及其它 */}
                         <IndexCategoryItemView title="推广优惠及其它" thumb={ProductsItemImg3}>
                             <div className="category-sub">
                                 <IndexCategorySubItemView title="推广优惠">
                                 </IndexCategorySubItemView>
                                 <IndexCategorySubItemView title="其它">
                                     <div className="sub-view clearfix">
-                                        <SubSingleItem />
-                                        <SubSingleItem />
+                                        {
+                                            _product.other && _product.other.map((item) => {
+                                                return(
+                                                    <SubSingleItem data={item}/>
+                                                );
+                                            })
+                                        }
                                     </div>
                                 </IndexCategorySubItemView>
                             </div>

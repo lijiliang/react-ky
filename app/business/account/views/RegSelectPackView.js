@@ -89,7 +89,7 @@ class RegSelectPackView extends React.Component {
                         </div>
                         <div className="m-pack">
                              {this.state.groupList.map(item => (
-                                <PackItemView icon value={item.groupId} checked={this.state.groupId} listData={item} onChange={this.handleChanges.bind(this, item)}/>
+                                <PackItemView icon value={item.id} checked={this.state.groupId} listData={item} onChange={this.handleChanges.bind(this, item)}/>
                              ))}
                             <div className="m-pack-other">
                                 <p>只须购买100元的会藉或购买以上</p>
