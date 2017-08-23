@@ -1,1 +1,1 @@
-export const LOGIN = 'LOGIN';   // 登录
+export const SHOPPINGCAR = 'SHOPPINGCAR';   // 购物车

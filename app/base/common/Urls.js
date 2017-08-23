@@ -15,6 +15,7 @@ const Urls = {
     Address: profile.server + '/starspower/shop/service/v1/address',      //获取所有省市区数据
     Nav: profile.server + '/starspower/shop/service/v1/nav', // 获取左侧菜单(栏目)数据
     Home: profile.server + '/starspower/shop/service/v1/home', // 首页数据
+    ShoppingCar: profile.server + '/starspower/shop/service/v1/shoppingcar', // 商品购物车
 };
 
 export default Urls;

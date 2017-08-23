@@ -6,8 +6,8 @@ import { Link } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as loginAction from '../action/actionTypes';
-import {login} from '../action/DataAction';
+import * as ShoppingAction from '../action/actionTypes';
+import {getShoppingCar} from '../action/DataAction';
 import classNames from 'classnames';
 
 import { Button, Toast, NavBar, Stepper, List } from 'uxComponent';
@@ -38,6 +38,10 @@ class CartIndexView extends React.Component{
     }
     componentDidMount(){
         this.checkAll();
+
+        this.props.dispatch(getShoppingCar(() => {
+            console.log('a');
+        }));
     }
     // 返回上一页
     gohistoryHandle(){

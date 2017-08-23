@@ -19,7 +19,6 @@ export default class SubGroupItem extends React.Component {
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-            showNumber: 1,
         };
     }
     render(){
@@ -47,7 +46,7 @@ export default class SubGroupItem extends React.Component {
                             <span>{_item.qv}</span>
                         </li>
                     </ul>
-                    <IndexAddCart id={_item.id}/>
+                    <IndexAddCart id={_item.id} isGroup={true}/>
                 </div>
             </div>
         );

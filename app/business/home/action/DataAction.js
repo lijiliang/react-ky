@@ -2,7 +2,7 @@
  * @fileOverview 首页 处理数据action
  */
  import * as types from './actionTypes';
- import { getHasFetch} from 'FetchData';
+ import { getHasFetch, post} from 'FetchData';
  import { Urls } from 'kyCommon';
  import { Toast } from 'uxComponent';
  import { failLoading} from 'Utils';
@@ -24,6 +24,37 @@ export function getHome(callback) {
                     type: types.HOME,
                     home: res.data
                 });
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+/*
+ * [addShoppingCar 加入购物车]
+ * @param  {Function} callback [回调函数]
+ * @return {[type]}            [description]
+ */
+export function addShoppingCar(id, isGroup, callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const _data = {
+            productId: id,
+            isGroup: isGroup
+        };
+        const response = post(Urls.ShoppingCar, _data);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                // dispatch({
+                //     type: types.HOME,
+                //     home: res.data
+                // });
                 if(callback && typeof callback === 'function'){
                     callback(res.data);
                 }

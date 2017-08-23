@@ -46,7 +46,7 @@ export default class SubGroupItem extends React.Component {
                             <span>{_item.qv}</span>
                         </li>
                     </ul>
-                    <IndexAddCart id={_item.id}/>
+                    <IndexAddCart id={_item.id} isGroup={false}/>
                 </div>
             </div>
         );
