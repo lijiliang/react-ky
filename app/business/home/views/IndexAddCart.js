@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { addShoppingCar, putShoppingCar } from '../action/DataAction'
+import { addShoppingCar, updateShoppingCar } from '../action/DataAction'
 import { getShoppingCarCount } from 'kyBus/common/action/DataAction'
 import classNames from 'classnames';
 import { Toast } from 'uxComponent';
@@ -22,15 +22,19 @@ class SubGroupItem extends React.Component {
         this.state = {
             showNumber: 1,
             isShowStepper: false,
+            carId: 0,
         };
     }
     // 加入购物车
     addCartHandle = () => {
         const props = this.props;
-        this.props.dispatch(addShoppingCar(props.productId, props.groupFlag, 1, () => {
+        this.props.dispatch(addShoppingCar(props.productId, props.groupFlag, 1, (res) => {
             Toast.success('成功加入购物车', 2);
-            // 加入购物车 成功后显示加减
-            this.setState({ isShowStepper: true });
+            this.setState({
+                isShowStepper: true, //显示加减按钮
+                carId: res.carId,    // 购物车ID
+                showNumber: res.num  // 购物车数量
+            });
             setTimeout(() => {
                 this.getShoppingCarCount();
             }, 2000)
@@ -40,28 +44,23 @@ class SubGroupItem extends React.Component {
 
     // 改变数量
     onChangeNum = (val) => {
-        console.log(val);
-        // this.setState({ showNumber: val });
         const props = this.props;
-        this.props.dispatch(putShoppingCar(props.productId, props.groupFlag, val, () => {
+        this.props.dispatch(updateShoppingCar(this.state.carId, props.groupFlag, val, (res) => {
             // Toast.success('成功加入购物车', 2);
-            // 加入购物车 成功后显示加减
-            this.setState({ showNumber: val });
-            setTimeout(() => {
-                this.getShoppingCarCount();
-            }, 2000)
+            this.setState({
+                carId: res.carId,
+                showNumber: res.num
+            });
+            this.getShoppingCarCount();
         }))
     }
 
     // 获取购物车总数
     getShoppingCarCount(){
-        this.props.dispatch(getShoppingCarCount((res) => {
-            console.log(res)
-        }))
+        this.props.dispatch(getShoppingCarCount())
     }
 
     render(){
-        console.log(this.props)
         return(
             <div className="m-add-cart">
                 {!this.state.isShowStepper ? <button onClick={this.addCartHandle}>加入购物车</button> : null}

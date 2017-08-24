@@ -1,5 +1,5 @@
 /**
- * @fileOverview 用户中心 处理数据action
+ * @fileOverview common 处理数据action
  */
 import * as types from './actionTypes';
 import { getHasFetch, get} from 'FetchData';

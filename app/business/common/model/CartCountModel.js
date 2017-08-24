@@ -10,8 +10,8 @@ const navCommonMap = Immutable.fromJS({
 });
 
 export default CreateReducer(navCommonMap, {
-    [type.NAV](state, action){
-        const newState = state.set('cartcount', action.cartcount.num)
+    [type.CARTCOUNT](state, action){
+        const newState = state.set('cartcount', action.cartcount.catNum)
         ;
         return newState;
     }

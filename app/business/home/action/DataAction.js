@@ -37,8 +37,10 @@ export function getHome(callback) {
 
 /*
  * [addShoppingCar 加入购物车]
+ * @param {[string]}   productId [传productId则累加数量，传carId则更新数量]
+ * @param {[boolean]}   groupFlag [是否套组]
+ * @param {[string || number]}   num   [数量]
  * @param  {Function} callback [回调函数]
- * @return {[type]}            [description]
  */
 export function addShoppingCar(productId, groupFlag, num, callback) {
     return (dispatch, getState) => {
@@ -48,7 +50,6 @@ export function addShoppingCar(productId, groupFlag, num, callback) {
             groupFlag,
             num
         };
-        console.log(_data)
         const response = post(Urls.ShoppingCar, _data);
         response.then((result) => {
             const res = result.data;
@@ -69,20 +70,21 @@ export function addShoppingCar(productId, groupFlag, num, callback) {
 }
 
 /*
- * [putShoppingCar 更新指定的商品 加，减]
+ * [updateShoppingCar 更新购物车]
+ * @param {[string]}   carId [传carId则更新数量]
+ * @param {[boolean]}   groupFlag [是否套组]
+ * @param {[string || number]}   num   [数量]
  * @param  {Function} callback [回调函数]
- * @return {[type]}            [description]
  */
-export function putShoppingCar(productId, groupFlag, num, callback) {
+export function updateShoppingCar(carId, groupFlag, num, callback) {
     return (dispatch, getState) => {
         Toast.loading('加载中...', 200);
         const _data = {
-            productId,
+            carId,
             groupFlag,
             num
         };
-        console.log(_data)
-        const response = putFetch(Urls.ShoppingCar, _data);
+        const response = post(Urls.ShoppingCar, _data);
         response.then((result) => {
             const res = result.data;
             if(res.success){
