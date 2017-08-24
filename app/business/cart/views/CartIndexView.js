@@ -10,7 +10,7 @@ import * as ShoppingAction from '../action/actionTypes';
 import {getShoppingCar} from '../action/DataAction';
 import classNames from 'classnames';
 
-import { Button, Toast, NavBar, Stepper, List } from 'uxComponent';
+import { Button, Toast, NavBar, Stepper, List, Modal, Loading } from 'uxComponent';
 const Item = List.Item;
 const Brief = Item.Brief;
 import { Cache } from 'kyCommon';
@@ -24,23 +24,26 @@ class CartIndexView extends React.Component{
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-            showNumber: 2,
-            list: [
-                {text:'6点起床',isChecked:false, num: 1},
-                {text:'7点出门',isChecked:true, num: 2},
-                {text:'8点吃早饭',isChecked:true, num: 3},
-                {text:'9点上班',isChecked:true, num: 4},
-                {text:'12点下班',isChecked:true, num: 5}
-            ],
+            // list: [
+            //     {text:'6点起床',active:false, num: 1},
+            //     {text:'7点出门',active:true, num: 2},
+            //     {text:'8点吃早饭',active:true, num: 3},
+            //     {text:'9点上班',active:true, num: 4},
+            //     {text:'12点下班',active:true, num: 5}
+            // ],
+            list: [],
             isAllChecked: false,
         };
         this.changeStatus = this.changeStatus.bind(this);
     }
     componentDidMount(){
-        this.checkAll();
-
-        this.props.dispatch(getShoppingCar(() => {
-            console.log('a');
+        // this.checkAll();
+        this.props.dispatch(getShoppingCar((res) => {
+            this.setState({
+                list: res.items
+            });
+            // 是否全选
+            this.checkAll();
         }));
     }
     // 返回上一页
@@ -49,8 +52,8 @@ class CartIndexView extends React.Component{
     }
 
     //改变数量
-    numItemChangeHandle(index, num){
-        this.state.list[index].num = num;
+    numItemChangeHandle(index, buyNum){
+        this.state.list[index].buyNum = buyNum;
         this.setState({
             list: this.state.list,
             refresh:Math.random()
@@ -59,12 +62,12 @@ class CartIndexView extends React.Component{
     /**
      * @description 单个商品单选框的属性
      * @param {number} index 索引
-     * @param {boolean} isChecked 是否选中
+     * @param {boolean} active 是否选中
      * @returns {Voild}
     */
-    changeStatus(index,isChecked) {
-        console.log('单选：', index, isChecked)
-        this.state.list[index].isChecked = isChecked;
+    changeStatus(index,active) {
+        console.log('单选：', index, active)
+        this.state.list[index].active = active;
         this.setState({
             list: this.state.list,
             refresh:Math.random()
@@ -78,12 +81,18 @@ class CartIndexView extends React.Component{
       * @returns {Voild}
      */
     deleteItemHandle(index){
-        this.state.list.splice(index,1);
-        //删除完成后来更新下页面的内容
-        this.setState({
-            list : this.state.list,
-            refresh:Math.random()
-        });
+        Modal.alert('删除', '确定删除么?', [
+          { text: '取消'},
+          { text: '确定', onPress: (() => {
+              console.log(index)
+          })},
+      ])
+        // this.state.list.splice(index,1);
+        // //删除完成后来更新下页面的内容
+        // this.setState({
+        //     list : this.state.list,
+        //     refresh:Math.random()
+        // });
     }
 
     /*
@@ -91,7 +100,7 @@ class CartIndexView extends React.Component{
      * 如果所有产品都选择了，就设置isAllChecked为true
     */
     checkAll(){
-        if(this.state.list.every(function(list){ return list.isChecked })){
+        if(this.state.list.every(function(list){ return list.active })){
             this.setState({
                 isAllChecked: true
             });
@@ -110,7 +119,7 @@ class CartIndexView extends React.Component{
         const checked = e.target.checked;
         //修改每个产品的状态
         this.state.list.forEach(function(list){
-            list.isChecked = checked;
+            list.active = checked;
         });
         //修改isAllChecked里面的值
         this.setState({
@@ -120,6 +129,7 @@ class CartIndexView extends React.Component{
     }
     render(){
         console.log(this.state)
+        const _getShappingcar = this.props.shappingcar
         const isAllCheckedCls = classNames({
             [`icon`]: true,
             [`icon-radio`]: true,
@@ -132,178 +142,191 @@ class CartIndexView extends React.Component{
                         <NavBar
                             onLeftClick={this.gohistoryHandle.bind(this)}
                             ><div className="navbar-cart-tit"><i className="icon icon-shoppingCart"></i>购物车</div></NavBar>
+                            {
+                                this.state.list.length > 1 ?
+                                    <div>
+                                        <div className="m-cart">
+                                            {this.state.list.map((item, index) => {
+                                                return(
+                                                    <CartItemView key={index} index={index} ListItem={item} deleteItem={this.deleteItemHandle.bind(this)} changeStatus={this.changeStatus} numItem={this.numItemChangeHandle.bind(this)}/>
+                                                )
+                                            })}
 
-                            <div className="m-cart">
-                                {this.state.list.map((item, index)=>{
-                                    return(
-                                        <CartItemView key={index} index={index} ListItem={item} deleteItem={this.deleteItemHandle.bind(this)} changeStatus={this.changeStatus} numItem={this.numItemChangeHandle.bind(this)}/>
-                                    )
-                                })}
-
-                                {/* <div className="cart-item">
-                                    <div className="item-header">
-                                        <div className="header-name">
-                                            <label>
-                                                <div className="pack-radio">
-                                                    <input type="checkbox" />
-                                                    <i className="icon icon-radio"></i>
+                                            {/* <div className="cart-item">
+                                                <div className="item-header">
+                                                    <div className="header-name">
+                                                        <label>
+                                                            <div className="pack-radio">
+                                                                <input type="checkbox" />
+                                                                <i className="icon icon-radio"></i>
+                                                            </div>
+                                                        </label>
+                                                        <span className="name">新乐思</span>
+                                                    </div>
+                                                    <div className="header-price">
+                                                        <span>合计 <i className="price">￥4,200.00</i></span>
+                                                        <i className="icon icon-cancel"></i>
+                                                    </div>
                                                 </div>
-                                            </label>
-                                            <span className="name">新乐思</span>
+                                                <div className="item-content">
+                                                    <div className="thumb">
+                                                        <img src="http://fpoimg.com/230x280?text=img" alt=""/>
+                                                    </div>
+                                                    <div className="info">
+                                                        <div className="info-item">
+                                                            <div className="name name-tit">新乐思新乐新乐思新乐</div>
+                                                            <div className="number">数量</div>
+                                                        </div>
+                                                        <div className="info-item">
+                                                            <div className="name">
+                                                                <p>蓝莓复合果汁饮品(便利装) </p>
+                                                                <p>900毫升 (30袋)</p>
+                                                            </div>
+                                                            <div className="number">12件/套</div>
+                                                        </div>
+                                                        <div className="info-subtotal">
+                                                            <span>会员价</span>
+                                                            <span className="price">￥420.00</span>
+                                                        </div>
+                                                        <div className="info-foot">
+                                                            <Stepper
+                                                                showNumber
+                                                                min={1}
+                                                                max={500}
+                                                                value={this.state.showNumber}
+                                                                onChange={this.onChange}
+                                                                onOkClick={this.onClickHandle}
+                                                            />
+                                                            <span className="isstock">有货</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="cart-item cart-item-guoups">
+                                                <div className="item-header">
+                                                    <div className="header-name">
+                                                        <i className="icon icon-radio icon-selectFill"></i>
+
+                                                        <span className="name">家庭健康组合</span>
+                                                    </div>
+                                                    <div className="header-price">
+                                                        <span>合计 <i className="price">￥4,200.00</i></span>
+                                                        <i className="icon icon-cancel"></i>
+                                                    </div>
+                                                </div>
+                                                <div className="guoups-item">
+                                                    <div className="item-content">
+                                                        <div className="thumb">
+                                                            <img src="http://fpoimg.com/230x280?text=img" alt=""/>
+                                                        </div>
+                                                        <div className="info">
+                                                            <div className="info-item">
+                                                                <div className="name name-tit">新乐思新乐新乐思新乐</div>
+                                                                <div className="number">数量</div>
+                                                            </div>
+                                                            <div className="info-item">
+                                                                <div className="name">
+                                                                    <p>蓝莓复合果汁饮品(便利装) </p>
+                                                                    <p>900毫升 (30袋)</p>
+                                                                </div>
+                                                                <div className="number">12件/套</div>
+                                                            </div>
+                                                            <div className="info-item info-item-member">
+                                                                <div className="name">
+                                                                    <span>会员价</span><span className="price">￥420.00</span>
+                                                                </div>
+                                                                <div className="number">x 1</div>
+                                                            </div>
+                                                            <div className="info-subtotal">
+                                                                <span>小计&nbsp;&nbsp;</span>
+                                                                <span className="price">￥420.00</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="item-content">
+                                                        <div className="thumb">
+                                                            <img src="http://fpoimg.com/230x280?text=img" alt=""/>
+                                                        </div>
+                                                        <div className="info">
+                                                            <div className="info-item">
+                                                                <div className="name name-tit">新乐思新乐新乐思新乐</div>
+                                                                <div className="number">数量</div>
+                                                            </div>
+                                                            <div className="info-item">
+                                                                <div className="name">
+                                                                    <p>蓝莓复合果汁饮品(便利装) </p>
+                                                                    <p>900毫升 (30袋)</p>
+                                                                </div>
+                                                                <div className="number">12件/套</div>
+                                                            </div>
+                                                            <div className="info-item info-item-member">
+                                                                <div className="name">
+                                                                    <span>会员价</span><span className="price">￥420.00</span>
+                                                                </div>
+                                                                <div className="number">x 1</div>
+                                                            </div>
+                                                            <div className="info-subtotal">
+                                                                <span>小计&nbsp;&nbsp;</span>
+                                                                <span className="price">￥420.00</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="info-foot">
+                                                        <Stepper
+                                                            showNumber
+                                                            min={1}
+                                                            max={500}
+                                                            value={this.state.showNumber}
+                                                            onChange={this.onChange}
+                                                            onOkClick={this.onClickHandle}
+                                                        />
+                                                        <span className="isstock">有货</span>
+                                                    </div>
+                                                </div>
+                                            </div> */}
                                         </div>
-                                        <div className="header-price">
-                                            <span>合计 <i className="price">￥4,200.00</i></span>
-                                            <i className="icon icon-cancel"></i>
+
+                                        <div className="m-cart-other">
+                                            <List small>
+                                              <Item extra={`${_getShappingcar.get('totalNum')}`}>商品数量</Item>
+                                              <Item extra={`${_getShappingcar.get('salePrice')}`}>会员价总计</Item>
+                                              <Item extra={`${_getShappingcar.get('originalPrice')}`}>销售价总计</Item>
+                                              <Item extra={`${_getShappingcar.get('preferentialPrice')}`}>总优惠</Item>
+                                            </List>
                                         </div>
                                     </div>
-                                    <div className="item-content">
-                                        <div className="thumb">
-                                            <img src="http://fpoimg.com/230x280?text=img" alt=""/>
-                                        </div>
-                                        <div className="info">
-                                            <div className="info-item">
-                                                <div className="name name-tit">新乐思新乐新乐思新乐</div>
-                                                <div className="number">数量</div>
-                                            </div>
-                                            <div className="info-item">
-                                                <div className="name">
-                                                    <p>蓝莓复合果汁饮品(便利装) </p>
-                                                    <p>900毫升 (30袋)</p>
-                                                </div>
-                                                <div className="number">12件/套</div>
-                                            </div>
-                                            <div className="info-subtotal">
-                                                <span>会员价</span>
-                                                <span className="price">￥420.00</span>
-                                            </div>
-                                            <div className="info-foot">
-                                                <Stepper
-                                                    showNumber
-                                                    min={1}
-                                                    max={500}
-                                                    value={this.state.showNumber}
-                                                    onChange={this.onChange}
-                                                    onOkClick={this.onClickHandle}
-                                                />
-                                                <span className="isstock">有货</span>
-                                            </div>
-                                        </div>
+                                :
+                                    <div className="loading-container">
+                                        <Loading size="large" text="加载中..."/>
                                     </div>
-                                </div>
-                                <div className="cart-item cart-item-guoups">
-                                    <div className="item-header">
-                                        <div className="header-name">
-                                            <i className="icon icon-radio icon-selectFill"></i>
+                            }
 
-                                            <span className="name">家庭健康组合</span>
-                                        </div>
-                                        <div className="header-price">
-                                            <span>合计 <i className="price">￥4,200.00</i></span>
-                                            <i className="icon icon-cancel"></i>
-                                        </div>
-                                    </div>
-                                    <div className="guoups-item">
-                                        <div className="item-content">
-                                            <div className="thumb">
-                                                <img src="http://fpoimg.com/230x280?text=img" alt=""/>
-                                            </div>
-                                            <div className="info">
-                                                <div className="info-item">
-                                                    <div className="name name-tit">新乐思新乐新乐思新乐</div>
-                                                    <div className="number">数量</div>
-                                                </div>
-                                                <div className="info-item">
-                                                    <div className="name">
-                                                        <p>蓝莓复合果汁饮品(便利装) </p>
-                                                        <p>900毫升 (30袋)</p>
-                                                    </div>
-                                                    <div className="number">12件/套</div>
-                                                </div>
-                                                <div className="info-item info-item-member">
-                                                    <div className="name">
-                                                        <span>会员价</span><span className="price">￥420.00</span>
-                                                    </div>
-                                                    <div className="number">x 1</div>
-                                                </div>
-                                                <div className="info-subtotal">
-                                                    <span>小计&nbsp;&nbsp;</span>
-                                                    <span className="price">￥420.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="item-content">
-                                            <div className="thumb">
-                                                <img src="http://fpoimg.com/230x280?text=img" alt=""/>
-                                            </div>
-                                            <div className="info">
-                                                <div className="info-item">
-                                                    <div className="name name-tit">新乐思新乐新乐思新乐</div>
-                                                    <div className="number">数量</div>
-                                                </div>
-                                                <div className="info-item">
-                                                    <div className="name">
-                                                        <p>蓝莓复合果汁饮品(便利装) </p>
-                                                        <p>900毫升 (30袋)</p>
-                                                    </div>
-                                                    <div className="number">12件/套</div>
-                                                </div>
-                                                <div className="info-item info-item-member">
-                                                    <div className="name">
-                                                        <span>会员价</span><span className="price">￥420.00</span>
-                                                    </div>
-                                                    <div className="number">x 1</div>
-                                                </div>
-                                                <div className="info-subtotal">
-                                                    <span>小计&nbsp;&nbsp;</span>
-                                                    <span className="price">￥420.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="info-foot">
-                                            <Stepper
-                                                showNumber
-                                                min={1}
-                                                max={500}
-                                                value={this.state.showNumber}
-                                                onChange={this.onChange}
-                                                onOkClick={this.onClickHandle}
-                                            />
-                                            <span className="isstock">有货</span>
-                                        </div>
-                                    </div>
-                                </div> */}
-                            </div>
-
-                            <div className="m-cart-other">
-                                <List small>
-                                  <Item extra={'14'}>商品数量</Item>
-                                  <Item extra={'￥21,400.00'}>会员价总计</Item>
-                                  <Item extra={'￥21,400.00'}>销售价总计</Item>
-                                  <Item extra={'-￥21,400.00'}>总优惠</Item>
-                                </List>
-                            </div>
                     </div>
                 </div>
                 <div className="m-foot-fixed">
                     {/* 立即结算 */}
-                    <div className="m-settlement">
-                        <div className="select">
-                            <label>
-                                <div className="pack-radio">
-                                    <input type="checkbox" checked={this.state.isAllChecked} onChange={this.changeAllStatus.bind(this)}/>
-                                    <i className={isAllCheckedCls}></i>
+                    {
+                        this.state.list.length > 1 ?
+                            <div className="m-settlement">
+                                <div className="select">
+                                    <label>
+                                        <div className="pack-radio">
+                                            <input type="checkbox" checked={this.state.isAllChecked} onChange={this.changeAllStatus.bind(this)}/>
+                                            <i className={isAllCheckedCls}></i>
+                                        </div>
+                                    </label>
+                                    <span>全选</span>
                                 </div>
-                            </label>
-                            <span>全选</span>
-                        </div>
-                        <div className="total">
-                            <span>总计</span>
-                            <span className="price"> ￥18,328.00</span>
-                        </div>
-                        <div className="btn">
-                            <Button title="立即结算" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
-                        </div>
-                    </div>
+                                <div className="total">
+                                    <span>总计</span>
+                                    <span className="price"> ￥{_getShappingcar.get('salePrice')}</span>
+                                </div>
+                                <div className="btn">
+                                    <Button title="立即结算" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
+                                </div>
+                            </div>
+                        : null
+                    }
                 </div>
             </div>
         );
@@ -313,7 +336,7 @@ class CartIndexView extends React.Component{
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
-        LoginModel: state.LoginModel
+        shappingcar: state.ShappingModel
     };
 }
 

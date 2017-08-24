@@ -5,8 +5,9 @@
 // 首页 reducers
 export {default as HomeModel} from './home/model/HomeModel';
 
-// 菜单导航数据 NavModel
-export {default as NavModel} from './common/model/NavModel.js';
+// common 数据模型MODEL
+export {default as NavModel} from './common/model/NavModel.js';    //菜单导航数据
+export {default as CartCountModel} from './common/model/CartCountModel';   // 购物车总数
 
 // 登录的数据模型MODEL
 export {default as LoginModel} from './login/model/LoginModel';

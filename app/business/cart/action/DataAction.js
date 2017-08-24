@@ -15,8 +15,8 @@ import { failLoading} from 'Utils';
  */
 export function getShoppingCar(callback){
     return (dispatch, getState) => {
-        Toast.loading('加载中...', 200);
-        const response = get(Urls.ShoppingCar);
+        // Toast.loading('加载中...', 200);
+        const response = get(Urls.ShoppingCar + '?ids=');
         response.then((result) => {
             const res = result.data;
             if(res.success){

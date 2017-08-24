@@ -21,6 +21,8 @@ class KYFooterBar extends React.Component{
         window.KYFooterBar=this;
     }
     render(){
+        const cartcount = this.props.cartcount.get('cartcount');
+        console.log(cartcount)
         return(
             <div className="footer-bar flex-row">
                 <div className="footer-bar-list ky-center-v">
@@ -39,7 +41,7 @@ class KYFooterBar extends React.Component{
                     <Link to="/cart" activeClassName="active" className="bar-item">
                         <i className="icon icon-shoppingCart"></i>
                         <div className="bar-item-text">购物车</div>
-                        <div className="cat-num">10</div>
+                        <div className="cat-num">{cartcount}</div>
                     </Link>
                 </div>
             </div>
@@ -51,15 +53,9 @@ class KYFooterBar extends React.Component{
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
+        cartcount: state.CartCountModel
     };
 }
-
-function mapDispatchToProps(dispatch){
-    return {
-    };
-}
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
 )(KYFooterBar);

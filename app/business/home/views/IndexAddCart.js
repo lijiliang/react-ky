@@ -6,8 +6,10 @@ import { Link } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { addShoppingCar } from '../action/DataAction'
+import { addShoppingCar, putShoppingCar } from '../action/DataAction'
+import { getShoppingCarCount } from 'kyBus/common/action/DataAction'
 import classNames from 'classnames';
+import { Toast } from 'uxComponent';
 
 import { Button, Stepper} from 'uxComponent';
 
@@ -25,20 +27,39 @@ class SubGroupItem extends React.Component {
     // 加入购物车
     addCartHandle = () => {
         const props = this.props;
-        this.props.dispatch(addShoppingCar(props.id, props.isGroup, () => {
+        this.props.dispatch(addShoppingCar(props.productId, props.groupFlag, 1, () => {
+            Toast.success('成功加入购物车', 2);
             // 加入购物车 成功后显示加减
             this.setState({ isShowStepper: true });
+            setTimeout(() => {
+                this.getShoppingCarCount();
+            }, 2000)
         }))
 
     }
-    onChange = (val) => {
-        // console.log(val);
-        this.setState({ showNumber: val });
+
+    // 改变数量
+    onChangeNum = (val) => {
+        console.log(val);
+        // this.setState({ showNumber: val });
+        const props = this.props;
+        this.props.dispatch(putShoppingCar(props.productId, props.groupFlag, val, () => {
+            // Toast.success('成功加入购物车', 2);
+            // 加入购物车 成功后显示加减
+            this.setState({ showNumber: val });
+            setTimeout(() => {
+                this.getShoppingCarCount();
+            }, 2000)
+        }))
     }
-    onClickHandle = (e) => {
-        alert('a')
-        console.log(e)
+
+    // 获取购物车总数
+    getShoppingCarCount(){
+        this.props.dispatch(getShoppingCarCount((res) => {
+            console.log(res)
+        }))
     }
+
     render(){
         console.log(this.props)
         return(
@@ -51,8 +72,8 @@ class SubGroupItem extends React.Component {
                         max={500}
                         isRed
                         value={this.state.showNumber}
-                        onChange={this.onChange}
-                        onOkClick={this.onClickHandle}
+                        onChange={this.onChangeNum}
+                        // onOkClick={this.onClickHandle}
                     />
                 : null }
             </div>

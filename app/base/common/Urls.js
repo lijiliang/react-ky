@@ -16,6 +16,7 @@ const Urls = {
     Nav: profile.server + '/starspower/shop/service/v1/nav', // 获取左侧菜单(栏目)数据
     Home: profile.server + '/starspower/shop/service/v1/home', // 首页数据
     ShoppingCar: profile.server + '/starspower/shop/service/v1/shoppingcar', // 商品购物车
+    ShoppingCarCount: profile.server + '/starspower/shop/service/v1/shoppingcar/count', // 获取购物车总数
 };
 
 export default Urls;
