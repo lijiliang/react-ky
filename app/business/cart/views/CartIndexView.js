@@ -7,7 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as ShoppingAction from '../action/actionTypes';
-import {getShoppingCar} from '../action/DataAction';
+import { getShoppingCar, updateShoppingCar, deteteShoppingCar } from '../action/DataAction';
 import classNames from 'classnames';
 
 import { Button, Toast, NavBar, Stepper, List, Modal, Loading } from 'uxComponent';
@@ -24,13 +24,6 @@ class CartIndexView extends React.Component{
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-            // list: [
-            //     {text:'6点起床',active:false, num: 1},
-            //     {text:'7点出门',active:true, num: 2},
-            //     {text:'8点吃早饭',active:true, num: 3},
-            //     {text:'9点上班',active:true, num: 4},
-            //     {text:'12点下班',active:true, num: 5}
-            // ],
             list: [],
             isAllChecked: false,
         };
@@ -38,13 +31,7 @@ class CartIndexView extends React.Component{
     }
     componentDidMount(){
         // this.checkAll();
-        this.props.dispatch(getShoppingCar((res) => {
-            this.setState({
-                list: res.items
-            });
-            // 是否全选
-            this.checkAll();
-        }));
+        this._getAllShoppingCat();
     }
     // 返回上一页
     gohistoryHandle(){
@@ -53,11 +40,12 @@ class CartIndexView extends React.Component{
 
     //改变数量
     numItemChangeHandle(index, buyNum){
-        this.state.list[index].buyNum = buyNum;
-        this.setState({
-            list: this.state.list,
-            refresh:Math.random()
-        });
+        const _item = this.state.list[index] || {};
+        this.props.dispatch(updateShoppingCar(_item.shoppingCarId, _item.product.groupFlag, buyNum, () => {
+            const ids = this._getIdsActive().join(',');
+            this._getAllShoppingCat(ids);
+        }));
+        // this.state.list[index].buyNum = buyNum;
     }
     /**
      * @description 单个商品单选框的属性
@@ -66,33 +54,32 @@ class CartIndexView extends React.Component{
      * @returns {Voild}
     */
     changeStatus(index,active) {
-        console.log('单选：', index, active)
+        // console.log('单选：', index, active)
         this.state.list[index].active = active;
         this.setState({
             list: this.state.list,
             refresh:Math.random()
         });
+        const ids = this._getIdsActive().join(',');
+        this._getAllShoppingCat(ids);
         this.checkAll();
     }
 
-     /**
+     /*
       * @description 删除指定的一项
       * @param {number} index 索引
       * @returns {Voild}
      */
-    deleteItemHandle(index){
+    deleteItemHandle(index, shoppingCarId){
         Modal.alert('删除', '确定删除么?', [
-          { text: '取消'},
-          { text: '确定', onPress: (() => {
-              console.log(index)
-          })},
-      ])
-        // this.state.list.splice(index,1);
-        // //删除完成后来更新下页面的内容
-        // this.setState({
-        //     list : this.state.list,
-        //     refresh:Math.random()
-        // });
+            { text: '取消'},
+            { text: '确定', onPress: (() => {
+                this.props.dispatch(deteteShoppingCar(shoppingCarId, (res) => {
+                    this._getAllShoppingCat();
+                }));
+            })}
+        ]);
+    // this.state.list.splice(index,1);
     }
 
     /*
@@ -126,10 +113,36 @@ class CartIndexView extends React.Component{
             list:this.state.list,
             isAllChecked:checked
         });
+
+        const ids = this._getIdsActive().join(',');
+        this._getAllShoppingCat(ids);
+    }
+
+    // 获取全部购物车列表
+    _getAllShoppingCat(ids=''){
+        this.props.dispatch(getShoppingCar(ids, (res) => {
+            this.setState({
+                list: res.items
+            });
+            // 是否全选
+            this.checkAll();
+        }));
+    }
+
+    // 获取选中的项目，并返回一个包含购物车id选中的数据
+    _getIdsActive(){
+        const _list = this.state.list;
+        let caridArr = [];
+        _list.filter((item) => {
+            if(item.active){
+                caridArr.push(item.shoppingCarId);
+            }
+        });
+        return caridArr;
     }
     render(){
-        console.log(this.state)
-        const _getShappingcar = this.props.shappingcar
+        // console.log(this.state)
+        const _getShappingcar = this.props.shappingcar;
         const isAllCheckedCls = classNames({
             [`icon`]: true,
             [`icon-radio`]: true,
@@ -143,12 +156,12 @@ class CartIndexView extends React.Component{
                             onLeftClick={this.gohistoryHandle.bind(this)}
                             ><div className="navbar-cart-tit"><i className="icon icon-shoppingCart"></i>购物车</div></NavBar>
                             {
-                                this.state.list.length > 1 ?
+                                this.state.list.length > 0 ?
                                     <div>
                                         <div className="m-cart">
                                             {this.state.list.map((item, index) => {
                                                 return(
-                                                    <CartItemView key={index} index={index} ListItem={item} deleteItem={this.deleteItemHandle.bind(this)} changeStatus={this.changeStatus} numItem={this.numItemChangeHandle.bind(this)}/>
+                                                    <CartItemView key={index} index={index} ListItem={item} deleteItem={this.deleteItemHandle.bind(this, index, item.shoppingCarId)} changeStatus={this.changeStatus} numItem={this.numItemChangeHandle.bind(this)}/>
                                                 )
                                             })}
 
@@ -297,7 +310,7 @@ class CartIndexView extends React.Component{
                                     </div>
                                 :
                                     <div className="loading-container">
-                                        <Loading size="large" text="加载中..."/>
+                                        <p className="ky-center">购物车空空是也，快去加点商品吧！</p>
                                     </div>
                             }
 
@@ -306,7 +319,7 @@ class CartIndexView extends React.Component{
                 <div className="m-foot-fixed">
                     {/* 立即结算 */}
                     {
-                        this.state.list.length > 1 ?
+                        this.state.list.length > 0 ?
                             <div className="m-settlement">
                                 <div className="select">
                                     <label>

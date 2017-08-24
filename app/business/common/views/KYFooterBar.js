@@ -7,6 +7,7 @@ import { Link } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { getShoppingCarCount } from '../action/DataAction'
 
 import '../resources/KYFooterBar.less';
 
@@ -19,10 +20,11 @@ class KYFooterBar extends React.Component{
     }
     componentDidMount(){
         window.KYFooterBar=this;
+        // 初始化购物车数量
+        this.props.dispatch(getShoppingCarCount());
     }
     render(){
         const cartcount = this.props.cartcount.get('cartcount');
-        console.log(cartcount)
         return(
             <div className="footer-bar flex-row">
                 <div className="footer-bar-list ky-center-v">
