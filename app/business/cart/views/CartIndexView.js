@@ -54,14 +54,12 @@ class CartIndexView extends React.Component{
      * @returns {Voild}
     */
     changeStatus(index,active) {
-        // console.log('单选：', index, active)
         this.state.list[index].active = active;
         this.setState({
             list: this.state.list,
             refresh:Math.random()
         });
-        const ids = this._getIdsActive().join(',');
-        this._getAllShoppingCat(ids);
+        this._cartItemActive();
         this.checkAll();
     }
 
@@ -75,7 +73,8 @@ class CartIndexView extends React.Component{
             { text: '取消'},
             { text: '确定', onPress: (() => {
                 this.props.dispatch(deteteShoppingCar(shoppingCarId, (res) => {
-                    this._getAllShoppingCat();
+                    // this._getAllShoppingCat();
+                    this._cartItemActive();
                 }));
             })}
         ]);
@@ -114,7 +113,14 @@ class CartIndexView extends React.Component{
             isAllChecked:checked
         });
 
-        const ids = this._getIdsActive().join(',');
+        this._cartItemActive();
+    }
+
+    // 购物车商品选中后，将选中的id记录到sesseion,然后重新获取购物车列表
+    _cartItemActive(){
+        const idsList = this._getIdsActive();
+        const ids = idsList.join(',');
+        Cache.sessionSet(Cache.sessionKeys.ky_cart_ids, idsList);
         this._getAllShoppingCat(ids);
     }
 
@@ -129,7 +135,7 @@ class CartIndexView extends React.Component{
         }));
     }
 
-    // 获取选中的项目，并返回一个包含购物车id选中的数据
+    // 获取选中商品的购物车id，并返回一个列表
     _getIdsActive(){
         const _list = this.state.list;
         let caridArr = [];
