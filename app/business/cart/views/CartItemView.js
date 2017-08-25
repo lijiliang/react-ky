@@ -74,7 +74,7 @@ class CartIndexView extends React.Component{
                                 return(
                                     <div className="item-content">
                                         <div className="thumb">
-                                            <img src="http://fpoimg.com/230x280?text=img" alt=""/>
+                                            <img src={item.imgPath}/>
                                         </div>
                                         <div className="info">
                                             <div className="info-item">
@@ -84,19 +84,19 @@ class CartIndexView extends React.Component{
                                             <div className="info-item">
                                                 <div className="name">
                                                     <p>{item.productName}</p>
-                                                    <p>900毫升 (30袋)</p>
+                                                    {/* <p>900毫升 (30袋)</p> */}
                                                 </div>
                                                 <div className="number">12件/套</div>
                                             </div>
                                             <div className="info-item info-item-member">
                                                 <div className="name">
-                                                    <span>会员价</span><span className="price">￥420.00</span>
+                                                    <span>会员价</span><span className="price">￥{item.salePrice}</span>
                                                 </div>
                                                 <div className="number">x {item.productNum}</div>
                                             </div>
                                             <div className="info-subtotal">
                                                 <span>小计&nbsp;&nbsp;</span>
-                                                <span className="price">￥420.00</span>
+                                                <span className="price">￥{item.productTotal}</span>
                                             </div>
                                         </div>
                                     </div>

@@ -16,7 +16,7 @@
     .item-header{
         display:flex;
         align-items: center;
-        height: 80px;
+        // height: 80px;
         padding: 0 @v-spacing-md;
         border-bottom: @border-width-md solid @border-color-base;
 
@@ -24,12 +24,15 @@
             display: flex;
             align-items: center;
             padding-left: 10px;
+            flex-basis: 60%;
+            overflow: hidden;
             // 多选
             .pack-radio{
                 white-space: nowrap;
                 outline: none;
                 display: inline-block;
                 position: relative;
+                margin-top: 4px;
                 input{
                     position: absolute;
                     left: -30px;
@@ -62,14 +65,18 @@
             }
 
             .name{
-                line-height: 80px;
-                font-size: 36px;
+                // display: inline-block;
+                // line-height: 80px;
+                font-size: 34px;
+                line-height: 1.5;
                 color: @brand-primary;
+                overflow: hidden;
                 white-space: nowrap;
+                text-overflow: ellipsis;
             }
         }
         .header-price{
-            flex: 1;
+            flex-basis: 40%;
             justify-content: flex-end;
             text-align: right;
             font-size: 25px;
@@ -78,7 +85,7 @@
             .price{
                 font-style: normal;
                 color: @brand-green-deep;
-                font-size: 38px;
+                font-size: 36px;
             }
             .icon{
                 padding-left: 15px;
@@ -125,7 +132,7 @@
                 }
             }
             .name-tit{
-                font-size: 34px;
+                font-size: 32px;
             }
             .number{
                 flex-basis: 26%;

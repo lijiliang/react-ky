@@ -8,20 +8,35 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getShoppingCarCount } from '../action/DataAction'
+import { Cache } from 'kyCommon';
 
 import '../resources/KYFooterBar.less';
 
 class KYFooterBar extends React.Component{
     constructor(props, context){
         super(props, context);
-        this.state = {
-        };
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+        this.state = {
+            isLogin: false
+        };
     }
     componentDidMount(){
         window.KYFooterBar=this;
-        // 初始化购物车数量
-        this.props.dispatch(getShoppingCarCount());
+        // 获取用户是否登录
+        const isLogin = Cache.sessionGet('ky_cache_isLogined') || false;
+        this.setState({
+            isLogin: isLogin
+        });
+        // 登录后获取购物车总数
+        if(isLogin){
+            this.props.dispatch(getShoppingCarCount());
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        const isLogin = Cache.sessionGet('ky_cache_isLogined') || false;
+        this.setState({
+            isLogin: isLogin
+        });
     }
     render(){
         const cartcount = this.props.cartcount.get('cartcount');
