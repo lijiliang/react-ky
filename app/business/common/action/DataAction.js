@@ -5,7 +5,7 @@ import * as types from './actionTypes';
 import { getHasFetch, get} from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
-import { failLoading} from 'Utils';
+import { failLoading, hasMember} from 'Utils';
 
 /*
  * [getNav 获取菜单]
@@ -41,22 +41,32 @@ export function getNav(callback) {
  */
 export function getShoppingCarCount(callback) {
     return (dispatch, getState) => {
-        Toast.loading('加载中...', 200);
-        const response = get(Urls.ShoppingCarCount);
-        response.then((result) => {
-            const res = result.data;
-            if(res.success){
-                Toast.hide();
-                dispatch({
-                    type: types.CARTCOUNT,
-                    cartcount: res.data
-                });
-                if(callback && typeof callback === 'function'){
-                    callback(res.data);
+        // 如果登录，直接请求接口得到总数
+        if(hasMember()){
+            Toast.loading('加载中...', 200);
+            const response = get(Urls.ShoppingCarCount);
+            response.then((result) => {
+                const res = result.data;
+                if(res.success){
+                    Toast.hide();
+                    dispatch({
+                        type: types.CARTCOUNT,
+                        cartcount: res.data
+                    });
+                    if(callback && typeof callback === 'function'){
+                        callback(res.data);
+                    }
                 }
-            }
-        }).catch((err) => {
-            failLoading(err);
-        });
+            }).catch((err) => {
+                failLoading(err);
+            });
+        }else {
+            dispatch({
+                type: types.CARTCOUNT,
+                cartcount: {
+                    catNum: 0
+                }
+            });
+        }
     };
 }

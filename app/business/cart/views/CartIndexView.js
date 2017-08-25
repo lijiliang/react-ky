@@ -7,6 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as ShoppingAction from '../action/actionTypes';
+import { getShoppingCarCount } from 'kyBus/common/action/DataAction'
 import { getShoppingCar, updateShoppingCar, deteteShoppingCar } from '../action/DataAction';
 import classNames from 'classnames';
 
@@ -73,8 +74,9 @@ class CartIndexView extends React.Component{
             { text: '取消'},
             { text: '确定', onPress: (() => {
                 this.props.dispatch(deteteShoppingCar(shoppingCarId, (res) => {
-                    // this._getAllShoppingCat();
                     this._cartItemActive();
+                    // 删除成功后，更新购物车数量
+                    this.props.dispatch(getShoppingCarCount());
                 }));
             })}
         ]);
