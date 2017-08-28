@@ -1,0 +1,79 @@
+/**
+ * @fileOverview: 支付成功页
+ * @version: 1.0.0(2017-6-15)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+@regSuccessCls: m-paysuccess;
+
+.ky-scrollable.ky-paysuccess{
+    background: @fill-base;
+}
+.@{regSuccessCls} {
+    text-align: center;
+    .success-view{
+        .pay-price{
+            padding-top: 30px;
+            font-size: 40px;
+            color: @brand-primary;
+        }
+    }
+    .icon{
+        display: block;
+        margin: 40px 0 20px 0;
+        line-height: 1;
+        font-size: 120px;
+        color: @brand-green-deep;
+
+    }
+    h2{
+        font-size: 46px;
+        color: @brand-green-deep;
+    }
+    .user-info{
+        width: 480px;
+        margin:28px auto;
+        text-align: left;
+        .info-item{
+            display: flex;
+            span{
+                font-size: 38px;
+                &:first-child{
+                    width: 180px;
+
+                }
+                &:last-child{
+                    color: @brand-primary;
+                }
+            }
+        }
+    }
+    .info-remember{
+        p{
+            font-size: 38px;
+            line-height: 1.4;
+        }
+    }
+
+    // 按钮
+    .goshop{
+        margin: 30px 80px;
+    }
+    .shop-btn{
+        background: #fff;
+        border: 2px solid @brand-green-deep;
+    }
+    .btn-gohome{
+        background: #fff;
+        color: @brand-primary;
+        border: 1px solid @brand-primary;
+    }
+    .info-more{
+        padding-bottom: 20px;
+        font-size: 30px;
+        color: @color-text-base;
+    }
+}
