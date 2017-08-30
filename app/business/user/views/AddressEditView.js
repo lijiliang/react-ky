@@ -2,11 +2,13 @@
  * @fileOverview 管理收货地址 - 新增、编辑
  */
  import React from 'react';
- import { Link } from 'react-router';
+ import { Link, hashHistory } from 'react-router';
  import PureRenderMixin from 'react-addons-pure-render-mixin';
  import { get, getPublic } from 'kyBase/common/FetchData';
  import { createForm } from 'rc-form';
  import classNames from 'classnames';
+ import { connect } from 'react-redux';
+ import { AddShipAddress, GetIdShipAddress, SaveShipAddress } from '../action/DataAction'
 
  //组件
  import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
@@ -22,14 +24,7 @@
          this.state = {
              title: '',
              cityAreaData: cityAreaData,
-             cityExtra: true,
-             userName: '李先生',
-             phoneNumber: '13594949946',
-             idCard: '4408883434',
-             telNumber: '020567890954',
-             cityValue: ['8','60','619'],
-             addrDetail: '林和西路9号耀中广场918号林和西路9号耀中广场918号',
-             addrPostcode: '432222',
+             cityExtra: true
          };
      }
      componentDidMount(){
@@ -39,19 +34,31 @@
              this.setState({
                  title: '新增收货地址',
                  cityExtra: false,
-                 userName: '',
+                 consignee: '',
                  phoneNumber: '',
                  idCard: '',
                  telNumber: '',
                  cityValue: [],
                  addrDetail: '',
-                 addrPostcode: '',
+                 postcode: '',
+                 default: false
              })
          } else {
              // 编辑
-             this.setState({
-                 title: '编辑收货地址'
-             })
+             this.props.dispatch(GetIdShipAddress(edit, (res)=>{
+                 this.setState({
+                     title: '编辑收货地址',
+                     consignee: res.consignee,
+                     phoneNumber: res.phoneNumber,
+                     idCard: res.idCard,
+                     telNumber: res.telNumber,
+                     cityValue: [res.addrPrivonce, res.addrCity, res.addrCounty],
+                     addrDetail: res.addrDetail,
+                     postcode: res.postcode,
+                     id: res.id,
+                     default: res.default
+                 })
+             }))
          }
      }
      // 返回上一页
@@ -85,7 +92,7 @@
          const form = this.props.form;
          form.validateFields((error, value) => {
              if(error){
-                 const fieldNames = ['userName', 'phoneNumber', 'idCard', 'telNumber', 'cityValue', 'addrDetail', 'addrPostcode'].reverse();
+                 const fieldNames = ['consignee', 'phoneNumber', 'idCard', 'telNumber', 'cityValue', 'addrDetail', 'postcode'].reverse();
                  fieldNames.map((item, index) => {
                      if(form.getFieldError(item)){
                          Toast.info(form.getFieldError(item), 1)
@@ -96,6 +103,42 @@
              }
              if(!error){
                  this.setState(value)
+             }
+             const _state = this.state;
+             const _data = {
+                  addrPrivonce: _state.cityValue[0],// 省id
+                  addrCity: _state.cityValue[1],   //城市id
+                  addrCounty: _state.cityValue[2], // 县/区ID
+                  addrDetail: _state.addrDetail,
+                  consignee: _state.consignee,
+                  default: _state.default,
+                  idCard: _state.idCard,
+                  phoneNumber: _state.phoneNumber,
+                  postcode: _state.postcode,
+                  telNumber: _state.telNumber
+             }
+
+             const edit = this.props.params.edit;
+             if(edit == null){
+                 // 新添地址
+                 this.props.dispatch(AddShipAddress(_data, (res) => {
+                     Toast.success('添加地址成功！');
+                     setTimeout(() => {
+                         hashHistory.push('/user/address');
+                     }, 1000);
+                 }))
+             }else{
+                 // 编辑地址
+                 const _id = {
+                     id: _state.id
+                 }
+                 let saveData = Object.assign(_data, _id)
+                 this.props.dispatch(SaveShipAddress(saveData, (res) => {
+                    Toast.success('编辑地址成功！');
+                    setTimeout(() => {
+                        hashHistory.push('/user/address');
+                    }, 1000);
+                 }))
              }
          })
      }
@@ -116,8 +159,8 @@
                              >{this.state.title}</NavBar>
                          <div className="m-address-edit-view">
                              <div className="m-addressedit-form">
-                                 {getFieldDecorator('userName', {
-                                     initialValue: this.state.userName,
+                                 {getFieldDecorator('consignee', {
+                                     initialValue: this.state.consignee,
                                      rules: [{
                                          required: true,
                                          message: '请输入收货人'
@@ -125,7 +168,7 @@
                                    })(
                                      <InputItem
                                          placeholder="请输入收货人"
-                                         onChange={this.stateChangeHandle.bind(this, 'userName')}
+                                         onChange={this.stateChangeHandle.bind(this, 'consignee')}
                                      >收货人</InputItem>
                                   )}
                                   {getFieldDecorator('phoneNumber', {
@@ -207,8 +250,8 @@
                                          onChange={this.stateChangeHandle.bind(this, 'addrDetail')}
                                      />
                                  )}
-                                 {getFieldDecorator('addrPostcode',{
-                                     initialValue: this.state.addrPostcode,
+                                 {getFieldDecorator('postcode',{
+                                     initialValue: this.state.postcode,
                                      rules: [{
                                          pattern: RegxRule.zipCode,
                                          message: '请输入正确的邮政编码'
@@ -222,7 +265,7 @@
                                          maxLength={6}
                                          type="number"
                                          style={{border:'none'}}
-                                         onChange={this.stateChangeHandle.bind(this, 'addrPostcode')}
+                                         onChange={this.stateChangeHandle.bind(this, 'postcode')}
                                      >邮政编码</InputItem>
                                  )}
                                  <span></span>
@@ -239,4 +282,13 @@
  }
 
  const AddressEditViewWrapper = createForm()(AddressEditView);
- export default AddressEditViewWrapper;
+
+ /*  React 与  Redux 绑定 */
+ function mapStateToProps(state){
+     return {
+     };
+ }
+
+ export default connect(
+     mapStateToProps
+ )(AddressEditViewWrapper);

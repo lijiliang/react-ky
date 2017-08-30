@@ -6,6 +6,8 @@
  import PureRenderMixin from 'react-addons-pure-render-mixin';
  import { get, getPublic } from 'kyBase/common/FetchData';
  import classNames from 'classnames';
+ import { connect } from 'react-redux';
+ import { getShipAddress, DeleteShipAddress, DefaultShipAddress } from '../action/DataAction'
 
  //组件
  import { Button, Toast, NavBar, Modal, Result} from 'uxComponent';
@@ -16,72 +18,78 @@
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
-             addressData: [
-                 {
-                     addressId: '1',
-                     userName: 'Benson',
-                     iphone: '13503077896',
-                     idCard: '44088218272615',
-                     streetName: '广州市天河区sadflsadflj',
-                     isDefault: true
-                 },
-                 {
-                     addressId: '2',
-                     userName: 'Benson',
-                     iphone: '13503077896',
-                     idCard: '44088218272615',
-                     streetName: '广州市天河区耀中广场918号',
-                     isDefault: false
-                 },
-                 {
-                     addressId: '3',
-                     userName: '李先生',
-                     iphone: '1360307436',
-                     idCard: '44076543456787654345',
-                     streetName: '棋顶起仍枯做朋友有理脾工90892号',
-                     isDefault: false
-                 }
-             ]
+             addressData: []
          };
      }
      componentDidMount(){
+         this._getShipAddress();
      }
      // 返回上一页
      gohistoryHandle(){
          window.history.go(-1);
      }
      // 设为默认地址
-     radioChange(addressId){
-         this.state.addressData.forEach((address, index) => {
-             if(address.addressId === addressId) {
-                 address.isDefault = true;
-                 this.setState({
-                     random: Math.random()
-                 });
-             } else {
-                 address.isDefault = false;
-                 this.setState({
-                     random: Math.random()
-                 });
-             }
-         });
+     radioChange(item, id){
+         const _data = {
+              addrPrivonce: item.addrPrivonce,// 省id
+              addrCity: item.addrCity,   //城市id
+              addrCounty: item.addrCounty, // 县/区ID
+              addrDetail: item.addrDetail,
+              consignee: item.consignee,
+              default: true,
+              idCard: item.idCard,
+              phoneNumber: item.phoneNumber,
+              postcode: item.postcode,
+              telNumber: item.telNumber,
+              id: item.id
+         }
+         this.props.dispatch(DefaultShipAddress(_data, (res) => {
+            //  this._getShipAddress();
+             this.state.addressData.forEach((address, index) => {
+                 if(address.id === id) {
+                     address.default = true;
+                     this.setState({
+                         random: Math.random()
+                     });
+                 } else {
+                     address.default = false;
+                     this.setState({
+                         random: Math.random()
+                     });
+                 }
+             });
+         }))
      }
      // 删除
-     onDeleteHandle(index){
-         this.state.addressData.splice(index, 1);
-         this.setState({
-             random: Math.random()
-         });
+     onDeleteHandle(index, id){
+        //  this.state.addressData.splice(index, 1);
+        //  this.setState({
+        //      random: Math.random()
+        //  });
+        this.props.dispatch(DeleteShipAddress(id, (res) => {
+            Toast.success('删除成功！');
+            setTimeout(() => {
+                this._getShipAddress();
+            }, 1000);
+        }));
      }
-     onEditHandle(index){
-         hashHistory.push(`/user/addredit/${index}`)
+     onEditHandle(id){
+         hashHistory.push(`/user/addredit/${id}`)
      }
      // 新增收货地址
      submitHandle = () => {
          hashHistory.push('/user/addredit')
      }
+     // 获取地址列表
+     _getShipAddress(){
+         this.props.dispatch(getShipAddress((res) => {
+             this.setState({
+                 addressData: res
+             })
+         }));
+     }
      render(){
-         console.log(this.state)
+        //  console.log(this.state)
          return(
              <div className="ky-container-body">
                  <div className="ky-scrollable">
@@ -95,12 +103,12 @@
                                  this.state.addressData.map((item, index) => {
                                      const addressCls = classNames({
                                          [`address-item`]: true,
-                                         [`address-item-active`]: item.isDefault
+                                         [`address-item-active`]: item.default
                                      })
                                      const iconCls = classNames({
                                          [`icon`]: true,
-                                         [`icon-radio`]: !item.isDefault,
-                                         [`icon-selectFill`]: item.isDefault
+                                         [`icon-radio`]: !item.default,
+                                         [`icon-selectFill`]: item.default
                                      })
                                      return (
                                          <div className={addressCls}>
@@ -108,11 +116,11 @@
                                              <div className="address-body">
                                                  <div className="item">
                                                      <div className="name">收货人</div>
-                                                     <div className="info">{item.userName}</div>
+                                                     <div className="info">{item.consignee}</div>
                                                  </div>
                                                  <div className="item">
                                                      <div className="name">手机号</div>
-                                                     <div className="info">{item.iphone}</div>
+                                                     <div className="info">{item.phoneNumber}</div>
                                                  </div>
                                                  <div className="item">
                                                      <div className="name">身份证号码</div>
@@ -120,25 +128,25 @@
                                                  </div>
                                                  <div className="item">
                                                      <div className="name">收货地址</div>
-                                                     <div className="info">{item.streetName}</div>
+                                                     <div className="info">{item.addrPrivonceName}{item.addrCityName}{item.addrCountyName}{item.addrDetail}</div>
                                                  </div>
                                              </div>
                                              <div className="address-foot">
                                                 <div className="select">
                                                     <label>
                                                         <div className="select-radio">
-                                                            <input type="radio" value={item.isDefault} checked={item.isDefault} onChange={this.radioChange.bind(this, item.addressId)}/>
+                                                            <input type="radio" value={item.default} checked={item.default} onChange={this.radioChange.bind(this, item, item.id)}/>
                                                             <i className={iconCls}></i>
                                                       </div>
-                                                      <span className="name">{item.isDefault ? '默认地址' : '设为默认'}</span>
+                                                      <span className="name">{item.default ? '默认地址' : '设为默认'}</span>
                                                   </label>
                                                 </div>
                                                 <div className="edit-btn">
-                                                    <a href="javascript:;" className="btn" onClick={this.onEditHandle.bind(this, index)}>编辑</a>
+                                                    <a href="javascript:;" className="btn" onClick={this.onEditHandle.bind(this, item.id)}>编辑</a>
                                                     <a href="javascript:;"
                                                         onClick={() => Modal.alert('删除', '确定删除么?', [
                                                           { text: '取消'},
-                                                          { text: '确定', onPress: this.onDeleteHandle.bind(this, index) },
+                                                          { text: '确定', onPress: this.onDeleteHandle.bind(this, index, item.id) },
                                                         ])}
                                                         className="btn">删除</a>
                                                 </div>
@@ -167,4 +175,13 @@
      }
  }
 
- export default AddressView;
+
+ /*  React 与  Redux 绑定 */
+ function mapStateToProps(state){
+     return {
+     };
+ }
+
+ export default connect(
+     mapStateToProps
+ )(AddressView);

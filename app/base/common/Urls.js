@@ -17,6 +17,8 @@ const Urls = {
     Home: profile.server + '/starspower/shop/service/v1/home', // 首页数据
     ShoppingCar: profile.server + '/starspower/shop/service/v1/shoppingcar', // 商品购物车
     ShoppingCarCount: profile.server + '/starspower/shop/service/v1/shoppingcar/count', // 获取购物车总数
+    ShipAddress: profile.server + '/starspower/shop/service/v1/shipAddress',      // 收货地址服务
+    ShipAddressDefault: profile.server + '/starspower/shop/service/v1/shipAddress/default', // 设为默认地址
 };
 
 export default Urls;
