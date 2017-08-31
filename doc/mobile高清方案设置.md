@@ -149,6 +149,27 @@ less设置
 </html>
 ```
 
+```js
+function adapt(designWidth, rem2px){
+var d = window.document.createElement('div');
+d.style.width = '1rem';
+d.style.display = "none";
+var head = window.document.getElementsByTagName('head')[0];
+head.appendChild(d);
+var defaultFontSize = parseFloat(window.getComputedStyle(d, null).getPropertyValue('width'));
+d.remove();
+document.documentElement.style.fontSize = window.innerWidth / designWidth * rem2px / defaultFontSize * 100 + '%';
+var st = document.createElement('style');
+var portrait = "@media screen and (min-width: "+window.innerWidth+"px) {html{font-size:"+((window.innerWidth/(designWidth/rem2px)/defaultFontSize)*100) +"%;}}";
+var landscape = "@media screen and (min-width: "+window.innerHeight+"px) {html{font-size:"+((window.innerHeight/(designWidth/rem2px)/defaultFontSize)*100) +"%;}}"
+st.innerHTML = portrait + landscape;
+head.appendChild(st);
+return defaultFontSize
+};
+var defaultFontSize = adapt(750, 100);
+// 参考： https://mp.weixin.qq.com/s?__biz=MzAwNDcyNjI3OA==&mid=2650840260&idx=1&sn=d737ff54a094f22fb4074968e2c462c9&chksm=80d3b7adb7a43ebb60c7227de906f3cc007fe217e926a5d77dfd31eeb3d98952df94ade576d6&scene=0&key=82a8432f5ab6082cb8c721e2eacb538a7f831e540334853767ce8f8b3a9012d395b6d82cc6dc9c6c0ab0927f99a0f124e1e51ab1ffdb192999c35e76d75f2177aef35be912d242f23d66b07def1f4dca&ascene=0&uin=MjExNTY4NTUyMA%3D%3D&devicetype=iMac+MacBookPro13%2C1+OSX+OSX+10.12.5+build(16F73)&version=12020810&nettype=WIFI&fontScale=100&pass_ticket=tARstmKcqc3Vlw8%2FpqERHVq7V82UMGkKy3AvaqF1ACIy6yZsMErCN0CzBb5AYreV
+```
+
 另外一种实现方式
 ```html
 <!DOCTYPE html>
