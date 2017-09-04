@@ -102,3 +102,30 @@ export function updateShoppingCar(carId, groupFlag, num, callback) {
         });
     };
 }
+
+/*
+ * [getProductInfoId 根据id获取商品详情]
+ * @param {[string]}   id [商品id]
+ * @param {Function} callback [回调函数]
+ */
+export function getProductInfoId(id, callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = getHasFetch(Urls.ProductInfoId + '/' + id);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                dispatch({
+                    type: types.PRODUCTINFOID,
+                    product: res.data
+                });
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}

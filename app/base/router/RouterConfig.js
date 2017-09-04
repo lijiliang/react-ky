@@ -11,6 +11,9 @@ import Launch from './Launch';
 import HomeView from 'kyBus/home/views/IndexView';
 import LoginView from 'kyBus/login/views/LoginView';             // 登录
 
+// 产品
+import ProductIdView from 'kyBus/home/views/ProductIdView';    // 产品详情页
+
 // account 用户注册相关
 import AccountIndexView from 'kyBus/account/views/IndexView';          // 会员中心首页
 import RegConsumerView from 'kyBus/account/views/RegConsumerView';  // 消费者注册
@@ -67,6 +70,7 @@ class RouterMap extends React.Component {
                 >
                     <IndexRoute component={HomeView}/>
                     <Route path='login(/:router)' component={LoginView}/>
+                    <Route path='product/:id' component={ProductIdView}/>
                     <Redirect from="/account" to="/account/regmember"/>
                     <Route path='/account' component={AccountIndexView} >
                         <Route path='/account/regconsumer' component={RegConsumerView}/>

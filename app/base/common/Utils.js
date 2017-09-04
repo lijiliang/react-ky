@@ -125,6 +125,42 @@ export function dedupe (array) {
     return Array.from(new Set(array));
 }
 
+/*
+ * [raw 根据一个对象，生成拼接好的字符串]
+ * @param  {[type]} args [description]
+ * @return {[type]}      [description]
+ * 根据一个对象，返回 aa=aa&bb=bb&cc=cc  的值
+ */
+export function raw (args) {
+    let keys = Object.keys(args);
+    let newArgs = {};
+    let str = '';
+
+    keys = keys.sort();
+    keys.forEach((key) => {
+        newArgs[key.toLowerCase()] = args[key];
+    });
+
+    for (let k in newArgs) {
+        str += '&' + k + '=' + newArgs[k];
+    }
+
+    return str.substr(1);
+}
+
+/*
+ * [ unescapeHTML html转换 ]
+ * @param {string} str 未转换的html字符串
+ * @returns {string}
+*/
+export function unescapeHTML(str){
+    const _str = str;
+    return _str.replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&')
+            .replace(/&quot;/g, '"')
+            .replace(/&apos;/g, '\'');
+}
 // 导出
 // export default {
 //     hideLoading,

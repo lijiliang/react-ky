@@ -19,6 +19,7 @@ const Urls = {
     ShoppingCarCount: profile.server + '/starspower/shop/service/v1/shoppingcar/count', // 获取购物车总数
     ShipAddress: profile.server + '/starspower/shop/service/v1/shipAddress',      // 收货地址服务
     ShipAddressDefault: profile.server + '/starspower/shop/service/v1/shipAddress/default', // 设为默认地址
+    ProductInfoId: profile.server + '/starspower/shop/service/v1/product', // 根据Id获取商品详情
 };
 
 export default Urls;
