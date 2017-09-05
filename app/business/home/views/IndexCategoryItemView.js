@@ -18,6 +18,17 @@ class IndexCategoryItemView extends React.Component {
             isChildren: false,   // 是否显示栏目子项
         };
     }
+    componentDidMount(){
+        const isChildren = this.props.isChildren
+        this.setState({
+            isChildren: isChildren || false
+        })
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            isChildren: nextProps.isChildren
+        })
+    }
     // 点击事件
     clickHandle = (e) => {
         this.setState({
@@ -46,4 +57,12 @@ class IndexCategoryItemView extends React.Component {
     }
 }
 
-export default IndexCategoryItemView;
+/*  React 与  Redux 绑定 */
+function mapStateToProps(state){
+    return {
+    };
+}
+
+export default connect(
+    mapStateToProps
+)(IndexCategoryItemView);

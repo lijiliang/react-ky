@@ -4,6 +4,7 @@
 
 // 首页 reducers
 export {default as HomeModel} from './home/model/HomeModel';
+export {default as IndexItemOpenModel} from './home/model/IndexItemOpenModel'; // 首页展开所有商品
 
 export {default as ProductInfoIdModel} from './home/model/ProductInfoIdModel';  // 商品详情
 

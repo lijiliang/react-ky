@@ -40,13 +40,15 @@ class IndexView extends React.Component{
         const homeData = this.props.home;
         const _bannerList = homeData.get('banner');
         const _product = homeData.get('product');
+        const itemOpen = this.props.itemOpen;
+        const _isChildren = itemOpen.get('isChildren');   // 是否展开商品
         return(
                 <div className="ky-scrollable-white">
                     <SlideSwipe List={_bannerList}/>
 
                     <div className="m-category">
                         {/* 营养补充品 */}
-                        <IndexCategoryItemView title="营养补充品" thumb={ProductsItemImg1}>
+                        <IndexCategoryItemView title="营养补充品" thumb={ProductsItemImg1} isChildren={_isChildren}>
                             <div className="category-sub">
                                 <IndexCategorySubItemView title="套组">
                                     <div className="sub-view clearfix">
@@ -74,7 +76,7 @@ class IndexView extends React.Component{
                         </IndexCategoryItemView>
 
                         {/* 护肤产品 */}
-                        <IndexCategoryItemView title="护肤产品" thumb={ProductsItemImg2}>
+                        <IndexCategoryItemView title="护肤产品" thumb={ProductsItemImg2} isChildren={_isChildren}>
                             <div className="category-sub">
                                 <IndexCategorySubItemView title="套组">
                                     <div className="sub-view clearfix">
@@ -102,7 +104,7 @@ class IndexView extends React.Component{
                         </IndexCategoryItemView>
 
                         {/* 推广优惠及其它 */}
-                        <IndexCategoryItemView title="推广优惠及其它" thumb={ProductsItemImg3}>
+                        <IndexCategoryItemView title="推广优惠及其它" thumb={ProductsItemImg3} isChildren={_isChildren}>
                             <div className="category-sub">
                                 <IndexCategorySubItemView title="推广优惠">
                                 </IndexCategorySubItemView>
@@ -130,7 +132,8 @@ class IndexView extends React.Component{
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
-        home: state.HomeModel
+        home: state.HomeModel,
+        itemOpen: state.IndexItemOpenModel
     };
 }
 

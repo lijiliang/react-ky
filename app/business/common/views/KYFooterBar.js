@@ -3,7 +3,7 @@
  * /order/*
  */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -38,7 +38,9 @@ class KYFooterBar extends React.Component{
             isLogin: isLogin
         });
     }
+
     render(){
+        const { onGoIndexItemOpen } = this.props
         const cartcount = this.props.cartcount.get('cartcount');
         return(
             <div className="footer-bar flex-row">
@@ -51,7 +53,7 @@ class KYFooterBar extends React.Component{
                         <i className="icon icon-onlineCS"></i>
                         <div className="bar-item-text">在线客服</div>
                     </a>
-                    <div className="bar-item">
+                    <div className="bar-item" onClick={onGoIndexItemOpen}>
                         <i className="icon icon-productlist"></i>
                         <div className="bar-item-text">产品商城</div>
                     </div>
@@ -73,6 +75,22 @@ function mapStateToProps(state){
         cartcount: state.CartCountModel
     };
 }
+
+function mapDispatchToProps(dispatch){
+    return {
+        // 跳到首页，并展开首页所有商品
+        onGoIndexItemOpen: () => {
+            hashHistory.push('/');
+            dispatch({
+                type: 'INDEXITEMOPEN',
+                indexItemOpen: {
+                    isChildren: true
+                }
+            });
+        }
+    };
+}
 export default connect(
     mapStateToProps,
+    mapDispatchToProps
 )(KYFooterBar);
