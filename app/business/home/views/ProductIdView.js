@@ -14,7 +14,7 @@ import IndexAddCart from './IndexAddCart';
 
 import '../resources/ProductIdView.less';
 
-class IndexView extends React.Component{
+class ProductIdView extends React.Component{
     constructor(props, context){
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
@@ -94,4 +94,4 @@ function mapStateToProps(state){
 
 export default connect(
     mapStateToProps
-)(IndexView);
+)(ProductIdView);

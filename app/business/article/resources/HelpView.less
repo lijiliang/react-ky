@@ -1,0 +1,43 @@
+/**
+ * @fileOverview: 帮助文章 详情页
+ * @version: 1.0.0(2017-9-5)
+ * @author: Benson
+ * @updatatime:
+ */
+
+// 引入变量
+@import '~varLess';
+
+.m-help{
+    margin-top: 15px;
+    &-tit{
+        height: 130px;
+        line-height: 130px;
+        padding-left: 40px;
+        background: #fff;
+        font-size: 42px;
+        color: @brand-primary;
+    }
+    .m-help-content{
+        padding: 30px;
+        font-size: 32px;
+        p{
+            padding: 8px 0;
+            line-height: 1.5;
+            font-size: 32px;
+        }
+    }
+    .m-help-menu{
+        padding-bottom: 20px;
+        .menu-item{
+            display: block;
+            height: 130px;
+            line-height: 130px;
+            padding-left: 40px;
+            background: #fff;
+            font-size: 42px;
+            color: @brand-blue;
+            border-bottom: 1px solid @brand-gray-p;
+        }
+    }
+}

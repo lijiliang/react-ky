@@ -1,0 +1,47 @@
+/**
+ * @fileOverview: 最新消息
+ * @version: 1.0.0(2017-9-5)
+ * @author: Benson
+ * @updatatime:
+ */
+
+// 引入变量
+@import '~varLess';
+
+.m-news{
+    .news-item{
+        display: block;
+        margin: 30px 60px 40px 60px;
+        background: #fff;
+        border-radius: 6px;
+        box-shadow: 8px 8px 30px #b8b8b8, -8px -8px 30px #b8b8b8;
+        .thumb{
+            img{
+                display: block;
+                width: 100%;
+                // height: 310px;
+            }
+        }
+        .info{
+            padding: 10px 30px 40px 30px;
+            h2{
+                padding: 8px 0;
+                font-size: 40px;
+                line-height: 1.4;
+                color: @brand-blue;
+            }
+            p{
+                font-size: 25px;
+                color: #787878;
+            }
+        }
+        .more{
+            height: 60px;
+            line-height: 60px;
+            background: #c8c8c8;
+            text-align: center;
+            font-size: 30px;
+            color: @brand-primary;
+        }
+    }
+}
