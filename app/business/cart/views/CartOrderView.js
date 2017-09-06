@@ -7,7 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
-import {login} from '../action/DataAction';
+import { OrderPreview } from '../action/DataAction';
 
 import { Cache } from 'kyCommon';
 import { KYPayMethod } from 'kyComponent';
@@ -26,6 +26,12 @@ class CartIndexView extends React.Component{
         };
     }
     componentDidMount(){
+        const cartIds = Cache.sessionGet(Cache.sessionKeys.ky_cart_ids);
+        this.props.dispatch(OrderPreview(cartIds, (res) => {
+            this.setState({
+                ...res
+            })
+        }))
         // this.send("topBar->addItem({text:'aaa',handler:function(){alert()}},icon:"class")");
     }
     // 返回上一页
@@ -41,6 +47,13 @@ class CartIndexView extends React.Component{
         console.log('a')
     }
     render(){
+        const _state = this.state || {};
+        const shippingInfo =  _state.shippingInfo || {}
+        const orderList = _state.orderList || []
+        console.log(_state)
+        function markMoney(str){
+            return '￥' + str;
+        }
         return(
             <div className="ky-scrollable">
                 <div className="ky-cart-order">
@@ -57,15 +70,15 @@ class CartIndexView extends React.Component{
                             <div className="list">
                                 <div className="item">
                                     <span className="name">收货人</span>
-                                    <span className="info">架夺</span>
+                                    <span className="info">{shippingInfo.consignee}</span>
                                 </div>
                                 <div className="item">
                                     <span className="name">手机号</span>
-                                    <span className="info">13503030033</span>
+                                    <span className="info">{shippingInfo.phoneNumber}</span>
                                 </div>
                                 <div className="item">
                                     <span className="name">收货地址</span>
-                                    <span className="info">江苏省泰州市江阴区 曲伟胜祥6955号</span>
+                                    <span className="info">{shippingInfo.addrPrivonceName}省{shippingInfo.addrCityName}{shippingInfo.addrCountyName}{shippingInfo.addrDetail}</span>
                                 </div>
                             </div>
                         </div>
@@ -131,113 +144,76 @@ class CartIndexView extends React.Component{
                             <List small>
                                 <Item extra={'快递'}>配送方式</Item>
                                 <Item extra={'在线支付'}>支付方式</Item>
-                                <Item extra={'10'}>商品数量</Item>
-                                <Item extra={'3'} className="text-primary">子订单数量</Item>
+                                <Item extra={_state.productCount}>商品数量</Item>
+                                <Item extra={_state.orderCount} className="text-primary">子订单数量</Item>
                             </List>
                             <Accordion className="m-suborder">
-                                <Accordion.Panel className="pad" header={
-                                    <div className="header-content">
-                                        <span className="name">子订单1</span>
-                                        <div className="bao">
-                                            <span className="icon icon-bao"></span>
-                                            <span className="bao-shop">保税区商品</span>
-                                        </div>
-                                    </div>
-                                }>
-                                <div className="m-suborder-box">
-                                    <div className="item-content">
-                                        <div className="thumb">
-                                            <img src="http://fpoimg.com/230x280?text=img" alt=""/>
-                                        </div>
-                                        <div className="info">
-                                            <div className="info-item">
-                                                <div className="name name-tit">新乐思新乐新乐思新乐</div>
-                                                <div className="number">数量</div>
-                                            </div>
-                                            <div className="info-item">
-                                                <div className="name">
-                                                    <p>蓝莓复合果汁饮品(便利装) 900毫升 (30袋)</p>
+                                {
+                                    orderList.map((item, index) => {
+                                        return(
+                                            <Accordion.Panel className="pad" header={
+                                                <div className="header-content">
+                                                    <span className="name">子订单{index + 1}</span>
+                                                    <div className="bao">
+                                                        <span className="icon icon-bao"></span>
+                                                        <span className="bao-shop">保税区商品</span>
+                                                    </div>
+                                                </div>
+                                            }>
+                                            <div className="m-suborder-box">
+                                                {
+                                                    item.items.map((items) => {
+                                                        return(
+                                                            <div className="item-content">
+                                                                <div className="thumb">
+                                                                    <img src={items.imgPath}/>
+                                                                </div>
+                                                                <div className="info">
+                                                                    <div className="info-item">
+                                                                        <div className="name name-tit">{items.name}</div>
+                                                                        <div className="number">数量</div>
+                                                                    </div>
+                                                                    <div className="info-item">
+                                                                        <div className="name">
+                                                                            <p>{items.name}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="info-item info-price">
+                                                                        <div className="name">
+                                                                            <p>原价&nbsp;&nbsp;&nbsp;<span className="name-price">¥{items.originalPrice}</span></p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="info-item info-price">
+                                                                        <div className="name">
+                                                                            <p>会员价<span className="name-price">¥{items.salePrice}</span></p>
+                                                                        </div>
+                                                                        <div className="number">x {items.buyNum}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                                <div className="subtotal">
+                                                    <span>合计</span><span className="price">¥{item.actualPrice}</span>
                                                 </div>
                                             </div>
-                                            <div className="info-item info-price">
-                                                <div className="name">
-                                                    <p>原价&nbsp;&nbsp;&nbsp;<span className="name-price">¥460.00</span></p>
-                                                </div>
-                                            </div>
-                                            <div className="info-item info-price">
-                                                <div className="name">
-                                                    <p>会员价<span className="name-price">¥460.00</span></p>
-                                                </div>
-                                                <div className="number">x 4</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="item-content">
-                                        <div className="thumb">
-                                            <img src="http://fpoimg.com/230x280?text=img" alt=""/>
-                                        </div>
-                                        <div className="info">
-                                            <div className="info-item">
-                                                <div className="name name-tit">新乐思新新乐思新新乐思新乐新乐思新乐</div>
-                                                <div className="number">数量</div>
-                                            </div>
-                                            <div className="info-item">
-                                                <div className="name">
-                                                    <p>蓝莓复合果汁饮品(便利装) 900毫升 (30袋)</p>
-                                                </div>
-                                            </div>
-                                            <div className="info-item info-price">
-                                                <div className="name">
-                                                    <p>原价&nbsp;&nbsp;&nbsp;<span className="name-price">¥460.00</span></p>
-                                                </div>
-                                            </div>
-                                            <div className="info-item info-price">
-                                                <div className="name">
-                                                    <p>会员价<span className="name-price">¥460.00</span></p>
-                                                </div>
-                                                <div className="number">12件/套</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="subtotal">
-                                        <span>合计</span><span className="price">¥420.00</span>
-                                    </div>
-                                </div>
-                                </Accordion.Panel>
-                                <Accordion.Panel header={
-                                    <div className="header-content">
-                                        <span className="name">子订单234567809876</span>
-                                        <div className="bao">
-                                            <span className="icon icon-bao"></span>
-                                            <span className="bao-shop">保税区商品</span>
-                                        </div>
-                                    </div>
-                                }>
-                                    <div>sadf</div>
-                                </Accordion.Panel>
-                                <Accordion.Panel header={
-                                    <div className="header-content">
-                                        <span className="name">子订单1</span>
-                                        <div className="bao">
-                                            <span className="icon icon-bao"></span>
-                                            <span className="bao-shop">保税区商品</span>
-                                        </div>
-                                    </div>
-                                }>
-                                    Text text text text text text text text text text text text text text text
-                                </Accordion.Panel>
+                                            </Accordion.Panel>
+                                        )
+                                    })
+                                }
                             </Accordion>
                             <List small>
-                                <Item extra={'￥21,400.00'}>会员价总额</Item>
-                                <Item extra={'￥21,400.00'}>销售价总额</Item>
-                                <Item extra={'￥0.00'}>进口关税</Item>
-                                <Item extra={'-￥21,400.00'}>总优惠</Item>
-                                <Item extra={'￥0.00'}>运费</Item>
-                                <Item extra={'525'}>总积分</Item>
+                                <Item extra={markMoney(_state.originalPrice)}>会员价总额</Item>
+                                {/* <Item extra={'￥21,400.00'}>销售价总额</Item> */}
+                                <Item extra={markMoney(_state.importTariff)}>进口关税</Item>
+                                <Item extra={markMoney(_state.preferential)}>总优惠</Item>
+                                <Item extra={markMoney(_state.expressPrice)}>运费</Item>
+                                <Item extra={_state.totalQV}>总积分</Item>
                             </List>
                         </div>
                     </div>
-                   <KYPayMethod price="10,888.00"/>
+                   <KYPayMethod price={_state.actualPrice}/>
                    <Button title="立即结算" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
 
                 </div>

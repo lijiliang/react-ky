@@ -16,10 +16,12 @@ class App extends Component {
             // ...
         };
     }
-    // 组件的卸载
-    componentWillMount() {
-        // ...
+
+    //组件将要加载
+    componentWillMount(){
+
     }
+
     //组件加载完成执行的动作(第一轮执行)
     componentDidMount() {
         // ...
@@ -37,9 +39,14 @@ class App extends Component {
         // return true;
     }
     componentWillUpdate(nextProps, nextState) {
-        // ...
+        // 准备更新
     }
     componentDidUpdate(prevProps, prevState) {
+        // 更新完成
+    }
+
+    // 组件的卸载
+    componentWillMount() {
         // ...
     }
 

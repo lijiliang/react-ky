@@ -7,7 +7,7 @@ import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getShoppingCarCount } from '../action/DataAction'
+import { getShoppingCarCount, indexItemOpen} from '../action/DataAction'
 import { Cache } from 'kyCommon';
 
 import '../resources/KYFooterBar.less';
@@ -39,6 +39,11 @@ class KYFooterBar extends React.Component{
         });
     }
 
+    // 跳到首页，并展开首页所有商品
+    onGoIndexItemOpen() {
+        hashHistory.push('/');
+        this.props.dispatch(indexItemOpen());
+    }
     render(){
         const { onGoIndexItemOpen } = this.props
         const cartcount = this.props.cartcount.get('cartcount');
@@ -53,7 +58,7 @@ class KYFooterBar extends React.Component{
                         <i className="icon icon-onlineCS"></i>
                         <div className="bar-item-text">在线客服</div>
                     </a>
-                    <div className="bar-item" onClick={onGoIndexItemOpen}>
+                    <div className="bar-item" onClick={this.onGoIndexItemOpen.bind(this)}>
                         <i className="icon icon-productlist"></i>
                         <div className="bar-item-text">产品商城</div>
                     </div>
@@ -76,21 +81,21 @@ function mapStateToProps(state){
     };
 }
 
-function mapDispatchToProps(dispatch){
-    return {
-        // 跳到首页，并展开首页所有商品
-        onGoIndexItemOpen: () => {
-            hashHistory.push('/');
-            dispatch({
-                type: 'INDEXITEMOPEN',
-                indexItemOpen: {
-                    isChildren: true
-                }
-            });
-        }
-    };
-}
+// function mapDispatchToProps(dispatch){
+//     return {
+//         // 跳到首页，并展开首页所有商品
+//         onGoIndexItemOpen: () => {
+//             hashHistory.push('/');
+//             dispatch({
+//                 type: 'INDEXITEMOPEN',
+//                 indexItemOpen: {
+//                     isChildren: true
+//                 }
+//             });
+//         }
+//     };
+// }
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    // mapDispatchToProps
 )(KYFooterBar);

@@ -2,7 +2,7 @@
  * @fileOverview 购物车首页 View
  */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -31,6 +31,8 @@ class CartIndexView extends React.Component{
         this.changeStatus = this.changeStatus.bind(this);
     }
     componentDidMount(){
+        // 进来之前先删除之前选中的购物车信息
+        Cache.sessionRemove(Cache.sessionKeys.ky_cart_ids);
         // this.checkAll();
         this._getAllShoppingCat();
     }
@@ -118,6 +120,10 @@ class CartIndexView extends React.Component{
         this._cartItemActive();
     }
 
+    // 立即结算
+    submitHandle() {
+        hashHistory.push('/cart/order')
+    }
     // 购物车商品选中后，将选中的id记录到sesseion,然后重新获取购物车列表
     _cartItemActive(){
         const idsList = this._getIdsActive();
@@ -343,7 +349,7 @@ class CartIndexView extends React.Component{
                                     <span className="price"> ￥{_getShappingcar.get('salePrice')}</span>
                                 </div>
                                 <div className="btn">
-                                    <Button title="立即结算" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
+                                    <Button title="立即结算" className="ky-button-primary regcon-btn" onClick={this.submitHandle.bind(this)} across/>
                                 </div>
                             </div>
                         : null

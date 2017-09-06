@@ -70,3 +70,14 @@ export function getShoppingCarCount(callback) {
         }
     };
 }
+
+export function indexItemOpen(){
+    return (dispatch, getState) => {
+        dispatch({
+            type: types.INDEXITEMOPEN,
+            indexItemOpen: {
+                isChildren: true
+            }
+        });
+    };
+}

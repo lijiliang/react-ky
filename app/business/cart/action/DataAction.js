@@ -87,3 +87,29 @@ export function deteteShoppingCar(id, callback){
         });
     };
 }
+
+/*
+ * [deteteShoppingCar 预览订单]
+ * @param  {[string]}   carIds  [购物车id]
+ * @param  {Function} callback [description]
+ */
+export function OrderPreview(carIds, callback){
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const _data = {
+            carIds: carIds
+        };
+        const response = post(Urls.OrderPreview, _data);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
