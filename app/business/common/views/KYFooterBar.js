@@ -50,7 +50,7 @@ class KYFooterBar extends React.Component{
         return(
             <div className="footer-bar flex-row">
                 <div className="footer-bar-list ky-center-v">
-                    <Link to="/user" activeClassName="active" className="bar-item">
+                    <Link to="/news" activeClassName="active" className="bar-item">
                         <i className="icon icon-news"></i>
                         <div className="bar-item-text">最新消息</div>
                     </Link>
