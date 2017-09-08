@@ -120,9 +120,10 @@ class KYMenu extends React.Component{
                                 </ul>
                             :
                                 singleProduct.map((item) => {
+                                    const  url = '/product/' + item.id;
                                     return(
                                         <ul className="m-menu-sub menu-sub-two">
-                                            <li className="m-menu-item" data-id={item.id}>{item.name}</li>
+                                            <li className="m-menu-item" onClick={this.goUrl.bind(this, url)} data-id={item.id}>{item.name}</li>
                                         </ul>
                                     );
                                 })
@@ -136,8 +137,9 @@ class KYMenu extends React.Component{
                         <ul className="m-menu-sub menu-sub-two">
                             {
                                 skinProduct.map((item) => {
+                                    const  url = '/product/' + item.id;
                                     return(
-                                        <li className="m-menu-item" data-id={item.id}>{item.name}</li>
+                                        <li className="m-menu-item" onClick={this.goUrl.bind(this, url)} data-id={item.id}>{item.name}</li>
                                     );
                                 })
                             }

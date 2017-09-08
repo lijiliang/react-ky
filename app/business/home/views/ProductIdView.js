@@ -24,6 +24,22 @@ class ProductIdView extends React.Component{
     }
     componentDidMount(){
         const productId = this.props.params.id;
+        this._getProductInfo(productId);
+    }
+    componentWillReceiveProps(nextProps) {
+        const productId = this.props.params.id;
+        if(productId !== nextProps.params.id){
+            this._getProductInfo(nextProps.params.id);
+        }
+    }
+    // 返回上一页
+    gohistoryHandle(){
+        window.history.go(-1);
+    }
+
+    // 获取产品详情数据
+    _getProductInfo(productId){
+        // const productId = this.props.params.id;
         if(productId.indexOf('g') >= 0){
             this.state = {
                 groupFlag: true
@@ -34,10 +50,6 @@ class ProductIdView extends React.Component{
             };
         }
         this.props.dispatch(getProductInfoId(productId));
-    }
-    // 返回上一页
-    gohistoryHandle(){
-        window.history.go(-1);
     }
     render(){
         const product = this.props.product;

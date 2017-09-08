@@ -60,7 +60,7 @@ class CartIndexView extends React.Component{
         const shippingInfo =  _state.shippingInfo || {}
         // 如果没收货人地址，则不能让提交
         if (shippingInfo.id == null){
-            Toast.info('请先增加收货人地址');
+            Toast.info('请先增加收货地址');
             return
         }
         const data = {

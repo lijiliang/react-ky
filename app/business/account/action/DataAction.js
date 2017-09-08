@@ -4,7 +4,7 @@
 import * as types from './actionTypes';
 import Base64 from 'js-base64';
 import {hashHistory} from 'react-router'
-import { post, getPublic, postPublic } from 'FetchData';
+import { post, get, getPublic, postPublic } from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
 import { failLoading } from 'Utils';
@@ -189,6 +189,29 @@ export function UserDealer(data, callback) {
                 }
             }else{
                 Toast.info(res.message, 1);
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+
+/*
+ * [getCurrentUserInfo 获取当前登录会员的消息]
+ * @param  {Function} callback [回调函数]
+ */
+export function getCurrentUserInfo(callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = get(Urls.UserCurrent);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
             }
         }).catch((err) => {
             failLoading(err);
