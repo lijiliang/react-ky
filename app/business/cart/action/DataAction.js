@@ -113,3 +113,26 @@ export function OrderPreview(carIds, callback){
         });
     };
 }
+
+/*
+ * [OrderAdd 创建订单]
+ * @param  {[Object]}   data  [参数集合]
+ * @param  {Function} callback [description]
+ */
+export function OrderAdd(data, callback){
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = post(Urls.OrderAdd, data);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}

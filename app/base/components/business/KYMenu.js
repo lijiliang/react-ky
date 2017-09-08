@@ -93,8 +93,9 @@ class KYMenu extends React.Component{
                                     <ul className="m-menu-sub">
                                         {
                                             groupProduct.map((item) => {
+                                                const  url = '/product/g' + item.id;
                                                 return(
-                                                    <li className="m-menu-item" data-id={item.id}>{item.name}</li>
+                                                    <li className="m-menu-item" onClick={this.goUrl.bind(this, url)} data-id={item.id}>{item.name}</li>
                                                 );
                                             })
                                         }
@@ -108,8 +109,9 @@ class KYMenu extends React.Component{
                                     <ul className="m-menu-sub">
                                         {
                                             singleProduct.map((item) => {
+                                                const  url = '/product/' + item.id;
                                                 return(
-                                                    <li className="m-menu-item" data-id={item.id}>{item.name}</li>
+                                                    <li className="m-menu-item" onClick={this.goUrl.bind(this, url)} data-id={item.id}>{item.name}</li>
                                                 );
                                             })
                                         }

@@ -21,6 +21,7 @@ const Urls = {
     ShipAddressDefault: profile.server + '/starspower/shop/service/v1/shipAddress/default', // 设为默认地址
     ProductInfoId: profile.server + '/starspower/shop/service/v1/product', // 根据Id获取商品详情
     OrderPreview: profile.server + '/starspower/shop/service/v1/order/preview', // 预览订单
+    OrderAdd: profile.server + '/starspower/shop/service/v1/order', // 创建订单
 };
 
 export default Urls;

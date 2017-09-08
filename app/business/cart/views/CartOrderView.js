@@ -7,7 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
-import { OrderPreview } from '../action/DataAction';
+import { OrderPreview, OrderAdd } from '../action/DataAction';
 
 import { Cache } from 'kyCommon';
 import { KYPayMethod } from 'kyComponent';
@@ -53,11 +53,33 @@ class CartIndexView extends React.Component{
     addMangementHandle() {
         hashHistory.push('/user/address');
     }
+
+    //立即结算 下单
+    submitHandle() {
+        const _state = this.state;
+        const shippingInfo =  _state.shippingInfo || {}
+        // 如果没收货人地址，则不能让提交
+        if (shippingInfo.id == null){
+            Toast.info('请先增加收货人地址');
+            return
+        }
+        const data = {
+          actualPrice: _state.actualPrice,
+          addressId: shippingInfo.id,
+          carIds: _state.shoppingCarIds,
+          originalPrice: _state.originalPrice,
+          payType: 0,
+          preferential: _state.preferential
+        }
+        this.props.dispatch(OrderAdd(data, (res) => {
+            console.log(res)
+        }))
+    }
     render(){
         const _state = this.state || {};
         const shippingInfo =  _state.shippingInfo || {}
         const orderList = _state.orderList || []
-        console.log(shippingInfo)
+        console.log(_state)
         function markMoney(str){
             return '￥' + str;
         }
@@ -222,7 +244,7 @@ class CartIndexView extends React.Component{
                                         </Accordion>
                                         <List small>
                                             <Item extra={markMoney(_state.originalPrice)}>会员价总额</Item>
-                                            {/* <Item extra={'￥21,400.00'}>销售价总额</Item> */}
+                                            <Item extra={markMoney(_state.originalPrice)}>销售价总额</Item>
                                             <Item extra={markMoney(_state.importTariff)}>进口关税</Item>
                                             <Item extra={markMoney(_state.preferential)}>总优惠</Item>
                                             <Item extra={markMoney(_state.expressPrice)}>运费</Item>
@@ -245,7 +267,7 @@ class CartIndexView extends React.Component{
                 {
                     !_state.isLoading ?
                         <div className="m-foot-fixed">
-                            <Button title="立即结算" className="ky-button-primary regcon-btn" onClick={this.submitHandle} across/>
+                            <Button title="立即结算" className="ky-button-primary regcon-btn" onClick={this.submitHandle.bind(this)} across/>
                         </div>
                     : null
                 }

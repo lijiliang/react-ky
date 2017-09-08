@@ -1,6 +1,10 @@
 ## react es6 推荐默认写法
 ```js
 import React, {Component} from 'react';
+
+const defaultProps = {
+    userName: 'name'
+}
 class App extends Component {
     // 类型检查
     static propTypes = {
@@ -11,7 +15,7 @@ class App extends Component {
         // ...
     };
     constructor(props) {
-        super(props);
+        super(props);   // 调用基类的所有的初始化方法
         this.state = {
             // ...
         };
@@ -66,9 +70,12 @@ class App extends Component {
     }
 }
 
-Drawer.propTypes = {
+App.propTypes = {
     sidebar: PropTypes.element,  //抽屉里的内容
 }
+
+// 默认的定义props值
+App.defaultProps = defaultProps;
 
 ```
 ## 子级调用父级函数
@@ -83,6 +90,18 @@ onChange={this.numItemChangeHandle}
 onChange={(val)=>{this.props.numItem(this.props.index, val)}}
 ```
 
+// 在子页面往父页面传递参数，只能通过函数调用的方式
+子页面：
+onChange={this.props.handleValue}
+
+父页面：
+handleValue(event){
+    this.setState({
+        value: event.target.value
+    })
+}
+<Child {...this.props} handleValue={this.handleValue.bind(this)} />
+
 ## 传递参数
 ```js
 onChange={this.numItemChangeHandle.bind(this, 参数一，参数二,...)}
@@ -96,4 +115,48 @@ numItemChangeHandle(参数一，参数二, e){
 ## react  无状态组件的写法
 ```js
 const HelloBenson = (props) => <div>Hello {props.name}</div>
+```
+
+## 可复用组件
+```js
+ // props验证   https://github.com/facebook/prop-types
+ BodyChild.propTypes = {
+     userId: PropTypes.number
+ }
+```
+
+## 组件 Refs
+```js
+// 原始获取方式：
+var mySumbitButton = document.getElementById('submitButton');
+ReactDom.findDOMNode(mySumbitButton).style.color = 'red';
+
+// Refs
+<input ref="submitButton"/>
+this.refs.submitButton
+this.refs.submitButton.style.color = 'red'
+```
+
+## Mixins
+https://github.com/brigand/react-mixin
+```js
+// minins.js
+const MixinLog = {
+    componentDidMount(){
+        console.log('MixinLog componentDidMount')
+    }
+    log(){
+        console.log('')
+    }
+}
+
+export default MixinLog;
+
+// 调用
+var reactMixin = require('react-mixin');
+var Minins = require('minins');
+class Foo extends React.Component {
+    render: function(){ return <div /> }
+}
+reactMixin(Foo.prototype, Minins);
 ```

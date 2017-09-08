@@ -39,11 +39,11 @@ export default class SubGroupItem extends React.Component {
                     <ul className="info-list">
                         <li className="price">
                             <span>会员价</span>
-                            <span>￥{_item.originalPrice}</span>
+                            <span>￥{_item.salePrice}</span>
                         </li>
                         <li>
                             <span>原价</span>
-                            <span className="center-line">￥{_item.salePrice}</span>
+                            <span className="center-line">￥{_item.originalPrice}</span>
                         </li>
                         <li>
                             <span>积分</span>
