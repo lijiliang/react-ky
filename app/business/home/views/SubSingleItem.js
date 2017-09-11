@@ -27,7 +27,8 @@ export default class SubGroupItem extends React.Component {
     }
     render(){
         const _item = this.props.data || {};
-        const imgPath = _item.imgPath + '!/fwfh/600x600/format/webp';  // 产品图片，用webp图片格式
+        //const imgPath = _item.imgPath + '!/fwfh/600x600/format/webp';  // 产品图片，用webp图片格式
+        const imgPath = _item.imgPath + '!/fwfh/600x600';
         return(
             <div className="sub-single-item">
                 <div className="item-name" onClick={this.goProduct.bind(this, _item.id)}>
