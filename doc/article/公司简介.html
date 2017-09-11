@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title>kyani Mobile</title>
+    <script>
+    !function(e){function t(a){if(i[a])return i[a].exports;var n=i[a]={exports:{},id:a,loaded:!1};return e[a].call(n.exports,n,n.exports,t),n.loaded=!0,n.exports}var i={};return t.m=e,t.c=i,t.p="",t(0)}([function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=window;t["default"]=i.flex=function(e,t){var a=e||100,n=t||1,r=i.document,o=navigator.userAgent,d=o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),l=o.match(/U3\/((\d+|\.){5,})/i),c=l&&parseInt(l[1].split(".").join(""),10)>=80,p=navigator.appVersion.match(/(iphone|ipad|ipod)/gi),s=i.devicePixelRatio||1;p||d&&d[1]>534||c||(s=1);var u=1/s,m=r.querySelector('meta[name="viewport"]');m||(m=r.createElement("meta"),m.setAttribute("name","viewport"),r.head.appendChild(m)),m.setAttribute("content","width=device-width,user-scalable=no,initial-scale="+u+",maximum-scale="+u+",minimum-scale="+u),r.documentElement.style.fontSize=a/2*s*n+"px"},e.exports=t["default"]}]);
+flex(100, 1);
+    </script>
+    <link href="http://10.206.41.8:9010/static/app.ba065d9e.css" rel="stylesheet">
+</head>
+<script src="http://10.206.41.8:9010/static/manifest.088dd510.js"></script>
+<script src="http://10.206.41.8:9010/static/vendor.ea94c84b.js"></script>
+<script src="http://10.206.41.8:9010/static/app.27dd25db.js"></script>
+<body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097526498.jpg"/></div>
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097870995.jpg"/></div>
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097881243.jpg"/></div>
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097891348.jpg"/></div>
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097908684.jpg"/></div>
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097925546.jpg"/></div>
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097939862.jpg"/></div>
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097948901.jpg"/></div>
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097957513.jpg"/></div>
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097966818.jpg"/></div>
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097977651.jpg"/></div>
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097988531.jpg"/></div>
+            <div class="swiper-slide"><img src="https://kyaniyoupaiyun.b0.upaiyun.com/1505097999579.jpg"/></div>
+        </div>
+        <!-- <div class="swiper-pagination"></div> -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css"/>
+    <style>
+        .swiper-container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .swiper-container img{
+            display: block;
+            width: 100%;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.min.js"></script>
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        slidesPerView: 1,
+        paginationClickable: true,
+        spaceBetween: 30,
+        loop: true
+    });
+    </script>
+</body>
+</html>

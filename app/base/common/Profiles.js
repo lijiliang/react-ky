@@ -9,7 +9,7 @@ const profiles = {
     },
     prod: {
         preffix: '',
-        host: '10.206.40.145:8012',
+        host: 'dev.kyani.cn:8100',
         //sercureEnable: true
         sercureEnable: false
     }
