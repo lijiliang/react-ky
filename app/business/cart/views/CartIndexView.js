@@ -122,7 +122,12 @@ class CartIndexView extends React.Component{
 
     // 立即结算
     submitHandle() {
-        hashHistory.push('/cart/order')
+        const cartIds = Cache.sessionGet(Cache.sessionKeys.ky_cart_ids) || [];
+        if(cartIds.length > 0){
+            hashHistory.push('/cart/order');
+        } else {
+            Toast.info('请选择商品!');
+        }
     }
     // 购物车商品选中后，将选中的id记录到sesseion,然后重新获取购物车列表
     _cartItemActive(){
@@ -162,6 +167,9 @@ class CartIndexView extends React.Component{
             [`icon-radio`]: true,
             [`icon-radioSelect`]: this.state.isAllChecked,
         });
+        function markMoney(str){
+            return '￥' + str;
+        }
         return(
             <div className="ky-container-body">
                 <div className="ky-scrollable">
@@ -316,9 +324,9 @@ class CartIndexView extends React.Component{
                                         <div className="m-cart-other">
                                             <List small>
                                               <Item extra={`${_getShappingcar.get('totalNum')}`}>商品数量</Item>
-                                              <Item extra={`${_getShappingcar.get('salePrice')}`}>会员价总计</Item>
-                                              <Item extra={`${_getShappingcar.get('originalPrice')}`}>销售价总计</Item>
-                                              <Item extra={`${_getShappingcar.get('preferentialPrice')}`}>总优惠</Item>
+                                              <Item extra={markMoney(_getShappingcar.get('salePrice'))}>会员价总计</Item>
+                                              <Item extra={markMoney(_getShappingcar.get('originalPrice'))}>销售价总计</Item>
+                                              <Item extra={markMoney(_getShappingcar.get('preferentialPrice'))}>总优惠</Item>
                                             </List>
                                         </div>
                                     </div>
