@@ -127,6 +127,37 @@ export function OrderAdd(data, callback){
             const res = result.data;
             if(res.success){
                 Toast.hide();
+                dispatch({
+                    type: types.PAYMENT,
+                    payment: res.data
+                });
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+/*
+ * [OrderAdd payeezy支付]
+ * @param  {[Object]}   data  [参数集合]
+ * @param  {Function} callback [description]
+ */
+export function Payeezy(data, callback){
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = post(Urls.Payeezy, data);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                // dispatch({
+                //     type: types.PAYMENT,
+                //     payment: res.data
+                // });
                 if(callback && typeof callback === 'function'){
                     callback(res.data);
                 }

@@ -20,3 +20,4 @@ export {default as RegModel} from './account/model/RegModel';
 
 // 购物车的数据模型MODEL
 export {default as ShappingModel} from './cart/model/ShappingModel';
+export {default as PaymentModel} from './cart/model/PaymentModel';  // 支付信息

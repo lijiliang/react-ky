@@ -72,7 +72,8 @@ class CartIndexView extends React.Component{
           preferential: _state.preferential
         }
         this.props.dispatch(OrderAdd(data, (res) => {
-            console.log(res)
+            // 跳到信用卡支付页
+            hashHistory.push('/cart/payment')
         }))
     }
     render(){

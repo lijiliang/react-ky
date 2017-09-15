@@ -54,7 +54,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
              consigneeIdCard: '',      // 收货人身份证号码
              consigneeTelNumber: '',   // 收货人固定电话号码
              cityAreaData: cityAreaData, // 全部省市区数据
-
+             recommenderTimes: 0,  // 推荐人编号为空次数
          };
      }
 
@@ -64,6 +64,11 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
          if(regmember_info){
              this.setState(regmember_info);
          }
+
+         // 每次进来先设置推荐人编号为空次数
+         this.setState({
+             recommenderTimes: 0
+         })
      }
 
      // 返回上一页
@@ -102,6 +107,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
             const _confirmEmail = form.getFieldValue('confirmEmail');
             const _password = form.getFieldValue('password');
             const _confirmPwd = form.getFieldValue('confirmPwd');
+            const _recommender = form.getFieldValue('recommender');
 
             if(error){
                 const fieldNames = ['firstName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPwd', 'phoneNumber', 'telNumber', 'idCard', 'cityValue', 'addrDetail', 'postcode', 'recommender', 'reRecommender'].reverse();
@@ -149,8 +155,26 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
             const regMemberInfo = Object.assign(this.state, consigneeInfo);
             Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, regMemberInfo);
 
+            // 如果推荐人号没填，则需要点击两次“下一步”按钮才能进入下一步
+            if(_recommender){
+                // 推荐人会员号存在，直接将数据dispatch过去
+                this.props.dispatch(CheckDealerReg(_state.cityValue[0], _state.cityValue[1], _state.cityValue[2], _state.addrDetail, _state.email, _state.firstName, _state.idCard, _state.lastName, _state.password, _state.phoneNumber, _state.postcode, _state.reRecommender, _state.recommender, _state.telNumber, this.successFn))
+            }else{
+                let recommenderTimes = this.state.recommenderTimes;
+                if(recommenderTimes < 2) {
+                    Toast.info('请输入推荐人会员号', 1)
+                    recommenderTimes++;
+                    this.setState({
+                        recommenderTimes: recommenderTimes
+                    })
+                }else{
+                    // 将数据dispatch过去
+                    this.props.dispatch(CheckDealerReg(_state.cityValue[0], _state.cityValue[1], _state.cityValue[2], _state.addrDetail, _state.email, _state.firstName, _state.idCard, _state.lastName, _state.password, _state.phoneNumber, _state.postcode, _state.reRecommender, _state.recommender, _state.telNumber, this.successFn))
+                }
+
+            }
             // 将数据dispatch过去
-            this.props.dispatch(CheckDealerReg(_state.cityValue[0], _state.cityValue[1], _state.cityValue[2], _state.addrDetail, _state.email, _state.firstName, _state.idCard, _state.lastName, _state.password, _state.phoneNumber, _state.postcode, _state.reRecommender, _state.recommender, _state.telNumber, this.successFn))
+            //this.props.dispatch(CheckDealerReg(_state.cityValue[0], _state.cityValue[1], _state.cityValue[2], _state.addrDetail, _state.email, _state.firstName, _state.idCard, _state.lastName, _state.password, _state.phoneNumber, _state.postcode, _state.reRecommender, _state.recommender, _state.telNumber, this.successFn))
          })
      }
      // 下一步 验证数据成功的回调
@@ -158,6 +182,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
          hashHistory.push('/account/regselectpack')
      }
      render(){
+         console.log(this.state)
          const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
 
          // 密码

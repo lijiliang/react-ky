@@ -6,8 +6,7 @@ import { Link } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as loginAction from '../action/actionTypes';
-// import { UserDealer } from '../action/DataAction';
+import { Payeezy } from '../action/DataAction';
 
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
@@ -55,10 +54,11 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
          });
      }
      submitHandle(){
+        console.log(this.props)
         const form = this.props.form;
         form.validateFields((error, value) => {
             if(error){
-                const fieldNames = ['cardNumber', 'cardName', 'expDate', 'cvv', 'payAddrDetail', 'city', 'province', 'payPostcode', 'country'].reverse();
+                const fieldNames = ['cardNumber', 'cardName', 'expDate', 'cvv', 'payAddrDetail', 'city', 'province', 'zipcode', 'country'].reverse();
                 fieldNames.map((item, index) => {
                     if(form.getFieldError(item)){
                         Toast.info(form.getFieldError(item), 1);
@@ -73,65 +73,45 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
             }
 
             const _state = this.state;
+            const payment = this.props.payment;
             // 注册会员需要的数据
             const _data = {
-                orderOriginalPrice: _state.groupItem.originalPrice, //订单原金额
-                orderPayAmount: _state.groupItem.salePrice,     //订单应付金额
-                orderPreferential: _state.groupItem.preferential,  //订单优惠
-                payType: '1',//支付类型
-                productGroupId: _state.groupId, // 产品套组ID
-                dealer: {  //会员信息
-                    addrPrivonce: _state.cityValue[0], //省
-                    addrCity: _state.cityValue[1], //市
-                    addrCounty: _state.cityValue[2], //县/区
-                    addrDetail: _state.addrDetail, //详细地址
-                    email: _state.email, // 邮箱
-                    firstName: _state.firstName, //姓氏
-                    idCard: _state.idCard, //身份证号码
-                    lastName: _state.lastName, //名字
-                    password: _state.password, //密码
-                    phoneNumber: _state.phoneNumber,//手机号码
-                    postcode: _state.postcode, //邮编
-                    reRecommender: _state.reRecommender, //确认推荐人（安置人)
-                    recommender: _state.recommender, //推荐人，KID，例如：CN123456或123456
-                    telNumber: _state.telNumber //固定电话号码
-                },
-                shippingInfo: {  //收货信息
-                    addrPrivonce: _state.consigneeCityValue[0],  // 省
-                    addrCity: _state.consigneeCityValue[1], //市
-                    addrCounty: _state.consigneeCityValue[2], //区
-                    addrDetail: _state.consigneeAddrDetail, //详细地址
-                    consignee: _state.consigneeName, //收件人
-                    idCard: _state.consigneeIdCard, //身份证号码
-                    isDefault: true, //是否默认
-                    phoneNumber: _state.consigneePhoneNumber, //手机号码
-                    postcode: _state.consigneepostcode, //邮编
-                    telNumber: _state.consigneeTelNumber, //固定电话号码
-                },
-                payCardInfo: {  //支付信息
-                    cardName: _state.cardName, //持卡人姓名
-                    cardNumber: _state.cardNumber, //卡号
-                    expDate: _state.expDate.join(''), //有效期
-                    cvv: _state.cvv, //发全码
-                    addrDetail: _state.payAddrDetail, //账单地址
-                    addrPrivonce: _state.province, //省份
-                    addrCity: _state.city, //城市
-                    postcode: _state.payPostcode, //邮政编码
+                cardAddress: {   //卡地址
+                    city: _state.city, //城市
                     country: _state.country, //国家
+                    state: _state.province,
+                    street: _state.payAddrDetail,
+                    zip: _state.zipcode
+                },
+                cardInfo: {  //卡信息
+                    cardNumber: _state.cardNumber, //卡号
                     cardType: '1', //卡类型
-                }
-            };
+                    cardholderName: _state.cardName, //持卡人姓名
+                    cvv: _state.cvv, //发全码
+                    expDate: _state.expDate.join(''), //有效期
+                    // currency: string,  // 货币
+                },
+                payPrice: payment.get('price'), //支付金额
+                tradeNo: payment.get('tradeNo')   //主订单号
+            }
             console.log(_data)
-            // 更新session数据
-            Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, _state);
 
-            // this.props.dispatch(UserDealer(_data));
+            this.props.dispatch(Payeezy(_data, (res) => {
+                console.log('res: ', res)
+                if(res.success){
+                    console.log('success')
+                }else{
+                    console.log('error')
+                    Toast.fail(res.errMsg, 2);
+                }
+            }));
         });
      }
      render(){
          console.log(this.state)
          const _state = this.state;
          const { getFieldDecorator} = this.props.form;
+         const payment = this.props.payment;
 
          const cityExtraCls = classNames({
              ['picker-city']: true,
@@ -258,8 +238,8 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                         >省份</InputItem>
                                      )}
 
-                                      {getFieldDecorator('payPostcode',{
-                                          initialValue: this.state.payPostcode,
+                                      {getFieldDecorator('zipcode',{
+                                          initialValue: this.state.zipcode,
                                           rules: [{
                                               pattern: RegxRule.zipCode,
                                               message: '请输入正确的邮政编码'
@@ -273,7 +253,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                               labelNumber={5}
                                               maxLength={6}
                                               type="number"
-                                              onChange={this.stateChangeHandle.bind(this, 'payPostcode')}
+                                              onChange={this.stateChangeHandle.bind(this, 'zipcode')}
                                           >邮政编码</InputItem>
                                       )}
 
@@ -302,7 +282,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                  </div>
                              </div>
                              <div className="payable">
-                                 应付金额<span className="price">￥{_state.groupItem ? _state.groupItem.salePrice : '0'}</span>
+                                 应付金额<span className="price">￥{payment.get('price')}</span>
                              </div>
                          </div>
                      </div>
@@ -320,7 +300,7 @@ const PaymentViewWrapper = createForm()(RegPaymentView);
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
-        RegModel: state.RegModel
+        payment: state.PaymentModel
     };
 }
 
