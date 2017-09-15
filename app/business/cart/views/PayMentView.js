@@ -58,7 +58,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
         const form = this.props.form;
         form.validateFields((error, value) => {
             if(error){
-                const fieldNames = ['cardNumber', 'cardName', 'expDate', 'cvv', 'payAddrDetail', 'city', 'province', 'zipcode', 'country'].reverse();
+                const fieldNames = ['cardNumber', 'cardName', 'expDate', 'cvv', 'payAddrDetail', 'city', 'province', 'payPostcode', 'country'].reverse();
                 fieldNames.map((item, index) => {
                     if(form.getFieldError(item)){
                         Toast.info(form.getFieldError(item), 1);
@@ -76,20 +76,17 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
             const payment = this.props.payment;
             // 注册会员需要的数据
             const _data = {
-                cardAddress: {   //卡地址
-                    city: _state.city, //城市
-                    country: _state.country, //国家
-                    state: _state.province,
-                    street: _state.payAddrDetail,
-                    zip: _state.zipcode
-                },
-                cardInfo: {  //卡信息
+                cardInfo: {  //支付信息
+                    cardName: _state.cardName, //持卡人姓名
                     cardNumber: _state.cardNumber, //卡号
-                    cardType: '1', //卡类型
-                    cardholderName: _state.cardName, //持卡人姓名
-                    cvv: _state.cvv, //发全码
                     expDate: _state.expDate.join(''), //有效期
-                    // currency: string,  // 货币
+                    cvv: _state.cvv, //发全码
+                    addrDetail: _state.payAddrDetail, //账单地址
+                    addrPrivonce: _state.province, //省份
+                    addrCity: _state.city, //城市
+                    postcode: _state.payPostcode, //邮政编码
+                    country: _state.country, //国家
+                    cardType: '1', //卡类型
                 },
                 payPrice: payment.get('price'), //支付金额
                 tradeNo: payment.get('tradeNo')   //主订单号
@@ -238,8 +235,8 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                         >省份</InputItem>
                                      )}
 
-                                      {getFieldDecorator('zipcode',{
-                                          initialValue: this.state.zipcode,
+                                      {getFieldDecorator('payPostcode',{
+                                          initialValue: this.state.payPostcode,
                                           rules: [{
                                               pattern: RegxRule.zipCode,
                                               message: '请输入正确的邮政编码'
@@ -253,7 +250,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                               labelNumber={5}
                                               maxLength={6}
                                               type="number"
-                                              onChange={this.stateChangeHandle.bind(this, 'zipcode')}
+                                              onChange={this.stateChangeHandle.bind(this, 'payPostcode')}
                                           >邮政编码</InputItem>
                                       )}
 
