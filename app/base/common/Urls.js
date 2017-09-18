@@ -23,6 +23,7 @@ const Urls = {
     OrderPreview: profile.server + '/starspower/shop/service/v1/order/preview', // 预览订单
     OrderAdd: profile.server + '/starspower/shop/service/v1/order', // 创建订单
     Payeezy: profile.server + '/starspower/shop/service/v1/payment/payeezy', // payeezy支付
+    Country: profile.server + '/starspower/shop/service/v1/payment/country', //获取信用卡国家数据
 };
 
 export default Urls;

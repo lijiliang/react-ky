@@ -10,6 +10,7 @@ const Cache = {
         ky_cache_login_account: 'ky_cache_login_account', //登录用户
         ky_cache_isAccount: 'ky_cache_isAccount',         //记住帐号
         ky_cache_cityArea: 'ky_cache_cityArea',           //省市区 城市信息
+        ky_cache_Country: 'ky_cache_Country',             //信用卡国家数据
     },
     /**
      * [sessionKeys 一些默认sessionStorage的keys值]

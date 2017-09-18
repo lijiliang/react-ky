@@ -10,7 +10,7 @@ import { Payeezy } from '../action/DataAction';
 
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
-import { Urls, RegxRule, Cache, ValidData } from 'kyCommon';
+import { Urls, RegxRule, Cache, ValidData, CountryData} from 'kyCommon';
 import { KYSteps } from 'kyComponent';
 import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
 const Item = List.Item;
@@ -19,20 +19,21 @@ const Brief = Item.Brief;
 import '../resources/PayMentView.less';
 import visa from 'kyBase/resources/images/visa.png';
 import masterCard from 'kyBase/resources/images/masterCard.png';
+
+// 信用卡国家数据
+const countryData = Cache.getObj(Cache.keys.ky_cache_Country) || [];
+
  class RegPaymentView extends React.Component {
      constructor(props, context){
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
+             countryData: countryData,  // 信用卡国家数据
              expDate: [],  //有效期
+             country: [],  // 国家
          };
      }
      componentDidMount(){
-         // 获取session
-         const regmember_info = Cache.sessionGet(Cache.sessionKeys.ky_cache_regmember_info);
-         if(regmember_info){
-             this.setState(regmember_info);
-         }
      }
 
      // 返回上一页
@@ -54,7 +55,6 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
          });
      }
      submitHandle(){
-        console.log(this.props)
         const form = this.props.form;
         form.validateFields((error, value) => {
             if(error){
@@ -78,14 +78,14 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
             const _data = {
                 cardInfo: {  //支付信息
                     cardName: _state.cardName, //持卡人姓名
-                    cardNumber: _state.cardNumber, //卡号
+                    cardNumber: _state.cardNumber.replace(/\s+/g, ''), //卡号
                     expDate: _state.expDate.join(''), //有效期
                     cvv: _state.cvv, //发全码
                     addrDetail: _state.payAddrDetail, //账单地址
                     addrPrivonce: _state.province, //省份
                     addrCity: _state.city, //城市
                     postcode: _state.payPostcode, //邮政编码
-                    country: _state.country, //国家
+                    country: _state.country.join(''), //国家
                     cardType: '1', //卡类型
                 },
                 payPrice: payment.get('price'), //支付金额
@@ -104,6 +104,23 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
             }));
         });
      }
+
+     // 信用卡选择
+     countryChangeHandle(v){
+        this.setState({
+            country: v
+        })
+     }
+     // 信用卡国家数据
+     onCitykHandle(){
+         const _this = this;
+         CountryData(function(e){
+             _this.setState({
+                 countryData: e
+             });
+         });
+     }
+
      render(){
          console.log(this.state)
          const _state = this.state;
@@ -113,6 +130,11 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
          const cityExtraCls = classNames({
              ['picker-city']: true,
              ['picker-city-active']: this.state.expDate.length
+         })
+         // 信用卡国家样式
+         const countryExtraCls = classNames({
+             ['picker-city']: true,
+             ['picker-city-active']: this.state.country.length
          })
          return(
              <div className="ky-container-body">
@@ -140,6 +162,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                       <InputItem
                                           labelNumber={5}
                                           placeholder="请输入您的卡号"
+                                          type="bankCard"
                                           onChange={this.stateChangeHandle.bind(this, 'cardNumber')}
                                       >卡号</InputItem>
                                    )}
@@ -254,19 +277,23 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                                           >邮政编码</InputItem>
                                       )}
 
-                                      {getFieldDecorator('country', {
-                                          initialValue: this.state.country,
-                                          rules: [{
-                                              required: true,
-                                              message: '请输入国家'
-                                          }],
-                                        })(
-                                          <InputItem
-                                              labelNumber={5}
-                                              placeholder="国家"
-                                              onChange={this.stateChangeHandle.bind(this, 'country')}
-                                          >国家</InputItem>
-                                       )}
+                                       {getFieldDecorator('country', {
+                                           initialValue: this.state.country,
+                                           rules: [{
+                                               required: true,
+                                               message: '请选择国家'
+                                           }],
+                                         })(
+                                           <Picker
+                                               data={this.state.countryData}
+                                               cols={1}
+                                               title="请选择国家"
+                                               extra="国家"
+                                               onChange={this.countryChangeHandle.bind(this)}
+                                            >
+                                               <List.Item className={countryExtraCls} onClick={this.onCitykHandle.bind(this)}>国家</List.Item>
+                                           </Picker>
+                                          )}
                               </div>
                          </div>
                          {/* 安全加密 */}
