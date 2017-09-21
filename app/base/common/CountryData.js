@@ -19,7 +19,7 @@ function CountryData(callback){
     if(cache_Country){
         callback(cache_Country);
     }else{
-        // 通过接口获取省市区数据
+        // 通过接口获取信用卡国家数据
         const response = getPublic(Urls.Country);
         Toast.loading('加载中...', 2000);
         response.then((res) => {

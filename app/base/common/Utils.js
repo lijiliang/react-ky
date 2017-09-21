@@ -161,6 +161,38 @@ export function unescapeHTML(str){
             .replace(/&quot;/g, '"')
             .replace(/&apos;/g, '\'');
 }
+
+/*
+ * [getIdCardAge 根据身份证号码计算年龄]
+ * @param  {[string]} idCard [身份证号]
+ * @return {[number]}        [返回年龄]
+ */
+export function getIdCardAge(idCard){
+    const len= (idCard + '').length;
+    if(len === 0){
+        return 0;
+    }else {
+        if((len !== 15) && (len !== 18)){  // 身份证号码只能为15位或18位，其它不合法
+            return 0;
+        }
+    }
+
+    let strBirthday = '';
+    if(len === 18){
+        strBirthday = idCard.substr(6, 4) + '/' + idCard.substr(10, 2) + '/' + idCard.substr(12, 2);
+    }
+    if(len === 15){
+        strBirthday = '19' + idCard.substr(6, 2) + '/' + idCard.substr(8, 2) + '/' + idCard.substr(10, 2);
+    }
+    // 时间字符串里，必须是'/'
+    let birthDate = new Date(strBirthday);
+    let nowDateTime = new Date();
+    let age = nowDateTime.getFullYear() - birthDate.getFullYear();
+    if(nowDateTime.getMonth() < birthDate.getMonth() || (nowDateTime.getMonth() == birthDate.getMonth() && nowDateTime.getDate() < birthDate.getDate())){
+        age--;
+    }
+    return age;
+}
 // 导出
 // export default {
 //     hideLoading,

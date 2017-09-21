@@ -13,6 +13,7 @@ import { createForm } from 'rc-form';
 import classNames from 'classnames';
 import { get, getPublic } from 'kyBase/common/FetchData';
 import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
+import { getIdCardAge } from 'Utils';
 
 //组件
 import { KYSteps } from 'kyComponent';
@@ -108,6 +109,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
             const _password = form.getFieldValue('password');
             const _confirmPwd = form.getFieldValue('confirmPwd');
             const _recommender = form.getFieldValue('recommender');
+            const _idCard = form.getFieldValue('idCard');
 
             if(error){
                 const fieldNames = ['firstName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPwd', 'phoneNumber', 'telNumber', 'idCard', 'cityValue', 'addrDetail', 'postcode', 'recommender', 'reRecommender'].reverse();
@@ -134,6 +136,12 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
             // 处理输入两次密码不一致
             if(_confirmPwd && (_password !== _confirmPwd)){
                 Toast.info('两次输入的密码不一致', 1);
+                return;
+            }
+
+            // 如果年龄小于18岁，不能通过
+            if(getIdCardAge(_idCard) < 18){
+                Toast.info('身份证号码不符', 1);
                 return;
             }
 
