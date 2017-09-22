@@ -75,8 +75,8 @@ module.exports = {
                 }]
             },
             {
-                // 匹配favicon.png
-                test: /favicon\.png$/,
+                // 匹配favicon.ico
+                test: /favicon\.ico/,
                 use: [{
                     loader: 'file-loader',
                     options: {
@@ -124,8 +124,8 @@ module.exports = {
                     }
                 }],
                 */
-                // 排除favicon.png, 因为它已经由上面的loader处理了. 如果不排除掉, 它会被这个loader再处理一遍
-                exclude: /favicon\.png$/,
+                // 排除favicon.ico, 因为它已经由上面的loader处理了. 如果不排除掉, 它会被这个loader再处理一遍
+                exclude: /favicon\.ico/,
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
