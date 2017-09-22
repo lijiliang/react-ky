@@ -11,6 +11,7 @@ const AssetsPlugin = require('assets-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const tinyPngWebpackPlugin = require('tinypng-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');  // 用于清理目录文件
+const CopyWebpackPlugin = require('copy-webpack-plugin');  //复制无需处理的静态资源
 const SOURCE_MAP = false;
 
 // 环境变量获取方法  process.env.NODE_ENV
@@ -93,6 +94,9 @@ config.plugins.push(
         filename: '../index.html',
         template: commonPath.indexHTML
     }),
+    new CopyWebpackPlugin([
+        {from: commonPath.staticDir + '/**/*', to: commonPath.dist}
+    ]),
     new webpack.DefinePlugin({
         // 开发环境变量
         __environment__ : '"prod"'

@@ -46,6 +46,7 @@ npm run build
 │   ├─ webpack.dev.conf.js   # dev环境webpack配置文件
 │   ├─ webpack.prod.conf.js  # 生产环境webpack配置文件
 ├─ dist/             # build 生成的生产环境下的项目
+├─ static/           # static 无需处理的静态资源目录
 ├── app/
 │   ├─ base/            # 基础支持
 │   │   ├── common/         # 一些公用的方法及函数
