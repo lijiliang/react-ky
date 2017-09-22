@@ -31,6 +31,7 @@ const countryData = Cache.getObj(Cache.keys.ky_cache_Country) || [];
              countryData: countryData,  // 信用卡国家数据
              expDate: [],  //有效期
              country: [],  // 国家
+             cardType: '1' // 卡类型
          };
      }
      componentDidMount(){
@@ -45,6 +46,13 @@ const countryData = Cache.getObj(Cache.keys.ky_cache_Country) || [];
      stateChangeHandle(name, value){
          this.setState({
              [name]: value
+         });
+     }
+
+     // 信用卡类型选择
+     cardTypeChange(cardType){
+         this.setState({
+             cardType: cardType + ''
          });
      }
 
@@ -86,7 +94,7 @@ const countryData = Cache.getObj(Cache.keys.ky_cache_Country) || [];
                     addrCity: _state.city, //城市
                     postcode: _state.payPostcode, //邮政编码
                     country: _state.country.join(''), //国家
-                    cardType: '1', //卡类型
+                    cardType: _state.cardType, //卡类型
                 },
                 payPrice: payment.get('price'), //支付金额
                 tradeNo: payment.get('tradeNo')   //主订单号
@@ -146,8 +154,15 @@ const countryData = Cache.getObj(Cache.keys.ky_cache_Country) || [];
                          <div className="m-payment-info">
                               <div className="info-tit">信用卡支付</div>
                               <div className="pay-list">
-                                  <img src={visa}/>
-                                  <img src={masterCard}/>
+                                  <span
+                                      className={this.state.cardType === '1' ? 'card-type cart-active' : 'card-type'} onClick={this.cardTypeChange.bind(this, 1)}>
+                                      <img src={visa}/>
+                                  </span>
+                                  <span
+                                      className={this.state.cardType === '2' ? 'card-type cart-active' : 'card-type'}
+                                      onClick={this.cardTypeChange.bind(this, 2)}>
+                                      <img src={masterCard}/>
+                                  </span>
                               </div>
 
                               <div className="m-payment-form">
