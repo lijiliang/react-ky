@@ -16,7 +16,7 @@ import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
 import { getIdCardAge } from 'Utils';
 
 //组件
-import { KYSteps } from 'kyComponent';
+import { KYSteps, KYRegTips} from 'kyComponent';
 import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -454,8 +454,8 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
                                       )}
                                 </div>
                             </div>
-
                         </div>
+                        <KYRegTips />
                      </div>
                 </div>
                 <div className="m-foot-fixed">

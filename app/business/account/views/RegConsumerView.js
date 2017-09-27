@@ -19,6 +19,7 @@
  import { Cache } from 'kyCommon';
 
  import { Button, Toast, NavBar, InputItem } from 'uxComponent';
+ import { KYRegTips } from 'kyComponent'
 
  import '../resources/RegConsumerView.less';
 
@@ -295,7 +296,7 @@
                                     <span>如没有推荐人会员号，请点击此处</span><i className={multipleCls}></i>
                                 </div>
                             </div>
-
+                            <KYRegTips />
                         </div>
                      </div>
                 </div>
