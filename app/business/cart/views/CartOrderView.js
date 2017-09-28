@@ -23,7 +23,8 @@ class CartIndexView extends React.Component{
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
             value: 'a',
-            isLoading: true
+            isLoading: true,
+            payType: 'payeco'
         };
     }
     componentDidMount(){
@@ -75,6 +76,12 @@ class CartIndexView extends React.Component{
             // 跳到信用卡支付页
             hashHistory.push('/cart/payment')
         }))
+    }
+    // 选择支付方式
+    changePayTypeHandle(payType){
+        this.setState({
+            payType: payType
+        })
     }
     render(){
         const _state = this.state || {};
@@ -253,7 +260,7 @@ class CartIndexView extends React.Component{
                                         </List>
                                     </div>
                                 </div>
-                               <KYPayMethod price={_state.actualPrice}/>
+                               <KYPayMethod price={_state.actualPrice} defaultPayType={_state.payType} changePayType={this.changePayTypeHandle.bind(this)}/>
                             </div>
                         : null
                     }
