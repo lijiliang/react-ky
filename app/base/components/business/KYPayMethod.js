@@ -1,5 +1,6 @@
 /**
  * @fileOverview 支付方式
+ * <KYPayMethod price={_state.actualPrice} defaultPayType={_state.payType} changePayType={this.changePayTypeHandle.bind(this)}/>
  */
  import React from 'react';
  import PropTypes from 'prop-types';
@@ -66,21 +67,6 @@ export default class KYPayMethod extends React.Component {
                             )
                         })
                     }
-
-                    {/* <div className="pay-item">
-                        <div className="sel-pay">
-                            <label>
-                                <div className="select-radio">
-                                    <input type="radio" value="payeco" checked={this.state.payType === 'payeco'} onChange={this.handleChanges.bind(this)}/>
-                                    <i className={this.state.payType === 'payeco' ? 'icon icon-selectFill' : 'icon icon-radio'}></i>
-                              </div>
-                              <span className="name">易联支付</span>
-                          </label>
-                        </div>
-                        <div className="pay-list">
-                            <img src={payeco}/>
-                        </div>
-                    </div> */}
                 </div>
                 <div className={`${prefixCls}-foot`}>
                     应付金额<span className="price">￥{price}</span>
