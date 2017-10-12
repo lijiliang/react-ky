@@ -34,7 +34,7 @@ export default class KYPayMethod extends React.Component {
         const { prefixCls, price} = this.props;
         const payList = [
             {
-                payType: 'payeco',
+                payType: '29',
                 name: '易联支付',
                 imgUrl: payeco
             },{

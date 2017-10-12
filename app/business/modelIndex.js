@@ -21,3 +21,4 @@ export {default as RegModel} from './account/model/RegModel';
 // 购物车的数据模型MODEL
 export {default as ShappingModel} from './cart/model/ShappingModel';
 export {default as PaymentModel} from './cart/model/PaymentModel';  // 支付信息
+export {default as PayCompleteModel} from './pay/model/PayCompleteModel';  // 订单支付后回调完成页，支付成功/失败

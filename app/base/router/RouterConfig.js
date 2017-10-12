@@ -46,6 +46,9 @@ import CartPayMentView from 'kyBus/cart/views/PayMentView';          // 填写�
 import CartPaySuccessView from 'kyBus/cart/views/PaySuccessView';    // 支付成功
 import CartPayFailedView from 'kyBus/cart/views/PayFailedView';      // 支付失败
 
+// pay 支付
+import CompleteView from 'kyBus/pay/views/CompleteView';    // 支付完成页，失败和成功提示页
+
 // article 文章相关页面
 import NewsView from 'kyBus/article/views/NewsView';          // 最新消息
 import NewsIdView from 'kyBus/article/views/NewsIdView';      // 最新消息 详情页
@@ -103,9 +106,10 @@ class RouterMap extends React.Component {
                     <Route path='/cart' component={CartIndexView} >
                         <Route path='/cart/order' component={CartOrderView}/>
                         <Route path='/cart/payment' component={CartPayMentView}/>
-                        <Route path='/cart/paysuccess' component={CartPaySuccessView}/>
+                        <Route path='/cart/paysuccess/:payid' component={CartPaySuccessView}/>
                         <Route path='/cart/payfailed' component={CartPayFailedView}/>
                     </Route>
+                    <Route path='pay/complete/:payid' component={CompleteView}></Route>
                     <Route path='news' component={NewsView}/>
                     <Route path='news/:id' component={NewsIdView}/>
                     <Route path='help/:id' component={HelpView}/>

@@ -24,7 +24,7 @@ class CartIndexView extends React.Component{
         this.state = {
             value: 'a',
             isLoading: true,
-            payType: 'payeco'
+            payType: '29'
         };
     }
     componentDidMount(){
@@ -65,16 +65,21 @@ class CartIndexView extends React.Component{
             return
         }
         const data = {
-          actualPrice: _state.actualPrice,
-          addressId: shippingInfo.id,
-          carIds: _state.shoppingCarIds,
-          originalPrice: _state.originalPrice,
-          payType: 0,
-          preferential: _state.preferential
+          actualPrice: _state.actualPrice,      //实付金额
+          addressId: shippingInfo.id,           //地址id
+          carIds: _state.shoppingCarIds,        //购物车id组
+          originalPrice: _state.originalPrice,  //原价
+          payType: _state.payType,              //支付类型
+          preferential: _state.preferential,    //优惠价
         }
         this.props.dispatch(OrderAdd(data, (res) => {
-            // 跳到信用卡支付页
-            hashHistory.push('/cart/payment')
+            console.log(res)
+            if(res.payType === '29'){
+                window.location.href = res.payUrl
+            }else{
+                // 跳到信用卡支付页
+                // hashHistory.push('/cart/payment')
+            }
         }))
     }
     // 选择支付方式

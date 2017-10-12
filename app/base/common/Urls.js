@@ -22,6 +22,7 @@ const Urls = {
     ProductInfoId: profile.server + '/starspower/shop/service/v1/product', // 根据Id获取商品详情
     OrderPreview: profile.server + '/starspower/shop/service/v1/order/preview', // 预览订单
     OrderAdd: profile.server + '/starspower/shop/service/v1/order', // 创建订单
+    OrderComplete: profile.server + '/starspower/shop/service/v1/order/complete', // 订单支付后回调完成页，支付成功/失败
     Payeezy: profile.server + '/starspower/shop/service/v1/payment/payeezy', // payeezy支付
     Country: profile.server + '/starspower/shop/service/v1/payment/country', //获取信用卡国家数据
 };
