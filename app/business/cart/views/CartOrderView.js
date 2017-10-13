@@ -292,7 +292,6 @@ class CartIndexView extends React.Component{
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
-        LoginModel: state.LoginModel
     };
 }
 

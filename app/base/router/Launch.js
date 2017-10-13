@@ -21,6 +21,7 @@ class Launch extends React.Component {
             'account/regselectpack': false,   //会员注册->选购加入套组
             'account/regorder': false,        //会员注册->填写订单及填写收货地址
             'account/payment': false,         //填写支付信息
+            'pay/types': false,               //选择支付方式
         }
     }
     constructor(props, context){

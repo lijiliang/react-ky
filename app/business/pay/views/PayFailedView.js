@@ -2,12 +2,12 @@
  * @fileOverview 支付失败页
  */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
-import {regConsumer} from '../action/DataAction';
+import { payAgainBtn } from '../action/DataAction';
 
 import { Button, Toast, NavBar } from 'uxComponent';
 
@@ -19,6 +19,12 @@ class PayFailedView extends React.Component {
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
         };
+    }
+    // 重新支付
+    payAgainHandle(tradeNo, payAmount){
+        this.props.dispatch(payAgainBtn(tradeNo, payAmount, (res) => {
+            hashHistory.push('/pay/types');  // 跳到选择支付方式页面
+        }));
     }
     render(){
         const payInfo = this.props;
@@ -34,7 +40,7 @@ class PayFailedView extends React.Component {
                         </div>
                     }
                     <div className="m-btn">
-                        <Button className="ky-btn btn-pay" title="重新支付"></Button>
+                        <Button className="ky-btn btn-pay" title="重新支付" onClick={this.payAgainHandle.bind(this, payInfo.tradeNo, payInfo.payAmount)}></Button>
                     </div>
                     <p className="info-item">若重复出现此信息，请联系线上客服。</p>
                     <div className="m-btn">
@@ -48,4 +54,12 @@ class PayFailedView extends React.Component {
     }
 }
 
-export default PayFailedView;
+/*  React 与  Redux 绑定 */
+function mapStateToProps(state){
+    return {
+    };
+}
+
+export default connect(
+    mapStateToProps
+)(PayFailedView);
