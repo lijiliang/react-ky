@@ -60,7 +60,7 @@ import HelpView from 'kyBus/article/views/HelpView';          // 帮助文章 �
  */
 class RouterMap extends React.Component {
     updateHandle(){
-        console.log('每次router变化之后都会触发');
+        // console.log('每次router变化之后都会触发');
     }
     render(){
         return(

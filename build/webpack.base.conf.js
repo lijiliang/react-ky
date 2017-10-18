@@ -24,7 +24,8 @@ module.exports = {
     output: {
         path: path.join(commonPath.dist, 'static'),
         filename: '[name].js', //主入口文件 名称
-        //chunkFilename: '[id].chunk.js', //分片异步模块
+        chunkFilename: '[id].chunk.js', //分片异步模块
+        // chunkFilename: '[name].[id].[chunkhash:5].min.js',
         publicPath: '/static/'
     },
     resolve: {
