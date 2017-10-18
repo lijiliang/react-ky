@@ -101,7 +101,7 @@ class RouterMap extends React.Component {
                         <Route path='/user/basicinfo' component={BasicInfoView}/>
                         <Route path='/user/address' component={AddressView}/>
                         <Route path='/user/addredit(/:edit)' component={AddressEditView}/>
-                        <Route path='/user/order' component={OrderView}/>
+                        <Route path='/user/order(/:id)' component={OrderView}/>
                         <Route path='/user/orderdetail/:id' component={OrderDetailsView}/>
                     </Route>
                     <Route path='/cart' component={CartIndexView} >

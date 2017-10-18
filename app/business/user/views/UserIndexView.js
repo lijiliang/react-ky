@@ -85,19 +85,19 @@ class UserIndexView extends React.Component {
                             <List className="m-order-all">
                                 <Item arrow="horizontal" onClick={() => { hashHistory.push('user/order') }}>全部订单</Item>
                                 <div className="order-view">
-                                    <div className="order-item">
+                                    <div className="order-item" onClick={() => { hashHistory.push('user/order/1')}}>
                                         <i className="icon icon-shipped"></i>
                                         <span>待处理</span>
                                     </div>
-                                    <div className="order-item">
+                                    <div className="order-item" onClick={() => { hashHistory.push('user/order/2')}}>
                                         <i className="icon icon-pending"></i>
                                         <span>已发货</span>
                                     </div>
-                                    <div className="order-item">
+                                    <div className="order-item" onClick={() => { hashHistory.push('user/order/3')}}>
                                         <i className="icon icon-cancelled"></i>
                                         <span>已取消</span>
                                     </div>
-                                    <div className="order-item">
+                                    <div className="order-item" onClick={() => { hashHistory.push('user/order/4')}}>
                                         <i className="icon icon-chargeback"></i>
                                         <span>已退单</span>
                                     </div>
@@ -120,7 +120,6 @@ class UserIndexView extends React.Component {
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
-        RegModel: state.RegModel
     };
 }
 

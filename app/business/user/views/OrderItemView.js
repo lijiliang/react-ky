@@ -59,7 +59,6 @@ import { GetOrderList } from '../action/DataAction';
              {value: 'i', label: '其它原因'},
          ];
          const { orderList } = this.props;
-         console.log(orderList)
          return(
              <div className="m-order-item-view">
                  {
@@ -119,6 +118,54 @@ import { GetOrderList } from '../action/DataAction';
                                  <div className="order-body">
                                      {
                                          item.orderList.map((subitem, subindex) => {
+                                             let statusName;
+                                             if(subitem.orderStatus == '0'){
+                                                 statusName = '待发货'
+                                             }else if(subitem.orderStatus == "1" || subitem.orderStatus == "5" || subitem.orderStatus == "6"){
+                                                 statusName = '已付款未发货'
+                                             }else if(subitem.orderStatus == "19" || subitem.orderStatus == "20"){
+                                                 statusName = '已付款待清关'
+                                             }else if(subitem.orderStatus == '21'){
+                                                 statusName = '清关中'
+                                             }else if(subitem.orderStatus == '22'){
+                                                 statusName = '清关失败'
+                                             }else if(subitem.orderStatus == '2'){
+                                                 statusName = '已发货'
+                                             }else if(subitem.orderStatus == '3'){
+                                                 statusName = '已完成'
+                                             }else if(subitem.orderStatus == '4'){
+                                                 statusName = '已取消'
+                                             }else if(subitem.orderStatus == '7'){
+                                                 statusName = '退货审核中'
+                                             }else if(subitem.orderStatus == '8'){
+                                                 statusName = '同意退换货'
+                                             }else if(subitem.orderStatus == '9'){
+                                                 statusName = '拒绝退货'
+                                             }else if(subitem.orderStatus == '10'){
+                                                 statusName = '待商家收货'
+                                             }else if(subitem.orderStatus == '11'){
+                                                 statusName = '退货结束'
+                                             }else if(subitem.orderStatus == '12'){
+                                                 statusName = '已处理待退款'
+                                             }else if(subitem.orderStatus == '15'){
+                                                 statusName = '退款审核中'
+                                             }else if(subitem.orderStatus == '13'){
+                                                 statusName = '拒绝退款'
+                                             }else if(subitem.orderStatus == '14'){
+                                                 statusName = '已提交退货审核'
+                                             }else if(subitem.orderStatus == '16'){
+                                                 statusName = '商家收货失败'
+                                             }else if(subitem.orderStatus == '17'){
+                                                 statusName = '已退款'
+                                             }else if(subitem.orderStatus == '18'){
+                                                 statusName = '退款成功'
+                                             }else if(subitem.orderStatus == '23'){
+                                                 statusName = '换货审核中'
+                                             }else if(subitem.orderStatus == '24'){
+                                                 statusName = '拒绝换货'
+                                             }else if(subitem.orderStatus == '25'){
+                                                 statusName = '换货完成'
+                                             }
                                              return(
                                                  <div className="suborder-item">
                                                      <div className="suborder-info">
@@ -140,10 +187,10 @@ import { GetOrderList } from '../action/DataAction';
                                                         }
                                                      </div>
                                                      <div className="suborder-status">
-                                                         <span className="status">待付款</span>
+                                                         <span className="status">{statusName}</span>
                                                          <div className="suborder-btn">
                                                              <a href="" className="status-btn btn-order">查看订单</a>
-                                                             <a href="" className="status-btn btn-order">状态码: {subitem.orderStatus}</a>
+                                                             {/* <a href="" className="status-btn btn-order">状态码: {subitem.orderStatus}</a> */}
                                                          </div>
                                                      </div>
                                                  </div>

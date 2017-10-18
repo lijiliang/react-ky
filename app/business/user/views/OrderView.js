@@ -28,6 +28,7 @@ import OrderItemView from './OrderItemView';
              orderListData: [],   // 存储列表信息
              hasMore: false, // 记录当前状态下，还有没有更多的数据可供加载
              isLoadingMore: false, // 记录当前状态下，是“加载中...”还是“点击加载更多”
+             total: '' //总数
          };
      }
      componentDidMount(){
@@ -54,15 +55,24 @@ import OrderItemView from './OrderItemView';
      }
      //数据处理
      resultHandle(pageSize, page){
-         this.props.dispatch(GetOrderList(pageSize, page, '0', (res) => {
+         // 获取不同的状态
+         let _id;
+         if(this.props.params.id){
+             _id = this.props.params.id;
+         }else{
+             _id = '0';
+         }
+         this.props.dispatch(GetOrderList(pageSize, page, _id, (res) => {
              if(!res.isLastPage){
                  this.setState({
                      orderListData: this.state.orderListData.concat(res.data),
-                     hasMore: true
+                     total: res.total,
+                     hasMore: true,
                  });
              }else{
                  this.setState({
                      orderListData: this.state.orderListData.concat(res.data),
+                     total: res.total,
                      hasMore: false
                  });
              }
@@ -71,6 +81,17 @@ import OrderItemView from './OrderItemView';
      render(){
          const _state = this.state;
          console.log(_state)
+
+         // 列表数据
+         let orderLayout;
+         if(_state.total === '0'){
+             orderLayout = <div className="loading-container"><p className="ky-center">暂无订单数据</p></div>;
+         }else if(_state.orderListData.length && _state.total > '0'){
+             orderLayout = <OrderItemView orderList={_state.orderListData}/>;
+         }else{
+             orderLayout = <div className="loading-container"><Loading size="large"/></div>;
+         }
+
          return(
              <div className="ky-container-body">
                  <div className="ky-scrollable">
@@ -80,11 +101,12 @@ import OrderItemView from './OrderItemView';
                              mode="blue"
                              >全部订单</NavBar>
                          <div className="m-order-view">
-                             {
+                             {orderLayout}
+                             {/* {
                                  _state.orderListData.length
                                  ? <OrderItemView orderList={_state.orderListData}/>
                                  : <div className="loading-container"><Loading size="large"/></div>
-                             }
+                             } */}
                              {
                                  _state.hasMore
                                  ? <KYLoadMore isLoadingMore={this.state.isLoadingMore} loadMoreFn={this.loadMoreData.bind(this)}/>

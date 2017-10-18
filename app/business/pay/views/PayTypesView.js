@@ -15,7 +15,6 @@ import { Button, Toast, NavBar, Loading} from 'uxComponent';
 
 
 // import '../resources/CartOrderView.less';
-
 class PayTypesView extends React.Component{
     constructor(props, context){
         super(props, context);

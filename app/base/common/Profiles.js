@@ -10,7 +10,7 @@ const profiles = {
     },
     prod: {
         preffix: '',
-        host: '127.0.0.1:8012',
+        host: '9ggdfc.natappfree.cc',
         // host: 'dev.kyani.cn:8100',
         //sercureEnable: true
         sercureEnable: false
