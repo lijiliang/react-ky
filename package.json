@@ -86,6 +86,7 @@
     "classnames": "^2.2.5",
     "es6-promise": "^4.1.0",
     "fastclick": "^1.0.6",
+    "global": "^4.3.2",
     "immutable": "^3.8.1",
     "js-base64": "^2.1.9",
     "lodash": "^4.17.4",

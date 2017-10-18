@@ -211,3 +211,29 @@ export function GetIdShipAddress(id, callback) {
         });
     };
 }
+
+/**
+ * [GetOrderList 会员中心订单列表]
+ * @param       {[String]}   size     [每页多少条]
+ * @param       {[String]}   num      [页数]
+ * @param       {[String]}   type     [类型：0全部,1未处理，2已发货,3已取消,4已退货
+ * @param       {Function} callback [description]
+ * @constructor
+ */
+export function GetOrderList(size, num, type , callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = get(Urls.OrderList + `?size=${size}&num=${num}&type=${type}`);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}

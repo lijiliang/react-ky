@@ -26,6 +26,7 @@ const Urls = {
     Payeezy: profile.server + '/starspower/shop/service/v1/payment/payeezy', // payeezy支付
     Country: profile.server + '/starspower/shop/service/v1/payment/country', //获取信用卡国家数据
     PayAgain: profile.server + '/starspower/shop/service/v1/payment/goPay',   //订单去支付(重新发起支付)
+    OrderList: profile.server + '/starspower/shop/service/v1/order/list',   //会员中心订单列表
 };
 
 export default Urls;
