@@ -17,9 +17,9 @@ const RouterFilter={
         if(_pathname.indexOf('user') > -1){
             checkMember();
         }
-        if(_pathname.indexOf('/pay/') > -1){
-            checkMember();
-        }
+        // if(_pathname.indexOf('/pay/') > -1){
+        //     checkMember();
+        // }
     }
 };
 

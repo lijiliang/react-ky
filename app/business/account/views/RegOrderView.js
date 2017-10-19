@@ -7,7 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
-import { CheckDealerReg, CheckAddress } from '../action/DataAction';
+import { CheckDealerReg, CheckAddress, UserDealer} from '../action/DataAction';
 
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
@@ -31,6 +31,7 @@ class RegOrderView extends React.Component {
         this.state = {
             accouontMask: true,   //帐户信息遮罩
             consigneeMask: true,  //收货信息遮罩
+            payType: '29',        //默认支付类型
         };
     }
     componentDidMount(){
@@ -90,14 +91,70 @@ class RegOrderView extends React.Component {
             return;
         }
         this._verifyFormHandle(() => {
+            const checkAddressData = {
+                addrPrivonce: _state.consigneeCityValue[0],//省
+                addrCity: _state.consigneeCityValue[1],    //市
+                addrCounty: _state.consigneeCityValue[2],  //区
+                addrDetail: _state.consigneeAddrDetail,    //详细地址
+                consignee: _state.consigneeName,           //收件人
+                idCard: _state.consigneeIdCard,            //身份证号
+                phoneNumber: _state.consigneePhoneNumber,  //手机号码
+                postcode: _state.consigneepostcode,        //邮编
+                telNumber: _state.consigneeTelNumber,      //电话号码
+                isDefault: true,//是否默认
+            };
+
+            // 注册会员需要的数据
+            const userDealerData = {
+                orderOriginalPrice: _state.groupItem.originalPrice, //订单原金额
+                orderPayAmount: _state.groupItem.salePrice,     //订单应付金额
+                orderPreferential: _state.groupItem.preferentialPrice,  //订单优惠
+                payType: _state.payType,//支付类型
+                productGroupId: _state.groupId, // 产品套组ID
+                dealer: {  //会员信息
+                    addrPrivonce: _state.cityValue[0], //省
+                    addrCity: _state.cityValue[1], //市
+                    addrCounty: _state.cityValue[2], //县/区
+                    addrDetail: _state.addrDetail, //详细地址
+                    email: _state.email, // 邮箱
+                    firstName: _state.firstName, //姓氏
+                    idCard: _state.idCard, //身份证号码
+                    lastName: _state.lastName, //名字
+                    password: _state.password, //密码
+                    phoneNumber: _state.phoneNumber,//手机号码
+                    postcode: _state.postcode, //邮编
+                    reRecommender: _state.reRecommender, //确认推荐人（安置人)
+                    recommender: _state.recommender, //推荐人，KID，例如：CN123456或123456
+                    telNumber: _state.telNumber //固定电话号码
+                },
+                shippingInfo: {  //收货信息
+                    addrPrivonce: _state.consigneeCityValue[0],  // 省
+                    addrCity: _state.consigneeCityValue[1], //市
+                    addrCounty: _state.consigneeCityValue[2], //区
+                    addrDetail: _state.consigneeAddrDetail, //详细地址
+                    consignee: _state.consigneeName, //收件人
+                    idCard: _state.consigneeIdCard, //身份证号码
+                    isDefault: true, //是否默认
+                    phoneNumber: _state.consigneePhoneNumber, //手机号码
+                    postcode: _state.consigneepostcode, //邮编
+                    telNumber: _state.consigneeTelNumber, //固定电话号码
+                }
+            };
             // 确保收货信息里面的收货人与身份证号码相匹配
             // 将数据dispatch过去  验证：收货信息表单
-            this.props.dispatch(CheckAddress(_state.consigneeCityValue[0], _state.consigneeCityValue[1], _state.consigneeCityValue[2], _state.consigneeAddrDetail, _state.consigneeName, _state.consigneeIdCard, _state.consigneePhoneNumber, _state.consigneepostcode, _state.consigneeTelNumber, true, this.successSubmitFn))
+            this.props.dispatch(CheckAddress(checkAddressData, (res) => {
+                if(res.success){
+                    // 注册用户并跳支付页面
+                    this.props.dispatch(UserDealer(userDealerData, (dealeres) => {
+                        if(dealeres.memberFlag){
+                            window.location.href = dealeres.payUrl;
+                        }else{
+                            hashHistory.push(`/pay/complete/${dealeres.tradeNo}`)
+                        }
+                    }))
+                }
+            }))
         });
-    }
-    // 提交成功，回调函数
-    successSubmitFn = () => {
-        hashHistory.push('/account/payment')
     }
     //修改帐户信息
     accouontMaskHandle(){
@@ -156,6 +213,7 @@ class RegOrderView extends React.Component {
         // 更新session数据
         Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
     }
+
     // 验证表单数据
     _verifyFormHandle(callback) {
         const form = this.props.form;
@@ -182,6 +240,12 @@ class RegOrderView extends React.Component {
            //const _state = this.state;
            //Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
 
+        })
+    }
+    // 选择支付方式
+    changePayTypeHandle(payType){
+        this.setState({
+            payType: payType
         })
     }
     render(){
@@ -497,7 +561,7 @@ class RegOrderView extends React.Component {
 
                            </div>
                        </div>
-                        <KYPayMethod price={_state.groupItem ? _state.groupItem.salePrice : '0'}/>
+                        <KYPayMethod price={_state.groupItem ? _state.groupItem.salePrice : '0'} defaultPayType={_state.payType} changePayType={this.changePayTypeHandle.bind(this)}/>
                     </div>
                 </div>
                 <div className="m-foot-fixed">

@@ -127,40 +127,19 @@ export function CheckDealerReg(addrPrivonce, addrCity, addrCounty, addrDetail, e
 
 /*
  * [CheckAddress  验证：收货信息表单]
- * @param {[String]} addrPrivonce  [省]
- * @param {[String]} addrCity      [市]
- * @param {[String]} addrCounty    [区]
- * @param {[String]} addrDetail    [详细地址]
- * @param {[String]} consignee     [收件人]
- * @param {[String]} idCard        [身份证号]
- * @param {[String]} phoneNumber   [手机号码]
- * @param {[String]} postcode      [邮编]
- * @param {[String]} telNumber     [电话号码]
- * @param {Boolean} isDefault      [是否默认]
+ * @param {[Object]} data  [需要传入的数据]
  * @param {[Function]} callback    [回调函数]
  */
-export function CheckAddress(addrPrivonce, addrCity, addrCounty, addrDetail, consignee, idCard, phoneNumber, postcode, telNumber, isDefault, callback) {
+export function CheckAddress(data,callback) {
     return(dispatch, getState) => {
-        const _data = {
-            addrPrivonce,
-            addrCity,
-            addrCounty,
-            addrDetail,
-            consignee,
-            idCard,
-            phoneNumber,
-            postcode,
-            telNumber,
-            isDefault
-        };
         Toast.loading('加载中...', 200);
-        const response = postPublic(Urls.CheckAddress, _data);
+        const response = postPublic(Urls.CheckAddress, data);
         response.then((result) => {
             const res = result.data;
             if(res.success){
                 Toast.hide();
                 if(callback && typeof callback === 'function'){
-                    callback();
+                    callback(res);
                 }
             }else{
                 Toast.info(res.message, 1);
@@ -185,7 +164,7 @@ export function UserDealer(data, callback) {
             if(res.success) {
                 Toast.hide();
                 if(callback && typeof callback === 'function'){
-                    callback();
+                    callback(res.data);
                 }
             }else{
                 Toast.info(res.message, 1);
