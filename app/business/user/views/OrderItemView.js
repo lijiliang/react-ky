@@ -120,7 +120,7 @@ import { GetOrderList } from '../action/DataAction';
                                          item.orderList.map((subitem, subindex) => {
                                              let statusName;
                                              if(subitem.orderStatus == '0'){
-                                                 statusName = '待发货'
+                                                 statusName = '待付款'
                                              }else if(subitem.orderStatus == "1" || subitem.orderStatus == "5" || subitem.orderStatus == "6"){
                                                  statusName = '已付款未发货'
                                              }else if(subitem.orderStatus == "19" || subitem.orderStatus == "20"){
