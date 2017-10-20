@@ -195,23 +195,35 @@ class RegOrderView extends React.Component {
         }
         if (!_state.consigneeMask) {
             this._verifyFormHandle(() => {
+                const checkAddressData = {
+                    addrPrivonce: _state.consigneeCityValue[0],//省
+                    addrCity: _state.consigneeCityValue[1],    //市
+                    addrCounty: _state.consigneeCityValue[2],  //区
+                    addrDetail: _state.consigneeAddrDetail,    //详细地址
+                    consignee: _state.consigneeName,           //收件人
+                    idCard: _state.consigneeIdCard,            //身份证号
+                    phoneNumber: _state.consigneePhoneNumber,  //手机号码
+                    postcode: _state.consigneepostcode,        //邮编
+                    telNumber: _state.consigneeTelNumber,      //电话号码
+                    isDefault: true,//是否默认
+                };
                 // 将数据dispatch过去  验证：收货信息表单
-                this.props.dispatch(CheckAddress(_state.consigneeCityValue[0], _state.consigneeCityValue[1], _state.consigneeCityValue[2], _state.consigneeAddrDetail, _state.consigneeName, _state.consigneeIdCard, _state.consigneePhoneNumber, _state.consigneepostcode, _state.consigneeTelNumber, true, this.successConsigneeFn))
+                this.props.dispatch(CheckAddress(checkAddressData, (res) => {
+                    if(res.success){
+                        Toast.success('修改成功', 1);
+                        this.setState({
+                            consigneeMask: true
+                        })
+                        // 更新session数据
+                        Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
+                    }
+                }))
             });
         }else{
             this.setState({
                 consigneeMask: false
             })
         }
-    }
-    // 收货信息 修改成功回调函数
-    successConsigneeFn = () => {
-        Toast.success('修改成功', 1);
-        this.setState({
-            consigneeMask: true
-        })
-        // 更新session数据
-        Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
     }
 
     // 验证表单数据
