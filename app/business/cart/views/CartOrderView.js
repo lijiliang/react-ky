@@ -29,7 +29,16 @@ class CartIndexView extends React.Component{
     }
     componentDidMount(){
         const cartIds = Cache.sessionGet(Cache.sessionKeys.ky_cart_ids);
+        if(!cartIds){
+            hashHistory.push('/cart')
+            return;
+        }
         this.props.dispatch(OrderPreview(cartIds, (res) => {
+            //订单列表与价格为空，则跳到购物车页
+            if(res.orderList.length === 0 && res.actualPrice){
+                hashHistory.push('/cart')
+                return;
+            }
             this.setState({
                 ...res,
                 isLoading: false
@@ -73,12 +82,17 @@ class CartIndexView extends React.Component{
           preferential: _state.preferential,    //优惠价
         }
         this.props.dispatch(OrderAdd(data, (res) => {
-            console.log(res)
-            if(res.payType === '29'){
-                window.location.href = res.payUrl
+            if(!res.success){
+                Toast.info(res.errMsg);
+                if(res.tradeNo){
+                    setTimeout(function(){
+                        hashHistory.push(`/pay/complete/${res.tradeNo}`);
+                    }, 1500)
+                }
+                return;
             }else{
                 // 跳到信用卡支付页
-                // hashHistory.push('/cart/payment')
+                window.location.href = res.payUrl
             }
         }))
     }

@@ -25,6 +25,13 @@ class PayTypesView extends React.Component{
         };
     }
     componentDidMount(){
+        const { payagain } = this.props;
+        const tradeNo = payagain.get('tradeNo');
+        if(tradeNo.length === 0){
+            setTimeout(function(){
+                window.history.go(-1);
+            }, 1000);
+        }
     }
     // 返回上一页
     gohistoryHandle(){

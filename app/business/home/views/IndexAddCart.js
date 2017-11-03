@@ -29,7 +29,7 @@ class SubGroupItem extends React.Component {
     addCartHandle = () => {
         const props = this.props;
         this.props.dispatch(addShoppingCar(props.productId, props.groupFlag, 1, (res) => {
-            Toast.success('成功加入购物车', 2);
+            Toast.success('成功加入购物车', 1);
             this.setState({
                 isShowStepper: true, //显示加减按钮
                 carId: res.carId,    // 购物车ID

@@ -134,10 +134,11 @@
       * @param  {[string]} password [密码]
       */
      regSuccessFn = (userName, password) => {
+
          const _self = this;
          const isAccount = Cache.get(Cache.keys.ky_cache_isAccount) && true;
         //  console.log(userName, password, isAccount)
-         const _userName = userName.substr(2); //去掉返回用户名前面的'cn'
+         const _userName = userName && userName.substr(2); //去掉返回用户名前面的'cn'
          _self.props.dispatch(login(_userName, password, isAccount, () => {
              Toast.success('恭喜您，注册成功', 1);
             setTimeout(() => {
