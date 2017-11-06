@@ -89,7 +89,6 @@ class CartIndexView extends React.Component{
                         hashHistory.push(`/pay/complete/${res.tradeNo}`);
                     }, 1500)
                 }
-                return;
             }else{
                 // 跳到信用卡支付页
                 window.location.href = res.payUrl

@@ -2,12 +2,14 @@
  * @fileOverview 订单列表 单项
  */
  import React from 'react';
- import { Link } from 'react-router';
+ import { Link, hashHistory } from 'react-router';
  import PureRenderMixin from 'react-addons-pure-render-mixin';
  import { bindActionCreators } from 'redux';
  import { connect } from 'react-redux';
  import classNames from 'classnames';
-import { GetOrderList } from '../action/DataAction';
+import { GetOrderList, payAgainBtn } from '../action/DataAction';
+// import { getPayAgain } from 'kyBus/pay/action/DataAction';
+
  //组件
  import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
  import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List, Modal} from 'uxComponent';
@@ -30,22 +32,29 @@ import { GetOrderList } from '../action/DataAction';
      gohistoryHandle(){
          window.history.go(-1);
      }
+     // 去付款
+     goPayHandle(tradeNo, tradePrice){
+         this.props.dispatch(payAgainBtn(tradeNo, tradePrice, (res) => {
+             console.log(tradeNo, tradePrice)
+             hashHistory.push('/pay/types');  // 跳到选择支付方式页面
+         }));
+     }
      // 打开弹出层
-    showModal = key => (e) => {
-        e.preventDefault();
-        this.setState({
-            [key]: true,
-        });
-    }
-    // 关闭弹出层
-    onClose = key => () => {
-        this.setState({
+     showModal = key => (e) => {
+         e.preventDefault();
+         this.setState({
+             [key]: true,
+         });
+     }
+     // 关闭弹出层
+     onClose = key => () => {
+         this.setState({
             [key]: false,
-        });
-    }
-    reasonChange = () => {
-        this.setState({value: event.target.value});
-    }
+         });
+     }
+     reasonChange = () => {
+         this.setState({value: event.target.value});
+     }
      render(){
          const data = [
              {value: 'a', label: '现在不想买'},
@@ -68,7 +77,7 @@ import { GetOrderList } from '../action/DataAction';
                              case '0':
                                  orderStatus = <div className="order-status">
                                      <a href="javascript:;" className="status-btn" onClick={this.showModal('modal')}>取消订单</a>
-                                     <a href="" className="status-btn btn-pay">去付款</a>
+                                     <a className="status-btn btn-pay" onClick={this.goPayHandle.bind(this, item.tradeNo, item.tradePrice)}>去付款</a>
                                  </div>
                                  break;
                              case '1':

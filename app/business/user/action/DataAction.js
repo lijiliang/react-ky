@@ -237,3 +237,29 @@ export function GetOrderList(size, num, type , callback) {
         });
     };
 }
+
+
+/*
+ * [payAgainBtn 重新发起支付按钮，存数据到redux]
+ * @param  {[String]}   tradeNo  [订单编号]
+ * @param  {[String]}   payType  [支付方式]
+ * @param  {Function} callback [回调函数]
+ * @return {[type]}            [description]
+ */
+export function payAgainBtn(tradeNo, payAmount, callback) {
+    const _data = {
+        tradeNo,
+        payAmount
+    };
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        dispatch({
+            type: 'PAYAGAIN',
+            payagain: _data
+        });
+        Toast.hide();
+        if(callback && typeof callback === 'function'){
+            callback(_data);
+        }
+    };
+}

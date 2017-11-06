@@ -4,7 +4,7 @@
 const profiles = {
     local: {
         preffix: '',
-        host: 'f966ne.natappfree.cc',
+        host: 'cjmgxp.natappfree.cc',
         // host : '10.206.41.102:8012',
         // host: 'dev.kyani.cn:8100',
         sercureEnable: false
