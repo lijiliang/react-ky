@@ -263,3 +263,47 @@ export function payAgainBtn(tradeNo, payAmount, callback) {
         }
     };
 }
+
+/*
+ * [GetUserInfo 获取用户基础信息]
+ * @param  {Function} callback [回调函数]
+ */
+export function GetUserInfo(callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = get(Urls.UserInfo);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+/*
+ * [GetUserInfo 获取用户基础信息]
+ * @param  {Function} callback [回调函数]
+ */
+export function PostUserInfo(data, callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = post(Urls.UserInfo, data);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}

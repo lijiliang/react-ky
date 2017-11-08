@@ -80,7 +80,6 @@ import OrderItemView from './OrderItemView';
      }
      render(){
          const _state = this.state;
-         console.log(_state)
 
          // 列表数据
          let orderLayout;

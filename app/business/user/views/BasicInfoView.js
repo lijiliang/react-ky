@@ -4,9 +4,11 @@
  import React from 'react';
  import { Link } from 'react-router';
  import PureRenderMixin from 'react-addons-pure-render-mixin';
- import { get, getPublic } from 'kyBase/common/FetchData';
  import { createForm } from 'rc-form';
  import classNames from 'classnames';
+ import { bindActionCreators } from 'redux';
+ import { connect } from 'react-redux';
+ import { GetUserInfo, PostUserInfo } from '../action/DataAction'
 
  //组件
  import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
@@ -24,17 +26,33 @@
          this.state = {
              avatar: Avatar,
              cityAreaData: cityAreaData,
-             cityExtra: true,
-             cityValue: ['8','60','619'],
-             addrDetail: '林和西路9号耀中广场918号林和西路9号耀中广场918号',
-             addrPostcode: '432222',
-             chatNumber: '13599699696',
-             phoneNumber: '13594949946',
-             email: '23456532@qq.com',
+             cityExtra: false,
+             cityValue: [],
+             addrDetail: '',
+             postcode: '',
+             wechatNo: '',
+             phoneNumber: '',
+             email: '',
+             userImgPath: '',
+             realName: '',
              isEdit: false,  // 是否可编辑
          };
      }
-     componentDidMount(){}
+     componentDidMount(){
+         this.props.dispatch(GetUserInfo((res) => {
+             this.setState({
+                 cityValue: [res.addrPrivonce, res.addrCity, res.addrCounty],
+                 addrDetail: res.addrDetail,
+                 postcode: res.postcode,
+                 wechatNo: res.wechatNo,
+                 phoneNumber: res.phoneNumber,
+                 email: res.email,
+                 realName: res.realName,
+                 userImgPath: res.userImgPath,
+                 cityExtra: !!res.addrPrivonce
+             })
+         }))
+     }
      // 返回上一页
      gohistoryHandle(){
          window.history.go(-1);
@@ -72,7 +90,7 @@
          const form = this.props.form;
          form.validateFields((error, value) => {
              if(error){
-                 const fieldNames = ['cityValue', 'addrDetail', 'addrPostcode', 'chatNumber', 'phoneNumber', 'email'].reverse();
+                 const fieldNames = ['cityValue', 'addrDetail', 'postcode', 'wechatNo', 'phoneNumber', 'email'].reverse();
                  fieldNames.map((item, index) => {
                      if(form.getFieldError(item)){
                          Toast.info(form.getFieldError(item), 1)
@@ -83,6 +101,33 @@
              }
              if(!error){
                  this.setState(value)
+                 const _state = this.state;
+                 const _data = {
+                     'addrPrivonce': _state.cityValue[0],
+                     'addrCity': _state.cityValue[1],
+                     'addrCounty': _state.cityValue[2],
+                     'addrDetail': _state.addrDetail,
+                     'email': _state.email,
+                     'phoneNumber': _state.phoneNumber,
+                     'postcode': _state.postcode,
+                     'realName': _state.realName,
+                     'userImgPath': _state.userImgPath,
+                     'wechatNo': _state.wechatNo
+                }
+                this.props.dispatch(PostUserInfo(_data, (res) => {
+                    Toast.success('修改成功！');
+                    this.setState({
+                        cityValue: [res.addrPrivonce, res.addrCity, res.addrCounty],
+                        addrDetail: res.addrDetail,
+                        postcode: res.postcode,
+                        wechatNo: res.wechatNo,
+                        phoneNumber: res.phoneNumber,
+                        email: res.email,
+                        realName: res.realName,
+                        userImgPath: res.userImgPath,
+                        isEdit: false
+                    })
+                }))
              }
          })
      }
@@ -107,6 +152,7 @@
         // http://www.open-open.com/lib/view/open1460474353494.html
      }
      render(){
+         console.log(this.state)
          const { getFieldDecorator} = this.props.form;
 
         const basicFormCls = classNames({
@@ -128,15 +174,15 @@
                          <div className="m-basic-view">
                              <div className="account-info">
                                  <div className="account-thumb">
-                                     <label htmlFor="img_input" onChange={this.changeUpFile.bind(this)} id="img_label">
+                                     {/* <label htmlFor="img_input" onChange={this.changeUpFile.bind(this)} id="img_label">
                                          <input id="img_input" type="file" accept="image/*"/>
-                                     </label>
+                                     </label> */}
                                      <img src={this.state.avatar}/>
-                                     <div className="modify">点此修改头像</div>
+                                     {/* <div className="modify">点此修改头像</div> */}
                                  </div>
                                  <div className="account-name">
                                      <p className="tit">姓名</p>
-                                     <p className="name">丛征</p>
+                                     <p className="name">{this.state.realName}</p>
                                  </div>
                              </div>
                              <div className={basicFormCls}>
@@ -178,8 +224,8 @@
                                          onChange={this.stateChangeHandle.bind(this, 'addrDetail')}
                                      />
                                  )}
-                                 {getFieldDecorator('addrPostcode',{
-                                     initialValue: this.state.addrPostcode,
+                                 {getFieldDecorator('postcode',{
+                                     initialValue: this.state.postcode,
                                      rules: [{
                                          pattern: RegxRule.zipCode,
                                          message: '请输入正确的邮政编码'
@@ -194,23 +240,16 @@
                                          maxLength={6}
                                          type="number"
                                          style={{border:'none'}}
-                                         onChange={this.stateChangeHandle.bind(this, 'addrPostcode')}
+                                         onChange={this.stateChangeHandle.bind(this, 'postcode')}
                                      >邮政编码</InputItem>
                                  )}
-                                 {getFieldDecorator('chatNumber', {
-                                     initialValue: this.state.chatNumber,
-                                     rules: [{
-                                         pattern: RegxRule.phone,
-                                         message: '请输入正确的手机号'
-                                     },{
-                                         required: true,
-                                         message: '请输入您的手机号'
-                                     }],
+                                 {getFieldDecorator('wechatNo', {
+                                     initialValue: this.state.wechatNo
                                    })(
                                      <InputItem
                                          labelNumber={5}
                                          placeholder="请输入您的微信号"
-                                         onChange={this.stateChangeHandle.bind(this, 'chatNumber')}
+                                         onChange={this.stateChangeHandle.bind(this, 'wechatNo')}
                                      >微信号</InputItem>
                                  )}
                                  {getFieldDecorator('phoneNumber', {
@@ -266,4 +305,13 @@
  }
 
  const BasicInfoViewWrapper = createForm()(BasicInfoView);
- export default BasicInfoViewWrapper;
+
+ /*  React 与  Redux 绑定 */
+ function mapStateToProps(state){
+     return {
+     };
+ }
+
+ export default connect(
+     mapStateToProps
+ )(BasicInfoViewWrapper);

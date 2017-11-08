@@ -4,15 +4,15 @@
 const profiles = {
     local: {
         preffix: '',
-        host: 'cjmgxp.natappfree.cc',
-        // host : '10.206.41.102:8012',
+        // host: 'cjmgxp.natappfree.cc',
+        host : '10.206.41.102:8012',
         // host: 'dev.kyani.cn:8100',
         sercureEnable: false
     },
     prod: {
         preffix: '',
-        // host: '9ggdfc.natappfree.cc',
-        host: 'dev.kyani.cn:8100',
+        host: 'cjmgxp.natappfree.cc',
+        // host: 'dev.kyani.cn:8100',
         //sercureEnable: true
         sercureEnable: false
     }

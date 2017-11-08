@@ -62,13 +62,14 @@ class LoginView extends React.Component{
                     }
                 });
                 return;
-            }else{
+            }
+            if(!error){
                 this.setState(value);
+                const _backUrl = getQueryString('backUrl');
                 this.props.dispatch(login(this.state.username, this.state.password, this.state.isAccount, () => {
                     Toast.success('登录成功', 1);
                     setTimeout(() => {
                         // 如果有需要跳转的链接，则跳转过去，否则直接返回首页
-                        const _backUrl = getQueryString('backUrl');
                         if(_backUrl){
                             location.href = _backUrl;
                         }else{
