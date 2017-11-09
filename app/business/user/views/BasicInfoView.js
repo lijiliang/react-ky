@@ -152,7 +152,6 @@
         // http://www.open-open.com/lib/view/open1460474353494.html
      }
      render(){
-         console.log(this.state)
          const { getFieldDecorator} = this.props.form;
 
         const basicFormCls = classNames({

@@ -4,36 +4,37 @@
  import React from 'react';
  import { Link } from 'react-router';
  import PureRenderMixin from 'react-addons-pure-render-mixin';
- import { get, getPublic } from 'kyBase/common/FetchData';
- import { createForm } from 'rc-form';
  import classNames from 'classnames';
+ import { bindActionCreators } from 'redux';
+ import { connect } from 'react-redux';
  import CopyToClipboard from 'react-copy-to-clipboard';
+ import { GetOrderDetail } from '../action/DataAction';
+ import { markMoney } from 'kyBase/common/Utils';
 
  //组件
- import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
- import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List} from 'uxComponent';
+ import { Button, Toast, NavBar, List} from 'uxComponent';
  const Item = List.Item;
  const Brief = Item.Brief;
  import '../resources/OrderDetailsView.less';
 
- class AddressView extends React.Component {
+ class OrderDetailsView extends React.Component {
      constructor(props, context){
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
-             isEdit: false,  // 是否可编辑
          };
      }
-     componentDidMount(){}
+     componentDidMount(){
+         const orderNo = this.props.params.id;
+         this.props.dispatch(GetOrderDetail(orderNo, (res) => {
+             this.setState({
+                 ...res
+             })
+         }))
+     }
      // 返回上一页
      gohistoryHandle(){
          window.history.go(-1);
-     }
-     // 点击编辑
-     onEditHandle = () => {
-         this.setState({
-             isEdit: true
-         })
      }
      // 复制单号
      copyTextHandle = (text, result) => {
@@ -44,6 +45,10 @@
          }
      }
      render(){
+         const _state = this.state;
+         const _shippingInfo = _state.shippingInfo || {};
+         const _productList = _state.productList || [];
+         const _orderLogisticsInfo = _state.orderLogisticsInfo || {}
          return(
              <div className="ky-container-body">
                  <div className="ky-scrollable">
@@ -53,50 +58,56 @@
                              mode="blue"
                              >子订单信息</NavBar>
                          <div className="m-orderdetail-view">
-                             <div className="detail-item">
-                                 <div className="orderdetail-head">包裹信息</div>
-                                 <div className="orderdetail-body">
-                                     <div className="list">
-                                         <div className="item">
-                                             <div className="name">物流公司</div>
-                                             <div className="info">顺丰快递</div>
-                                         </div>
-                                         <div className="item">
-                                             <div className="name">物流单号</div>
-                                             <div className="info">
-                                                 <span className="order-no">0000000000000000</span>
-                                                 <CopyToClipboard text='asdfghjklkjhgf' onCopy={this.copyTextHandle.bind(this)}>
-                                                     <span className="copy">复制单号</span>
-                                                </CopyToClipboard>
+                             {
+                                 _orderLogisticsInfo.expressName
+                                 ?
+                                     <div className="detail-item">
+                                         <div className="orderdetail-head">包裹信息</div>
+                                         <div className="orderdetail-body">
+                                             <div className="list">
+                                                 <div className="item">
+                                                     <div className="name">物流公司</div>
+                                                     <div className="info">{_orderLogisticsInfo.expressName}</div>
+                                                 </div>
+                                                 <div className="item">
+                                                     <div className="name">物流单号</div>
+                                                     <div className="info">
+                                                         <span className="order-no">{_orderLogisticsInfo.expressNo}</span>
+                                                         {/* <CopyToClipboard text='asdfghjklkjhgf' onCopy={this.copyTextHandle.bind(this)}>
+                                                             <span className="copy">复制单号</span>
+                                                        </CopyToClipboard> */}
+                                                     </div>
+                                                 </div>
+                                                 <a className="gobtn" href={_orderLogisticsInfo.kuaidi100Url}>快递100官网查询</a>
                                              </div>
                                          </div>
-                                         <div className="gobtn">快递100官网查询</div>
                                      </div>
-                                 </div>
-                             </div>
+                                 : null
+                             }
+
                              <div className="detail-item">
                                  <div className="orderdetail-head">收货人信息</div>
                                  <div className="orderdetail-body">
                                      <div className="list">
                                          <div className="item">
                                              <div className="name">收货人</div>
-                                             <div className="info">李生</div>
+                                             <div className="info">{_shippingInfo.consignee}</div>
                                          </div>
                                          <div className="item">
                                              <div className="name">手机号</div>
-                                             <div className="info">13500303033</div>
+                                             <div className="info">{_shippingInfo.phoneNumber}</div>
                                          </div>
                                          <div className="item">
                                              <div className="name">收货地址</div>
-                                             <div className="info">江苏省泰州市江阴区曲伟胜祥6955号</div>
+                                             <div className="info">{_shippingInfo.addrPrivonce}{_shippingInfo.addrCity}{_shippingInfo.addrCounty}{_shippingInfo.addrDetail}</div>
                                          </div>
                                          <div className="item">
                                              <div className="name">邮政编码</div>
-                                             <div className="info">655555</div>
+                                             <div className="info">{_shippingInfo.postcode}</div>
                                          </div>
                                          <div className="item">
                                              <div className="name">固定电话</div>
-                                             <div className="info">020-7896787898</div>
+                                             <div className="info">{_shippingInfo.telNumber}</div>
                                          </div>
                                      </div>
                                  </div>
@@ -105,79 +116,58 @@
                                  <div className="orderdetail-head">送货清单</div>
                                  <div className="order-list-body">
                                      <List small>
-                                         <Item extra={'87654345678765435678'} className="orderno">订单编号</Item>
-                                         <Item extra={'快递'}>配送方式</Item>
-                                         <Item extra={'在线支付'}>支付方式</Item>
-                                         <Item extra={'10'}>商品数量</Item>
+                                         <Item extra={_state.orderCode} className="orderno">订单编号</Item>
+                                         <Item extra={_state.deliveryMethod == 0 ? '快递' : ''}>配送方式</Item>
+                                         <Item extra={_state.paymentMethod == 1 ? '在线支付' : ''}>支付方式</Item>
+                                         <Item extra={_state.productCount}>商品数量</Item>
                                          <Item>商品清单</Item>
                                      </List>
                                      <div className="suborder-box">
-                                         <div className="item-content">
-                                             <div className="thumb">
-                                                 <img src="http://fpoimg.com/230x280?text=img" alt=""/>
-                                             </div>
-                                             <div className="info">
-                                                 <div className="info-item">
-                                                     <div className="name name-tit">新乐思新乐新乐思新乐</div>
-                                                     <div className="number">数量</div>
-                                                 </div>
-                                                 <div className="info-item">
-                                                     <div className="name">
-                                                         <p>蓝莓复合果汁饮品(便利装) 900毫升 (30袋)</p>
+                                         {
+                                             _productList.map((item, index) => {
+                                                 return(
+                                                     <div className="item-content">
+                                                         <div className="thumb">
+                                                             <img src={item.imgPath}/>
+                                                         </div>
+                                                         <div className="info">
+                                                             <div className="info-item">
+                                                                 <div className="name name-tit">{item.name}</div>
+                                                                 <div className="number">数量</div>
+                                                             </div>
+                                                             <div className="info-item">
+                                                                 <div className="name">
+                                                                     <p>{item.name}</p>
+                                                                 </div>
+                                                             </div>
+                                                             <div className="info-item info-price">
+                                                                 <div className="name">
+                                                                     <p>原价&nbsp;&nbsp;&nbsp;<span className="name-price">¥{item.originalPrice}</span></p>
+                                                                 </div>
+                                                             </div>
+                                                             <div className="info-item info-price">
+                                                                 <div className="name">
+                                                                     <p>会员价<span className="name-price">¥{item.salePrice}</span></p>
+                                                                 </div>
+                                                                 <div className="number">x {item.buyNum}</div>
+                                                             </div>
+                                                         </div>
                                                      </div>
-                                                 </div>
-                                                 <div className="info-item info-price">
-                                                     <div className="name">
-                                                         <p>原价&nbsp;&nbsp;&nbsp;<span className="name-price">¥460.00</span></p>
-                                                     </div>
-                                                 </div>
-                                                 <div className="info-item info-price">
-                                                     <div className="name">
-                                                         <p>会员价<span className="name-price">¥460.00</span></p>
-                                                     </div>
-                                                     <div className="number">x 4</div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                         <div className="item-content">
-                                             <div className="thumb">
-                                                 <img src="http://fpoimg.com/230x280?text=img" alt=""/>
-                                             </div>
-                                             <div className="info">
-                                                 <div className="info-item">
-                                                     <div className="name name-tit">新乐思新新乐思新新乐思新乐新乐思新乐</div>
-                                                     <div className="number">数量</div>
-                                                 </div>
-                                                 <div className="info-item">
-                                                     <div className="name">
-                                                         <p>蓝莓复合果汁饮品(便利装) 900毫升 (30袋)</p>
-                                                     </div>
-                                                 </div>
-                                                 <div className="info-item info-price">
-                                                     <div className="name">
-                                                         <p>原价&nbsp;&nbsp;&nbsp;<span className="name-price">¥460.00</span></p>
-                                                     </div>
-                                                 </div>
-                                                 <div className="info-item info-price">
-                                                     <div className="name">
-                                                         <p>会员价<span className="name-price">¥460.00</span></p>
-                                                     </div>
-                                                     <div className="number">12</div>
-                                                 </div>
-                                             </div>
-                                         </div>
+                                                 )
+                                             })
+                                         }
                                      </div>
                                      <List small>
-                                         <Item extra={'￥21,400.00'}>会员价总额</Item>
-                                         <Item extra={'￥21,400.00'}>销售价总额</Item>
-                                         <Item extra={'￥0.00'}>进口关税</Item>
-                                         <Item extra={'-￥21,400.00'}>总优惠</Item>
-                                         <Item extra={'￥0.00'}>运费</Item>
-                                         <Item extra={'525'} className="m-quota">总积分</Item>
+                                         <Item extra={markMoney(_state.originalPrice)}>会员价总额</Item>
+                                         <Item extra={markMoney(_state.actualPrice)}>销售价总额</Item>
+                                         <Item extra={markMoney(_state.importTariff)}>进口关税</Item>
+                                         <Item extra={'-' + markMoney(_state.preferential)}>总优惠</Item>
+                                         <Item extra={markMoney(_state.expressPrice)}>运费</Item>
+                                         {/* <Item extra={'525'} className="m-quota">总积分</Item> */}
                                      </List>
                                  </div>
                              </div>
-                            <div className="paymethod-price">已付金额：<span class="price">￥10,888.00</span></div>
+                            <div className="paymethod-price">已付金额：<span class="price">{markMoney(_state.actualPrice)}</span></div>
                          </div>
                      </div>
                  </div>
@@ -186,4 +176,12 @@
      }
  }
 
- export default AddressView;
+ /*  React 与  Redux 绑定 */
+ function mapStateToProps(state){
+     return {
+     };
+ }
+
+ export default connect(
+     mapStateToProps
+ )(OrderDetailsView);

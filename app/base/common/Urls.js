@@ -27,6 +27,7 @@ const Urls = {
     Country: profile.server + '/starspower/shop/service/v1/payment/country', //获取信用卡国家数据
     PayAgain: profile.server + '/starspower/shop/service/v1/payment/goPay',   //订单去支付(重新发起支付)
     OrderList: profile.server + '/starspower/shop/service/v1/order/list',   //会员中心订单列表
+    OrderDetail: profile.server + '/starspower/shop/service/v1/order/detail', //会员中心->子订单查看
     UserInfo: profile.server + '/starspower/shop/service/v1/user/info',     //会员中心->基本信息
 };
 

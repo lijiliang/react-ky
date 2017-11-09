@@ -195,6 +195,15 @@ export function getIdCardAge(idCard){
 }
 
 /*
+ * [markMoney 返回带￥符号的金额]
+ * @param  {[String]} str [金额]
+ * @return {[String]}     [返回带￥符号的金额]
+ */
+export function markMoney(str){
+    return '￥' + str;
+}
+
+/*
  * [getScroll 返回当前页面相对于窗口显示区左上角的 X ，Y 的位置]
  * @param  {[type]} top [description]
  * @return {[type]}     [description]

@@ -128,6 +128,7 @@ import { GetOrderList, payAgainBtn } from '../action/DataAction';
                                      {
                                          item.orderList.map((subitem, subindex) => {
                                              let statusName;
+                                             const goDetailUrl = '/user/detail/' + subitem.orderNo;  // 详情页url
                                              if(subitem.orderStatus == '0'){
                                                  statusName = '待付款'
                                              }else if(subitem.orderStatus == "1" || subitem.orderStatus == "5" || subitem.orderStatus == "6"){
@@ -198,8 +199,7 @@ import { GetOrderList, payAgainBtn } from '../action/DataAction';
                                                      <div className="suborder-status">
                                                          <span className="status">{statusName}</span>
                                                          <div className="suborder-btn">
-                                                             <a href="" className="status-btn btn-order">查看订单</a>
-                                                             {/* <a href="" className="status-btn btn-order">状态码: {subitem.orderStatus}</a> */}
+                                                             <Link to={goDetailUrl} className="status-btn btn-order">查看订单</Link>
                                                          </div>
                                                      </div>
                                                  </div>

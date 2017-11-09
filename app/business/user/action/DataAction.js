@@ -238,6 +238,29 @@ export function GetOrderList(size, num, type , callback) {
     };
 }
 
+/*
+ * [GetOrderDetail 会员中心子订单查询]
+ * @param       {[String]}   code     [子订单id]
+ * @param       {Function} callback [description]
+ * @constructor
+ */
+export function GetOrderDetail(code, callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = get(Urls.OrderDetail + `/${code}`);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
 
 /*
  * [payAgainBtn 重新发起支付按钮，存数据到redux]
