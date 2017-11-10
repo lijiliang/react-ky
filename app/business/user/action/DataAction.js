@@ -35,9 +35,11 @@ export function signout(callback) {
                         token: '',        //用户token
                     }
                 });
-                Toast.success('退出成功', 1);
                 if(callback && typeof callback === 'function'){
-                    callback();
+                    callback({
+                        success: res.success,
+                        message: res.message
+                    });
                 }
             }
         }).catch((err) => {
@@ -324,6 +326,39 @@ export function PostUserInfo(data, callback) {
                 if(callback && typeof callback === 'function'){
                     callback(res.data);
                 }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+/*
+ * [PutUserChangePwd 修改密码]
+ * @param       {[String]}   password    [原密码]
+ * @param       {[String]}   newPassword [新密码]
+ * @param       {Function} callback    [description]
+ */
+export function PutUserChangePwd(password, newPassword, callback) {
+    const _data = {
+        password: password,
+        newPassword: newPassword
+    };
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = putFetch(Urls.UserChangePwd, _data);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback({
+                        success: res.success,
+                        message: res.message
+                    });
+                }
+            }else{
+                Toast.fail(res.message);
             }
         }).catch((err) => {
             failLoading(err);

@@ -47,7 +47,10 @@ class UserIndexView extends React.Component {
     }
     // 退出登录
     signoutHandle(){
-        this.props.dispatch(signout(() => {
+        this.props.dispatch(signout((res) => {
+            if(res.success){
+                Toast.success('退出成功', 1);
+            }
             // 退出成功后，更新购物车数量
             this.props.dispatch(getShoppingCarCount());
             setTimeout(() => {

@@ -2,12 +2,13 @@
  * @fileOverview 帐户安全 - 修改密码
  */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
-import {regConsumer} from '../action/DataAction';
+import { PutUserChangePwd, signout } from '../action/DataAction';
+import { getShoppingCarCount } from 'kyBus/common/action/DataAction'
 
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
@@ -44,6 +45,7 @@ class SafetyPwdView extends React.Component {
     submitHandle = () => {
         const form = this.props.form;
         form.validateFields((error, value) => {
+            const _password = form.getFieldValue('password');
             const _newPassword = form.getFieldValue('newPassword');
             const _confirmPwd = form.getFieldValue('confirmPwd');
             if (error) {
@@ -57,10 +59,28 @@ class SafetyPwdView extends React.Component {
                 return;
             }
 
+            if(_password == _newPassword){
+                Toast.info('原密码与新密码不能一样', 1);
+                return;
+            }
+
             if (_confirmPwd && (_newPassword !== _confirmPwd)) {
                 Toast.info('两次输入的密码不一致', 1);
                 return;
             }
+
+            this.props.dispatch(PutUserChangePwd(_password, _newPassword, (res) => {
+                if(res.success){
+                    Toast.success('密码修改成功！');
+                    setTimeout(() => {
+                        this.props.dispatch(signout(() => {
+                            // 退出成功后，更新购物车数量
+                            this.props.dispatch(getShoppingCarCount());
+                            hashHistory.push('/login');
+                        }));
+                    }, 1500)
+                }
+            }))
         })
 
     }
