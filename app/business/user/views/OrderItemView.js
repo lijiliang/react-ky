@@ -7,12 +7,13 @@
  import { bindActionCreators } from 'redux';
  import { connect } from 'react-redux';
  import classNames from 'classnames';
-import { GetOrderList, payAgainBtn } from '../action/DataAction';
+import { payAgainBtn, getOrderCancelType, putOrderCancel } from '../action/DataAction';
 // import { getPayAgain } from 'kyBus/pay/action/DataAction';
 
  //组件
  import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
  import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List, Modal} from 'uxComponent';
+ import CancelTypeModal from './OrderCancelTypeView';
  import '../resources/OrderView.less';
 
 
@@ -22,7 +23,10 @@ import { GetOrderList, payAgainBtn } from '../action/DataAction';
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
              modal: false, // 弹出层是否显示
-             value: 'c',   // 取消订单的原因
+             cancelValue: '',   // 取消订单的原因
+             cancelType: [],    // 订单取消原因类型
+             isOther: false,
+             otherValue: ''     // 其它原因
          };
      }
      componentDidMount(){
@@ -35,38 +39,93 @@ import { GetOrderList, payAgainBtn } from '../action/DataAction';
      // 去付款
      goPayHandle(tradeNo, tradePrice){
          this.props.dispatch(payAgainBtn(tradeNo, tradePrice, (res) => {
-             console.log(tradeNo, tradePrice)
              hashHistory.push('/pay/types');  // 跳到选择支付方式页面
          }));
      }
      // 打开弹出层
      showModal = key => (e) => {
          e.preventDefault();
-         this.setState({
-             [key]: true,
-         });
+         // 获取取消订单原因数据
+         this.props.dispatch(getOrderCancelType((res) => {
+             let cancelType = []
+             res.map((item) => {
+                 cancelType.push({
+                     value: item.name,
+                     label: item.name
+                 })
+             })
+             this.setState({
+                 modal: true,
+                 tradeNo: key,
+                 cancelType: cancelType
+             });
+         }))
+
      }
      // 关闭弹出层
      onClose = key => () => {
          this.setState({
-            [key]: false,
+            modal: false,
          });
      }
-     reasonChange = () => {
-         this.setState({value: event.target.value});
+     // 选择取消订单原因
+     reasonItemChange = () => {
+         const _value = event.target.value;
+         if(_value !== '其他原因'){
+             this.setState({
+                 cancelValue: _value,
+                 isOther: false
+             });
+         }else{
+             this.setState({
+                 cancelValue: _value,
+                 isOther: true
+             });
+         }
+     }
+     // 其它原因
+     otherChange = () => {
+         this.setState({
+             otherValue: event.target.value
+         });
+     }
+     // 确定取消订单
+     cancelOrderOkHandle = () => {
+         let _state = this.state;
+         let _reason = '';
+         if(!_state.cancelValue){
+              Toast.info('请选择取消订单原因！');
+         }else{
+             if(_state.cancelValue == '其他原因'){
+                 if(!_state.otherValue){
+                     Toast.info('请输入其它原因！');
+                     return;
+                 }
+             }
+         }
+         _reason = _state.cancelValue == '其他原因' ? _state.otherValue : _state.cancelValue;
+         const _data = {
+             reason: _reason,
+             tradeNo: _state.tradeNo
+         }
+         this.props.dispatch(putOrderCancel(_data, (res) => {
+             if(res.success){
+                 Toast.success('取消订单成功');
+                 this.setState({
+                     modal: false,
+                     cancelValue: '',   // 取消订单的原因
+                     otherValue: ''     // 其它原因
+                 })
+                 setTimeout(() => {
+                     hashHistory.push('/user/order/3')
+                 }, 1500);
+             }else{
+                 Toast.info(res.errMsg);
+             }
+         }))
      }
      render(){
-         const data = [
-             {value: 'a', label: '现在不想买'},
-             {value: 'b', label: '商品价格较贵'},
-             {value: 'c', label: '价格波动'},
-             {value: 'd', label: '商品缺货'},
-             {value: 'e', label: '重新下单'},
-             {value: 'f', label: '添加或删除商品'},
-             {value: 'g', label: '收货人信息有误'},
-             {value: 'h', label: '送货时间过长'},
-             {value: 'i', label: '其它原因'},
-         ];
+         const data = this.state.cancelType || [];
          const { orderList } = this.props;
          return(
              <div className="m-order-item-view">
@@ -76,7 +135,7 @@ import { GetOrderList, payAgainBtn } from '../action/DataAction';
                          switch(item.tradeStatus){
                              case '0':
                                  orderStatus = <div className="order-status">
-                                     <a href="javascript:;" className="status-btn" onClick={this.showModal('modal')}>取消订单</a>
+                                     <a href="javascript:;" className="status-btn" onClick={this.showModal(item.tradeNo)}>取消订单</a>
                                      <a className="status-btn btn-pay" onClick={this.goPayHandle.bind(this, item.tradeNo, item.tradePrice)}>去付款</a>
                                  </div>
                                  break;
@@ -293,20 +352,20 @@ import { GetOrderList, payAgainBtn } from '../action/DataAction';
                   animationType='slide'
                   onClose={()=> {this.onClose('modal')()}}
                   transparent={true}
-                  footer={[{ text: '确定取消订单', onPress: () => { console.log('ok'); this.onClose('modal')(); } }]}
+                  footer={[{ text: '确定取消订单', onPress: this.cancelOrderOkHandle }]}
                 >
                   <div className="reason-list">
                       {
                           data.map((item, index) => {
                               const reasonCls = classNames({
                                   [`reason-radio`]: true,
-                                  [`reason-radio-active`]: item.value === this.state.value,
+                                  [`reason-radio-active`]: item.value === this.state.cancelValue,
                               })
                               return(
                                   <div className="reason-item">
                                       <label>
                                           <div className={reasonCls}>
-                                              <input type="radio" value={item.value} checked={this.state.value} onChange={this.reasonChange}/>
+                                              <input type="radio" value={item.value} checked={this.state.cancelValue} onChange={this.reasonItemChange}/>
                                               <i className="icon icon-radio"></i>
                                         </div>
                                     </label>
@@ -316,6 +375,13 @@ import { GetOrderList, payAgainBtn } from '../action/DataAction';
                           })
                       }
                   </div>
+                  {
+                      this.state.isOther
+                      ? <div className="reason-item-other">
+                          <TextareaItem placeholder="请输入其它原因" autoHeight rows="2" value={this.state.otherValue} onChange={this.otherChange}/>
+                      </div>
+                      : null
+                  }
                 </Modal>
              </div>
          );

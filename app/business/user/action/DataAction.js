@@ -365,3 +365,47 @@ export function PutUserChangePwd(password, newPassword, callback) {
         });
     };
 }
+
+/*
+ * [getOrderCancel 获取订单取消原因类型]
+ * @param  {Function} callback [回调函数]
+ */
+export function getOrderCancelType(callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = get(Urls.UserOrderCancelType);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+/*
+ * [putOrderCancel 取消订单]
+ * @param  {Function} callback [回调函数]
+ */
+export function putOrderCancel(data, callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = putFetch(Urls.UserOrderCancel, data);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}

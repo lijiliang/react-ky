@@ -132,6 +132,7 @@
 
 // 弹出层 取消订单原因
 .m-order-modal {
+    width: 620px!important;
     .ky-modal-body{
         padding: 20px 15px!important;
     }
@@ -140,7 +141,7 @@
     width: 100%;
     .reason-item{
         width: 50%;
-        float: left;
+        display: inline-block;
         text-align:left;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -179,6 +180,18 @@
             padding-left: 5px;
             font-size: 28px;
             color: #a0a0a0;
+        }
+    }
+}
+.reason-item-other{
+    margin: 8px 10px 0;
+    .ky-list-item{
+        border: 1px solid #a0a0a0;
+    }
+    .ky-textarea-control{
+        padding: 10px;
+        textarea{
+            font-size: 30px;
         }
     }
 }

@@ -30,6 +30,8 @@ const Urls = {
     OrderDetail: profile.server + '/starspower/shop/service/v1/order/detail', //会员中心->子订单查看
     UserInfo: profile.server + '/starspower/shop/service/v1/user/info',     //会员中心->基本信息
     UserChangePwd: profile.server + '/starspower/shop/service/v1/user/changePwd', //会员中心->修改密码
+    UserOrderCancelType: profile.server + '/starspower/shop/service/v1/order/cancelType', //会员中心->获取订单取消原因类型
+    UserOrderCancel: profile.server + '/starspower/shop/service/v1/order/cancelOrder', //会员中心->取消订单
 };
 
 export default Urls;

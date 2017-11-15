@@ -22,6 +22,7 @@ import OrderItemView from './OrderItemView';
          super(props, context);
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
+             navTitle: '全部订单',
              pageNum: 1, // 当前第几页
              pageSize: 10,// 一个多少条数据
              pageNext: 2, // 下一页的页码
@@ -32,6 +33,29 @@ import OrderItemView from './OrderItemView';
          };
      }
      componentDidMount(){
+         const _id = this.props.params.id;
+         let _navTitle = '';
+         if(_id){
+             switch(_id){
+             case '1':
+                 _navTitle = '待处理';
+                 break;
+             case '2':
+                 _navTitle = '已发货';
+                 break;
+             case '3':
+                 _navTitle = '已取消';
+                 break;
+             case '4':
+                 _navTitle = '已退单';
+                 break;
+             default:
+                 _navTitle = '全部订单';
+             }
+             this.setState({
+                 navTitle: _navTitle
+             });
+         }
          // 获取第一页数据
          this.resultHandle(this.state.pageSize, 1);
      }
@@ -98,7 +122,7 @@ import OrderItemView from './OrderItemView';
                          <NavBar
                              onLeftClick={this.gohistoryHandle.bind(this)}
                              mode="blue"
-                             >全部订单</NavBar>
+                             >{this.state.navTitle}</NavBar>
                          <div className="m-order-view">
                              {orderLayout}
                              {/* {

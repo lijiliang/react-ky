@@ -84,7 +84,6 @@ export default class Modal extends React.Component {
             operation,
             platform,
         } = this.props;
-
         // 判断是否安卓
         // const isAndroid = platform === 'android' ||
         // (platform === 'cross' && this.props.visible && !!navigator.userAgent.match(/Android/i));

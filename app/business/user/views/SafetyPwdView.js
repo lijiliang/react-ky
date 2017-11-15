@@ -60,7 +60,7 @@ class SafetyPwdView extends React.Component {
             }
 
             if(_password == _newPassword){
-                Toast.info('原密码与新密码不能一样', 1);
+                Toast.info('原密码与新密码不能相同', 1);
                 return;
             }
 
