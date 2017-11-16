@@ -108,6 +108,7 @@ import { payAgainBtn, getOrderCancelType, putOrderCancel } from '../action/DataA
              reason: _reason,
              tradeNo: _state.tradeNo
          }
+
          this.props.dispatch(putOrderCancel(_data, (res) => {
              if(res.success){
                  Toast.success('取消订单成功');
@@ -118,7 +119,7 @@ import { payAgainBtn, getOrderCancelType, putOrderCancel } from '../action/DataA
                  })
                  setTimeout(() => {
                      hashHistory.push('/user/order/3')
-                 }, 1500);
+                 }, 2000);
              }else{
                  Toast.info(res.errMsg);
              }

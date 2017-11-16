@@ -23,6 +23,7 @@ import OrderItemView from './OrderItemView';
          this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
          this.state = {
              navTitle: '全部订单',
+             orderId: '0',
              pageNum: 1, // 当前第几页
              pageSize: 10,// 一个多少条数据
              pageNext: 2, // 下一页的页码
@@ -32,11 +33,32 @@ import OrderItemView from './OrderItemView';
              total: '' //总数
          };
      }
+     componentWillMount(){
+         const _orderId = this.props.params.id || this.state.orderId;
+         this.setState({
+             navTitle: this._getNavTitle(_orderId),
+             orderId: _orderId
+         });
+     }
      componentDidMount(){
-         const _id = this.props.params.id;
-         let _navTitle = '';
-         if(_id){
-             switch(_id){
+         // 获取第一页数据
+         this.resultHandle(this.state.pageSize, 1);
+     }
+     componentWillReceiveProps(nextProps) {
+         const _orderId = this.props.params.id;
+         if(_orderId !== nextProps.params.id){
+             this.setState({
+                 orderId: nextProps.params.id || '0',
+                 navTitle: this._getNavTitle(nextProps.params.id),
+             });
+             this.resultHandle(this.state.pageSize, 1, nextProps.params.id);
+         }
+     }
+     // 获取标题
+     _getNavTitle(orderId){
+         let _navTitle = '全部订单';
+         if(orderId){
+             switch(orderId){
              case '1':
                  _navTitle = '待处理';
                  break;
@@ -52,12 +74,8 @@ import OrderItemView from './OrderItemView';
              default:
                  _navTitle = '全部订单';
              }
-             this.setState({
-                 navTitle: _navTitle
-             });
          }
-         // 获取第一页数据
-         this.resultHandle(this.state.pageSize, 1);
+         return _navTitle;
      }
      // 返回上一页
      gohistoryHandle(){
@@ -78,21 +96,24 @@ import OrderItemView from './OrderItemView';
          });
      }
      //数据处理
-     resultHandle(pageSize, page){
+     resultHandle(pageSize, page, type){
          // 获取不同的状态
-         let _id;
-         if(this.props.params.id){
-             _id = this.props.params.id;
-         }else{
-             _id = '0';
-         }
-         this.props.dispatch(GetOrderList(pageSize, page, _id, (res) => {
+         const _type = type || this.props.params.id || this.state.orderId;
+         this.props.dispatch(GetOrderList(pageSize, page, _type, (res) => {
              if(!res.isLastPage){
-                 this.setState({
-                     orderListData: this.state.orderListData.concat(res.data),
-                     total: res.total,
-                     hasMore: true,
-                 });
+                 if(res.pageNum == '1'){
+                     this.setState({
+                         orderListData: res.data,
+                         total: res.total,
+                         hasMore: true,
+                     });
+                 }else{
+                     this.setState({
+                         orderListData: this.state.orderListData.concat(res.data),
+                         total: res.total,
+                         hasMore: true,
+                     });
+                 }
              }else{
                  this.setState({
                      orderListData: this.state.orderListData.concat(res.data),
@@ -104,7 +125,6 @@ import OrderItemView from './OrderItemView';
      }
      render(){
          const _state = this.state;
-
          // 列表数据
          let orderLayout;
          if(_state.total === '0'){
