@@ -146,10 +146,14 @@ class RegOrderView extends React.Component {
                 if(res.success){
                     // 注册用户并跳支付页面
                     this.props.dispatch(UserDealer(userDealerData, (dealeres) => {
-                        if(dealeres.memberFlag){
-                            window.location.href = dealeres.payUrl;
+                        if(dealeres.success){
+                            if(dealeres.memberFlag){
+                                window.location.href = dealeres.payUrl;
+                            }else{
+                                hashHistory.push(`/pay/complete/${dealeres.tradeNo}`)
+                            }
                         }else{
-                            hashHistory.push(`/pay/complete/${dealeres.tradeNo}`)
+                            Toast.info(dealeres.errMsg)
                         }
                     }))
                 }

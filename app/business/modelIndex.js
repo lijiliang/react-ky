@@ -11,6 +11,7 @@ export {default as ProductInfoIdModel} from './home/model/ProductInfoIdModel';  
 export {default as NavModel} from './common/model/NavModel.js';    //菜单导航数据
 export {default as CartCountModel} from './common/model/CartCountModel';   // 购物车总数
 export {default as IndexItemOpenModel} from './common/model/IndexItemOpenModel'; // 首页展开所有商品
+export {default as IsPayeezyModel} from './common/model/IsPayeezyModel'; //信息卡支付页面区别是否注册
 
 // 登录的数据模型MODEL
 export {default as LoginModel} from './login/model/LoginModel';

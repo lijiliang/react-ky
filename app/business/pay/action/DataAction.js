@@ -2,7 +2,7 @@
  * @fileOverview 订单支付后回调完成页，支付成功/失败 处理数据action
  */
 import * as types from './actionTypes';
-import { get, getPublic} from 'FetchData';
+import { get, getPublic, post, postHasFetch} from 'FetchData';
 import { Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
 import { failLoading } from 'Utils';
@@ -78,6 +78,33 @@ export function getPayAgain(tradeNo, payType, callback){
                 // dispatch({
                 //     type: types.PAYAGAIN,
                 //     payagain: res.data
+                // });
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+/*
+ * [payeezy 信用卡支付]
+ * @param  {[Object]}   data  [参数集合]
+ * @param  {Function} callback [description]
+ */
+export function Payeezy(data, callback){
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = postHasFetch(Urls.Payeezy, data);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                // dispatch({
+                //     type: types.PAYMENT,
+                //     payment: res.data
                 // });
                 if(callback && typeof callback === 'function'){
                     callback(res.data);

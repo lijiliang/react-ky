@@ -38,7 +38,7 @@ export default class KYPayMethod extends React.Component {
                 name: '易联支付',
                 imgUrl: payeco
             },{
-                payType: 'payeezy',
+                payType: '27', //payeezy
                 name: '信用卡支付',
                 imgUrl: payvisacard
             },

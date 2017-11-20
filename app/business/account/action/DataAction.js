@@ -163,6 +163,17 @@ export function UserDealer(data, callback) {
             const res = result.data;
             if(res.success) {
                 Toast.hide();
+                dispatch({
+                    type: types.PAYMENT,
+                    payment: res.data
+                });
+                dispatch({
+                    type: types.PAYAGAIN,
+                    payagain: {
+                        tradeNo: res.data.tradeNo,
+                        payAmount: res.data.price
+                    }
+                });
                 if(callback && typeof callback === 'function'){
                     callback(res.data);
                 }
