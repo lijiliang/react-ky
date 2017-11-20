@@ -49,9 +49,18 @@ export function payAgainBtn(tradeNo, payAmount, callback) {
     };
     return (dispatch, getState) => {
         Toast.loading('加载中...', 200);
+        // dispatch({
+        //     type: types.PAYAGAIN,
+        //     payagain: _data
+        // });
         dispatch({
-            type: types.PAYAGAIN,
-            payagain: _data
+            type: types.PAYMENT,
+            payment: {
+                tradeNo: tradeNo,  //订单编号
+                price: payAmount,//支付金额
+                payType: '',  //支付类型
+                payUrl: '',   //支付链接
+            }
         });
         Toast.hide();
         if(callback && typeof callback === 'function'){

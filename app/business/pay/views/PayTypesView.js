@@ -24,8 +24,8 @@ class PayTypesView extends React.Component{
         };
     }
     componentDidMount(){
-        const { payagain } = this.props;
-        const tradeNo = payagain.get('tradeNo');
+        const { payment } = this.props;
+        const tradeNo = payment.get('tradeNo');
         if(tradeNo.length === 0){
             setTimeout(function(){
                 window.history.go(-1);
@@ -39,8 +39,8 @@ class PayTypesView extends React.Component{
 
     //立即结算 下单
     submitHandle() {
-        const { payagain } = this.props;
-        const tradeNo = payagain.get('tradeNo');
+        const { payment } = this.props;
+        const tradeNo = payment.get('tradeNo');
         this.props.dispatch(getPayAgain(tradeNo, this.state.payType, (res) => {
             if(res.success){
                 window.location.href = res.data;
@@ -57,8 +57,8 @@ class PayTypesView extends React.Component{
     }
     render(){
         const _state = this.state || {};
-        const { payagain } = this.props;
-        const payAmount = payagain.get('payAmount');
+        const { payment } = this.props;
+        const payAmount = payment.get('price');
         return(
             <div className="ky-container-body">
                 <div className="ky-scrollable-white">
@@ -89,7 +89,7 @@ class PayTypesView extends React.Component{
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
-        payagain: state.PayAgainModel
+        payment: state.PaymentModel
     };
 }
 

@@ -2,6 +2,7 @@
  * @fileOverview 购物车 处理数据action
  */
 import * as types from './actionTypes';
+import * as payTypes from 'kyBus/pay/action/actionTypes';
 import Base64 from 'js-base64';
 import { get, deleteFetch, post } from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
@@ -128,7 +129,7 @@ export function OrderAdd(data, callback){
             if(res.success){
                 Toast.hide();
                 dispatch({
-                    type: types.PAYMENT,
+                    type: payTypes.PAYMENT,
                     payment: res.data
                 });
                 if(callback && typeof callback === 'function'){

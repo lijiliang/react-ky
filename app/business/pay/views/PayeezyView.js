@@ -1,8 +1,8 @@
 /**
- * @fileOverview 填写支付信息
+ * @fileOverview 信用卡支付
  */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -96,18 +96,20 @@ const countryData = Cache.getObj(Cache.keys.ky_cache_Country) || [];
                     country: _state.country.join(''), //国家
                     cardType: _state.cardType, //卡类型
                 },
-                payPrice: '20171120100648149' || payment.get('price'), //支付金额
-                tradeNo: '530.00' || payment.get('tradeNo')   //主订单号
-            }
-            console.log(_data)
+                payPrice: payment.get('price'), //支付金额
+                tradeNo: payment.get('tradeNo')   //主订单号
+            };
 
             this.props.dispatch(Payeezy(_data, (res) => {
-                console.log('res: ', res)
                 if(res.success){
-                    console.log('success')
+                    hashHistory.push(`/pay/complete/${res.tradeNo}`);
                 }else{
-                    console.log('error')
-                    Toast.fail(res.errMsg, 2);
+                    Toast.fail(res.errMsg, 1);
+                    if(res.tradeNo){
+                        setTimeout(function(){
+                            hashHistory.push(`/pay/complete/${res.tradeNo}`);
+                        }, 1500);
+                    }
                 }
             }));
         });

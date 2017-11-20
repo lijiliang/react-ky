@@ -6,7 +6,6 @@ import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as loginAction from '../action/actionTypes';
 import { OrderPreview, OrderAdd } from '../action/DataAction';
 
 import { Cache } from 'kyCommon';

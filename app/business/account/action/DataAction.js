@@ -2,6 +2,7 @@
  * @fileOverview 注册 处理数据action
  */
 import * as types from './actionTypes';
+import * as payTypes from 'kyBus/pay/action/actionTypes';
 import Base64 from 'js-base64';
 import {hashHistory} from 'react-router'
 import { post, get, getPublic, postPublic } from 'FetchData';
@@ -164,15 +165,8 @@ export function UserDealer(data, callback) {
             if(res.success) {
                 Toast.hide();
                 dispatch({
-                    type: types.PAYMENT,
+                    type: payTypes.PAYMENT,
                     payment: res.data
-                });
-                dispatch({
-                    type: types.PAYAGAIN,
-                    payagain: {
-                        tradeNo: res.data.tradeNo,
-                        payAmount: res.data.price
-                    }
                 });
                 if(callback && typeof callback === 'function'){
                     callback(res.data);

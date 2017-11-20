@@ -2,6 +2,7 @@
  * @fileOverview 用户中心 处理数据action
  */
 import * as types from './actionTypes';
+import * as payTypes from 'kyBus/pay/action/actionTypes';
 import { get, post, postPublic, putFetch, deleteFetch} from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
@@ -278,9 +279,18 @@ export function payAgainBtn(tradeNo, payAmount, callback) {
     };
     return (dispatch, getState) => {
         Toast.loading('加载中...', 200);
+        // dispatch({
+        //     type: 'PAYAGAIN',
+        //     payagain: _data
+        // });
         dispatch({
-            type: 'PAYAGAIN',
-            payagain: _data
+            type: payTypes.PAYMENT,
+            payment: {
+                tradeNo: tradeNo,  //订单编号
+                price: payAmount,//支付金额
+                payType: '',  //支付类型
+                payUrl: '',   //支付链接
+            }
         });
         Toast.hide();
         if(callback && typeof callback === 'function'){
