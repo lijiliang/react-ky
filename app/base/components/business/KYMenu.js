@@ -47,6 +47,8 @@ class KYMenu extends React.Component{
     render(){
         const isLogin = this.props.isLogin;  // 是否登录
         const _nav = this.props.nav;
+        const _list = _nav.get('list')
+
         const groupProduct = _nav.get('groupProduct') || [];
         const about = _nav.get('about')|| [];
         const help = _nav.get('help')|| [];
@@ -76,60 +78,63 @@ class KYMenu extends React.Component{
                         : null
                     }
 
-                    <li className="m-menu-submenu m-menu-submenu-open">
-                        <div className="menu-submenu-title">
-                            <span>营养补充品</span>
-                            <i className="i-right"></i>
-                        </div>
-
-                        {
-                            isLogin ?
-                                <ul className="m-menu-sub menu-sub-two">
-                                <li className="m-menu-submenu menu-sub-three">
-                                    <div className="menu-submenu-title">
-                                        <span>套组</span>
-                                        <i className="i-right"></i>
-                                    </div>
-                                    <ul className="m-menu-sub">
-                                        {
-                                            groupProduct.map((item) => {
-                                                const  url = '/product/g' + item.id;
-                                                return(
-                                                    <li className="m-menu-item" onClick={this.goUrl.bind(this, url)} data-id={item.id}>{item.name}</li>
-                                                );
-                                            })
-                                        }
-                                    </ul>
-                                </li>
-                                <li className="m-menu-submenu menu-sub-three">
-                                    <div className="menu-submenu-title">
-                                        <span>单品</span>
-                                        <i className="i-right"></i>
-                                    </div>
-                                    <ul className="m-menu-sub">
-                                        {
-                                            singleProduct.map((item) => {
-                                                const  url = '/product/' + item.id;
-                                                return(
-                                                    <li className="m-menu-item" onClick={this.goUrl.bind(this, url)} data-id={item.id}>{item.name}</li>
-                                                );
-                                            })
-                                        }
-                                    </ul>
-                                </li>
-                                </ul>
-                            :
-                                singleProduct.map((item) => {
-                                    const  url = '/product/' + item.id;
-                                    return(
+                    {
+                        _list.map((item, index) => {
+                            const _itemTwo = item.sub || [];
+                            const _twoLen = item.sub.length;
+                            return(
+                                _twoLen > 0
+                                ?
+                                    <li className="m-menu-submenu m-menu-submenu-open">
+                                        <div className="menu-submenu-title">
+                                            <span>{item.name}</span>
+                                            <i className="i-right"></i>
+                                        </div>
                                         <ul className="m-menu-sub menu-sub-two">
-                                            <li className="m-menu-item" onClick={this.goUrl.bind(this, url)} data-id={item.id}>{item.name}</li>
+                                            {
+                                                _itemTwo.map((itemTwo) => {
+                                                    const _itemThree = itemTwo.sub || [];
+                                                    const _threeLen = itemTwo.sub.length;
+                                                    return(
+                                                        _threeLen > 0
+                                                        ?
+                                                            <li className="m-menu-submenu menu-sub-three">
+                                                               <div className="menu-submenu-title">
+                                                                   <span>{itemTwo.name}</span>
+                                                                   <i className="i-right"></i>
+                                                               </div>
+                                                               <ul className="m-menu-sub">
+                                                                   {
+                                                                       _itemThree.map((itemThree) => {
+                                                                           return(
+                                                                               <li className="m-menu-item" onClick={this.goUrl.bind(this, itemThree.url)} data-id={itemThree.id}>{itemThree.name}</li>
+                                                                           );
+                                                                       })
+                                                                   }
+                                                               </ul>
+                                                           </li>
+                                                         :
+                                                             <li className="m-menu-submenu menu-sub-three">
+                                                                <div className="menu-submenu-title" onClick={this.goUrl.bind(this, itemTwo.url)} data-id={itemTwo.id}>
+                                                                    <span>{itemTwo.name}</span>
+                                                                </div>
+                                                            </li>
+                                                    );
+                                                })
+                                            }
                                         </ul>
-                                    );
-                                })
-                        }
-                    </li>
-                    <li className="m-menu-submenu m-menu-submenu-open">
+                                    </li>
+                                :
+                                    <li className="m-menu-submenu">
+                                        <div className="menu-submenu-title" onClick={this.goUrl.bind(this, item.url)} data-id={item.id}>
+                                            <span>{item.name}</span>
+                                        </div>
+                                    </li>
+                            );
+                        })
+                    }
+
+                    {/* <li className="m-menu-submenu m-menu-submenu-open">
                         <div className="menu-submenu-title">
                             <span>护肤产品</span>
                             <i className="i-right"></i>
@@ -144,96 +149,25 @@ class KYMenu extends React.Component{
                                 })
                             }
                         </ul>
-                    </li>
-                    <li className="m-menu-submenu">
-                        <div className="menu-submenu-title">
-                            <span>推广优惠及其它</span>
-                        </div>
-                    </li>
-                    <li className="m-menu-submenu">
-                        <div className="menu-submenu-title">
-                            <span>最新消息</span>
-                        </div>
-                    </li>
-                    <li className="m-menu-submenu">
-                        <div className="menu-submenu-title">
-                            <span>关于我们</span>
-                            <i className="i-right"></i>
-                        </div>
-                        <ul className="m-menu-sub menu-sub-two">
-                            {
-                                about.map((item) => {
-                                    if(item.sub && item.sub.length>0){
-                                        return(
-                                            <li className="m-menu-submenu menu-sub-three">
-                                                <div className="menu-submenu-title">
-                                                    <span>{item.name}</span>
-                                                    <i className="i-right"></i>
-                                                </div>
-                                                <ul className="m-menu-sub">
-                                                    {
-                                                        item.sub.map((subItem) => {
-                                                            return(
-                                                                <li className="m-menu-item" data-id={subItem.id}>{subItem.name}</li>
-                                                            );
-                                                        })
-                                                    }
-                                                </ul>
-                                            </li>
-                                        );
-                                    }else{
-                                        return(
-                                            <li className="m-menu-item" data-id={item.id}>{item.name}</li>
-                                        );
-                                    }
-                                })
-                            }
-                        </ul>
-                    </li>
-                    <li className="m-menu-submenu">
-                        <div className="menu-submenu-title">
-                            <span>帮助中心</span>
-                            <i className="i-right"></i>
-                        </div>
-                        <ul className="m-menu-sub menu-sub-two">
-                            {help.map((item) => {
-                                return(
-                                    <li className="m-menu-submenu menu-sub-three">
-                                        <div className="menu-submenu-title">
-                                            <span>{item.name}</span>
-                                            <i className="i-right"></i>
-                                        </div>
-                                        <ul className="m-menu-sub">
-                                            {
-                                                item.sub.map((subItem) => {
-                                                    return(
-                                                        <li className="m-menu-item" data-id={subItem.id}>{subItem.name}</li>
-                                                    );
-                                                })
-                                            }
-                                        </ul>
-                                    </li>
-                                );
-                            })}
+                    </li> */}
 
-                             {/* <li className="m-menu-submenu menu-sub-three">
-                                <div className="menu-submenu-title">
-                                    <span>购物指南</span>
-                                    <i className="i-right"></i>
-                                </div>
-                                <ul className="m-menu-sub">
-                                    <li className="m-menu-item">购物流程</li>
-                                    <li className="m-menu-item">常见问题</li>
-                                    <li className="m-menu-item">微信支付教学</li>
-                                </ul>
-                            </li> */}
-                        </ul>
+
+                    {/* <li className="m-menu-submenu menu-sub-three">
+                       <div className="menu-submenu-title">
+                           <span>购物指南</span>
+                           <i className="i-right"></i>
+                       </div>
+                       <ul className="m-menu-sub">
+                           <li className="m-menu-item">购物流程</li>
+                           <li className="m-menu-item">常见问题</li>
+                           <li className="m-menu-item">微信支付教学</li>
+                       </ul>
                     </li>
                     <li className="m-menu-submenu">
                         <div className="menu-submenu-title">
                             <span>防伪溯源码</span>
                         </div>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
         );

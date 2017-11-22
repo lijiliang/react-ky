@@ -42,7 +42,7 @@ class SlideSwipe extends React.Component{
                                 {
                                     list.map((item, index) => {
                                         return(
-                                            <div className="slide-item" key={index}><img src={item.imgPath} alt={item.name}/></div>
+                                            <div className="slide-item" key={index}><img src={item.img} alt={item.title}/></div>
                                         );
                                     })
                                 }
