@@ -21,8 +21,8 @@ class PayFailedView extends React.Component {
         };
     }
     // 重新支付
-    payAgainHandle(tradeNo, payAmount){
-        this.props.dispatch(payAgainBtn(tradeNo, payAmount, (res) => {
+    payAgainHandle(tradeNo, payAmount, regOrder){
+        this.props.dispatch(payAgainBtn(tradeNo, payAmount, regOrder, (res) => {
             hashHistory.push('/pay/types');  // 跳到选择支付方式页面
         }));
     }
@@ -40,7 +40,7 @@ class PayFailedView extends React.Component {
                         </div>
                     }
                     <div className="m-btn">
-                        <Button className="ky-btn btn-pay" title="重新支付" onClick={this.payAgainHandle.bind(this, payInfo.tradeNo, payInfo.payAmount)}></Button>
+                        <Button className="ky-btn btn-pay" title="重新支付" onClick={this.payAgainHandle.bind(this, payInfo.tradeNo, payInfo.payAmount, payInfo.regOrder)}></Button>
                     </div>
                     <p className="info-item">若重复出现此信息，请联系线上客服。</p>
                     <div className="m-btn">

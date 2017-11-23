@@ -38,11 +38,12 @@ export function getPayComplete(payid, callback){
 /*
  * [payAgainBtn 重新发起支付按钮，存数据到redux]
  * @param  {[String]}   tradeNo  [订单编号]
- * @param  {[String]}   payType  [支付方式]
+ * @param  {[String]}   payAmount  [订单金额]
+ * @param  {[String]}   regOrder  [是否注册订单]
  * @param  {Function} callback [回调函数]
  * @return {[type]}            [description]
  */
-export function payAgainBtn(tradeNo, payAmount, callback) {
+export function payAgainBtn(tradeNo, payAmount, regOrder, callback) {
     const _data = {
         tradeNo,
         payAmount
@@ -58,6 +59,7 @@ export function payAgainBtn(tradeNo, payAmount, callback) {
             payment: {
                 tradeNo: tradeNo,  //订单编号
                 price: payAmount,//支付金额
+                regOrder: regOrder, // 是否是注册订单
                 payType: '',  //支付类型
                 payUrl: '',   //支付链接
             }

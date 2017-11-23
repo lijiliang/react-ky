@@ -136,7 +136,7 @@ const countryData = Cache.getObj(Cache.keys.ky_cache_Country) || [];
          const _state = this.state;
          const { getFieldDecorator} = this.props.form;
          const payment = this.props.payment;
-
+         const regOrder = payment.get('regOrder');
          const cityExtraCls = classNames({
              ['picker-city']: true,
              ['picker-city-active']: this.state.expDate.length
@@ -151,14 +151,17 @@ const countryData = Cache.getObj(Cache.keys.ky_cache_Country) || [];
                  <div className="ky-scrollable">
                      <div className="m-payment">
                          <NavBar onLeftClick={this.gohistoryHandle.bind(this)}>填写支付信息</NavBar>
-
-                         <div className="m-regstep">
-                             <KYSteps current={4}/>
-                             <div className="regcon-info">
-                                 <h2>填写支付信息</h2>
-                             </div>
-                         </div>
-
+                         {
+                             regOrder
+                             ?
+                                 <div className="m-regstep">
+                                     <KYSteps current={4}/>
+                                     <div className="regcon-info">
+                                         <h2>填写支付信息</h2>
+                                     </div>
+                                 </div>
+                            : null
+                         }
                          {/* 信用卡支付 */}
                          <div className="m-payment-info">
                               <div className="info-tit">信用卡支付</div>

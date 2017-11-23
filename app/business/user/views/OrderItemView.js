@@ -7,8 +7,8 @@
  import { bindActionCreators } from 'redux';
  import { connect } from 'react-redux';
  import classNames from 'classnames';
-import { payAgainBtn, getOrderCancelType, putOrderCancel } from '../action/DataAction';
-// import { getPayAgain } from 'kyBus/pay/action/DataAction';
+import { getOrderCancelType, putOrderCancel } from '../action/DataAction';
+import { payAgainBtn } from 'kyBus/pay/action/DataAction';
 
  //组件
  import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
@@ -38,7 +38,7 @@ import { payAgainBtn, getOrderCancelType, putOrderCancel } from '../action/DataA
      }
      // 去付款
      goPayHandle(tradeNo, tradePrice){
-         this.props.dispatch(payAgainBtn(tradeNo, tradePrice, (res) => {
+         this.props.dispatch(payAgainBtn(tradeNo, tradePrice, false, (res) => {
              hashHistory.push('/pay/types');  // 跳到选择支付方式页面
          }));
      }

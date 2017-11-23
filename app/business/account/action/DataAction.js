@@ -166,7 +166,13 @@ export function UserDealer(data, callback) {
                 Toast.hide();
                 dispatch({
                     type: payTypes.PAYMENT,
-                    payment: res.data
+                    payment: {
+                        tradeNo: res.data.tradeNo,  //订单编号
+                        price: res.data.price,//支付金额
+                        regOrder: res.data.memberFlag, // 是否是注册订单
+                        payType: res.data.payType,  //支付类型
+                        payUrl: res.data.payUrl,   //支付链接
+                    }
                 });
                 if(callback && typeof callback === 'function'){
                     callback(res.data);
