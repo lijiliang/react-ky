@@ -27,6 +27,7 @@ class KYHeaderBar extends React.Component{
         this.setState({
             isLogin: isLogin
         });
+        this.props.dispatch(getNav());
     }
     componentWillReceiveProps(nextProps) {
         const isLogin = Cache.sessionGet('ky_cache_isLogined') || false;
@@ -55,7 +56,22 @@ class KYHeaderBar extends React.Component{
         }
 
         // 获取导航菜单数据
-        this.props.dispatch(getNav());
+        // this.props.dispatch(getNav((res) => {
+        //     $('.ky-popup-mask').show();  //打开遮罩层
+        //     $('.ky-scrollable, .ky-scrollable-white').css('overflow','hidden');
+        //     if(kyFooter){
+        //         const footerHeight = kyFooter.height();
+        //         sideBarWrap.css({
+        //             transform: 'translate3d(0, 0, 0)',
+        //             height: bodyHeight-footerHeight
+        //         });
+        //     }else{
+        //         sideBarWrap.css({
+        //             transform: 'translate3d(0, 0, 0)',
+        //             height: '100%'
+        //         });
+        //     }
+        // }));
     }
     render(){
         const user = this.props.user;

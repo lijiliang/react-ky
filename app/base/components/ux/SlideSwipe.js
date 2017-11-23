@@ -3,7 +3,7 @@
  * 需要传入的参数是：List
  * [
  *  {
-         imgPath: '',
+         img: '',
          href: '',
          name: '',
          id: '',

@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
 import {login} from '../action/DataAction';
+import {getNav} from 'kyBus/common/action/DataAction';
 
 import { createForm } from 'rc-form';
 import { Button, Toast, NavBar, InputItem } from 'uxComponent';
@@ -68,6 +69,9 @@ class LoginView extends React.Component{
                 const _backUrl = getQueryString('backUrl');
                 this.props.dispatch(login(this.state.username, this.state.password, this.state.isAccount, () => {
                     Toast.success('登录成功', 1);
+                    // 登录成功后重新获取下导航栏数据
+                    this.props.dispatch(getNav());
+
                     setTimeout(() => {
                         // 如果有需要跳转的链接，则跳转过去，否则直接返回首页
                         if(_backUrl){

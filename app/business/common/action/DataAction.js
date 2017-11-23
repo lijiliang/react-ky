@@ -14,7 +14,7 @@ import { failLoading, hasMember} from 'Utils';
  */
 export function getNav(callback) {
     return (dispatch, getState) => {
-        Toast.loading('加载中...', 200);
+        // Toast.loading('加载中...', 200);
         const response = getHasFetch(Urls.Nav);
         response.then((result) => {
             const res = result.data;

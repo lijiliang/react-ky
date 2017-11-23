@@ -7,7 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { signout, getCurrentUserInfo } from '../action/DataAction';
-import { getShoppingCarCount } from 'kyBus/common/action/DataAction'
+import { getShoppingCarCount, getNav } from 'kyBus/common/action/DataAction'
 import { checkMember } from 'Utils';
 import { Cache } from 'kyCommon';
 
@@ -53,6 +53,9 @@ class UserIndexView extends React.Component {
             }
             // 退出成功后，更新购物车数量
             this.props.dispatch(getShoppingCarCount());
+
+            // 退出成功后，重新获取下导航栏数据
+            this.props.dispatch(getNav());
             setTimeout(() => {
                 hashHistory.push('/');
             }, 1000);
