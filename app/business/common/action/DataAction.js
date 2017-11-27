@@ -2,7 +2,7 @@
  * @fileOverview common 处理数据action
  */
 import * as types from './actionTypes';
-import { getHasFetch, get} from 'FetchData';
+import { getHasFetch, get, getPublic} from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
 import { failLoading, hasMember} from 'Utils';
@@ -15,7 +15,7 @@ import { failLoading, hasMember} from 'Utils';
 export function getNav(callback) {
     return (dispatch, getState) => {
         // Toast.loading('加载中...', 200);
-        const response = getHasFetch(Urls.Nav);
+        const response = getPublic(Urls.Nav);
         response.then((result) => {
             const res = result.data;
             if(res.success){

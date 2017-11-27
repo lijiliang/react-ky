@@ -112,7 +112,7 @@ class UserIndexView extends React.Component {
                             <List className="m-other-view">
                                 <Item arrow="horizontal" onClick={() => { hashHistory.push('user/basicinfo')}}>基本信息</Item>
                                 <Item arrow="horizontal" onClick={() => { hashHistory.push('user/safety')}}>帐户安全</Item>
-                                <Item extra={<div className="coupon-r">2</div>} arrow="horizontal" onClick={() => { hashHistory.push('user/coupon')}}>我的优惠券</Item>
+                                {/* <Item extra={<div className="coupon-r">2</div>} arrow="horizontal" onClick={() => { hashHistory.push('user/coupon')}}>我的优惠券</Item> */}
                                 <Item arrow="horizontal" onClick={() => { hashHistory.push('user/address')}}>收货地址</Item>
                             </List>
                         </div>

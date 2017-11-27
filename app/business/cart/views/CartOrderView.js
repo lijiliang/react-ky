@@ -147,7 +147,7 @@ class CartIndexView extends React.Component{
                                     }
 
                                 </div>
-                                <div className="m-conpon">
+                                {/* <div className="m-conpon">
                                     <div className="m-item-tit m-item-coupon">
                                         <div className="tit-content">
                                             <h2>可用优惠券</h2>
@@ -199,7 +199,7 @@ class CartIndexView extends React.Component{
                                             <Item extra={'-￥0.00'} className="coupon-bottom text-primary">优惠</Item>
                                         </List>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="m-delivery">
                                     <div className="m-item-tit">
                                         <div className="tit-content"><h2>送货清单</h2></div>
