@@ -16,7 +16,8 @@
  import '../resources/AddressEditView.less';
 
  // 省市区数据
- const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
+ let cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
+
  class AddressEditView extends React.Component {
      constructor(props, context){
          super(props, context);
@@ -29,6 +30,15 @@
      }
      componentDidMount(){
          const edit = this.props.params.edit;
+         let _this = this;
+         // 本地缓存没有地址，先获取一次
+         if(!cityAreaData.length){
+             AddressData(function(e){
+                 _this.setState({
+                     cityAreaData: e
+                 })
+             });
+         }
          if(edit == null) {
              // 新增
              this.setState({

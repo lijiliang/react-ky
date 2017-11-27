@@ -39,6 +39,15 @@
          };
      }
      componentDidMount(){
+         let _this = this;
+         // 本地缓存没有地址，先获取一次
+         if(!cityAreaData.length){
+             AddressData(function(e){
+                 _this.setState({
+                     cityAreaData: e
+                 })
+             });
+         }
          this.props.dispatch(GetUserInfo((res) => {
              this.setState({
                  cityValue: [res.addrPrivonce, res.addrCity, res.addrCounty],
