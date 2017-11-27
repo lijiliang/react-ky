@@ -42,7 +42,12 @@ class KYMenu extends React.Component{
         });
         $('.ky-popup-mask').hide();  //关闭遮罩层
 
-        hashHistory.push(url);
+        // 区别外链与本地链接的跳转
+        if(url.indexOf('http') > -1) {
+            window.location.href= url;
+        }else{
+            hashHistory.push(url);
+        }
     }
     render(){
         const isLogin = this.props.isLogin;  // 是否登录
