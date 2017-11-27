@@ -17,7 +17,7 @@ class PaySuccessView extends React.Component {
         };
     }
     goOrderDetails() {
-        console.log('goOrderDetails');
+        hashHistory.push(`/user/order`);
     }
     goHome(){
         hashHistory.push('/');
