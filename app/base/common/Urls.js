@@ -9,6 +9,8 @@ const Urls = {
     UserDealer: profile.server + '/starspower/shop/service/v1/user/dealer',     //POST 注册会员/经销商
     UserCurrent: profile.server + '/starspower/shop/service/v1/user/current',   // GET 获取当前登录会员的消息
     UserLogout: profile.server + '/starspower/shop/service/v1/user/logout',     // PUT 退出登录
+    UserCaptcha: profile.server + '/starspower/shop/service/v1/user/captcha',     // post 取短信验证码
+    UserRestPwd: profile.server + '/starspower/shop/service/v1/user/resetPwd',     // PUT 重置密码
     GroupReg: profile.server + '/starspower/shop/service/v1/product/group/reg', // 获取会员注册的套组信息
     CheckDealerReg: profile.server + '/starspower/shop/service/v1/user/check/dealerReg', // 验证：会员注册帐户信息表单
     CheckAddress: profile.server + '/starspower/shop/service/v1/shipAddress/check',      // 验证：收货信息表单

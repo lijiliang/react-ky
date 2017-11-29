@@ -5,7 +5,7 @@ import * as types from './actionTypes';
 import * as payTypes from 'kyBus/pay/action/actionTypes';
 import Base64 from 'js-base64';
 import {hashHistory} from 'react-router'
-import { post, get, getPublic, postPublic } from 'FetchData';
+import { post, get, getPublic, postPublic, putPublic } from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
 import { failLoading } from 'Utils';
@@ -202,6 +202,54 @@ export function getCurrentUserInfo(callback) {
                 if(callback && typeof callback === 'function'){
                     callback(res.data);
                 }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+/*
+ * [postUserCaptcha 获取短信验证码]
+ * @param [Object] data [需要的数据]
+ * @param  {Function} callback [回调函数]
+ */
+export function postUserCaptcha(data, callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = postPublic(Urls.UserCaptcha, data);
+        response.then((result) => {
+            const res = result.data;
+            Toast.hide();
+            if(callback && typeof callback === 'function'){
+                callback({
+                    success: res.success,
+                    message: res.message
+                });
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+/*
+ * [putUserRestPwd 重置密码]
+ * @param [Object] data [需要的数据]
+ * @param  {Function} callback [回调函数]
+ */
+export function putUserRestPwd(data, callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = putPublic(Urls.UserRestPwd, data);
+        response.then((result) => {
+            const res = result.data;
+            Toast.hide();
+            if(callback && typeof callback === 'function'){
+                callback({
+                    success: res.success,
+                    message: res.message
+                });
             }
         }).catch((err) => {
             failLoading(err);

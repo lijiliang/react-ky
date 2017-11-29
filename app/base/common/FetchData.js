@@ -80,6 +80,18 @@ export const postPublic = (url, param) => {
 };
 
 /*
+ * [公开put put请求，不需要带token]
+ * @param  {[string]} url   [请求地址]
+ * @param  {[object]} param [传入的参数]
+ * @return {[object]}       [返回Promise]
+ */
+export const putPublic = (url, param) => {
+    return (
+        axios.put(`${url}`, param)
+    );
+};
+
+/*
  * [getHasFetch get请求,有无token都可以]
  * @param  {[string]} url   [请求地址]
  * @param  {[object]} param [传入的参数]

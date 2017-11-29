@@ -2,12 +2,12 @@
  * @fileOverview 忘记密码 View
  */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
-import {regConsumer} from '../action/DataAction';
+import { postUserCaptcha, putUserRestPwd } from '../action/DataAction';
 
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
@@ -61,24 +61,58 @@ class ForgetpwdView extends React.Component{
                 return;
             }
 
+            if(!error){
+                const _state = this.state
+                const _data = {
+                    userName: _state.username,
+                    captcha: _state.phoneCode,
+                    newPassword: _state.password
+                }
+                this.props.dispatch(putUserRestPwd(_data, (res) => {
+                    if(res.success){
+                        Toast.info('重置密码成功！', 1)
+                        setTimeout(() => {
+                            hashHistory.push('/login')
+                        }, 1000)
+                    }else{
+                        Toast.info(res.message)
+                    }
+                }))
+            }
         })
     }
     // 获取短信验证码
     getPhoneCodeHandle = () => {
         const _this = this;
+        const _username = this.state.username || '';
         const _phoneNumber = this.state.phoneNumber || '';
         if(this.state.codeFlag){
+            if(_username.length <= 0){
+                Toast.info('请输入中国会员帐号', 1)
+                return;
+            }
             if(!RegxRule.phone.test(_phoneNumber)){
                 Toast.info('请输入正确的手机号', 1)
                 return;
-            } else {
-                // 请求发送短信验证码
-                const tipInfo = '短信验证码已发送到' + _phoneNumber
-                Toast.info(tipInfo, 1)
-
-                // 倒计时
-                this.changeSendStatus('phoneCodeTip', 60)
             }
+
+            const _data = {
+                userName: this.state.username,
+                mobile: this.state.phoneNumber
+            }
+            this.props.dispatch(postUserCaptcha(_data, (res) => {
+                if(res.success){
+                    // 请求发送短信验证码
+                    const tipInfo = '短信验证码已发送到' + _phoneNumber
+                    Toast.info(tipInfo, 1)
+
+                    // 倒计时
+                    this.changeSendStatus('phoneCodeTip', 60)
+                }else{
+                    Toast.info(res.message)
+                }
+            }))
+
         }
     }
     /**
@@ -116,7 +150,7 @@ class ForgetpwdView extends React.Component{
         wait()
     }
     render() {
-        // console.log(this.state)
+        console.log(this.state)
         const { getFieldDecorator} = this.props.form;
         // 密码
         const isShowPwdCls = classNames({
@@ -241,7 +275,6 @@ const ForgetpwdViewWrapper = createForm()(ForgetpwdView);
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
-        RegModel: state.RegModel
     };
 }
 
