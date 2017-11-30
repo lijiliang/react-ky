@@ -54,7 +54,6 @@ export default class Scroll extends Component {
 	}
 
 	scrollEvt(evt) {
-        console.log(evt)
 		// ios一般绑定在具体元素上，android一般绑定在window上
 		var isWindow = (this.scrollContainer === global);
 

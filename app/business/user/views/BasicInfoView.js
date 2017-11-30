@@ -153,7 +153,6 @@
           reader.readAsDataURL(file); // 读取文件
 
           reader.onload = function(arg) {
-              console.log(arg)
               _this.setState({
                   avatar: arg.target.result
               })

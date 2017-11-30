@@ -99,14 +99,11 @@ const countryData = Cache.getObj(Cache.keys.ky_cache_Country) || [];
                 payPrice: payment.get('price'), //支付金额
                 tradeNo: payment.get('tradeNo')   //主订单号
             }
-            console.log(_data)
 
             this.props.dispatch(Payeezy(_data, (res) => {
-                console.log('res: ', res)
                 if(res.success){
                     console.log('success')
                 }else{
-                    console.log('error')
                     Toast.fail(res.errMsg, 2);
                 }
             }));
@@ -130,7 +127,6 @@ const countryData = Cache.getObj(Cache.keys.ky_cache_Country) || [];
      }
 
      render(){
-         console.log(this.state)
          const _state = this.state;
          const { getFieldDecorator} = this.props.form;
          const payment = this.props.payment;

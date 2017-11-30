@@ -132,7 +132,6 @@ const countryData = Cache.getObj(Cache.keys.ky_cache_Country) || [];
      }
 
      render(){
-        //  console.log(this.state)
          const _state = this.state;
          const { getFieldDecorator} = this.props.form;
          const payment = this.props.payment;

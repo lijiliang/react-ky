@@ -47,7 +47,6 @@ class CartIndexView extends React.Component{
             [`icon-radio`]: !ListItem.active,
             [`icon-selectFill`]: ListItem.active,
         });
-        // console.log(ListItem)
         if (ListItem.product.groupFlag){
             return(
                 <div className="cart-item cart-item-guoups">

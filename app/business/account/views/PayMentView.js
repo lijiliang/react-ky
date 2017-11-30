@@ -121,7 +121,6 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                     cardType: '1', //卡类型
                 }
             };
-            console.log(_data)
             // 更新session数据
             Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, _state);
 
@@ -129,7 +128,6 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
         });
      }
      render(){
-         console.log(this.state)
          const _state = this.state;
          const { getFieldDecorator} = this.props.form;
 

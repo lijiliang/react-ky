@@ -160,7 +160,6 @@ class CartIndexView extends React.Component{
         return caridArr;
     }
     render(){
-        // console.log(this.state)
         const _getShappingcar = this.props.shappingcar;
         const isAllCheckedCls = classNames({
             [`icon`]: true,

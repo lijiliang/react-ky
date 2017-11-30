@@ -29,14 +29,13 @@ import '../resources/OrderView.less';
          this.setState({value: event.target.value});
      }
      pressHandle(){
-         console.log('sdf')
+        //  console.log('sdf')
      }
      otherChangeHandle = () => {
-         console.log(event.target.value)
+        //  console.log(event.target.value)
      }
      render(){
          const data = this.props.cancelType;
-         console.log(this.props)
          return(
              <div>
                  {/* 弹出层 */}
@@ -59,7 +58,6 @@ import '../resources/OrderView.less';
                                   [`reason-radio`]: true,
                                   [`reason-radio-active`]: item.value === this.state.value,
                               })
-                              console.log(item.value, this.props.value)
                               return(
                                   <div className="reason-item">
                                       <label>

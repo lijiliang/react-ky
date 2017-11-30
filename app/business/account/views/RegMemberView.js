@@ -190,7 +190,6 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
          hashHistory.push('/account/regselectpack')
      }
      render(){
-         console.log(this.state)
          const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
 
          // 密码

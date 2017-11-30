@@ -55,7 +55,6 @@ class CartIndexView extends React.Component{
     }
     // 按此使用
     useConponHandl = () => {
-        console.log('a')
     }
 
     // 地址管理
@@ -104,7 +103,6 @@ class CartIndexView extends React.Component{
         const _state = this.state || {};
         const shippingInfo =  _state.shippingInfo || {}
         const orderList = _state.orderList || []
-        console.log(_state)
         function markMoney(str){
             return '￥' + str;
         }

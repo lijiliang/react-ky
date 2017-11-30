@@ -150,7 +150,6 @@ class ForgetpwdView extends React.Component{
         wait()
     }
     render() {
-        console.log(this.state)
         const { getFieldDecorator} = this.props.form;
         // 密码
         const isShowPwdCls = classNames({
