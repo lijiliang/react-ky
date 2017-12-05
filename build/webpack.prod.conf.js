@@ -12,7 +12,7 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const tinyPngWebpackPlugin = require('tinypng-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');  // 用于清理目录文件
 const CopyWebpackPlugin = require('copy-webpack-plugin');  //复制无需处理的静态资源
-const SOURCE_MAP = false;
+const SOURCE_MAP = true;
 
 // 环境变量获取方法  process.env.NODE_ENV
 

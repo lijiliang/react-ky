@@ -28,6 +28,7 @@ module.exports = {
         // chunkFilename: '[name].[id].[chunkhash:5].min.js',
         publicPath: '/static/'
     },
+    devtool: 'source-map',
     resolve: {
         modules: ['node_modules'],
         extensions: ['.js', '.jsx'],
