@@ -51,17 +51,19 @@ class PackItemView extends React.Component {
             <div  {...restProps} className={wrapCls}>
 
                 <div className="m-pack-header">
-                    <div className="head-view">
-                        {icon ?
-                            <label>
-                                <div className="pack-radio">
-                                    <input type="radio" value={this.props.value} checked={this.props.value === this.props.checked}/>
-                                    <span className="icon-bg"></span>
-                                    {/* <i className={radioItemCls}></i> */}
-                                </div>
-                            </label>
-                        : null}
-                        <strong className="pack-name">{listData.name}</strong>
+                    <div className="head-view clearfix">
+                        <div className="head-view-tit">
+                            {icon ?
+                                <label>
+                                    <div className="pack-radio">
+                                        <input type="radio" value={this.props.value} checked={this.props.value === this.props.checked}/>
+                                        <span className="icon-bg"></span>
+                                        {/* <i className={radioItemCls}></i> */}
+                                    </div>
+                                </label>
+                            : null}
+                            <strong className="pack-name">{listData.name}</strong>
+                        </div>
                         <div className="member-price">
                             {
                                 productListLen > 1
@@ -93,11 +95,13 @@ class PackItemView extends React.Component {
                         }
                         <div className="pack-content">
                             <div className="con-tit">内容</div>
-                            <KYGroupProductList productList={listData.groupItems}/>
-                            <ul className="other-list">
-                                <li><span>原价</span><span className="price">¥{listData.originalPrice}</span></li>
-                                <li><span>积分</span><span>{listData.qv ? listData.qv : '0'}</span></li>
-                            </ul>
+                            <div className="pack-content-list">
+                                <KYGroupProductList productList={listData.groupItems}/>
+                                <ul className="other-list">
+                                    <li><span>原价</span><span className="price">¥{listData.originalPrice}</span></li>
+                                    <li><span>积分</span><span>{listData.qv ? listData.qv : '0'}</span></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     : null

@@ -2,7 +2,7 @@
  * @fileOverview 左侧边栏 menu
  */
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -26,6 +26,18 @@ class KYSideBar extends React.Component{
         });
         $('.ky-popup-mask').hide();  //关闭遮罩层
     }
+    goUrl(url, event){
+        event.preventDefault();
+        // 关闭侧边栏
+        this.closeSideHandle();
+
+        // 区别外链与本地链接的跳转
+        if(url.indexOf('http') > -1) {
+            window.location.href= url;
+        }else{
+            hashHistory.push(url);
+        }
+    }
     render(){
         return(
             <div className="ky-sideBar">
@@ -33,7 +45,7 @@ class KYSideBar extends React.Component{
                 <div className="ky-sideBar-wrap">
                     <div className="sideBar-content">
                         <div className="side-header">
-                            <i className="icon icon-Kyani"></i>
+                            <i className="icon icon-Kyani" onClick={this.goUrl.bind(this, '/')}></i>
                             <i className="icon icon-close" onClick={this.closeSideHandle.bind(this)}></i>
                         </div>
                         <div className="side-main" ref="sideMain">

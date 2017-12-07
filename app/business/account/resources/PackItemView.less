@@ -22,9 +22,9 @@
                 display: flex;
                 justify-content: center;
                 align-items:center;
-                height: 102px;
-                line-height: 102px;
-                padding: 0 @h-spacing-lg;
+                // height: 102px;
+                // line-height: 102px;
+                padding: 15px 20px;
             }
             // 单选
             .pack-radio{
@@ -46,7 +46,7 @@
                 }
                 span{
                     position: relative;
-                    top: 15px;
+                    top: 10px;
                 }
             }
             .icon-bg{
@@ -64,17 +64,29 @@
             i.icon-selectFill{
                 color: #5ebcb5;
             }
-
+            .head-view-tit{
+                // width: 55%;
+                // float: left;
+                flex: 60%;
+                label{
+                    display: block;
+                    float: left;
+                }
+            }
             .pack-name{
-                flex: 1;
-                font-size: 54px;
+                display: block;
+                font-size: 52px;
                 font-weight: normal;
-                white-space: nowrap;
+                padding-left: 58px;
+                line-height: 1.5;
             }
             .member-price{
+                // width: 45%;
+                // float: right;
                 flex: 1;
                 justify-content: flex-end;
                 text-align: right;
+                // align-self: flex-end;
                 white-space: nowrap;
                 span{
                     font-size: 30px;
@@ -88,7 +100,7 @@
         // item body
         .@{packCls}-body{
             background: @fill-base;
-            padding: 0 @h-spacing-sm;
+            // padding: 0 @h-spacing-sm;
             border: 15px solid @brand-blue-bady-deep;
             border-top: none;
             box-sizing: padding-box;
@@ -98,6 +110,10 @@
                     width: 100%;
                     height: auto;
                 }
+            }
+            .pack-content-list{
+                box-sizing: padding-box;
+                padding: 0 @h-spacing-sm;
             }
         }
         // 内容区域

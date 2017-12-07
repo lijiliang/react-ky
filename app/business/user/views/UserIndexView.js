@@ -77,7 +77,7 @@ class UserIndexView extends React.Component {
                             >帐户中心</NavBar>
                         <div className="m-account-view">
                             <div className="account-info">
-                                <div className="account-thumb">
+                                <div className="account-thumb" onClick={() => { hashHistory.push('user/basicinfo')}}>
                                     <img src={Avatar}/>
                                 </div>
                                 <div className="account-name">

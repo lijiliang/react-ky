@@ -23,7 +23,7 @@ export function failLoading(err) {
         return;
     }
     if(response.status === 401 && response.data.error === 'invalid_token'){
-        Toast.fail('登录超时，请重新登录!', 1);
+        Toast.info('请先登录!', 1);
         clearUserSession();
         setTimeout(() => {
             checkMember();
