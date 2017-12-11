@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import { KYGroupProductList } from 'kyComponent';
 import { Button, Stepper} from 'uxComponent';
 import IndexAddCart from './IndexAddCart';
+import ItemInfoList from './ItemInfoListView';
 
 import '../resources/SubSingleItem.less';
 
@@ -37,20 +38,7 @@ export default class SubGroupItem extends React.Component {
                 </div>
                 <div className="single-product-item">{_item.specName}</div>
                 <div className="item-other">
-                    <ul className="info-list">
-                        <li className="price">
-                            <span>会员价</span>
-                            <span>￥{_item.salePrice}</span>
-                        </li>
-                        <li>
-                            <span>原价</span>
-                            <span className="center-line">￥{_item.originalPrice}</span>
-                        </li>
-                        <li>
-                            <span>积分</span>
-                            <span>{_item.qv}</span>
-                        </li>
-                    </ul>
+                    <ItemInfoList salePrice={_item.salePrice} originalPrice={_item.originalPrice} qv={_item.qv}/>
                     <IndexAddCart productId={_item.id} groupFlag={false}/>
                 </div>
             </div>

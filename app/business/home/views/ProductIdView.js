@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {getProductInfoId} from '../action/DataAction'
 
-import { Urls } from 'kyCommon';
+import { Urls, Cache } from 'kyCommon';
 import { NavBar} from 'uxComponent';
 import IndexAddCart from './IndexAddCart';
 
@@ -19,15 +19,19 @@ class ProductIdView extends React.Component{
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
-            groupFlag: false
+            groupFlag: false,
+            isLogined: false, // 是否登录
+            isAccount: false  // 是否会员
         };
     }
-    componentDidMount(){
+    componentDidMount (){
         const productId = this.props.params.id;
         this._getProductInfo(productId);
+        this._getIsLogin();
     }
     componentWillReceiveProps(nextProps) {
         const productId = this.props.params.id;
+        this._getIsLogin();
         if(productId !== nextProps.params.id){
             this._getProductInfo(nextProps.params.id);
         }
@@ -35,6 +39,16 @@ class ProductIdView extends React.Component{
     // 返回上一页
     gohistoryHandle(){
         window.history.go(-1);
+    }
+
+    // 获取用户是否登录
+    _getIsLogin(){
+        const isLogin = Cache.sessionGet('ky_cache_isLogined') || false;
+        const memberFlag = Cache.sessionGet('ky_cache_memberFlag') || false;
+        this.setState({
+            isLogined: isLogin,
+            isAccount: memberFlag
+        });
     }
 
     // 获取产品详情数据
@@ -56,6 +70,7 @@ class ProductIdView extends React.Component{
         const imgList = product.get('imgList')[0] || [];
         const specList = product.get('specList')[0] || [];
         const description = product.get('description');
+        console.log(this.state)
         return(
             <div className="ky-container-body">
                 <div className="ky-scrollable-white">
@@ -72,9 +87,15 @@ class ProductIdView extends React.Component{
                             <img src={imgList.imagePath}/>
                         </div>
                         <div className="info">
-                            <div className="info-item member-price">
-                                会员价：￥<span className="price">{product.get('salePrice')}</span>
-                            </div>
+                            {
+                                this.state.isLogined
+                                ? <div className="info-item member-price">
+                                    {this.state.isAccount ? '会员价' : '销售价'}：￥<span className="price">{product.get('salePrice')}</span>
+                                </div>
+                                : <div className="info-item member-price">
+                                    销售价：￥<span className="price">{product.get('originalPrice')}</span>
+                                </div>
+                            }
                             <div className="info-item add-cart">
                                 <IndexAddCart productId={product.get('id')} groupFlag={this.state.groupFlag}/>
                             </div>

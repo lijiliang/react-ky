@@ -45,7 +45,7 @@ export function login(username, password, isAccount, callback){
                         // 保存数据到sessionStorage
                         Cache.sessionSet(Cache.sessionKeys.ky_cache_realName, _userInfo.realName);
                         Cache.sessionSet(Cache.sessionKeys.ky_cache_userName, _userInfo.userName);
-                        Cache.sessionSet(Cache.sessionKeys.ky_cache_memberFlag, String(_userInfo.memberFlag));
+                        Cache.sessionSet(Cache.sessionKeys.ky_cache_memberFlag, _userInfo.memberFlag);
                         Cache.sessionSet(Cache.sessionKeys.ky_cache_isLogined, true);
                         Cache.sessionSet(Cache.sessionKeys.ky_cache_last_login_time,new Date().getTime());
                         dispatch({
