@@ -13,7 +13,8 @@ const profiles = {
         preffix: '',
         // host: '10.206.41.102:8012',
         // host: 'cjmgxp.natappfree.cc',
-        host: 'dev.kyani.cn:8100',
+        // host: 'dev.kyani.cn:8100',
+        host: '127.0.0.1:8012',
         //sercureEnable: true
         sercureEnable: false
     }

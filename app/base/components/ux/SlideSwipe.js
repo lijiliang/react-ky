@@ -11,6 +11,7 @@
  * ]
  */
 import React from 'react';
+import { Link, hashHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ReactSwipe from 'react-swipe';
@@ -24,6 +25,15 @@ class SlideSwipe extends React.Component{
         this.state = {
             index: 0,
         };
+    }
+    goUrl(url, event){
+        event.preventDefault();
+        // 区别外链与本地链接的跳转
+        if(url.indexOf('http') > -1) {
+            window.location.href= url;
+        }else{
+            hashHistory.push(url);
+        }
     }
     render(){
         const opt = {
@@ -42,7 +52,7 @@ class SlideSwipe extends React.Component{
                                 {
                                     list.map((item, index) => {
                                         return(
-                                            <div className="slide-item" key={index}><img src={item.img} alt={item.title}/></div>
+                                            <div className="slide-item" key={index} onClick={this.goUrl.bind(this, item.url)}><img src={item.img} alt={item.title}/></div>
                                         );
                                     })
                                 }
