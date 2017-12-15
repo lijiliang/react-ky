@@ -34,6 +34,8 @@ const Urls = {
     UserChangePwd: profile.server + '/starspower/shop/service/v1/user/changePwd', //会员中心->修改密码
     UserOrderCancelType: profile.server + '/starspower/shop/service/v1/order/cancelType', //会员中心->获取订单取消原因类型
     UserOrderCancel: profile.server + '/starspower/shop/service/v1/order/cancelOrder', //会员中心->取消订单
+    ActicleNews: profile.server + '/starspower/shop/service/v1/article/news', //获取最新消息栏目
+    ActicleInfo: profile.server + '/starspower/shop/service/v1/article/info', //获取文章/帮助明细,以h开头的为帮助
 };
 
 export default Urls;

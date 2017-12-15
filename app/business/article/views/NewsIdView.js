@@ -7,6 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { NavBar } from 'uxComponent';
+import { getActicleInfo } from '../action/DataAction'
 
 import '../resources/NewsIdView.less';
 
@@ -15,9 +16,27 @@ class NewsIdView extends React.Component{
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
+            title: '',
+            content: ''
         };
     }
     componentDidMount(){
+        this._getActicleInfo();
+    }
+    componentWillReceiveProps(nextProps) {
+        const _id = this.props.params.id;
+        if(_id !== nextProps.params.id){
+            this._getActicleInfo();
+        }
+    }
+    _getActicleInfo() {
+        const _id = this.props.params.id;
+        this.props.dispatch(getActicleInfo(_id, (res) => {
+            this.setState({
+                title: res.title,
+                content: res.content
+            });
+        }));
     }
     // 返回上一页
     gohistoryHandle(){
@@ -30,9 +49,7 @@ class NewsIdView extends React.Component{
                     mode="dark"
                     onLeftClick={this.gohistoryHandle.bind(this)}
                     >最新消息</NavBar>
-                <div className="m-news-content">
-                    <img src="https://kyaniyoupaiyun.b0.upaiyun.com/1488962260805.jpg"/>
-                </div>
+                <div className="m-news-content" dangerouslySetInnerHTML={{__html: this.state.content}}></div>
             </div>
         );
     }
@@ -41,10 +58,8 @@ class NewsIdView extends React.Component{
 /*  React 与  Redux 绑定 */
 function mapStateToProps(state){
     return {
-        // LoginModel: state.LoginModel
     };
 }
-
 
 export default connect(
     mapStateToProps
