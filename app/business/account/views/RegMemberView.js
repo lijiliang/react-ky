@@ -116,6 +116,16 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
                 fieldNames.map((item, index) => {
                     if(form.getFieldError(item)){
                         Toast.info(form.getFieldError(item), 1)
+                        // 处理输入两次邮箱不一致
+                        if(_confirmEmail && (_email !== _confirmEmail)){
+                            Toast.info('两次输入的邮箱不一致', 1);
+                            return;
+                        }
+                        // 处理输入两次密码不一致
+                        if(_confirmPwd && (_password !== _confirmPwd)){
+                            Toast.info('两次输入的密码不一致', 1);
+                            return;
+                        }
                         return;
                     }
                 })
@@ -126,18 +136,6 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
             //     Toast.info('姓氏不能包含空格', 1);
             //     return;
             // }
-
-            // 处理输入两次邮箱不一致
-            if(_confirmEmail && (_email !== _confirmEmail)){
-                Toast.info('两次输入的邮箱不一致', 1);
-                return;
-            }
-
-            // 处理输入两次密码不一致
-            if(_confirmPwd && (_password !== _confirmPwd)){
-                Toast.info('两次输入的密码不一致', 1);
-                return;
-            }
 
             // 如果年龄小于18岁，不能通过
             if(getIdCardAge(_idCard) < 18){
@@ -181,8 +179,6 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
                 }
 
             }
-            // 将数据dispatch过去
-            //this.props.dispatch(CheckDealerReg(_state.cityValue[0], _state.cityValue[1], _state.cityValue[2], _state.addrDetail, _state.email, _state.firstName, _state.idCard, _state.lastName, _state.password, _state.phoneNumber, _state.postcode, _state.reRecommender, _state.recommender, _state.telNumber, this.successFn))
          })
      }
      // 下一步 验证数据成功的回调
