@@ -5,6 +5,7 @@ import React from 'react';
 import { Link, hashHistory } from 'react-router';
 import { connect } from 'react-redux';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import classNames from 'classnames'
 import {hasMember} from 'Utils';
 import './KYMenu.less';
 
@@ -87,6 +88,11 @@ class KYMenu extends React.Component{
                         _list.map((item, index) => {
                             const _itemTwo = item.sub || [];
                             const _twoLen = item.sub.length;
+                            console.log(item.name)
+                            const submenuTitle = classNames({
+                                'menu-submenu-title': true,
+                                'title-weight': item.name === '推广优惠及其他'
+                            })
                             return(
                                 _twoLen > 0
                                 ?
@@ -131,7 +137,7 @@ class KYMenu extends React.Component{
                                     </li>
                                 :
                                     <li className="m-menu-submenu">
-                                        <div className="menu-submenu-title" onClick={this.goUrl.bind(this, item.url)} data-id={item.id}>
+                                        <div className={submenuTitle} onClick={this.goUrl.bind(this, item.url)} data-id={item.id}>
                                             <span>{item.name}</span>
                                         </div>
                                     </li>
