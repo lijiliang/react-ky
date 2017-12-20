@@ -70,7 +70,6 @@ class ProductIdView extends React.Component{
         const imgList = product.get('imgList')[0] || [];
         const specList = product.get('specList')[0] || [];
         const description = product.get('description');
-        console.log(this.state)
         return(
             <div className="ky-container-body">
                 <div className="ky-scrollable-white">

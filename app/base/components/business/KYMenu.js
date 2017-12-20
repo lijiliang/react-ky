@@ -88,11 +88,10 @@ class KYMenu extends React.Component{
                         _list.map((item, index) => {
                             const _itemTwo = item.sub || [];
                             const _twoLen = item.sub.length;
-                            console.log(item.name)
                             const submenuTitle = classNames({
                                 'menu-submenu-title': true,
                                 'title-weight': item.name === '推广优惠及其他'
-                            })
+                            });
                             return(
                                 _twoLen > 0
                                 ?
