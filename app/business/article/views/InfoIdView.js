@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { NavBar } from 'uxComponent';
 import { getActicleInfo } from '../action/DataAction'
 
-import '../resources/NewsIdView.less';
+import '../resources/InfoIdView.less';
 
 class NewsIdView extends React.Component{
     constructor(props, context){
@@ -21,17 +21,17 @@ class NewsIdView extends React.Component{
         };
     }
     componentDidMount(){
-        this._getActicleInfo();
+        const _id = this.props.params.id;
+        this._getActicleInfo(_id);
     }
     componentWillReceiveProps(nextProps) {
         const _id = this.props.params.id;
         if(_id !== nextProps.params.id){
-            this._getActicleInfo();
+            this._getActicleInfo(nextProps.params.id);
         }
     }
-    _getActicleInfo() {
-        const _id = this.props.params.id;
-        this.props.dispatch(getActicleInfo(_id, (res) => {
+    _getActicleInfo(id) {
+        this.props.dispatch(getActicleInfo(id, (res) => {
             this.setState({
                 title: res.title,
                 content: res.content
@@ -44,11 +44,13 @@ class NewsIdView extends React.Component{
     }
     render(){
         return(
-            <div className="ky-scrollable">
+            <div className="ky-scrollable m-info-article">
                 <NavBar leftContent=""
                     mode="dark"
                     onLeftClick={this.gohistoryHandle.bind(this)}
-                    >最新消息</NavBar>
+                    >
+                    <div className="info-title">{this.state.title}</div>
+                </NavBar>
                 <div className="m-news-content" dangerouslySetInnerHTML={{__html: this.state.content}}></div>
             </div>
         );

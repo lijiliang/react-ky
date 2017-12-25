@@ -53,7 +53,7 @@ import PayeezyView from 'kyBus/pay/views/PayeezyView';      // 信用卡支付
 
 // article 文章相关页面
 import NewsView from 'kyBus/article/views/NewsView';          // 最新消息
-import NewsIdView from 'kyBus/article/views/NewsIdView';      // 最新消息 详情页
+import InfoIdView from 'kyBus/article/views/InfoIdView';      // 最新消息、关于我们文章 详情页
 import HelpView from 'kyBus/article/views/HelpView';          // 帮助文章 详情页
 
 /*
@@ -115,7 +115,7 @@ class RouterMap extends React.Component {
                     <Route path='pay/types' component={PayTypesView}></Route>
                     <Route path='pay/payeezy' component={PayeezyView}></Route>
                     <Route path='news' component={NewsView}/>
-                    <Route path='news/:id' component={NewsIdView}/>
+                    <Route path='info/:id' component={InfoIdView}/>
                     <Route path='help/:id' component={HelpView}/>
                     {/* <Route path='*' component={NotFound}/> */}
                 </Route>

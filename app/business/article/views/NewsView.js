@@ -40,7 +40,7 @@ class NewsView extends React.Component{
                 <div className="m-news">
                     {
                         this.state.list.map((item) => {
-                            const newsHref = '/news/' + item.id;
+                            const newsHref = '/info/' + item.id;
                             return(
                                 <Link to={newsHref} className="news-item">
                                     <div className="thumb">

@@ -7,6 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { NavBar } from 'uxComponent';
+import { getActicleInfo, getActicleTitle } from '../action/DataAction'
 
 import '../resources/HelpView.less';
 
@@ -15,36 +16,66 @@ class NewsView extends React.Component{
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state = {
+            title: '',
+            content: '',
+            typeName: '',
+            titleList: []
         };
     }
     componentDidMount(){
+        const _id = this.props.params.id;
+        this._getActicleInfo(_id);
+    }
+    componentWillReceiveProps(nextProps) {
+        const _id = this.props.params.id;
+        if(_id !== nextProps.params.id){
+            this._getActicleInfo(nextProps.params.id);
+        }
+    }
+    // 获取文章内容
+    _getActicleInfo(id) {
+        this.props.dispatch(getActicleInfo('h' + id, (res) => {
+            this.setState({
+                typeName: res.typeName,
+                title: res.title,
+                content: res.content
+            });
+            this.props.dispatch(getActicleTitle(res.typeId, (resTitle) => {
+                let _list = resTitle.filter(function(item){
+                    return item.title !== res.title;
+                });
+                this.setState({
+                    titleList: _list
+                });
+            }));
+        }));
     }
     // 返回上一页
     gohistoryHandle(){
         window.history.back();
     }
     render(){
+        const _state = this.state;
         return(
             <div className="ky-scrollable">
                 <NavBar leftContent=""
                     mode="dark"
                     onLeftClick={this.gohistoryHandle.bind(this)}
-                    >售后服务</NavBar>
+                    >{_state.typeName}</NavBar>
                 <div className="m-help">
                     <div className="m-help-tit">
-                        <h1>退货承诺</h1>
+                        <h1>{_state.title}</h1>
                     </div>
-                    <div className="m-help-content">
-                        <p>
-                            &nbsp;&nbsp;&nbsp;&nbsp;对于退货退款，用户可在购货起30天内提出申请，并把全数未经使用及不影响再次销售的产品退还，以享全单退款的保障。该退款将会扣除增值税11.9%及有关运费（每个子订单运费为人民币35元）。
-                        </p>
-                        <p>
-                            对于退货退款，用户可在购货起30天内提出申请，并把全数未经使用及不影响再次销售的产品退还，以享全单退款的保障。该退款将会扣除增值税11.9%及有关运费（每个子订单运费为人民币35元）。
-                        </p>
-                    </div>
+                    <div className="m-help-content" dangerouslySetInnerHTML={{__html: this.state.content}}></div>
                     <div className="m-help-menu">
-                        <Link to="/" className="menu-item">退货承诺</Link>
-                        <Link to="/" className="menu-item">退货承诺</Link>
+                        {
+                            _state.titleList.map((item) => {
+                                const _href = '/help/' + item.id;
+                                return(
+                                    <Link to={_href} className="menu-item">{item.title}</Link>
+                                );
+                            })
+                        }
                     </div>
                 </div>
             </div>

@@ -36,6 +36,7 @@ const Urls = {
     UserOrderCancel: profile.server + '/starspower/shop/service/v1/order/cancelOrder', //会员中心->取消订单
     ActicleNews: profile.server + '/starspower/shop/service/v1/article/news', //获取最新消息栏目
     ActicleInfo: profile.server + '/starspower/shop/service/v1/article/info', //获取文章/帮助明细,以h开头的为帮助
+    ActicleTitle: profile.server + '/starspower/shop/service/v1/article/title', //获取帮助中心 文章标题栏目
 };
 
 export default Urls;
