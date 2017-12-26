@@ -36,6 +36,7 @@ class NewsIdView extends React.Component{
                 title: res.title,
                 content: res.content
             });
+            document.getElementById('aaaa').innerHTML = res.content
         }));
     }
     // 返回上一页
@@ -51,7 +52,8 @@ class NewsIdView extends React.Component{
                     >
                     <div className="info-title">{this.state.title}</div>
                 </NavBar>
-                <div className="m-news-content" dangerouslySetInnerHTML={{__html: this.state.content}}></div>
+                <div className="m-news-content" id="aaaa">
+                </div>
             </div>
         );
     }

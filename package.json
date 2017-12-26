@@ -112,6 +112,7 @@
     "redux-immutablejs": "0.0.8",
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.2.0",
+    "swiper": "^4.0.7",
     "zscroller": "^0.2.5"
   }
 }
