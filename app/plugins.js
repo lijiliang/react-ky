@@ -1,4 +1,4 @@
-import Swiper from 'swiper';
+import Swiper from 'swiper/dist/js/swiper.min.js';
 
 window.onload = function(){
     // 公司简介
