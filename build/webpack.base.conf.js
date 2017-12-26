@@ -38,6 +38,7 @@ module.exports = {
             /**
              * 自定义路径别名
              */
+            staticDir: path.join(commonPath.staticDir),
             kyBase: path.join(commonPath.src, '/base/'),
             kyBus: path.join(commonPath.src, '/business/'),
             kyCommon: path.join(commonPath.src, '/base/common/kyCommon.js'),  //公用的方法及函数
