@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { NavBar } from 'uxComponent';
 import { getActicleInfo } from '../action/DataAction'
+import InnerHTML from 'dangerously-set-inner-html'
 
 import '../resources/InfoIdView.less';
 
@@ -36,7 +37,6 @@ class NewsIdView extends React.Component{
                 title: res.title,
                 content: res.content
             });
-            document.getElementById('aaaa').innerHTML = res.content
         }));
     }
     // 返回上一页
@@ -52,7 +52,8 @@ class NewsIdView extends React.Component{
                     >
                     <div className="info-title">{this.state.title}</div>
                 </NavBar>
-                <div className="m-news-content" id="aaaa">
+                <div className="m-news-content">
+                    <InnerHTML html={this.state.content} />
                 </div>
             </div>
         );

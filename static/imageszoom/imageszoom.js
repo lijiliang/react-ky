@@ -4,7 +4,7 @@
 	} else if (typeof exports === 'object') {
 		module.exports = factory();
 	} else {
-		root.PhotoSwipe = factory();
+		root.ImagesZoom = factory();
 	}
 })(this, function () {
 	var document = window.document,

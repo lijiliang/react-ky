@@ -251,6 +251,23 @@ export function getOffset(element, container = document.body){
         bottom: elRect.bottom + top - clientTop,
     };
 }
+
+/*
+ * [LoadJS 动态加载js]
+ * @param       {[String]} id      [区别id]
+ * @param       {[String]} fileUrl [文件url]
+ * @constructor
+ */
+export function LoadJS(id, fileUrl){
+    const scriptTag = document.getElementById(id);
+    const oHead = document.getElementsByTagName('HEAD').item(0);
+    const oScript= document.createElement('script');
+    if (scriptTag) oHead.removeChild(scriptTag);
+    oScript.id = id;
+    oScript.type = 'text/javascript';
+    oScript.src=fileUrl;
+    oHead.appendChild(oScript);
+}
 // 导出
 // export default {
 //     hideLoading,

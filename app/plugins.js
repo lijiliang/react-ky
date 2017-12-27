@@ -1,13 +1,17 @@
-import Swiper from 'swiper/dist/js/swiper.min.js';
+import Swiper from 'staticDir/swiper/swiper.min.js';
 import ImagesZoom from 'staticDir/imageszoom/imageszoom.js'
 
-window.onload = function(){
+$(document).ready(function () {
     setTimeout(() => {
         /** 公司简介 **/
         // 图片放大
-        ImagesZoom.init({
-            elem: '.imgzoom-main'
-        });
+        const imgzoomLen = $('.imgzoom-main').length;
+        if(imgzoomLen > 0){
+            ImagesZoom.init({
+                elem: '.imgzoom-main'
+            });
+        }
+
         // 幻灯片
         const mySwiper = new Swiper('.swiper-container', {
             // loop: true,
@@ -22,4 +26,4 @@ window.onload = function(){
             },
         });
     }, 2000);
-};
+});

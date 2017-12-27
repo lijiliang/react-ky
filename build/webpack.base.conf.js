@@ -20,7 +20,6 @@ module.exports = {
          */
         vendor: path.join(commonPath.src, 'vendor.js'),
         // vendor: ['react', 'react-dom', 'history', 'lodash', 'redux', 'react-redux'],
-        plugins: path.join(commonPath.src, 'plugins.js')
     },
     output: {
         path: path.join(commonPath.dist, 'static'),
