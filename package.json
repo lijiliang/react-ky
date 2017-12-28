@@ -74,7 +74,6 @@
     "tinypng-loader": "^1.0.4",
     "tinypng-webpack-plugin": "0.0.4",
     "url-loader": "^0.5.8",
-    "vconsole": "^2.5.2",
     "webpack": "^2.3.3",
     "webpack-dev-middleware": "^1.10.1",
     "webpack-hot-middleware": "^2.18.0",
@@ -115,6 +114,7 @@
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.2.0",
     "swiper": "^4.0.7",
+    "vconsole": "^3.1.0",
     "zscroller": "^0.2.5"
   }
 }

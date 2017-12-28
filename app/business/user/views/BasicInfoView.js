@@ -161,7 +161,9 @@
 
           let formData = new FormData()
           formData.append('imgFile', file)
+          console.log('formData', formData)
           this.props.dispatch(postUploadImg(formData, (res) => {
+              console.log('postUploadImg', res)
               const _data = {
                   imgUrl: res.url
               }

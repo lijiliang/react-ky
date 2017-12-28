@@ -11,7 +11,8 @@ import RouterConfig from 'kyBase/router/RouterConfig';
 FastClick.attach(document.body);
 
 // 手机调试工具，仅做调试用。正式环境需要手动隐藏
-import vconsole from 'vconsole';
+import VConsole from 'vconsole';
+var vConsole = new VConsole();
 
 render(
     <RouterConfig />,
