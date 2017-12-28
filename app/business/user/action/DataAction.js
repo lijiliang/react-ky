@@ -7,6 +7,7 @@ import { get, post, postPublic, putFetch, deleteFetch} from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
 import { failLoading, clearUserSession } from 'Utils';
+import axios from 'axios';
 
 /*
  * [signout 退出登录]
@@ -413,6 +414,27 @@ export function putOrderCancel(data, callback) {
                 if(callback && typeof callback === 'function'){
                     callback(res.data);
                 }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+// 上传图片文件
+export function postUploadImg(data, callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        axios.post(Urls.UploadImg, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: 'Bearer ' + Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token) || ''
+            },
+        }).then((result) => {
+            Toast.hide();
+            const res = result.data;
+            if(callback && typeof callback === 'function'){
+                callback(res.data);
             }
         }).catch((err) => {
             failLoading(err);

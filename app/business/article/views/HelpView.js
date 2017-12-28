@@ -6,6 +6,7 @@ import { Link, hashHistory } from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import InnerHTML from 'dangerously-set-inner-html'
 import { NavBar } from 'uxComponent';
 import { getActicleInfo, getActicleTitle } from '../action/DataAction'
 
@@ -66,7 +67,9 @@ class NewsView extends React.Component{
                     <div className="m-help-tit">
                         <h1>{_state.title}</h1>
                     </div>
-                    <div className="m-help-content" dangerouslySetInnerHTML={{__html: this.state.content}}></div>
+                    <div className="m-help-content">
+                        <InnerHTML html={this.state.content} />
+                    </div>
                     <div className="m-help-menu">
                         {
                             _state.titleList.map((item) => {

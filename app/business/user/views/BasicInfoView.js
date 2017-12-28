@@ -9,6 +9,8 @@
  import { bindActionCreators } from 'redux';
  import { connect } from 'react-redux';
  import { GetUserInfo, PostUserInfo } from '../action/DataAction'
+ import axios from 'axios';
+ import { failLoading } from 'Utils';
 
  //组件
  import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
@@ -33,7 +35,7 @@
              wechatNo: '',
              phoneNumber: '',
              email: '',
-             userImgPath: '',
+             userImgPath: Avatar,
              realName: '',
              isEdit: false,  // 是否可编辑
          };
@@ -143,21 +145,43 @@
      changeUpFile(e) {
          const _this = this;
          var file = e.target.files[0]  // 获取图片资源
-
          // 只选择图片文件
           if (!file.type.match('image.*')) {
             return false;
           }
 
+          /*
+          // http://www.open-open.com/lib/view/open1460474353494.html
           var reader = new FileReader();
           reader.readAsDataURL(file); // 读取文件
-
           reader.onload = function(arg) {
               _this.setState({
                   avatar: arg.target.result
               })
           }
-        // http://www.open-open.com/lib/view/open1460474353494.html
+          */
+
+          let formData = new FormData()
+          formData.append('imgFile', file)
+          Toast.loading('上传中...', 200);
+          axios.post('http://dev.kyani.cn:8100/starspower/shop/service/v1/upload/img', formData, {
+              headers: {
+                  'Content-Type': 'multipart/form-data',
+                  Authorization: 'Bearer ' + Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token) || ''
+              },
+          }).then((result) => {
+              Toast.hide();
+              const res = result.data;
+              if(res.data.succeed){
+                  this.setState({
+                      userImgPath: res.data.url
+                  })
+              }else {
+                  Toast.info(res.data.msg)
+              }
+          }).catch((err) => {
+              failLoading(err);
+          })
      }
      render(){
          const { getFieldDecorator} = this.props.form;
@@ -170,6 +194,7 @@
              ['picker-city']: true,
              ['picker-city-active']: this.state.cityExtra
          })
+         console.log(this.state)
          return(
              <div className="ky-container-body">
                  <div className="ky-scrollable-white">
@@ -181,11 +206,11 @@
                          <div className="m-basic-view">
                              <div className="account-info">
                                  <div className="account-thumb">
-                                     {/* <label htmlFor="img_input" onChange={this.changeUpFile.bind(this)} id="img_label">
+                                     <label htmlFor="img_input" onChange={this.changeUpFile.bind(this)} id="img_label">
                                          <input id="img_input" type="file" accept="image/*"/>
-                                     </label> */}
-                                     <img src={this.state.avatar}/>
-                                     {/* <div className="modify">点此修改头像</div> */}
+                                     </label>
+                                     <img src={this.state.userImgPath || Avatar}/>
+                                     <div className="modify">点此修改头像</div>
                                  </div>
                                  <div className="account-name">
                                      <p className="tit">姓名</p>
