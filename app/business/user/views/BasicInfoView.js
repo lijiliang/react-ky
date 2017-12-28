@@ -17,6 +17,11 @@
 
  import Avatar from '../resources/img/avatar-big.png'
 
+ // 字节转成M
+ function getfilesize(size) {
+     let num = 1024  //byte
+     return (size / Math.pow(num, 2)).toFixed(2)
+ }
  // 省市区数据
  const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
  class BasicInfoView extends React.Component {
@@ -145,7 +150,13 @@
          var file = e.target.files[0]  // 获取图片资源
          // 只选择图片文件
           if (!file.type.match('image.*')) {
+            Toast.info('亲，只能选择图片类型的文件！')
             return false;
+          }
+
+          if (getfilesize(file.size) > 10){
+            Toast.info('文件过大，请重新选择！')
+            return false
           }
 
           /*
@@ -161,20 +172,17 @@
 
           let formData = new FormData()
           formData.append('imgFile', file)
-          console.log('formData', formData)
           this.props.dispatch(postUploadImg(formData, (res) => {
-              console.log('postUploadImg', res)
               const _data = {
                   imgUrl: res.url
               }
               if(res.succeed){
                   // 更新用户头像
                   this.props.dispatch(postUserUpdatePhoto(_data, (userInfo) => {
-                      console.log('userInfo', userInfo)
+                      this.setState({
+                          userImgPath: userInfo
+                      })
                   }))
-                  this.setState({
-                      userImgPath: res.url
-                  })
               }else {
                   Toast.info(res.data.msg)
               }
