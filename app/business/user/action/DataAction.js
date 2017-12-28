@@ -421,20 +421,53 @@ export function putOrderCancel(data, callback) {
     };
 }
 
-// 上传图片文件
+/*
+ * [postUploadImg 上传图片文件]
+ * @param  {[type]}   data     [数据]
+ * @param  {Function} callback [回调函数]
+ * @return {[type]}            [description]
+ */
 export function postUploadImg(data, callback) {
     return (dispatch, getState) => {
         Toast.loading('加载中...', 200);
-        axios.post(Urls.UploadImg, data, {
+        const response = axios.post(Urls.UploadImg, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization: 'Bearer ' + Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token) || ''
             },
-        }).then((result) => {
-            Toast.hide();
+        });
+        response.then((result) => {
+            // Toast.hide();
             const res = result.data;
-            if(callback && typeof callback === 'function'){
-                callback(res.data);
+            if(res.success){
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
+            }
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+
+/*
+ * [postUserUpdatePhoto 用户上传头像]
+ * @param  {[type]}   data     [数据]
+ * @param  {Function} callback [回调函数]
+ * @return {[type]}            [description]
+ */
+export function postUserUpdatePhoto(data, callback) {
+    return (dispatch, getState) => {
+        // Toast.loading('加载中...', 200);
+        const response = post(Urls.UserUpdatePhoto, data);
+        response.then((result) => {
+            const res = result.data;
+            if(res.success){
+                Toast.hide();
+                if(callback && typeof callback === 'function'){
+                    callback(res.data);
+                }
             }
         }).catch((err) => {
             failLoading(err);

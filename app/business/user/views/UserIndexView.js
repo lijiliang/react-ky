@@ -27,6 +27,7 @@ class UserIndexView extends React.Component {
             userName: '',
             memberFlag: true,
             realName: '',
+            userImgPath: Avatar
         };
     }
     componentDidMount(){
@@ -37,6 +38,7 @@ class UserIndexView extends React.Component {
                     userName: res.userName,
                     memberFlag: res.memberFlag,
                     realName: res.realName,
+                    userImgPath: res.userImgPath
                 });
             }));
         }
@@ -78,7 +80,7 @@ class UserIndexView extends React.Component {
                         <div className="m-account-view">
                             <div className="account-info">
                                 <div className="account-thumb" onClick={() => { hashHistory.push('user/basicinfo')}}>
-                                    <img src={Avatar}/>
+                                    <img src={this.state.userImgPath || Avatar}/>
                                 </div>
                                 <div className="account-name">
                                     <p>{this.state.realName}，欢迎您！</p>

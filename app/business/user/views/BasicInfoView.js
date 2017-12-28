@@ -8,9 +8,7 @@
  import classNames from 'classnames';
  import { bindActionCreators } from 'redux';
  import { connect } from 'react-redux';
- import { GetUserInfo, PostUserInfo } from '../action/DataAction'
- import axios from 'axios';
- import { failLoading } from 'Utils';
+ import { GetUserInfo, PostUserInfo, postUploadImg, postUserUpdatePhoto } from '../action/DataAction'
 
  //组件
  import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
@@ -163,25 +161,22 @@
 
           let formData = new FormData()
           formData.append('imgFile', file)
-          Toast.loading('上传中...', 200);
-          axios.post('http://dev.kyani.cn:8100/starspower/shop/service/v1/upload/img', formData, {
-              headers: {
-                  'Content-Type': 'multipart/form-data',
-                  Authorization: 'Bearer ' + Cache.sessionGet(Cache.sessionKeys.ky_cache_access_token) || ''
-              },
-          }).then((result) => {
-              Toast.hide();
-              const res = result.data;
-              if(res.data.succeed){
+          this.props.dispatch(postUploadImg(formData, (res) => {
+              const _data = {
+                  imgUrl: res.url
+              }
+              if(res.succeed){
+                  // 更新用户头像
+                  this.props.dispatch(postUserUpdatePhoto(_data, (userInfo) => {
+                      console.log('userInfo', userInfo)
+                  }))
                   this.setState({
-                      userImgPath: res.data.url
+                      userImgPath: res.url
                   })
               }else {
                   Toast.info(res.data.msg)
               }
-          }).catch((err) => {
-              failLoading(err);
-          })
+          }))
      }
      render(){
          const { getFieldDecorator} = this.props.form;
@@ -194,7 +189,6 @@
              ['picker-city']: true,
              ['picker-city-active']: this.state.cityExtra
          })
-         console.log(this.state)
          return(
              <div className="ky-container-body">
                  <div className="ky-scrollable-white">
