@@ -64,6 +64,7 @@ class UserIndexView extends React.Component {
         }));
     }
     render(){
+        const _userImg = this.state.userImgPath ?  this.state.userImgPath + '!/fw/500' : Avatar
         return(
             <div className="ky-container-body">
                 <div className="ky-scrollable">
@@ -80,7 +81,7 @@ class UserIndexView extends React.Component {
                         <div className="m-account-view">
                             <div className="account-info">
                                 <div className="account-thumb" onClick={() => { hashHistory.push('user/basicinfo')}}>
-                                    <img src={this.state.userImgPath || Avatar}/>
+                                    <img src={_userImg}/>
                                 </div>
                                 <div className="account-name">
                                     <p>{this.state.realName}，欢迎您！</p>

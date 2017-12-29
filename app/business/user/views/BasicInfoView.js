@@ -199,6 +199,7 @@
              ['picker-city']: true,
              ['picker-city-active']: this.state.cityExtra
          })
+         const _userImg = this.state.userImgPath ?  this.state.userImgPath + '!/fw/500' : Avatar
          return(
              <div className="ky-container-body">
                  <div className="ky-scrollable-white">
@@ -213,7 +214,7 @@
                                      <label htmlFor="img_input" onChange={this.changeUpFile.bind(this)} id="img_label">
                                          <input id="img_input" type="file" accept="image/*"/>
                                      </label>
-                                     <img src={this.state.userImgPath || Avatar}/>
+                                     <img src={_userImg}/>
                                      <div className="modify">点此修改头像</div>
                                  </div>
                                  <div className="account-name">
