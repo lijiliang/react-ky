@@ -1,0 +1,79 @@
+/**
+ * @fileOverview: 优惠券
+ * @version: 1.0.0(2018-1-5)
+ * @author: Benson
+ */
+
+// 引入变量
+@import '~varLess';
+
+@prefixCls: ky-coupon;
+
+//顶部标题
+.m-item-tit{
+    display: flex;
+    min-height: 90px;
+    background: @fill-base;
+    padding: 0 @h-spacing-lg;
+    border-top: 5px solid @brand-blue;
+    color: @brand-primary;
+    align-items: center;
+    font-size: 28px;
+    .tit-content{
+        flex: 1;
+    }
+    h2{
+        flex:1;
+        font-size: 40px;
+    }
+    .extra{
+        flex-basis: 36%;
+        text-align: right;
+    }
+    &.m-item-coupon{
+        height: 140px;
+    }
+}
+
+.@{prefixCls} {
+    margin-bottom: 20px;
+    background: #fff;
+    &-con{
+        padding:0 @h-spacing-lg;
+        .conpon-info{
+            font-size: 28px;
+            color: #a0a0a0;
+        }
+    }
+    .ky-input-item{
+        &:last-child{
+            border: 1px solid #e1e1e1;
+        }
+        input{
+            padding: 0 15px;
+            text-align: left;
+            &::-webkit-input-placeholder{
+                font-size: 34px;
+                color: #787878;
+            }
+        }
+    }
+    .conpon-code{
+        padding: 30px 0;
+        display: flex;
+    }
+    .conpon-input{
+        flex: 60%;
+    }
+    .conpon-btn{
+        flex: 40%;
+        height: 90px;
+        line-height: 90px;
+        text-align: center;
+        background: #c72b66;
+        border: 1px solid #c72b66;
+        color: #fff;
+        font-size: 32px;
+        cursor: pointer;
+    }
+}

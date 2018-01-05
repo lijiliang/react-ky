@@ -2,7 +2,7 @@
  * @fileOverview common 处理数据action
  */
 import * as types from './actionTypes';
-import { getHasFetch, get} from 'FetchData';
+import { getHasFetch, get, postHasFetch} from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
 import { failLoading, hasMember} from 'Utils';
@@ -78,6 +78,26 @@ export function indexItemOpen(){
             indexItemOpen: {
                 isChildren: true
             }
+        });
+    };
+}
+
+/*
+ * [conpouVerify 验证优惠券码]
+ * @param  {[object]}   data     [数据]
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
+export function conpouVerify(data, callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = postHasFetch(Urls.CouponVerify, data);
+        response.then((result) => {
+            Toast.hide();
+            const res = result.data;
+            callback(res.data);
+        }).catch((err) => {
+            failLoading(err);
         });
     };
 }

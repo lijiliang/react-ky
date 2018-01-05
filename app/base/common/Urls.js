@@ -39,6 +39,7 @@ const Urls = {
     ActicleTitle: profile.server + '/starspower/shop/service/v1/article/title', //获取帮助中心 文章标题栏目
     UploadImg: profile.server + '/starspower/shop/service/v1/upload/img', // 上传图片文件
     UserUpdatePhoto: profile.server + '/starspower/shop/service/v1/user/updatePhoto', // 用户上传头像
+    CouponVerify: profile.server + '/starspower/shop/service/v1/coupon/verify', // 验证优惠券
 };
 
 export default Urls;

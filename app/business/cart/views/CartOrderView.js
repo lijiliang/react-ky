@@ -9,11 +9,10 @@ import { connect } from 'react-redux';
 import { OrderPreview, OrderAdd } from '../action/DataAction';
 
 import { Cache } from 'kyCommon';
-import { KYPayMethod } from 'kyComponent';
+import { KYPayMethod, KYCoupon } from 'kyComponent';
 import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List, Accordion, Loading} from 'uxComponent';
 const Item = List.Item;
 const Brief = Item.Brief;
-
 import '../resources/CartOrderView.less';
 
 class CartIndexView extends React.Component{
@@ -98,6 +97,11 @@ class CartIndexView extends React.Component{
         this.setState({
             payType: payType
         })
+    }
+
+    //优惠券
+    couponBtnHandle(data){
+        console.log(data)
     }
     render(){
         const _state = this.state || {};
@@ -275,27 +279,7 @@ class CartIndexView extends React.Component{
                                         </List>
                                     </div>
                                 </div>
-                                <div className="conpon-main">
-                                    <div className="m-item-tit">
-                                        <div className="tit-content">
-                                            <h2>优惠券</h2>
-                                        </div>
-                                    </div>
-                                    <div className="conpon-main-con">
-                                        <div className="conpon-info">
-                                            <p>如果您有优惠券，请在下方输入优惠券码</p>
-                                            <p>注意：优惠券在您提交订单后将消耗</p>
-                                        </div>
-                                        <div className="conpon-code">
-                                            <div className="conpon-input">
-                                                <InputItem placeholder="请输入优惠券码"/>
-                                            </div>
-                                            <div className="conpon-btn">
-                                                <span>使用优惠券码</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                               <KYCoupon products={_state.shoppingCarIds.join(',')} clickCouponBtn={this.couponBtnHandle.bind(this)}/>
                                <KYPayMethod price={_state.actualPrice} defaultPayType={_state.payType} changePayType={this.changePayTypeHandle.bind(this)}/>
                             </div>
                         : null
