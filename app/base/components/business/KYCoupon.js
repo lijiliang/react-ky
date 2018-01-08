@@ -1,6 +1,6 @@
 /**
  * @fileOverview 优惠券
- *  <KYCoupon clickCouponBtn={this.couponBtnHandle.bind(this)}/>
+ *  <KYCoupon products={_state.groupId} clickCouponBtn={this.couponBtnHandle.bind(this)} isReg/>
  */
  import React from 'react';
  import PropTypes from 'prop-types';
@@ -11,7 +11,7 @@
  import { conpouVerify } from 'kyBus/common/action/DataAction'
 
  import './KYCoupon.less';
-import { InputItem, Toast } from 'uxComponent';
+import { InputItem, Toast, Modal } from 'uxComponent';
 
 class KYCoupon extends React.Component {
     static defaultProps = {
@@ -31,10 +31,12 @@ class KYCoupon extends React.Component {
        this.setState({
            [name]: value
        })
+       this.setCouponData(value, 0)
     }
     conponBtnHandle(){
+        const _this = this;
         let _couponCode = this.state.couponCode;
-        const { products } = this.props;
+        const { products, isReg } = this.props;
         if(_couponCode.length < 1){
             Toast.info('优惠券码不能为空', 1)
             return
@@ -42,12 +44,52 @@ class KYCoupon extends React.Component {
         const _data = {
             code: _couponCode,
             products: products,
-            isReg: false
+            isReg: isReg || false
         }
         this.props.dispatch(conpouVerify(_data, (res) => {
-            console.log(res)
+            if(res.success){
+                const _data = res.data;
+                const type = _data.type;
+                let tips = '';
+                if(type.indexOf('gift') > -1){
+                    this.setCouponData(_data.code, 0)
+                    tips = `免费获得赠品: ${_data.typeName}${_data.value}件`
+                }else if(type.indexOf('price') > -1){
+                    this.setCouponData(_data.code, _data.value)
+                    tips = `订单减免${_data.value}元`
+                }
+                Modal.alert('提示', <p className="message-success">{tips}</p>, [
+                    {
+                        text: '确认',
+                        onPress: () => {
+                            this.setState({
+                                couponCode: res.data.code
+                            })
+                        }
+                    },
+                ]);
+            }else{
+                this.setCouponData('', 0)
+                Modal.alert('提示', <p className="message-error">{res.message}</p>, [
+                    {
+                        text: '确认',
+                        onPress: () => {
+                            this.setState({
+                                couponCode: ''
+                            })
+                        }
+                    },
+                ]);
+            }
         }))
-        this.props.clickCouponBtn(_couponCode)
+    }
+    /**
+     * [setCouponData 修改优惠券相关数据]
+     * @param {[string]} couponCode  [优惠券码]
+     * @param {[number]} discountPrice [优惠金额]
+     */
+    setCouponData(couponCode, discountPrice){
+        this.props.clickCouponBtn(couponCode, discountPrice)
     }
     render(){
         const { prefixCls } = this.props;
@@ -67,6 +109,7 @@ class KYCoupon extends React.Component {
                         <div className="conpon-input">
                             <InputItem
                                 placeholder="请输入优惠券码"
+                                value={this.state.couponCode}
                                 onChange={this.stateChangeHandle.bind(this, 'couponCode')}
                             />
                         </div>
@@ -78,6 +121,12 @@ class KYCoupon extends React.Component {
             </div>
         );
     }
+}
+
+KYCoupon.PropTypes = {
+    products: PropTypes.string.isRequired,  // id 如果是数组，需要转成字符串,用,号分割
+    clickCouponBtn: PropTypes.func.isRequired, // 点击“使用优惠券”按钮
+    isReg: PropTypes.bool, // 是否注册页面
 }
 
 // KYCoupon.PropTypes = {

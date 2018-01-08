@@ -95,7 +95,7 @@ export function conpouVerify(data, callback) {
         response.then((result) => {
             Toast.hide();
             const res = result.data;
-            callback(res.data);
+            callback(res);
         }).catch((err) => {
             failLoading(err);
         });

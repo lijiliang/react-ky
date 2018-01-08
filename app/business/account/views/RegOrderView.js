@@ -14,7 +14,7 @@ import classNames from 'classnames';
 
 import PackItemView from './PackItemView';
 import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
-import { KYSteps, KYPayMethod } from 'kyComponent';
+import { KYSteps, KYPayMethod, KYCoupon } from 'kyComponent';
 import { Button, Toast, NavBar, InputItem, Picker, TextareaItem, List,} from 'uxComponent';
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -32,6 +32,8 @@ class RegOrderView extends React.Component {
             accouontMask: true,   //帐户信息遮罩
             consigneeMask: true,  //收货信息遮罩
             payType: '29',        //默认支付类型
+            couponCode: '',  // 优惠券码
+            discountPrice: 0 // 优惠金额
         };
     }
     componentDidMount(){
@@ -138,7 +140,8 @@ class RegOrderView extends React.Component {
                     phoneNumber: _state.consigneePhoneNumber, //手机号码
                     postcode: _state.consigneepostcode, //邮编
                     telNumber: _state.consigneeTelNumber, //固定电话号码
-                }
+                },
+                couponCode: _state.couponCode,        //优惠券码
             };
             // 确保收货信息里面的收货人与身份证号码相匹配
             // 将数据dispatch过去  验证：收货信息表单
@@ -262,6 +265,13 @@ class RegOrderView extends React.Component {
     changePayTypeHandle(payType){
         this.setState({
             payType: payType
+        })
+    }
+    //优惠券
+    couponBtnHandle(couponCode, discountPrice){
+        this.setState({
+            couponCode: couponCode,
+            discountPrice: discountPrice
         })
     }
     render(){
@@ -577,7 +587,8 @@ class RegOrderView extends React.Component {
 
                            </div>
                        </div>
-                        <KYPayMethod price={_state.groupItem ? _state.groupItem.salePrice : '0'} defaultPayType={_state.payType} changePayType={this.changePayTypeHandle.bind(this)}/>
+                        <KYCoupon products={_state.groupId} clickCouponBtn={this.couponBtnHandle.bind(this)} isReg/>
+                        <KYPayMethod price={_state.groupItem ? _state.groupItem.salePrice - _state.discountPrice : '0'} defaultPayType={_state.payType} changePayType={this.changePayTypeHandle.bind(this)}/>
                     </div>
                 </div>
                 <div className="m-foot-fixed">

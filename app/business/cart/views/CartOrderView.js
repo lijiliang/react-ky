@@ -22,7 +22,9 @@ class CartIndexView extends React.Component{
         this.state = {
             value: 'a',
             isLoading: true,
-            payType: '29'
+            payType: '29',
+            couponCode: '',  // 优惠券码
+            discountPrice: 0 // 优惠金额
         };
     }
     componentDidMount(){
@@ -77,6 +79,7 @@ class CartIndexView extends React.Component{
           originalPrice: _state.originalPrice,  //原价
           payType: _state.payType,              //支付类型
           preferential: _state.preferential,    //优惠价
+          couponCode: _state.couponCode,        //优惠券码
         }
         this.props.dispatch(OrderAdd(data, (res) => {
             if(!res.success){
@@ -100,8 +103,11 @@ class CartIndexView extends React.Component{
     }
 
     //优惠券
-    couponBtnHandle(data){
-        console.log(data)
+    couponBtnHandle(couponCode, discountPrice){
+        this.setState({
+            couponCode: couponCode,
+            discountPrice: discountPrice
+        })
     }
     render(){
         const _state = this.state || {};
@@ -110,6 +116,7 @@ class CartIndexView extends React.Component{
         function markMoney(str){
             return '￥' + str;
         }
+        // console.log(this.state)
         return(
             <div className="ky-container-body">
                 <div className="ky-scrollable">
@@ -280,7 +287,7 @@ class CartIndexView extends React.Component{
                                     </div>
                                 </div>
                                <KYCoupon products={_state.shoppingCarIds.join(',')} clickCouponBtn={this.couponBtnHandle.bind(this)}/>
-                               <KYPayMethod price={_state.actualPrice} defaultPayType={_state.payType} changePayType={this.changePayTypeHandle.bind(this)}/>
+                               <KYPayMethod price={_state.actualPrice - _state.discountPrice} defaultPayType={_state.payType} changePayType={this.changePayTypeHandle.bind(this)}/>
                             </div>
                         : null
                     }
