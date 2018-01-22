@@ -5,8 +5,8 @@ const profiles = {
     local: {
         preffix: '',
         // host: 'e7my9i.natappfree.cc',
-        // host : '10.206.41.102:8012',
-        host: '10.206.41.82:8012',
+        host : '10.206.41.102:8012',
+        // host: '10.206.41.82:8012',
         sercureEnable: false
     },
     prod: {
