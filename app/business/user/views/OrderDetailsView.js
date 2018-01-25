@@ -48,7 +48,7 @@
          const _state = this.state;
          const _shippingInfo = _state.shippingInfo || {};
          const _productList = _state.productList || [];
-         const _orderLogisticsInfo = _state.orderLogisticsInfo || {}
+         const _orderExpressInfo = _state.orderExpressInfo || {}
          return(
              <div className="ky-container-body">
                  <div className="ky-scrollable">
@@ -59,7 +59,7 @@
                              >子订单信息</NavBar>
                          <div className="m-orderdetail-view">
                              {
-                                 _orderLogisticsInfo.expressName
+                                 _orderExpressInfo.expressName
                                  ?
                                      <div className="detail-item">
                                          <div className="orderdetail-head">包裹信息</div>
@@ -67,18 +67,18 @@
                                              <div className="list">
                                                  <div className="item">
                                                      <div className="name">物流公司</div>
-                                                     <div className="info">{_orderLogisticsInfo.expressName}</div>
+                                                     <div className="info">{_orderExpressInfo.expressName}</div>
                                                  </div>
                                                  <div className="item">
                                                      <div className="name">物流单号</div>
                                                      <div className="info">
-                                                         <span className="order-no">{_orderLogisticsInfo.expressNo}</span>
+                                                         <span className="order-no">{_orderExpressInfo.expressNo}</span>
                                                          {/* <CopyToClipboard text='asdfghjklkjhgf' onCopy={this.copyTextHandle.bind(this)}>
                                                              <span className="copy">复制单号</span>
                                                         </CopyToClipboard> */}
                                                      </div>
                                                  </div>
-                                                 <a className="gobtn" href={_orderLogisticsInfo.kuaidi100Url}>快递100官网查询</a>
+                                                 <a className="gobtn" href={_orderExpressInfo.kuaidi100Url}>快递100官网查询</a>
                                              </div>
                                          </div>
                                      </div>
