@@ -64,6 +64,7 @@
                                      <div className="detail-item">
                                          <div className="orderdetail-head">包裹信息</div>
                                          <div className="orderdetail-body">
+
                                              <div className="list">
                                                  <div className="item">
                                                      <div className="name">物流公司</div>
@@ -167,7 +168,7 @@
                                      </List>
                                  </div>
                              </div>
-                            <div className="paymethod-price">已付金额：<span class="price">{markMoney(_state.actualPrice)}</span></div>
+                            {/* <div className="paymethod-price">已付金额：<span class="price">{markMoney(_state.actualPrice)}</span></div> */}
                          </div>
                      </div>
                  </div>
