@@ -227,7 +227,8 @@ export function GetIdShipAddress(id, callback) {
 export function GetOrderList(size, num, type , callback) {
     return (dispatch, getState) => {
         Toast.loading('加载中...', 200);
-        const response = get(Urls.OrderList + `?size=${size}&num=${num}&type=${type}`);
+        // const response = get(Urls.OrderList + `?size=${size}&num=${num}&type=${type}`);
+        const response = get(Urls.OrderList + `/${size}/${num}?type=${type}`);
         response.then((result) => {
             const res = result.data;
             if(res.success){
