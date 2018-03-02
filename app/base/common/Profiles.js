@@ -4,8 +4,8 @@
 const profiles = {
     local: {
         preffix: '',
-        // host: 'e7my9i.natappfree.cc',
-        host : '10.206.41.116:8012',
+        host: 'dev.kyani.cn:8100',
+        // host : '10.206.41.116:8012',
         // host: '10.206.41.82:8012',
         sercureEnable: false
     },
@@ -19,6 +19,7 @@ const profiles = {
         sercureEnable: false
     }
 };
+
 
 const currentProKey = __environment__;
 
