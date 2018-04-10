@@ -10,16 +10,8 @@
     "prod": "cross-env NODE_ENV=production webpack --config ./build/webpack.prod.conf.js",
     "mock": "node --harmony ./mock/server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lijiliang/react-ky.git"
-  },
   "author": "Benson.Li",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lijiliang/react-ky/issues"
-  },
-  "homepage": "https://github.com/lijiliang/react-ky#readme",
   "devDependencies": {
     "assets-webpack-plugin": "^3.5.1",
     "autoprefixer": "^6.7.7",
