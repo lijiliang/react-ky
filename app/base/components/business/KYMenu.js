@@ -63,7 +63,7 @@ class KYMenu extends React.Component{
         return(
             <div className="ky-menu">
                 <ul className="m-menu-main">
-                    <li className="m-menu-submenu m-menu-item-selected">
+                    <li className="m-menu-submenu m-menu-item-selected" onClick={this.goUrl.bind(this, '/help/134')}>
                         <div className="menu-submenu-title">
                             <span>消费者告知书</span>
                         </div>
