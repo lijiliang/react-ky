@@ -114,7 +114,9 @@ export function getProductInfoId(id, callback) {
         const response = getHasFetch(Urls.ProductInfoId + '/' + id);
         response.then((result) => {
             const res = result.data;
-            if(res.success){
+            if(!res.success){
+                Toast.info(res.message, 2)
+            }else{
                 Toast.hide();
                 dispatch({
                     type: types.PRODUCTINFOID,
