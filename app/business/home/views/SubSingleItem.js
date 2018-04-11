@@ -22,8 +22,14 @@ export default class SubGroupItem extends React.Component {
         this.state = {
         };
     }
-    goProduct(id) {
-        const url = `/product/${id}`;
+    goProduct(item) {
+        const {groupFlag, id} = item;
+        let url = '';
+        if (groupFlag) {
+            url = `/product/g${id}`;
+        } else {
+            url = `/product/${id}`;
+        }
         hashHistory.push(url);
     }
     render(){
@@ -32,14 +38,14 @@ export default class SubGroupItem extends React.Component {
         const imgPath = _item.imgPath + '!/fwfh/600x600';
         return(
             <div className="sub-single-item">
-                <div className="item-name" onClick={this.goProduct.bind(this, _item.id)}>
+                <div className="item-name" onClick={this.goProduct.bind(this, _item)}>
                     <h2>{_item.name}</h2>
                     <img src={imgPath}/>
                 </div>
                 <div className="single-product-item">{_item.specName}</div>
                 <div className="item-other">
                     <ItemInfoList salePrice={_item.salePrice} originalPrice={_item.originalPrice} qv={_item.qv}/>
-                    <IndexAddCart productId={_item.id} groupFlag={false}/>
+                    <IndexAddCart productId={_item.id} groupFlag={_item.groupFlag}/>
                 </div>
             </div>
         );
