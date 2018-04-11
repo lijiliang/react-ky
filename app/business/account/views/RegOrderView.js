@@ -528,7 +528,7 @@ class RegOrderView extends React.Component {
                                     <InputItem
                                         placeholder="请输入6个数字的邮政编码"
                                         labelNumber={5}
-                                        maxLength={5}
+                                        maxLength={6}
                                         type="number"
                                         style={{border:'none'}}
                                         onChange={this.stateChangeHandle.bind(this, 'consigneepostcode')}
