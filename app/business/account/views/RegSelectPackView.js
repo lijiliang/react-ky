@@ -52,7 +52,7 @@ class RegSelectPackView extends React.Component {
     submitHandle = () => {
         const _state = this.state;
         if(_state.groupId == null){
-            Toast.info('必须要选择一款套组', 1);
+            Toast.info('必须要选择一款套组', 2);
             return;
         }
         Toast.loading('加载中...');

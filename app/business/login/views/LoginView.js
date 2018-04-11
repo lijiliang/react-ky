@@ -58,7 +58,7 @@ class LoginView extends React.Component{
                 const fieldNames = ['username','password'].reverse();
                 fieldNames.map((item, index) => {
                     if(form.getFieldError(item)){
-                        Toast.info(form.getFieldError(item), 1);
+                        Toast.info(form.getFieldError(item), 2);
                         return;
                     }
                 });

@@ -61,7 +61,7 @@ import masterCard from 'kyBase/resources/images/masterCard.png';
                 const fieldNames = ['cardNumber', 'cardName', 'expDate', 'cvv', 'payAddrDetail', 'city', 'province', 'payPostcode', 'country'].reverse();
                 fieldNames.map((item, index) => {
                     if(form.getFieldError(item)){
-                        Toast.info(form.getFieldError(item), 1);
+                        Toast.info(form.getFieldError(item), 2);
                         return;
                     }
                 });

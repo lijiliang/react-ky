@@ -89,7 +89,7 @@
                 const fieldNames = ['firstName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPwd', 'referenceId', 'isHasReference'].reverse();
                 fieldNames.map((item, index) => {
                     if(form.getFieldError(item)){
-                        Toast.info(form.getFieldError(item), 1)
+                        Toast.info(form.getFieldError(item), 2)
                         return;
                     }
                 })
@@ -103,18 +103,18 @@
 
             // 处理输入两次邮箱不一致
             if(_confirmEmail && (_email !== _confirmEmail)){
-                Toast.info('两次输入的邮箱不一致', 1);
+                Toast.info('两次输入的邮箱不一致', 2);
                 return;
             }
 
             // 处理输入两次密码不一致
             if(_confirmPwd && (_password !== _confirmPwd)){
-                Toast.info('两次输入的密码不一致', 1);
+                Toast.info('两次输入的密码不一致', 2);
                 return;
             }
 
             if(!this.state.isHasReference && !this.state.referenceId){
-                Toast.info('如果没有推荐人号，请点击打勾', 1);
+                Toast.info('如果没有推荐人号，请点击打勾', 2);
                 return;
             }
 

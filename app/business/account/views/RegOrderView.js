@@ -85,11 +85,11 @@ class RegOrderView extends React.Component {
     submitHandle = () => {
         const _state = this.state;
         if(!_state.accouontMask){
-            Toast.info('您修改的帐户信息还没保存', 1);
+            Toast.info('您修改的帐户信息还没保存', 2);
             return;
         }
         if(!_state.consigneeMask){
-            Toast.info('您修改的收货信息还没保存', 1);
+            Toast.info('您修改的收货信息还没保存', 2);
             return;
         }
         this._verifyFormHandle(() => {
@@ -168,7 +168,7 @@ class RegOrderView extends React.Component {
         const _state = this.state;
         // 如果收货信息也在修改状态，提示用户保存
         if(!_state.consigneeMask){
-            Toast.info('您修改的收货信息还没保存', 1);
+            Toast.info('您修改的收货信息还没保存', 2);
             return;
         }
         if (!_state.accouontMask) {
@@ -197,7 +197,7 @@ class RegOrderView extends React.Component {
         const _state = this.state;
         // 如果帐户信息也在修改状态，提示用户保存
         if(!_state.accouontMask){
-            Toast.info('您修改的帐户信息还没保存', 1);
+            Toast.info('您修改的帐户信息还没保存', 2);
             return;
         }
         if (!_state.consigneeMask) {

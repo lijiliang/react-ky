@@ -48,7 +48,7 @@ class ForgetpwdView extends React.Component{
                 const fieldNames = ['username', 'phoneNumber', 'phoneCode', 'password', 'confirmPwd'].reverse();
                 fieldNames.map((item, index) => {
                     if(form.getFieldError(item)){
-                        Toast.info(form.getFieldError(item), 1);
+                        Toast.info(form.getFieldError(item), 2);
                         return;
                     }
                 });
@@ -57,7 +57,7 @@ class ForgetpwdView extends React.Component{
 
             // 处理输入两次密码不一致
             if(_confirmPwd && (_password !== _confirmPwd)){
-                Toast.info('两次输入的密码不一致', 1);
+                Toast.info('两次输入的密码不一致', 2);
                 return;
             }
 
@@ -70,7 +70,7 @@ class ForgetpwdView extends React.Component{
                 }
                 this.props.dispatch(putUserRestPwd(_data, (res) => {
                     if(res.success){
-                        Toast.info('重置密码成功！', 1)
+                        Toast.info('重置密码成功！', 2)
                         setTimeout(() => {
                             hashHistory.push('/login')
                         }, 1000)
@@ -88,11 +88,11 @@ class ForgetpwdView extends React.Component{
         const _phoneNumber = this.state.phoneNumber || '';
         if(this.state.codeFlag){
             if(_username.length <= 0){
-                Toast.info('请输入中国会员帐号', 1)
+                Toast.info('请输入中国会员帐号', 2)
                 return;
             }
             if(!RegxRule.phone.test(_phoneNumber)){
-                Toast.info('请输入正确的手机号', 1)
+                Toast.info('请输入正确的手机号', 2)
                 return;
             }
 
@@ -104,7 +104,7 @@ class ForgetpwdView extends React.Component{
                 if(res.success){
                     // 请求发送短信验证码
                     const tipInfo = '短信验证码已发送到' + _phoneNumber
-                    Toast.info(tipInfo, 1)
+                    Toast.info(tipInfo, 2)
 
                     // 倒计时
                     this.changeSendStatus('phoneCodeTip', 60)

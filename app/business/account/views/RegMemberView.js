@@ -115,15 +115,15 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
                 const fieldNames = ['firstName', 'lastName', 'email', 'confirmEmail', 'password', 'confirmPwd', 'phoneNumber', 'telNumber', 'idCard', 'cityValue', 'addrDetail', 'postcode', 'recommender', 'reRecommender'].reverse();
                 fieldNames.map((item, index) => {
                     if(form.getFieldError(item)){
-                        Toast.info(form.getFieldError(item), 1)
+                        Toast.info(form.getFieldError(item), 2)
                         // 处理输入两次邮箱不一致
                         if(_confirmEmail && (_email !== _confirmEmail)){
-                            Toast.info('两次输入的邮箱不一致', 1);
+                            Toast.info('两次输入的邮箱不一致', 2);
                             return;
                         }
                         // 处理输入两次密码不一致
                         if(_confirmPwd && (_password !== _confirmPwd)){
-                            Toast.info('两次输入的密码不一致', 1);
+                            Toast.info('两次输入的密码不一致', 2);
                             return;
                         }
                         return;
@@ -139,7 +139,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
 
             // 如果年龄小于18岁，不能通过
             if(getIdCardAge(_idCard) < 18){
-                Toast.info('身份证号码不符', 1);
+                Toast.info('身份证号码不符', 2);
                 return;
             }
 
@@ -168,7 +168,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
             }else{
                 let recommenderTimes = this.state.recommenderTimes;
                 if(recommenderTimes < 2) {
-                    Toast.info('请输入推荐人会员号', 1)
+                    Toast.info('请输入推荐人会员号', 2)
                     recommenderTimes++;
                     this.setState({
                         recommenderTimes: recommenderTimes
