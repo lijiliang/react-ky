@@ -91,11 +91,17 @@ class RegSelectPackView extends React.Component {
                              {this.state.groupList.map(item => (
                                 <PackItemView icon value={item.id} checked={this.state.groupId} listData={item} onChange={this.handleChanges.bind(this, item)}/>
                              ))}
-                            <div className="m-pack-other">
+                            {/* <div className="m-pack-other">
                                 <p>只须购买100元的会藉或购买以上</p>
                                 <p>任何一款的产品套组就马上可以成为凯娅尼会员。</p>
                                 <p>成为会员后，可以尽享会员专属折扣和促销活动。</p>
                                 <p>现在就马上选购可节省更多。</p>
+                            </div> */}
+                            <div className="m-pack-other">
+                                <p>只须购买100元的会藉或购买以上</p >
+                                <p>任何一款的产品套组就马上可以成为凯娅尼会员。</p >
+                                <p>成为会员后，可以尽享会员专属折扣和促销活动。</p >
+                                <p>现在就马上选购可节省更多。</p >
                             </div>
                         </div>
                      </div>
