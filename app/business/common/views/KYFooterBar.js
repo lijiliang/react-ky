@@ -54,7 +54,8 @@ class KYFooterBar extends React.Component{
                         <i className="icon icon-news"></i>
                         <div className="bar-item-text">最新消息</div>
                     </Link>
-                    <a href="http://wpa.qq.com/msgrd?v=3&uin=4004941171&site=qq&menu=yes" className="bar-item">
+                    {/* <a href="http://wpa.qq.com/msgrd?v=3&uin=4004941171&site=qq&menu=yes" className="bar-item"> */}
+                    <a href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzkzODA1MDUyMV80ODI1NDhfNDAwMDk0MTE3MV8" className="bar-item">
                         <i className="icon icon-onlineCS"></i>
                         <div className="bar-item-text">在线客服</div>
                     </a>
