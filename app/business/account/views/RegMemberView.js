@@ -333,6 +333,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
                                          }]
                                        })(
                                          <InputItem
+                                             type="number"
                                              placeholder="请输入您的固定电话"
                                              onChange={this.stateChangeHandle.bind(this, 'telNumber')}
                                          >固定电话</InputItem>
@@ -348,6 +349,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
                                          }],
                                        })(
                                          <InputItem
+                                             type="number"
                                              placeholder="请输入您的身份证号码"
                                              onChange={this.stateChangeHandle.bind(this, 'idCard')}
                                          >身份证号码</InputItem>

@@ -433,6 +433,7 @@ class RegOrderView extends React.Component {
                                    })(
                                      <InputItem
                                          labelNumber={5}
+                                         type="number"
                                          placeholder="请输入您的身份证号码"
                                          onChange={this.stateChangeHandle.bind(this, 'idCard')}
                                      >身份证号码</InputItem>
@@ -447,6 +448,7 @@ class RegOrderView extends React.Component {
                                    })(
                                      <InputItem
                                          labelNumber={5}
+                                         type="number"
                                          placeholder="请输入您的固定电话"
                                          onChange={this.stateChangeHandle.bind(this, 'telNumber')}
                                      >固定电话</InputItem>
@@ -566,6 +568,7 @@ class RegOrderView extends React.Component {
                                     })(
                                       <InputItem
                                           labelNumber={5}
+                                          type="number"
                                           placeholder="请输入您的身份证号码"
                                           onChange={this.stateChangeHandle.bind(this, 'consigneeIdCard')}
                                       >身份证号码</InputItem>
@@ -580,6 +583,7 @@ class RegOrderView extends React.Component {
                                     })(
                                       <InputItem
                                           labelNumber={5}
+                                          type="number"
                                           placeholder="请输入您的固定电话"
                                           onChange={this.stateChangeHandle.bind(this, 'consigneeTelNumber')}
                                       >固定电话</InputItem>

@@ -208,6 +208,7 @@ class ForgetpwdView extends React.Component{
                                  }],
                                })(
                                  <InputItem
+                                     type="number"
                                      placeholder="验证码"
                                      onChange={this.stateChangeHandle.bind(this, 'phoneCode')}
                                      extra={<span className={codeCls} onClick={this.getPhoneCodeHandle}>{this.state.phoneCodeTip}</span>}
