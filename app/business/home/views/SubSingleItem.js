@@ -31,6 +31,7 @@ export default class SubGroupItem extends React.Component {
             url = `/product/${id}`;
         }
         hashHistory.push(url);
+
     }
     render(){
         const _item = this.props.data || {};
