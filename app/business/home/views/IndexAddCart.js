@@ -25,6 +25,14 @@ class SubGroupItem extends React.Component {
             carId: 0,
         };
     }
+    componentWillReceiveProps(nextProps) {
+        const productId = this.props.productId;
+        if(productId !== nextProps.productId){
+            this.setState({
+                isShowStepper: false
+            })
+        }
+    }
     // 加入购物车
     addCartHandle = () => {
         const props = this.props;
@@ -63,9 +71,11 @@ class SubGroupItem extends React.Component {
     render(){
         return(
             <div className="m-add-cart">
-                {!this.state.isShowStepper ? <button onClick={this.addCartHandle}>加入购物车</button> : null}
-                {this.state.isShowStepper ?
-                    <Stepper
+                {
+                    !this.state.isShowStepper
+                    ?
+                      <button onClick={this.addCartHandle}>加入购物车</button>
+                    : <Stepper
                         showNumber
                         min={1}
                         max={500}
@@ -73,8 +83,7 @@ class SubGroupItem extends React.Component {
                         value={this.state.showNumber}
                         onChange={this.onChangeNum}
                         // onOkClick={this.onClickHandle}
-                    />
-                : null }
+                    />}
             </div>
         );
     }

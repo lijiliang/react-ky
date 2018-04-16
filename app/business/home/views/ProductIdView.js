@@ -56,11 +56,13 @@ class ProductIdView extends React.Component{
         // const productId = this.props.params.id;
         if(productId.indexOf('g') >= 0){
             this.state = {
-                groupFlag: true
+                groupFlag: true,
+                isShowStepper: false
             };
         }else{
             this.state = {
-                groupFlag: false
+                groupFlag: false,
+                isShowStepper: false
             };
         }
         this.props.dispatch(getProductInfoId(productId));
@@ -96,7 +98,10 @@ class ProductIdView extends React.Component{
                                 </div>
                             }
                             <div className="info-item add-cart">
-                                <IndexAddCart productId={product.get('id')} groupFlag={this.state.groupFlag}/>
+                                <IndexAddCart
+                                    productId={product.get('id')}
+                                    groupFlag={this.state.groupFlag}
+                                />
                             </div>
                         </div>
                         <div className="integral">
