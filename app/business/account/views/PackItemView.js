@@ -32,7 +32,6 @@ class PackItemView extends React.Component {
     }
     render(){
         const { prefixCls, active, icon, value, checked, ...restProps} = this.props;
-        console.log(this.props)
         const listData = this.props.listData || [];
         let productListLen = 0;  // 产品数量  目前用来区别 “体验包” 与其它套组的区别
         if(typeof listData.groupItems != 'undefined'){

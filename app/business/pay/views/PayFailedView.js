@@ -44,7 +44,9 @@ class PayFailedView extends React.Component {
                     </div>
                     <p className="info-item">若重复出现此信息，请联系线上客服。</p>
                     <div className="m-btn">
-                        <Button className="ky-btn btn-contact" title="联系线上客服"></Button>
+                        <a href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzkzODA1MDUyMV80ODI1NDhfNDAwMDk0MTE3MV8">
+                            <Button className="ky-btn btn-contact" title="联系线上客服"></Button>
+                        </a>
                     </div>
                     <p className="info-item">或联络凯娅尼中国客户服务热线 400 094 1171</p>
                     <p className="info-item">或电邮至 cs.cn@kyanicorp.com</p>
