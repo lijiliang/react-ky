@@ -7,7 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
-import { payAgainBtn } from '../action/DataAction';
+import { payAgainBtn, getPayAgain } from '../action/DataAction';
 
 import { Button, Toast, NavBar } from 'uxComponent';
 
@@ -23,7 +23,17 @@ class PayFailedView extends React.Component {
     // 重新支付
     payAgainHandle(tradeNo, payAmount, regOrder){
         this.props.dispatch(payAgainBtn(tradeNo, payAmount, regOrder, (res) => {
-            hashHistory.push('/pay/types');  // 跳到选择支付方式页面
+            // hashHistory.push('/pay/types');  // 跳到选择支付方式页面 
+
+            // 重新发起支付
+            this.props.dispatch(getPayAgain(tradeNo, (res) => {
+                if(res.success){
+                    window.location.href = res.data;
+                }else{
+                    Toast.info(res.errMsg);
+                }
+            }));
+            
         }));
     }
     render(){

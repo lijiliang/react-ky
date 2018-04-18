@@ -74,14 +74,15 @@ export function payAgainBtn(tradeNo, payAmount, regOrder, callback) {
 /*
  * [getPayAgain 重新发起支付]
  * @param  {[String]}   tradeNo  [订单编号]
- * @param  {[String]}   payType  [支付方式]
+ * @param  {[String]}   payType  [支付方式]   注：用kyani的支付，不需要支持类型了
  * @param  {Function} callback [回调函数]
  * @return {[type]}            [description]
  */
-export function getPayAgain(tradeNo, payType, callback){
+export function getPayAgain(tradeNo, callback){
     return (dispatch, getState) => {
         Toast.loading('加载中...', 200);
-        const response = getPublic(Urls.PayAgain + `/${tradeNo}/${payType}`);
+        // const response = getPublic(Urls.PayAgain + `/${tradeNo}/${payType}`);
+        const response = getPublic(Urls.PayAgain + `/${tradeNo}`);
         response.then((result) => {
             const res = result.data;
             if(res.success){

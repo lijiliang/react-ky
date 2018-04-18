@@ -77,7 +77,7 @@ class CartIndexView extends React.Component{
           addressId: shippingInfo.id,           //地址id
           carIds: _state.shoppingCarIds,        //购物车id组
           originalPrice: _state.originalPrice,  //原价
-          payType: _state.payType,              //支付类型
+          // payType: _state.payType,              //支付类型
           preferential: _state.preferential,    //优惠价
           couponCode: _state.couponCode,        //优惠券码
         }
@@ -90,7 +90,8 @@ class CartIndexView extends React.Component{
                     }, 1500)
                 }
             }else{
-                // 跳到信用卡支付页
+                // const goUrl = `/pay/complete/${res.tradeNo}`
+                // hashHistory.push(goUrl);
                 window.location.href = res.payUrl
             }
         }))

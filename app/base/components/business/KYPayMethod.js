@@ -45,7 +45,7 @@ export default class KYPayMethod extends React.Component {
         ]
         return(
             <div className={prefixCls}>
-                <div className={`${prefixCls}-tit`}>支付方式</div>
+                {/* <div className={`${prefixCls}-tit`}>支付方式</div>
                 <div className={`${prefixCls}-body`}>
                     {
                         payList.map((item) => {
@@ -71,7 +71,7 @@ export default class KYPayMethod extends React.Component {
                             )
                         })
                     }
-                </div>
+                </div> */}
                 <div className={`${prefixCls}-foot`}>
                     应付金额<span className="price">￥{price}</span>
                 </div>
