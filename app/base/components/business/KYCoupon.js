@@ -47,28 +47,53 @@ class KYCoupon extends React.Component {
             isReg: isReg || false
         }
         this.props.dispatch(conpouVerify(_data, (res) => {
-            if(res.success){
-                const _data = res.data;
-                const type = _data.type;
-                let tips = '';
-                if(type.indexOf('gift') > -1){
-                    this.setCouponData(_data.code, 0)
-                    tips = `免费获得赠品: ${_data.typeName}${_data.value}件`
-                }else if(type.indexOf('price') > -1){
-                    this.setCouponData(_data.code, _data.value)
-                    tips = `订单减免${_data.value}元`
+            if (res.success) {
+                const _data = res.data || [];
+                let tips = []
+                let price = 0  // 默认价格为0
+                let conpouCode = _data[0].code
+                _data.forEach((item) => {
+                    if(item.type.indexOf('gift') > -1){
+                        tips.push(`免费获得赠品: ${item.giftName}${item.value}件`)
+                    }else if(item.type.indexOf('price') > -1){
+                        price += parseInt(item.value)
+                        tips.push(`订单减免${item.value}元`)
+                    }
+                })
+                // 判断是否有减免的价格，有则设置
+                if (price > 0) {
+                    this.setCouponData(conpouCode, price)
+                } else {
+                    this.setCouponData(conpouCode, 0)
                 }
-                Modal.alert('提示', <p className="message-success">{tips}</p>, [
+
+                Modal.alert('提示', <div className="message-success">
+                    {
+                        tips.map((item, index) => {
+                            const tipsLen = tips.length
+                            const wrapItemCls = classNames({
+                                ['item']: tipsLen > 1,
+                                ['item-first']: tipsLen == 1,
+                            })
+                            return (
+                                <div key={index} className={wrapItemCls}>
+                                    {tipsLen > 1 && <span className="item-no">{index+1}、</span> }
+                                    <p>{item}</p>
+                                </div>
+                            )
+                        })
+                    }
+                </div>, [
                     {
                         text: '确认',
                         onPress: () => {
                             this.setState({
-                                couponCode: res.data.code
+                                couponCode: conpouCode
                             })
                         }
                     },
                 ]);
-            }else{
+            } else{
                 this.setCouponData('', 0)
                 Modal.alert('提示', <p className="message-error">{res.message}</p>, [
                     {

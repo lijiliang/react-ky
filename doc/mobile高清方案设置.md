@@ -73,7 +73,7 @@ new webpack.LoaderOptionsPlugin({
                     propWhiteList: [],
                 })
             ];
-        }
+        } 
     }
 }),
 ```
