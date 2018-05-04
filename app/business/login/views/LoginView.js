@@ -71,15 +71,14 @@ class LoginView extends React.Component{
                     Toast.success('登录成功', 1);
                     // 登录成功后重新获取下导航栏数据
                     this.props.dispatch(getNav());
-
                     setTimeout(() => {
                         // 如果有需要跳转的链接，则跳转过去，否则直接返回首页
                         if(_backUrl){
                             location.href = _backUrl;
                             // location.reload()
                         }else{
-                            // location.href = '/'
-                            hashHistory.push('/');
+                            location.href = '/'
+                            // hashHistory.push('/');
                         }
                     }, 1000);
                 }));
