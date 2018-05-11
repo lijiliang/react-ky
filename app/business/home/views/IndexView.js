@@ -47,6 +47,26 @@ class IndexView extends React.Component{
                     <SlideSwipe List={_bannerList}/>
 
                     <div className="m-category">
+
+                        {/* 推广优惠及其它 */}
+                        <IndexCategoryItemView title="推广优惠及其它" thumb={ProductsItemImg3} isChildren={_isChildren}>
+                            <div className="category-sub">
+                                <IndexCategorySubItemView title="推广优惠">
+                                </IndexCategorySubItemView>
+                                <IndexCategorySubItemView title="其它">
+                                    <div className="sub-view clearfix">
+                                        {
+                                            _product.other && _product.other.map((item) => {
+                                                return(
+                                                    <SubSingleItem data={item}/>
+                                                );
+                                            })
+                                        }
+                                    </div>
+                                </IndexCategorySubItemView>
+                            </div>
+                        </IndexCategoryItemView>
+                        
                         {/* 营养补充品 */}
                         <IndexCategoryItemView title="营养补充品" thumb={ProductsItemImg1} isChildren={_isChildren}>
                             <div className="category-sub">
@@ -102,26 +122,6 @@ class IndexView extends React.Component{
                                 </IndexCategorySubItemView>
                             </div>
                         </IndexCategoryItemView>
-
-                        {/* 推广优惠及其它 */}
-                        <IndexCategoryItemView title="推广优惠及其它" thumb={ProductsItemImg3} isChildren={_isChildren}>
-                            <div className="category-sub">
-                                <IndexCategorySubItemView title="推广优惠">
-                                </IndexCategorySubItemView>
-                                <IndexCategorySubItemView title="其它">
-                                    <div className="sub-view clearfix">
-                                        {
-                                            _product.other && _product.other.map((item) => {
-                                                return(
-                                                    <SubSingleItem data={item}/>
-                                                );
-                                            })
-                                        }
-                                    </div>
-                                </IndexCategorySubItemView>
-                            </div>
-                        </IndexCategoryItemView>
-
 
                     </div>
                 </div>
