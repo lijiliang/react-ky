@@ -112,7 +112,7 @@ class ProductIdView extends React.Component{
                     <div className="m-product-content">
                         <div className="content-guarantee">
                             <p><span>商家承诺100%美国原装正品</span><span><i className="icon icon-bao"></i>保税区商品</span></p>
-                            <p>本商品已包含增值税11.9%</p>
+                            <p>本商品已包含增值税</p>
                         </div>
                         <div className="content-edit" dangerouslySetInnerHTML={{__html: description}}></div>
                     </div>
