@@ -168,7 +168,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
             }else{
                 let recommenderTimes = this.state.recommenderTimes;
                 if(recommenderTimes < 2) {
-                    Toast.info('请输入推荐人会员号', 2)
+                    Toast.info('推荐人会员号不能为空', 3)
                     recommenderTimes++;
                     this.setState({
                         recommenderTimes: recommenderTimes
@@ -428,7 +428,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
                                         }],
                                       })(
                                         <InputItem
-                                            placeholder="请输入您的推荐人会员号"
+                                            placeholder="例: CN123456"
                                             value={this.state.referenceId}
                                             onChange={this.stateChangeHandle.bind(this, 'recommender')}
                                         >推荐人会员号</InputItem>
@@ -444,7 +444,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
                                          }],
                                        })(
                                          <InputItem
-                                             placeholder="请再次输入您的推荐人"
+                                             placeholder="例: CN123456"
                                              style={{border:'none'}}
                                              onChange={this.stateChangeHandle.bind(this, 'reRecommender')}
                                          >确认推荐人</InputItem>

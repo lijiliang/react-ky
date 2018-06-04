@@ -16,7 +16,7 @@ export function hideLoading() {
  * [failLoading 请求服务器错误]
  */
 export function failLoading(err) {
-    const response = err.response || {};
+    let response = err.response || {};
     Toast.hide();
     if(response.status === 0){
         Toast.fail('服务器连接失败!');
@@ -29,7 +29,15 @@ export function failLoading(err) {
             checkMember();
         }, 1000);
     }else{
-        Toast.fail(`服务器请求错误!`);
+        if (!checkNullObj(response)) {
+            if (response.data.message && response.data.success === false && response.data.statusCode === '500') {
+                Toast.info(response.data.message);
+            } else {
+                Toast.fail(`服务器请求错误!`);
+            }
+        } else {
+            Toast.fail(`服务器请求错误!`);
+        }
     }
 }
 
@@ -203,6 +211,13 @@ export function markMoney(str){
     return '￥' + str;
 }
 
+/**
+ * checkNullObj 判断一个对象是否为空
+ * @param {Object} obj传入一个对象
+ */
+export function checkNullObj(obj) {
+    return Object.keys(obj).length === 0
+}
 /*
  * [getScroll 返回当前页面相对于窗口显示区左上角的 X ，Y 的位置]
  * @param  {[type]} top [description]

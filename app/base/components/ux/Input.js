@@ -65,7 +65,8 @@ class Input extends React.Component {
         if (document.activeElement.tagName.toLowerCase() === 'input') {
             this.scrollIntoViewTimeout = setTimeout(() => {
                 try {
-                    document.activeElement.scrollIntoViewIfNeeded();
+                    document.activeElement.scrollIntoView()
+                    // document.activeElement.scrollIntoViewIfNeeded();
                 } catch (e) {}
             }, 100);
         }

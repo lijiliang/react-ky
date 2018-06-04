@@ -53,7 +53,6 @@ class LoginView extends React.Component{
     // 登录
     loginClickHandle(){
         const _backUrl = getQueryString('backUrl');
-        console.log('要跳转的url', _backUrl)
         const form = this.props.form;
         form.validateFields((error, value) => {
             if(error){

@@ -182,7 +182,14 @@ class CartIndexView extends React.Component{
                                         <div className="m-cart">
                                             {this.state.list.map((item, index) => {
                                                 return(
-                                                    <CartItemView key={index} index={index} ListItem={item} deleteItem={this.deleteItemHandle.bind(this, index, item.shoppingCarId)} changeStatus={this.changeStatus} numItem={this.numItemChangeHandle.bind(this)}/>
+                                                    <CartItemView
+                                                        key={index}
+                                                        index={index}
+                                                        ListItem={item}
+                                                        deleteItem={this.deleteItemHandle.bind(this, index, item.shoppingCarId)}
+                                                        changeStatus={this.changeStatus}
+                                                        numItem={this.numItemChangeHandle.bind(this)}
+                                                    />
                                                 )
                                             })}
 

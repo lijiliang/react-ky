@@ -16,6 +16,7 @@ function fixControlledValue(value) {
     return value;
 }
 
+const bfscrolltop = document.body.scrollTop;//获取软键盘唤起前浏览器滚动部分的高度
 class InputItem extends React.Component {
     static defaultProps = {
         prefixCls: 'ky-input',
@@ -100,6 +101,7 @@ class InputItem extends React.Component {
     // focus 事件触发的回调函数
     onInputFocus = (value) => {
         if(this.debounceTimeout) {
+            document.activeElement.scrollIntoViewIfNeeded();
             clearTimeout(this.debounceTimeout);
             this.debounceTimeout = null;
         }

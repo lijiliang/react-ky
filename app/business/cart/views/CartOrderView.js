@@ -280,9 +280,9 @@ class CartIndexView extends React.Component{
                                         <List small>
                                             <Item extra={markMoney(_state.actualPrice)}>会员价总额</Item>
                                             <Item extra={markMoney(_state.originalPrice)}>销售价总额</Item>
-                                            <Item extra={markMoney(_state.importTariff)}>进口关税</Item>
+                                            {/* <Item extra={markMoney(_state.importTariff)}>进口关税</Item> */}
                                             <Item extra={markMoney(_state.preferential)}>总优惠</Item>
-                                            <Item extra={markMoney(_state.expressPrice)}>运费</Item>
+                                            {/* <Item extra={markMoney(_state.expressPrice)}>运费</Item> */}
                                             <Item extra={_state.totalQV}>总积分</Item>
                                         </List>
                                     </div>

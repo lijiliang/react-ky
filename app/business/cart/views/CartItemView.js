@@ -85,13 +85,13 @@ class CartIndexView extends React.Component{
                                                     <p>{item.productName}</p>
                                                     {/* <p>900毫升 (30袋)</p> */}
                                                 </div>
-                                                <div className="number">12件/套</div>
+                                                <div className="number">x {item.productNum}</div>
                                             </div>
                                             <div className="info-item info-item-member">
                                                 <div className="name">
                                                     <span>会员价</span><span className="price">￥{item.salePrice}</span>
                                                 </div>
-                                                <div className="number">x {item.productNum}</div>
+                                                {/* <div className="number">x {item.productNum}</div> */}
                                             </div>
                                             <div className="info-subtotal">
                                                 <span>小计&nbsp;&nbsp;</span>
