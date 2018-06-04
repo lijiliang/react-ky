@@ -4,8 +4,10 @@
 import React from 'react';
 import omit from 'omit.js';
 
+var bfscrolltop = document.body.scrollTop;
 class Input extends React.Component {
     scrollIntoViewTimeout: null;
+    scrollTopBodyInterval: null;
     constructor(props) {
         super(props);
         this.state = {
@@ -49,6 +51,11 @@ class Input extends React.Component {
         if (this.props.onBlur) {
             this.props.onBlur(value);
         }
+
+        if (this.scrollTopBodyInterval) {
+            clearInterval(this.scrollTopBodyInterval);//清除计时器
+            document.body.scrollTop = bfscrolltop; //将软键盘唤起前的浏览器滚动部分高度重新赋给改变后的高度
+        }
     }
 
     onInputFocus = (e) => {
@@ -69,7 +76,11 @@ class Input extends React.Component {
                     document.activeElement.scrollIntoViewIfNeeded();
                 } catch (e) {}
             }, 100);
+            this.scrollTopBodyInterval = setInterval(() =>{
+                document.body.scrollTop = document.body.scrollHeight; //获取焦点后将浏览器内所有内容高度赋给浏览器滚动部分高度
+            }, 100)
         }
+
     }
 
     render() {
