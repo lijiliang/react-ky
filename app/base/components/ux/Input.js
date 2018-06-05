@@ -26,6 +26,9 @@ class Input extends React.Component {
         if (this.props.autoFocus || this.state.focused) {
             this.refs.input.focus();
         }
+
+        // https://segmentfault.com/a/1190000006243816 移动端iOS第三方输入法遮挡底部input及android键盘回落后留白问题
+        /*
         let interval = null
         $('input').focus(function(){
             interval = setInterval(function(){
@@ -34,6 +37,7 @@ class Input extends React.Component {
         }).blur(function(){
             clearInterval(interval)
         })
+        */
     }
 
     componentWillUnmount() {
