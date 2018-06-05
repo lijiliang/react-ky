@@ -11,7 +11,7 @@
  import { conpouVerify } from 'kyBus/common/action/DataAction'
 
  import './KYCoupon.less';
-import { InputItem, Toast, Modal } from 'uxComponent';
+import { InputItem, Toast, Modal, List } from 'uxComponent';
 
 class KYCoupon extends React.Component {
     static defaultProps = {
@@ -132,11 +132,13 @@ class KYCoupon extends React.Component {
                     </div>
                     <div className="conpon-code">
                         <div className="conpon-input">
-                            <InputItem
-                                placeholder="请输入优惠券码"
-                                value={this.state.couponCode}
-                                onChange={this.stateChangeHandle.bind(this, 'couponCode')}
-                            />
+                            <List>
+                                <InputItem
+                                    placeholder="请输入优惠券码"
+                                    value={this.state.couponCode}
+                                    onChange={this.stateChangeHandle.bind(this, 'couponCode')}
+                                />
+                            </List>
                         </div>
                         <div className="conpon-btn" onClick={this.conponBtnHandle.bind(this)}>
                             <span>使用优惠券码</span>
