@@ -70,6 +70,8 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
          this.setState({
              recommenderTimes: 0
          })
+
+         /*
         var bfscrolltop = document.body.scrollTop; //获取软键盘唤起前浏览器滚动部分的高度
         $("input").focus(function(){ // 当它获取焦点时触发事件
             interval = setInterval(function(){ //设置一个计时器，时间设置与软键盘弹出所需时间相近
@@ -79,6 +81,7 @@ const cityAreaData = Cache.getObj(Cache.keys.ky_cache_cityArea) || [];
             clearInterval(interval);//清除计时器
             document.body.scrollTop = bfscrolltop; //将软键盘唤起前的浏览器滚动部分高度重新赋给改变后的高度
         });
+        */
      }
 
      // 返回上一页
