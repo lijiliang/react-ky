@@ -26,6 +26,14 @@ class Input extends React.Component {
         if (this.props.autoFocus || this.state.focused) {
             this.refs.input.focus();
         }
+        let interval = null
+        $('input').focus(function(){
+            interval = setInterval(function(){
+                document.body.scrollTop = document.body.scrollHeight
+            }, 200)
+        }).blur(function(){
+            clearInterval(interval)
+        })
     }
 
     componentWillUnmount() {
