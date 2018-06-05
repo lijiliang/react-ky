@@ -52,10 +52,10 @@ class Input extends React.Component {
             this.props.onBlur(value);
         }
 
-        if (this.scrollTopBodyInterval) {
-            clearInterval(this.scrollTopBodyInterval);//清除计时器
-            document.body.scrollTop = bfscrolltop; //将软键盘唤起前的浏览器滚动部分高度重新赋给改变后的高度
-        }
+        // if (this.scrollTopBodyInterval) {
+        //     clearInterval(this.scrollTopBodyInterval);//清除计时器
+        //     document.body.scrollTop = bfscrolltop; //将软键盘唤起前的浏览器滚动部分高度重新赋给改变后的高度
+        // }
     }
 
     onInputFocus = (e) => {
@@ -73,12 +73,12 @@ class Input extends React.Component {
             this.scrollIntoViewTimeout = setTimeout(() => {
                 try {
                     // document.activeElement.scrollIntoView()
-                    document.activeElement.scrollIntoViewIfNeeded();
+                    document.activeElement.scrollIntoViewIfNeeded(true);
                 } catch (e) {}
             }, 100);
-            this.scrollTopBodyInterval = setInterval(() =>{
-                document.body.scrollTop = document.body.scrollHeight; //获取焦点后将浏览器内所有内容高度赋给浏览器滚动部分高度
-            }, 100)
+            // this.scrollTopBodyInterval = setInterval(() =>{
+            //     document.body.scrollTop = document.body.scrollHeight; //获取焦点后将浏览器内所有内容高度赋给浏览器滚动部分高度
+            // }, 100)
         }
 
     }
