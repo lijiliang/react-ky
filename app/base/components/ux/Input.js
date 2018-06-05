@@ -26,35 +26,6 @@ class Input extends React.Component {
         if (this.props.autoFocus || this.state.focused) {
             this.refs.input.focus();
         }
-        // 解决手机输入框被软键盘遮住的问题
-        // https://blog.csdn.net/github_37533433/article/details/66471962
-        // https://segmentfault.com/q/1010000012361207
-        // ios手机
-        var timer = null;
-        $('input').on('focus', function() {
-            clearInterval(timer);
-            var index = 0;
-            timer = setInterval(function() {
-                if(index>5) {
-                    $('body').scrollTop(1000000);
-                    clearInterval(timer);
-                }
-                index++;
-            }, 50)
-        })
-
-        // android手机
-        var winHeight = $(window).height(); // 获取当前页面高度
-        $(window).resize(function() {
-            var resizeHeight = $(this).height();
-            if (winHeight - resizeHeight > 50) {
-                // 软键盘弹出
-                $('body').css('height', winHeight + 'px');
-            } else {
-                //软键盘收起
-                $('body').css('height', '100%');
-            }
-        });
     }
 
     componentWillUnmount() {
