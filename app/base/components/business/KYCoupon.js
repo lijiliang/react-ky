@@ -25,6 +25,9 @@ class KYCoupon extends React.Component {
         };
     }
     componentDidMount(){
+        // 解决手机输入框被软键盘遮住的问题
+        // https://blog.csdn.net/github_37533433/article/details/66471962
+        // https://segmentfault.com/q/1010000012361207
         // ios手机
         var timer = null;
         $('input').on('focus', function() {
