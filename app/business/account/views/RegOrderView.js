@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as loginAction from '../action/actionTypes';
 import { CheckDealerReg, CheckAddress, UserDealer} from '../action/DataAction';
+import { cityVerify } from 'kyBus/common/action/DataAction'
 
 import { createForm } from 'rc-form';
 import classNames from 'classnames';
@@ -33,7 +34,8 @@ class RegOrderView extends React.Component {
             consigneeMask: true,  //收货信息遮罩
             payType: '29',        //默认支付类型
             couponCode: '',  // 优惠券码
-            discountPrice: 0 // 优惠金额
+            discountPrice: 0, // 优惠金额
+            selectCityName: '', // 选中的城市名
         };
     }
     componentDidMount(){
@@ -147,16 +149,24 @@ class RegOrderView extends React.Component {
             // 将数据dispatch过去  验证：收货信息表单
             this.props.dispatch(CheckAddress(checkAddressData, (res) => {
                 if(res.success){
-                    // 注册用户并跳支付页面
-                    this.props.dispatch(UserDealer(userDealerData, (dealeres) => {
-                        if(dealeres.success){
-                            if(dealeres.memberFlag){
-                                window.location.href = dealeres.payUrl;
-                            }else{
-                                hashHistory.push(`/pay/complete/${dealeres.tradeNo}`)
-                            }
-                        }else{
-                            Toast.info(dealeres.errMsg)
+                    // 验证城市黑名单
+                    this.props.dispatch(cityVerify(_state.selectCityName, (res) => {
+                        if (res.data) {
+                            Toast.fail(`抱歉，${_state.selectCityName} 暂不提供送货服务，请选择其他地址作为您的收货地址。如需协助，请致电 400 094 1171 联络客户服务部。`);
+                            return
+                        } else {
+                            // 注册用户并跳支付页面
+                            this.props.dispatch(UserDealer(userDealerData, (dealeres) => {
+                                if(dealeres.success){
+                                    if(dealeres.memberFlag){
+                                        window.location.href = dealeres.payUrl;
+                                    }else{
+                                        hashHistory.push(`/pay/complete/${dealeres.tradeNo}`)
+                                    }
+                                }else{
+                                    Toast.info(dealeres.errMsg)
+                                }
+                            }))
                         }
                     }))
                 }
@@ -214,15 +224,24 @@ class RegOrderView extends React.Component {
                     telNumber: _state.consigneeTelNumber,      //电话号码
                     isDefault: true,//是否默认
                 };
-                // 将数据dispatch过去  验证：收货信息表单
-                this.props.dispatch(CheckAddress(checkAddressData, (res) => {
-                    if(res.success){
-                        Toast.success('修改成功', 1);
-                        this.setState({
-                            consigneeMask: true
-                        })
-                        // 更新session数据
-                        Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
+
+                // 验证城市黑名单
+                this.props.dispatch(cityVerify(this.state.selectCityName, (res) => {
+                    if (res.data) {
+                        Toast.fail(`抱歉，${this.state.selectCityName} 暂不提供送货服务，请选择其他地址作为您的收货地址。如需协助，请致电 400 094 1171 联络客户服务部。`);
+                        return false
+                    } else {
+                        // 将数据dispatch过去  验证：收货信息表单
+                        this.props.dispatch(CheckAddress(checkAddressData, (res) => {
+                            if(res.success){
+                                Toast.success('修改成功', 1);
+                                this.setState({
+                                    consigneeMask: true
+                                })
+                                // 更新session数据
+                                Cache.sessionSet(Cache.sessionKeys.ky_cache_regmember_info, this.state);
+                            }
+                        }))
                     }
                 }))
             });
@@ -494,7 +513,13 @@ class RegOrderView extends React.Component {
                                         extra="请选择您所在的省市区"
                                         value={this.state.consigneeCityValue}
                                         onChange={this.pickerConsigneeChangeHandle.bind(this)}
-                                        format={(values) => { return values.join(' '); }}
+                                        // format={(values) => { return values.join(' '); }}
+                                        format={(values) => {
+                                            this.setState({
+                                                selectCityName: values[1]
+                                            })
+                                            return values.join(' ');
+                                        }}
                                      >
                                         <List.Item arrow="horizontal" onClick={this.onCitykHandle.bind(this)} className={cityExtraCls}>收货地区</List.Item>
                                     </Picker>

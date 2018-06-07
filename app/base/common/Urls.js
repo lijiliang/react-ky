@@ -40,6 +40,7 @@ const Urls = {
     UploadImg: profile.server + '/starspower/shop/service/v1/upload/img', // 上传图片文件
     UserUpdatePhoto: profile.server + '/starspower/shop/service/v1/user/updatePhoto', // 用户上传头像
     CouponVerify: profile.server + '/starspower/shop/service/v1/coupon/verify', // 验证优惠券
+    CityVerify: 'http://stars.kyani.cn:800/starspower/admin/service/v1/blacklist/city/verify/', // 检测 城市 黑名单
 };
 
 export default Urls;

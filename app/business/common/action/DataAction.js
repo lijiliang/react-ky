@@ -2,7 +2,7 @@
  * @fileOverview common 处理数据action
  */
 import * as types from './actionTypes';
-import { getHasFetch, get, postHasFetch} from 'FetchData';
+import { getHasFetch, get, postHasFetch, getPublic} from 'FetchData';
 import { Cache, Urls } from 'kyCommon';
 import { Toast } from 'uxComponent';
 import { failLoading, hasMember} from 'Utils';
@@ -92,6 +92,26 @@ export function conpouVerify(data, callback) {
     return (dispatch, getState) => {
         Toast.loading('加载中...', 200);
         const response = postHasFetch(Urls.CouponVerify, data);
+        response.then((result) => {
+            Toast.hide();
+            const res = result.data;
+            callback(res);
+        }).catch((err) => {
+            failLoading(err);
+        });
+    };
+}
+
+/*
+ * [cityVerify 检测城市黑名单]
+ * @param  {[string]}   city     [城市名]
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
+export function cityVerify(cityName, callback) {
+    return (dispatch, getState) => {
+        Toast.loading('加载中...', 200);
+        const response = getPublic(Urls.CityVerify + '/' + cityName);
         response.then((result) => {
             Toast.hide();
             const res = result.data;

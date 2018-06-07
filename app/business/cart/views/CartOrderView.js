@@ -7,6 +7,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { OrderPreview, OrderAdd } from '../action/DataAction';
+import { cityVerify } from 'kyBus/common/action/DataAction'
 
 import { Cache } from 'kyCommon';
 import { KYPayMethod, KYCoupon } from 'kyComponent';
@@ -23,6 +24,7 @@ class CartIndexView extends React.Component{
             value: 'a',
             isLoading: true,
             payType: '29',
+            selectCityName: '', // 选中的城市名
             couponCode: '',  // 优惠券码
             discountPrice: 0 // 优惠金额
         };
@@ -41,6 +43,7 @@ class CartIndexView extends React.Component{
             }
             this.setState({
                 ...res,
+                selectCityName: res.shippingInfo.addrCityName, // 选中的城市名
                 isLoading: false
             })
         }))
@@ -81,18 +84,27 @@ class CartIndexView extends React.Component{
           preferential: _state.preferential,    //优惠价
           couponCode: _state.couponCode,        //优惠券码
         }
-        this.props.dispatch(OrderAdd(data, (res) => {
-            if(!res.success){
-                Toast.info(res.errMsg);
-                if(res.tradeNo){
-                    setTimeout(function(){
-                        hashHistory.push(`/pay/complete/${res.tradeNo}`);
-                    }, 1500)
-                }
-            }else{
-                // const goUrl = `/pay/complete/${res.tradeNo}`
-                // hashHistory.push(goUrl);
-                window.location.href = res.payUrl
+
+        // 先验证城市黑名单
+        this.props.dispatch(cityVerify(_state.selectCityName, (res) => {
+            if (res.data) {
+                Toast.fail(`抱歉，${_state.selectCityName} 暂不提供送货服务,请选择其他地址或致电 400 094 1171 联络客户服务部。`);
+                return
+            } else {
+                this.props.dispatch(OrderAdd(data, (res) => {
+                    if(!res.success){
+                        Toast.info(res.errMsg);
+                        if(res.tradeNo){
+                            setTimeout(function(){
+                                hashHistory.push(`/pay/complete/${res.tradeNo}`);
+                            }, 1500)
+                        }
+                    }else{
+                        // const goUrl = `/pay/complete/${res.tradeNo}`
+                        // hashHistory.push(goUrl);
+                        window.location.href = res.payUrl
+                    }
+                }))
             }
         }))
     }

@@ -9,6 +9,7 @@
  import classNames from 'classnames';
  import { connect } from 'react-redux';
  import { AddShipAddress, GetIdShipAddress, SaveShipAddress } from '../action/DataAction'
+ import { cityVerify } from 'kyBus/common/action/DataAction'
 
  //组件
  import { Urls, RegxRule, Cache, AddressData } from 'kyCommon';
@@ -25,7 +26,8 @@
          this.state = {
              title: '',
              cityAreaData: cityAreaData,
-             cityExtra: true
+             cityExtra: true,
+             selectCityName: '' // 选中的城市名
          };
      }
      componentDidMount(){
@@ -128,28 +130,37 @@
                   telNumber: _state.telNumber
              }
 
-             const edit = this.props.params.edit;
-             if(edit == null){
-                 // 新添地址
-                 this.props.dispatch(AddShipAddress(_data, (res) => {
-                     Toast.success('添加地址成功！');
-                     setTimeout(() => {
-                         hashHistory.push('/user/address');
-                     }, 1000);
-                 }))
-             }else{
-                 // 编辑地址
-                 const _id = {
-                     id: _state.id
-                 }
-                 let saveData = Object.assign(_data, _id)
-                 this.props.dispatch(SaveShipAddress(saveData, (res) => {
-                    Toast.success('编辑地址成功！');
-                    setTimeout(() => {
-                        hashHistory.push('/user/address');
-                    }, 1000);
-                 }))
-             }
+            const edit = this.props.params.edit;
+
+            this.props.dispatch(cityVerify(_state.selectCityName, (res) => {
+                if (res.data) {
+                    Toast.fail(`抱歉，${_state.selectCityName} 暂不提供送货服务,请选择其他地址或致电 400 094 1171 联络客户服务部。`);
+                    return
+                } else {
+                    if(edit == null){
+                        // 新添地址
+                       this.props.dispatch(AddShipAddress(_data, (res) => {
+                            Toast.success('添加地址成功！');
+                            setTimeout(() => {
+                                hashHistory.push('/user/address');
+                            }, 1000);
+                       }))
+                   }else{
+                        // 编辑地址
+                        const _id = {
+                            id: _state.id
+                        }
+                        let saveData = Object.assign(_data, _id)
+                        this.props.dispatch(SaveShipAddress(saveData, (res) => {
+                           Toast.success('编辑地址成功！');
+                           setTimeout(() => {
+                               hashHistory.push('/user/address');
+                           }, 1000);
+                        }))
+                   }
+                }
+            }))
+
          })
      }
      render(){
@@ -238,7 +249,13 @@
                                          extra="请选择您所在的省市区"
                                          value={this.state.cityValue}
                                          onChange={this.pickerChangeHandle.bind(this)}
-                                         format={(values) => { return values.join(' '); }}
+                                        //  format={(values) => { return values.join(' ')}}
+                                         format={(values) => {
+                                            this.setState({
+                                                selectCityName: values[1]
+                                            })
+                                            return values.join(' ');
+                                        }}
                                       >
                                          <List.Item arrow="horizontal" onClick={this.onCitykHandle.bind(this)} className={cityExtraCls}>收货地区</List.Item>
                                      </Picker>
