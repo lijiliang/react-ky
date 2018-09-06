@@ -30,6 +30,7 @@ class CartIndexView extends React.Component{
         };
     }
     componentDidMount(){
+        const that = this
         const cartIds = Cache.sessionGet(Cache.sessionKeys.ky_cart_ids);
         if(!cartIds){
             hashHistory.push('/cart')
@@ -41,9 +42,9 @@ class CartIndexView extends React.Component{
                 hashHistory.push('/cart')
                 return;
             }
-            this.setState({
+            that.setState({
                 ...res,
-                selectCityName: res.shippingInfo.addrCityName, // 选中的城市名
+                selectCityName: res || res.shippingInfo.addrCityName, // 选中的城市名
                 isLoading: false
             })
         }))
