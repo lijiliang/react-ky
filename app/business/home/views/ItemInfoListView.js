@@ -54,7 +54,7 @@ class ItemInfoList extends React.Component {
                     </li>
                     : <li className="price">
                         <span>销售价</span>
-                        <span>￥{originalPrice}</span>
+                        <span>￥{salePrice}</span>
                     </li>
                 }
                 <li>
