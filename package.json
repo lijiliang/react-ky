@@ -6,6 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node build/dev.js",
     "build": "cross-env NODE_ENV=production node build/prod.js",
+    "beta": "cross-env NODE_ENV=production node build/beta.js",
     "dev": "cross-env NODE_ENV=development webpack --config ./build/webpack.dev.conf.js",
     "prod": "cross-env NODE_ENV=production webpack --config ./build/webpack.prod.conf.js",
     "mock": "node --harmony ./mock/server.js"
